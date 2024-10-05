@@ -28,7 +28,7 @@ body{
     width: 500px;
     height: 580px;
     margin: auto;
-    margin-top: 90px;
+    margin-top: 130px;
     box-shadow: 15px 20px 50px #000;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter:(10px);
@@ -92,12 +92,12 @@ body{
 
 /*This design will affect the button for coming back to the index in login.html and register.html*/
 .g_back{
-    width: 100px;
+    width: 110px;
     height: 40px;
     background: #257945;
     border: none;
     color: white;
-    margin-bottom: 16px;
+    margin-top: 660px;
 }
 
 /*This design will affect the stuff with the tag p in login.html*/

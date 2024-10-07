@@ -50,11 +50,11 @@ li, a, button {
     align-items: center;
 }
 
-.nav-container {
-    flex-grow: 1;  /* Esto hará que los enlaces de navegación ocupen el espacio entre el título y el botón */
+/* .nav-container {
+    flex-grow: 1; 
     display: flex;
     justify-content: center;
-}
+} */
 
 .nav-links {
     list-style: none;

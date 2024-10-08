@@ -61,6 +61,11 @@ li, a, button {
     margin-right: 15px;
     cursor: pointer;
 }
+.logo:hover{
+    width: 47px;
+    height: 47px;
+    transition: all 0.3s ease 0s;
+}
 
 #navbar__title {
     float: left;
@@ -88,7 +93,7 @@ li, a, button {
     height: 100%;
     background: #151719;
     left: -200px;
-    transition: all 500ms linear;
+    transition: all 250ms linear;
   }
   
   #sidebar.active {
@@ -108,6 +113,11 @@ li, a, button {
     padding: 0;
   }
 
+  #sidebar ul li:hover{
+    font-size: 22px;
+    color: #1cc349;
+  }
+
 a button {
     margin-top: 5px;
     float: right;
@@ -123,4 +133,7 @@ a button {
 
 a button:hover {
     background-color: #303030;
+    width: 110px;
+    height: 32px;
+    font-size: 16px;
 }

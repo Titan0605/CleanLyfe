@@ -1,3 +1,28 @@
+/* .nav-container {
+    flex-grow: 1; 
+    display: flex;
+    justify-content: center;
+} */
+
+/* .nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin: 0;
+}
+
+.nav-links li {
+    display: inline-block;
+}
+
+.nav-links li a {
+    transition: all 0.3s ease 0s;
+}
+
+.nav-links li a:hover {
+    color: #57cc99;
+} */
+
 * {
     text-decoration: none;
 }
@@ -15,67 +40,77 @@ li, a, button {
     text-decoration: none;
 }
 
-.container {
-    display: flex;
-    align-items: center;
+.navbar {
     justify-content: space-between;
     width: 100%;
     height: 60px;
     box-sizing: border-box;
-    padding: 20px 20px;
+    padding: 10px;
     inset: 0;
     position: fixed;
-    background: linear-gradient(135deg, rgba(3, 95, 37, 0.1), rgba(8, 229, 89,0.8));
+    background: linear-gradient(135deg, rgba(3, 95, 37, 0.719), rgba(8, 229, 74, 0.596));
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
 .logo {
-    width: 50px;
-    height: 50px;
+    float: left;
+    width: 45px;
+    height: 45px;
     margin-right: 15px;
     cursor: pointer;
 }
 
-#title {
+#navbar__title {
+    float: left;
     color: white;
-    font-size: 35px;
+    font-size: 30px;
     font-weight: bold;
     margin: 0;
 }
 
-.title-container {
-    display: flex;
-    align-items: center;
+.sidebar__button {
+    color: rgb(255, 255, 255);
+    font-size: 30px;
+    width: 30px;
+    cursor: pointer;
 }
 
-/* .nav-container {
-    flex-grow: 1; 
-    display: flex;
-    justify-content: center;
-} */
+.--button-navbar {
+    float: left;
+    margin-right: 10px;
+}
 
-.nav-links {
+#sidebar {
+    position: fixed;
+    width: 200px;
+    height: 100%;
+    background: #151719;
+    left: -200px;
+    transition: all 500ms linear;
+  }
+  
+  #sidebar.active {
+    left: 0px;
+  }
+  
+  #sidebar ul li {
+    color: rgba(230, 230, 230, .9);
     list-style: none;
-    display: flex;
-    gap: 20px;
+    padding: 15px 10px;
+    border-bottom: 1px solid rgba(100, 100, 100, .3);
+    text-align: center;
+  }
+
+  #sidebar ul {
     margin: 0;
-}
+    padding: 0;
+  }
 
-.nav-links li {
-    display: inline-block;
-}
-
-.nav-links li a {
-    transition: all 0.3s ease 0s;
-}
-
-.nav-links li a:hover {
-    color: #57cc99;
-}
-
-button {
+a button {
+    margin-top: 5px;
+    float: right;
     width: 100px;
     height: 30px;
     background-color: #364d3a;
@@ -86,6 +121,6 @@ button {
     transition: all 0.3s ease 0s;
 }
 
-button:hover {
-    background-color: #ffff;
+a button:hover {
+    background-color: #303030;
 }

@@ -48,7 +48,7 @@ li, a, button {
     padding: 10px;
     inset: 0;
     position: fixed;
-    background: linear-gradient(135deg, rgba(3, 95, 37, 0.719), rgba(8, 229, 74, 0.596));
+    background: linear-gradient(135deg, rgba(82, 183, 136, 0.8), rgba(22, 138, 173, 0.6));
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);

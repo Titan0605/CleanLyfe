@@ -94,29 +94,30 @@ li, a, button {
     background: #151719;
     left: -200px;
     transition: all 250ms linear;
-  }
+}
   
-  #sidebar.active {
+#sidebar.active {
     left: 0px;
-  }
+}
   
-  #sidebar ul li {
+#sidebar ul li {
     color: rgba(230, 230, 230, .9);
     list-style: none;
     padding: 15px 10px;
     border-bottom: 1px solid rgba(100, 100, 100, .3);
     text-align: center;
-  }
+    cursor: pointer;
+}
 
-  #sidebar ul {
+#sidebar ul {
     margin: 0;
     padding: 0;
-  }
+}
 
-  #sidebar ul li:hover{
+#sidebar ul li a:hover{
     font-size: 22px;
     color: #1cc349;
-  }
+}
 
 a button {
     margin-top: 5px;

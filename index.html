@@ -5,17 +5,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/css/indexStyles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-        <title>Document</title>
+        <title>Index Page</title>
     </head>
     <body>
         <header>
-            <nav class="navbar">
-                <div class="sidebar__button --button-navbar">
+            <nav id="navbar">
+                <div class="sidebar__button --button_navbar">
                     <i class="fa-solid fa-bars"></i>
                 </div>
                 <div class="navbar__container">
                     <img src="/img/Logo.png" alt="logoImagen" class="logo">
-                    <h1 id="navbar__title">CleanLyfe</h1>
+                    <h1 class="navbar__title">CleanLyfe</h1>
                 </div> 
                 <a href="#">
                     <button class="navbar__button --login">
@@ -26,23 +26,24 @@
         </header>
         <div id="sidebar">
             <ul>
-                <li>
-                    <span class="sidebar__button --sidebar">&#9776</span>
+                <li class="sidebar__content --sidebar --sidebar_top">
+                    <i class="fa-solid fa-bars sidebar__button --sidebar --top_button"></i>
                 </li>
-                <li>
-                    <a href="index.html">Home</a>
+                <li class="sidebar__content --sidebar_body">
+                    <a class="sidebar__link" href="index.html">Home</a>
                 </li>
-                <li>
-                    <a href="misions.html">Misions</a>
+                <li class="sidebar__content --sidebar_body">
+                    <a class="sidebar__link" href="misions.html">Misions</a>
                 </li>
-                <li>
-                    <a>About</a>
+                <li class="sidebar__content --sidebar_body">
+                    <a class="sidebar__link">About</a>
                 </li>
-                <li>
-                    <a>Contact</a>
+                <li class="sidebar__content --sidebar_body">
+                    <a class="sidebar__link">Contact</a>
                 </li>
             </ul>
         </div>
+        <div class="navbar__colormod"></div>
         <img src="https://img.freepik.com/fotos-premium/gatito-que-sentado-cielo_1293053-6.jpg" alt="">
     </body>
     <script src="/javascript/index.js"></script>

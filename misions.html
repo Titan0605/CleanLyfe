@@ -9,8 +9,8 @@
     </head>
     <body>
         <header>
-            <nav class="navbar">
-                <div class="sidebar__button --button-navbar">
+            <nav id="navbar">
+                <div class="sidebar__button --button_navbar">
                     <i class="fa-solid fa-bars"></i>
                 </div>
                 <div class="navbar__container">
@@ -19,32 +19,31 @@
                 </div> 
                 <div class="">
                     <a href="#">
-                        <button class="navbar__button --user_icon">
-                                <!-- <img src="/img/user_logo2.png" alter="User_icon" class="user__icon"> -->
-                        </button>
+                        <button class="navbar__button --user_icon"></button>
                     </a>
                 </div>
             </nav>
         </header>
         <div id="sidebar">
             <ul>
-                <li>
-                    <span class="sidebar__button --sidebar">&#9776</span>
+                <li class="sidebar__content --sidebar --sidebar_top">
+                    <i class="fa-solid fa-bars sidebar__button --sidebar --top_button"></i>
                 </li>
-                <li>
-                    <a href="index.html">Home</a>
+                <li class="sidebar__content --sidebar_body">
+                    <a class="sidebar__link" href="index.html">Home</a>
                 </li>
-                <li>
-                    <a href="misions.html">Misions</a>
+                <li class="sidebar__content --sidebar_body">
+                    <a class="sidebar__link" href="misions.html">Misions</a>
                 </li>
-                <li>
-                    <a>About</a>
+                <li class="sidebar__content --sidebar_body">
+                    <a class="sidebar__link">About</a>
                 </li>
-                <li>
-                    <a>Contact</a>
+                <li class="sidebar__content --sidebar_body">
+                    <a class="sidebar__link">Contact</a>
                 </li>
             </ul>
         </div>
+        <div class="navbar__colormod"></div>
     </body>
     <script src="/javascript/index.js"></script>
 </html> 

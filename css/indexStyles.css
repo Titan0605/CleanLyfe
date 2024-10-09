@@ -55,6 +55,8 @@ li, a, button {
 }
 
 .logo {
+    position: relative;
+    top: -3px;
     float: left;
     width: 45px;
     height: 45px;
@@ -150,8 +152,7 @@ li, a, button {
     background-image: url(/img/User_icon.png);
     background-size: cover;
     border: 1px hidden;
-    outline: 2px #354F52 solid;
-    box-shadow: 0px 0px 10px black;
+    box-shadow: 0px 0px 10px rgb(51, 50, 50);
 }
 
 .--login:hover {

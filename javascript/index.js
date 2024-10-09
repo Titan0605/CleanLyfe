@@ -1,4 +1,4 @@
-const btn_nav_sidebar = document.querySelector('.--button-navbar');
+const btn_nav_sidebar = document.querySelector('.--button_navbar');
 
 btn_nav_sidebar.addEventListener('click', function () {
   document.getElementById('sidebar').classList.toggle('active');

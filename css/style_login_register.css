@@ -26,6 +26,7 @@ body{
 
 /*The next design will afect only one section in register.html*/
 .register{
+    border-radius: 50px;
     width: 500px;
     height: 580px;
     margin: auto;

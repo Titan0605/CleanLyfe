@@ -11,13 +11,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 </head>
 <body>
-
     <!--I did this section because I wanted to center it-->
-    <section class="back_reg">
+    <section class="back">
         <!--In this button the user can get back to the index page-->
-        <input class="g_back" type="button" name="get_back" value="Take me back">
+        <a href="index.html">
+            <input class="g_back" type="button" name="get_back" value="Take me back">
+        </a>
     </section>
-    
     <section class="register">
         <!--This is the main title on the page-->
         <h5 class="titles">Register</h5>
@@ -39,7 +39,9 @@
         <!--The user will choose his/her birthday-->
         <label for="" class="l_birth">Birthday</label><input class="dates" type="date" name="birthday" value="">
         <!--When the user has finished, the user must push the button to upload every data to the backend-->
-        <a href=""><input class="buttons" type="submit" name="submit_register" value="Register"></a>
+        <a href="">
+            <input class="buttons" type="submit" name="submit_register" value="Register">
+        </a>
     </section>    
     <!--I did this section because I wanted the button to get back the people will be in the top-->
 </body>

@@ -9,26 +9,33 @@
     <link rel="stylesheet" href="css/style_login_register.css">
 </head>
 <body>
-
+    <section class="back">
+        <!--In this button the user can get back to the index page-->
+        <a href="index.html">
+            <input class="g_back" type="button" name="get_back" value="Take me back">
+        </a>
+    </section>
     <!--I did this section because I wanted to center it-->
     <section class="login">
         <!--This is the main title on the page-->
         <h5>Login</h5>
         <!--Here the user can put the name of his/her account-->
-        <input class="controls" type="text" name="user_name" value="" placeholder="User name">
+        <input class="controls" type="text" name="user_name" value="" placeholder="Username">
         <!--And here the user can put his/her password-->
         <input class="controls" type="password" name="password" value="" placeholder="Password">
         <!--With this submit the user will upload his/her data to the backend-->
-        <a href=""><input class="buttons" type="submit" name="Access" value="Login"></a>
+        <a href="">
+            <input class="buttons" type="submit" name="Access" value="Login">
+        </a>
         <!--If the user forgot the password, we will make a page for changing the password in the future-->
-        <p><a href="#">Did you forget your password?</a></p>
+        <p class="bottom__buttons">
+            <a href="#" class="button_forget">Did you forget your password?</a>
+            <div id="register">
+                <p class="register__text">Are you new?</p>
+                <a class="register__link" href="">Register</a>
+            </div>
+        </p>
     </section>
-
     <!--I did this section because I wanted the button to get back the people will be in the top-->
-    <section class="back">
-        <!--In this button the user can get back to the index page-->
-        <input class="g_back" type="button" name="get_back" value="Take me back">
-    </section>
-
 </body>
 </html>

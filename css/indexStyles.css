@@ -76,6 +76,7 @@ li, a, button {
     margin-right: 15px;
     cursor: pointer;
 }
+
 .logo:hover{
     width: 47px;
     height: 47px;

@@ -1,13 +1,11 @@
-const btn_nav_sidebar = document.querySelector('.--button_navbar');
+const btn_nav_sidebar = document.querySelector('.--button_navbar'); /* Function to call a block of html with a class */
 
-btn_nav_sidebar.addEventListener('click', function () {
-  document.getElementById('sidebar').classList.toggle('active');
-  console.log(document.getElementById('sidebar'))
+btn_nav_sidebar.addEventListener('click', function () { /*Funtion to modify the class of the block selected when is clicked*/
+  document.getElementById('sidebar').classList.toggle('active'); /*This specify which class we are going to add or delete*/
 });
 
 const btnsidebar = document.querySelector('.--sidebar');
 
-btnsidebar.addEventListener('click', function () {
-  document.getElementById('sidebar').classList.toggle('active');
-  console.log(document.getElementById('sidebar'))
+btnsidebar.addEventListener('click', function () { /*Funtion to modify the class of the block selected when is clicked*/
+  document.getElementById('sidebar').classList.toggle('active'); /*This specify which class we are going to add or delete*/
 });

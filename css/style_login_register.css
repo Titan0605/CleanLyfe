@@ -18,7 +18,7 @@ body{
     height: 340px;
     background: #373837;
     margin: auto;
-    margin-top: 300px;
+    margin-top: 90px;
     box-shadow: 15px 20px 50px #000;
     padding: 20px 30px;
     color: white;
@@ -30,7 +30,7 @@ body{
     width: 500px;
     height: 580px;
     margin: auto;
-    margin-top: 130px;
+    margin-top: 20px;
     box-shadow: 15px 20px 50px #000;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter:(10px);

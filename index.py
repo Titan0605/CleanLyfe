@@ -1,6 +1,5 @@
 from flask import Flask, render_template,request, redirect, url_for, flash 
 from flask_mysqldb import MySQL
-
 #este es para declarar una varianble tipo flask (es obligatorio)
 app = Flask(__name__)
 

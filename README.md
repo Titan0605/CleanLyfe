@@ -4,6 +4,6 @@
 ---
 
 <p align="center">
-  <img width="300" height="320" src="/img/Logo_mini.png">
+  <img width="300" height="320" src="/static/img/Logo_mini.png">
 </p>
 

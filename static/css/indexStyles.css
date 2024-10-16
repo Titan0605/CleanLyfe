@@ -153,7 +153,7 @@ li, a, button { /*This set the properties for a diffent elements*/
 .--user_icon { /*Modifier that set some properties to a specific button which will be used to show profile*/
     width: 41px;
     height: 41px;
-    background-image: url(/img/User_icon.png);
+    background-image: url(/static/img/User_icon.png);
     background-size: cover;
     border: 1px hidden;
     box-shadow: 0px 0px 10px rgb(51, 50, 50);

@@ -8,7 +8,7 @@
 /*I putted a default font and a background image in login.html and register.html*/
 body{
     font-family: arial;
-    background-image: url(/img/fondo.avif);
+    background-image: url("/static/img/fondo.avif");
 }
 
 /*The next design will afect only one section in login.html*/

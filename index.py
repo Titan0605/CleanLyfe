@@ -114,7 +114,13 @@ def go_missions():
 def go_index():
     if request.method == 'POST' or request.method == 'GET':
         return render_template('index.html')
+
+#This is a method that recieves an error and renderising the error handle page
+def page_not_found(error):
+    return render_template("404.html"), 404
     
 #Esto es para que corra la pagina como un servidor
 if __name__ == "__main__":
+    #This prevents that appears an error of page not found and shows a error handle page
+    app.register_error_handler(404, page_not_found)
     app.run(port= 5000, debug=True)

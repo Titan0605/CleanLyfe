@@ -3,7 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../static/css/indexStyles.css">
+        <link rel="stylesheet" href="../static/css/bases/baseStyle.css">
+        {%block css%}{%endblock%}<!--Here you can add extra css that you need-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
         <title>{% block title%}{% endblock%}</title>
     </head>
@@ -15,7 +16,7 @@
                     <i class="fa-solid fa-bars"></i>
                 </div>
                 <div class="navbar__container">
-                    <img src="{{ url_for('static', filename='img/Logo.png') }}" alt="logoImagen" class="logo"> <!--Imageof the app's logo-->
+                    <img src="{{ url_for('static', filename='img/Logo.png') }}" alt="logoImagen" class="logo"> <!--Image of the app's logo-->
                     <h1 class="navbar__title">CleanLyfe</h1> <!--The title of the app-->
                 </div> 
                 <div class="">
@@ -24,6 +25,7 @@
                     </a>
                 </div>
             </nav>
+            <div class="navbar__colormod"></div><!--The navbar color was changes of site-->
         </header>
         <div id="sidebar"> <!--div that contains sidebar items-->
             <ul>
@@ -44,9 +46,9 @@
                 </li>
             </ul>
         </div>
-        <div class="navbar__colormod"></div>
         
-        {%block body%}{%endblock%}
+        
+        {%block body%}{%endblock%}<!--here you can add the extra code that you need in the body-->
     </body>
     <script src="{{ url_for('static', filename='javascript/index.js') }}"></script> <!--Script to javascript functions-->
 </html> 

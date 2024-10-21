@@ -89,7 +89,7 @@ li, a, button { /*This set the properties for a diffent elements*/
     height: 100%;
     background: #282d32;
     left: -200px;
-    transition: all 250ms linear;
+    transition: all 400ms linear;
 }
   
 #sidebar.active { /*This is a class that will show the sidebar when the sidebar button will get a click*/

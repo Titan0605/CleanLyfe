@@ -58,7 +58,7 @@ This will create a virtual environment called `env`.
 2. Activate the virtual environment:
 
 ```bash
-.\venv\Scripts\activate
+env\Scripts\activate
 ```
 
 * ### Install dependencies

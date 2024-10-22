@@ -1,146 +1,121 @@
 * {
-    text-decoration: none;
-}
-
-body { /*This modify the font type an set de body background color*/
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding: 0;
     margin: 0;
-    background: white;
+    border: 0;
 }
 
-li, a, button { /*This set the properties for a diffent elements*/
-    color: white;
-    font-weight: bold;
-    font-size: 20px;
-    text-decoration: none;
+html {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 14px;
 }
 
-#navbar { /*This are the properties for our navbar*/
+body {
+    z-index: 0;
+}
+
+#navbar {
     z-index: 2;
-    justify-content: space-between;
-    width: 100%;
-    height: 60px;
-    box-sizing: border-box;
-    padding: 10px;
-    inset: 0;
     position: fixed;
+    width: 100%;
+    height: 4.5rem;
+    padding: 0rem 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background: linear-gradient(135deg, rgba(82, 183, 136, 0.8), rgba(22, 138, 173, 0.6));
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
-.navbar__colormod { /*This modify background color of the navbar*/
-    z-index: 1;
+.navbar__container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navbar__sidebar-button {
+    font-size: 2.2rem;
+    color: #fff;
+    cursor: pointer;
+}
+
+.logo {
+    position: relative;
+    width: 3.3rem;
+    height: 3.3rem;
+    top: -0.1rem;
+}
+
+.navbar__title {
+    font-size: 2.2rem;
+    color: #fff;
+}
+
+.navbar_user-profile {
+    text-decoration: none;
+    margin-right: 1.5rem;
+}
+
+.user-icon {
+    background-color: #fff;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+}
+
+.navbar__colormod{
     position: fixed;
-    top: 0;
+    z-index: 1;
     width: 100%;
-    height: 60px;
+    height: 4.5rem;
     background: linear-gradient(135deg, rgba(30, 32, 31, 0.774), rgba(82, 90, 93, 0.551));
 }
 
-.logo { /*With this we set the size and position the logo in our navbar*/
-    position: relative;
-    top: -3px;
-    float: left;
-    width: 45px;
-    height: 45px;
-    margin-right: 15px;    
-}
-
-.logo:hover{ /*When the cursor will position over the logo this propirties will be set on the logo */
-    cursor: pointer;
-}
-
-.navbar__title { /*This modify size text and position of the tittle in the navbar*/
-    float: left;
-    color: white;
-    font-size: 30px;
-    font-weight: bold;
-    margin: 0;
-}
-
-.sidebar__button { /*This are the properties for the sidebar button that is in the navbar*/
-    color: rgb(255, 255, 255);
-    font-size: 30px;
-    width: 30px;
-    cursor: pointer;
-}
-
-.--button_navbar { /*This is a modifier that will modify position in any element where you set it*/
-    float: left;
-    margin-right: 10px;
-}
-
-.user__icon { /*This are the properties setted at icon in the navbar*/
-    bottom: 1px;
-    right: 6px;
-    height: 41px;
-    width: 41px;
-    border-radius: 50px;
-    position: relative;
-}
-
-#sidebar { /*This are the main properties of the sidebar*/
+#sidebar {
     z-index: 2;
+    top: 0rem;
+    display: flex;
+    flex-direction: column;
     position: fixed;
-    top: 0;
-    width: 200px;
-    height: 100%;
     background: #282d32;
-    left: -200px;
+    height: 100%;
+    width: 12rem;
+    min-width: 5rem;
+    left: -12rem;
     transition: all 400ms linear;
 }
-  
+
 #sidebar.active { /*This is a class that will show the sidebar when the sidebar button will get a click*/
     left: 0px;
 }
-  
-#sidebar ul li.sidebar__content { /*This are the properties for all the content in the sidebar*/
+
+.sidebar__content {
+    position: relative; /*This are the properties for all the content in the sidebar*/
     color: rgba(230, 230, 230, .9);
     list-style: none;
-    padding: 20px 10px;
-    border-bottom: 1px solid rgba(93, 90, 90, 0.3);
+    padding: 1.2rem 0rem;
     text-align: center;
     cursor: pointer;
+    border-bottom: 1px solid rgba(93, 90, 90, 0.3);
 }
 
-#sidebar ul { /*To unorderlist, here we set it the margin and padding*/
-    margin: 0;
-    padding: 0;
-}
-
-#sidebar ul li a:hover{ /*When the cursor position is over a button on the sidebar this propierties will take action*/
-    font-size: 21px;
-    color: #1cc349;
-}
-
-#sidebar .sidebar__link { /*This is for expand the action area of the buttons*/
-    padding-inline: 55px;
-    padding-block: 15px;
-}
-
-#sidebar ul li.--sidebar_top { /*This is a modifier to set the color of the top button in the sidebar*/
+.--sidebar__top-color {
     background: linear-gradient(135deg, rgba(82, 183, 136, 0.8), rgba(22, 138, 173, 0.6));
 }
 
-#sidebar ul li.--top_button { /*Modifier that expand the action area of the top button*/
-    padding-inline: 55px;
-    padding-block: 10px;
+.sidebar__button{
+    font-size: 2rem;
 }
 
-.navbar__button { /*This modify the buttons in the navbar*/
-    float: right;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease 0s;
+.sidebar__button-link {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 1rem 3.2rem;
 }
 
-.--user_icon { /*Modifier that set some properties to a specific button which will be used to show profile*/
-    width: 41px;
-    height: 41px;
-    background-image: url(/static/img/User_icon.png);
-    background-size: cover;
-    border: 1px hidden;
-    box-shadow: 0px 0px 10px rgb(51, 50, 50);
+.sidebar__button-link:hover {
+    font-size: 1.4rem;
+    color: #1cc349;
 }

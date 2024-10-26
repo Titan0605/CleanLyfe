@@ -11,7 +11,7 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'cleanlyfe'
-app.config['MYSQL_PORT'] = 3307
+app.config['MYSQL_PORT'] = 3306
 mysql = MySQL(app)
 
 app.secret_key = 'mysecretkey'
@@ -47,7 +47,7 @@ def login_fun():
         if confirmation == 1:
             #El flash es un mensaje que se va a mandar a los html por medio de jinja2
             flash('You have been logged in')
-            return redirect(url_for('go_main_page'))
+            return redirect(url_for('go_cleanlyfe'))
         else:
             flash('The data was wrong')
             return redirect(url_for('go_login'))

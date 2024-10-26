@@ -228,6 +228,7 @@ body {
 }
 
 .sidebar__content {
+    list-style: none;
     height: 2.5rem;
     width: 13rem;
 }

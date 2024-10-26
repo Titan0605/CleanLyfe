@@ -3,50 +3,58 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../static/css/indexStyles.css"> <!--ref to the css-->
+        <link rel="stylesheet" href="/static/css/bases/baseStyle-prueba.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-        <title>Index Page</title>
+        <title>Index-test</title>
     </head>
     <body>
         <!--Section separator-->
-        <!-- <header> -->
+        <header>
             <nav id="navbar"> <!--A nav that storage the navbar to center it and align it to the top -->
-                <div class="sidebar__button --button_navbar"> <!-- Button to open/close sidebar -->
-                    <i class="fa-solid fa-bars navbar__sidebar-button"></i>
-                </div>
                 <div class="navbar__container">
-                    <img src="{{ url_for('static', filename='img/Logo.png') }}" alt="logoImagen" class="logo"> <!--Imageof the app's logo-->
+                    <i class="navbar__sidebar-button fa-solid fa-bars"></i>
+                    <img src="{{ url_for('static', filename='img/Logo.png') }}" alt="logoImagen" class="logo"> <!--Image of the app's logo-->
                     <h1 class="navbar__title">CleanLyfe</h1> <!--The title of the app-->
                 </div> 
-                <a href="{{ url_for('go_login') }}"><!--ref to the login page-->
-                    <button class="navbar__button --login"><!--This is the button that allows you login-->
-                        Login
-                    </button>
-                </a>
+                <section class="navbar__container-buttons">
+                    <div class="navbar__content --disappear_medium">
+                        <a href="" class="button --button_without_border">Features</a>
+                        <a href="" class="button --button_without_border">About</a>
+                        <a href="" class="button --button_without_border">F.A.Q</a>
+                    </div>
+                    <div class="navbar__content --dissapear_on_mobile">
+                        <a href="{{ url_for('go_login') }}" class="button --sign-buttons">Login</a>
+                        <a href="{{ url_for('go_register') }}" class="button --sign-buttons --sign-button__color">Sign Up</a>
+                    </div>
+                </section>
             </nav>
-            <div class="navbar__colormod"></div>
-
+            <div class="navbar__colormod"></div><!--The navbar color was changes of site-->
         </header>
-        <div id="sidebar"> <!--div that contains sidebar items-->
-            <ul>
-                <li class="sidebar__content --sidebar --sidebar_top"> <!-- Button to open/close sidebar -->
-                    <i class="fa-solid fa-bars sidebar__button --sidebar --top_button"></i>
-                </li>
-                <li class="sidebar__content --sidebar_body">
-                    <a class="sidebar__link" href="{{ url_for('go_index') }}">Home</a> <!--ref to the home page-->
-                </li>
-                <li class="sidebar__content --sidebar_body">
-                    <a class="sidebar__link" href="{{ url_for('go_missions') }}">Misions</a> <!--ref to the missions page-->
-                </li>
-                <li class="sidebar__content --sidebar_body">
-                    <a class="sidebar__link">About</a> <!--ref to the about page-->
-                </li>
-                <li class="sidebar__content --sidebar_body">
-                    <a class="sidebar__link" href="#">Contact</a> <!--ref to the contact page-->
-                </li>
-            </ul>
-        </div>
-        <img src="https://img.freepik.com/fotos-premium/gatito-que-sentado-cielo_1293053-6.jpg" alt="">
+        <aside id="sidebar"> <!-- div that contains sidebar items -->
+            <section class="sidebar__container">
+                <div class="sidebar__container-top --sidebar__top-color">
+                    <img src="{{ url_for('static', filename='img/Logo.png') }}" alt="logoImagen" class="logo"> 
+                    <i role="button" class="fa-solid fa-xmark button sidebar__button --button_without_border"></i>
+                </div>
+                <div class="sidebar__container-body">
+                    <ul>
+                        <li class="sidebar__content">
+                            <a role="button" class="sidebar__button-link" href="">Features</a> <!-- ref to the home page -->
+                        </li>
+                        <li class="sidebar__content">
+                            <a role="button" class="sidebar__button-link" href="">About</a> <!-- ref to the missions page -->
+                        </li>
+                        <li role="button" class="sidebar__content">
+                            <a role="button" class="sidebar__button-link" href="">F.A.Q</a> <!-- ref to the about page -->
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <section class="navbar__content --sidebar-position --appear_on_mobile">
+                <a href="{{ url_for('go_login') }}" class="button">Login</a>
+                <a href="{{ url_for('go_register') }}" class="button --sign-button__color">Sign Up</a>
+            </section>
+        </aside>
     </body>
-    <script src="{{ url_for('static', filename='javascript/index.js') }}"></script>
+    <script src="{{ url_for('static', filename='javascript/index.js') }}"></script> <!--Script to javascript functions-->
 </html> 

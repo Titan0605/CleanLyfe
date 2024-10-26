@@ -4,7 +4,7 @@ btn_nav_sidebar.addEventListener('click', function () { /*Funtion to modify the 
   document.getElementById('sidebar').classList.toggle('active'); /*This specify which class we are going to add or delete*/
 });
 
-const btnsidebar = document.querySelector('.--sidebar');
+const btnsidebar = document.querySelector('.sidebar__button');
 
 btnsidebar.addEventListener('click', function () { /*Funtion to modify the class of the block selected when is clicked*/
   document.getElementById('sidebar').classList.toggle('active'); /*This specify which class we are going to add or delete*/

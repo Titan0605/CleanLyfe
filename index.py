@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash 
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mysqldb import MySQL
 
 #este es para declarar una varianble tipo flask (es obligatorio)
@@ -16,17 +16,17 @@ mysql = MySQL(app)
 
 app.secret_key = 'mysecretkey'
 
-#el app route con el / es para que sea la primera pagina en aparecer 
+#el app route con el / es para que sea la primera pagina en aparecer
 @app.route('/')
 def index():
     return render_template('index.html')
-    
+
 #Esto es lo que se va a ejecutar cuando el formulario de login haga el submit, forzosamente es con el metodo POST
 @app.route('/login_fun', methods=['POST'])
 def login_fun():
     #Tenemos que verificar que el metodo requerido es POST para evitar errores
     if request.method == "POST":
-        #Creamos las variables necesarias para verificar el inicio de sesion, el valor se trae desde name del HTML 
+        #Creamos las variables necesarias para verificar el inicio de sesion, el valor se trae desde name del HTML
         user_name = request.form['user_name']
         password = request.form["password"]
         #Esta variable es para confirmar si el password y el user name son iguales a los de la base de datos
@@ -43,7 +43,7 @@ def login_fun():
             if login[4] == user_name and login[6] == password:
                 confirmation = 1
                 break
-        #Si el confirmation es 1 se va a mandar a la funcion de go_main_page que va a renderizar el html cleanlyfe, si es diferente de 1 entonces va a renderizar la misma pagina     
+        #Si el confirmation es 1 se va a mandar a la funcion de go_main_page que va a renderizar el html cleanlyfe, si es diferente de 1 entonces va a renderizar la misma pagina
         if confirmation == 1:
             #El flash es un mensaje que se va a mandar a los html por medio de jinja2
             flash('You have been logged in')
@@ -51,22 +51,22 @@ def login_fun():
         else:
             flash('The data was wrong')
             return redirect(url_for('go_login'))
-        
+
 @app.route('/redirect_reg', methods=['GET'])
 def redirect_reg():
     if request.method == 'GET':
         return redirect(url_for('go_register'))
-        
+
 @app.route('/register_fun', methods=['POST'])
 def register_fun():
-     if request.method == 'POST':
+    if request.method == 'POST':
         email = request.form['email']
         user_name = request.form['usuario']
         password = request.form['password']
         con_password = request.form['con_password']
         first_name = request.form['first_name']
         last_name = request.form['last_name']
-        
+
         if password == con_password:
             cur = mysql.connection.cursor()
             cur.execute('INSERT INTO tusers (id_type_member, first_name, last_name, user_name, user_email, user_password, active, created_at) VALUES (1, %s, %s, %s, %s, %s, 1, NOW())', (first_name, last_name, user_name, email, password))
@@ -76,40 +76,40 @@ def register_fun():
         else:
             flash('The confirm password was not the same')
             return redirect(url_for('go_register'))
-        
-        
-        
+
+
+
 #Esta ruta es para renderizar la pagina de login (el metodo get se obtiene cuando es redireccionado con redirect(url_for()))
 @app.route('/go_login', methods=['GET','POST'])
 def go_login():
     if request.method == 'POST' or request.method == 'GET':
         return render_template('login.html')
- 
-#This route is for opening and renderising the register   
+
+#This route is for opening and renderising the register
 @app.route('/go_register', methods=['GET','POST'])
 def go_register():
     if request.method=='POST' or request.method=='GET':
         return render_template('register.html')
-    
-#Esta ruta es para renderizar la main page 
+
+#Esta ruta es para renderizar la main page
 @app.route('/go_main_page', methods=['GET', 'POST'])
 def go_main_page():
     if request.method == 'GET' or request.method == "POST":
         return render_template('index.html')
-    
-#This route is for opening and renderising the cleanlyfe page  
+
+#This route is for opening and renderising the cleanlyfe page
 @app.route('/go_cleanlyfe', methods=['GET', 'POST'])
 def go_cleanlyfe():
     if request.method == 'POST' or request.method == 'GET':
         return render_template('cleanlyfe.html')
-    
-#This route is for opening and renderising the missions page 
+
+#This route is for opening and renderising the missions page
 @app.route('/go_missions', methods=['GET', 'POST'])
 def go_missions():
     if request.method == 'POST' or request.method == 'GET':
         return render_template('misions.html')
-    
-#This route is for opening and renderising the missions page 
+
+#This route is for opening and renderising the missions page
 @app.route('/go_index', methods=['GET', 'POST'])
 def go_index():
     if request.method == 'POST' or request.method == 'GET':
@@ -118,7 +118,7 @@ def go_index():
 #This is a method that recieves an error and renderising the error handle page
 def page_not_found(error):
     return render_template("404.html"), 404
-    
+
 #Esto es para que corra la pagina como un servidor
 if __name__ == "__main__":
     #This prevents that appears an error of page not found and shows a error handle page

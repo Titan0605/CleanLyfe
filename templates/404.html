@@ -1,12 +1,12 @@
 <!--Path of where is located the base html-->
-{%extends '/bases/base.html'%}
+{%extends '/layouts/base.html'%}
 
 <!--template of the title of the page-->
 {% block title%} Missions {% endblock%}
 
-{%block body%}
+{%block content%}
 <div>
     <h1>Oooops, page not found</h1>
-    <img src="/static/img/Huella.jpg">
+    <img src="{{ url_for('static', filename='img/Logo.png') }}">
 </div>
 {%endblock%}

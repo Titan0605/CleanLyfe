@@ -200,7 +200,7 @@ def rice(kg):
     kg = int(kg)
     
     #To produce one kg of rice, it's necessary 2500 liters of water
-    water_total = kg * 2500
+    water_total = kg * 3000
     
     return water_total, carbon_total
 
@@ -234,6 +234,58 @@ def eggs(pieces):
     #The variables that will be used for calculating are going to be converted in the respective variable
     pieces = float(pieces)
     
-    #To produce one egg, it's necessary 200 liters of water
-    water_total = pieces * 200
+    #To produce one egg, it's necessary 135 liters of water
+    water_total = pieces * 135
     return water_total, carbon_total
+
+def milk(liters):
+    water_total = 0.0
+    carbon_total = 0.0
+    
+    #The variables that will be used for calculating are going to be converted in the respective variable
+    liters = float(liters)
+     #To produce one liter of milk, it's necessary 200 liters of water
+    water_total = liters * 1000
+    return water_total, carbon_total
+
+def beer(liters):
+    water_total = 0.0
+    carbon_total = 0.0
+    
+    #The variables that will be used for calculating are going to be converted in the respective variable
+    liters = float(liters)
+     #To produce one liter of beer, it's necessary 200 liters of water
+    water_total = liters * 300
+    return water_total, carbon_total
+
+def processed_juice(liters):
+    water_total = 0.0
+    carbon_total = 0.0
+    
+    #The variables that will be used for calculating are going to be converted in the respective variable
+    liters = float(liters)
+     #To produce one liter of processed juice, it's necessary 200 liters of water
+    water_total = liters * 850
+    return water_total, carbon_total
+
+def soda(liters):
+    water_total = 0.0
+    carbon_total = 0.0
+    
+    #The variables that will be used for calculating are going to be converted in the respective variable
+    liters = float(liters)
+     #To produce one liter of soda, it's necessary 175 liters of water
+    water_total = liters * 175
+    return water_total, carbon_total
+
+def bread_slices(pieces):
+    water_total = 0
+    carbon_total = 0.0
+    
+    #The variables that will be used for calculating are going to be converted in the respective variable
+    pieces = float(pieces)
+
+    #To produce one slide og bread, it's necessary 40 liters of water
+    water_total = pieces * 40
+    return water_total, carbon_total
+

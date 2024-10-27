@@ -29,6 +29,7 @@ def login_fun():
         #Creamos las variables necesarias para verificar el inicio de sesion, el valor se trae desde name del HTML
         user_name = request.form['user_name']
         password = request.form["password"]
+        user_id = 2
         #Esta variable es para confirmar si el password y el user name son iguales a los de la base de datos
         confirmation = 3
         #Creamos un cursor, que es como un traductor/comunicador entre el backend y la base de datos
@@ -42,12 +43,13 @@ def login_fun():
             #Si los datos son iguales entonces confirmation se va a cambiar a uno
             if login[4] == user_name and login[6] == password:
                 confirmation = 1
+                user_id = login[0]
                 break
         #Si el confirmation es 1 se va a mandar a la funcion de go_main_page que va a renderizar el html cleanlyfe, si es diferente de 1 entonces va a renderizar la misma pagina
         if confirmation == 1:
             #El flash es un mensaje que se va a mandar a los html por medio de jinja2
             flash('You have been logged in')
-            return redirect(url_for('go_cleanlyfe'))
+            return redirect(url_for('go_cleanlyfe', id = user_id))
         else:
             flash('The data was wrong')
             return redirect(url_for('go_login'))
@@ -98,16 +100,24 @@ def go_main_page():
         return render_template('index.html')
 
 #This route is for opening and renderising the cleanlyfe page
-@app.route('/go_cleanlyfe', methods=['GET', 'POST'])
-def go_cleanlyfe():
+@app.route('/go_cleanlyfe/<id>', methods=['GET', 'POST'])
+def go_cleanlyfe(id):
     if request.method == 'POST' or request.method == 'GET':
-        return render_template('cleanlyfe.html')
+        id = int(id)
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT * FROM tusers WHERE id_user = %s', (id,))
+        data = cur.fetchall()
+        return render_template('cleanlyfe.html', user = data[0])
 
 #This route is for opening and renderising the missions page
-@app.route('/go_missions', methods=['GET', 'POST'])
-def go_missions():
+@app.route('/go_missions/<id>', methods=['GET', 'POST'])
+def go_missions(id):
     if request.method == 'POST' or request.method == 'GET':
-        return render_template('misions.html')
+        id = int(id)
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT * FROM tusers WHERE id_user = %s', (id,))
+        data = cur.fetchall()
+        return render_template('misions.html', user = data[0])
 
 #This route is for opening and renderising the missions page
 @app.route('/go_index', methods=['GET', 'POST'])

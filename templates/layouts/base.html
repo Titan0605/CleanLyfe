@@ -19,8 +19,8 @@
                 </div>
                 <section class="navbar__container-buttons">
                     <div class="flex-content --disappear_medium">
-                        <a href="{{ url_for('go_cleanlyfe') }}" class="button --button_without_border">Home</a>
-                        <a href="{{ url_for('go_missions') }}" class="button --button_without_border">Misions</a>
+                        {%block referencee%}{%endblock%}
+                        {%block reference_missions%}{%endblock%}
                     </div>
                     <div class="navbar__user-profile">
                         <a href="#" role="button" class="">
@@ -35,7 +35,7 @@
                     <li class="user-options__content">
                         <section class="user-options__profile">
                             <img src="{{ url_for('static', filename='img/User_icon.png') }}" alt="User" class="user-icon" >
-                            <h1>User</h1>
+                            <h1>{%block user%}{%endblock%}</h1>
                         </section>
                     </li>
                     <li class="user-options__content --button-hover">
@@ -52,8 +52,6 @@
                     </li>
                 </ul>
             </div>
-        </header>
-        <main>
             <aside id="sidebar"> <!-- div that contains sidebar items -->
                 <section class="sidebar__container">
                     <div class="sidebar__container-top --sidebar__top-color">
@@ -66,7 +64,7 @@
                                 <li class="sidebar__user-profile">
                                     <figure class="sidebar__profile">
                                         <img src="{{ url_for('static', filename='img/User_icon.png') }}" alt="User" class="user-icon" >
-                                        <h1>User</h1>
+                                        <h1>{%block usero%}{%endblock%}</h1>
                                     </figure>
                                 </li>
                                 <li class="sidebar__content">
@@ -86,16 +84,19 @@
                         <div class="sidebar__pages-links">
                             <ul>
                                 <li class="sidebar__content">
-                                    <a role="button" class="sidebar__button-link" href="{{ url_for('go_cleanlyfe') }}">Home</a>
+                                    {%block reference%}{%endblock%}
                                 </li>
                                 <li class="sidebar__content">
-                                    <a role="button" class="sidebar__button-link" href="{{ url_for('go_missions') }}">Misions</a>
+                                    {%block referencee_missions%}{%endblock%}
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </section>
             </aside>
+        </header>
+        <main>
+            {% block content %}{% endblock %} <!--Here's going to be all the  own content of each page-->
         </main>
         <footer class="footer">
             <div class="footer__container">
@@ -143,4 +144,5 @@
         </footer>
     </body>
     <script src="{{ url_for('static', filename='javascript/index.js') }}"></script> <!--Script to javascript functions-->
+    {% block script %}{%endblock%} <!--You can add more scripts for javascript if you wish-->
 </html> 

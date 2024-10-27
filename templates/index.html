@@ -3,9 +3,9 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/static/css/bases/baseStyle-prueba.css">
+        <link rel="stylesheet" href="/static/css/bases/baseStyle.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-        <title>Index-test</title>
+        <title>index</title>
     </head>
     <body>
         <!--Section separator-->
@@ -28,7 +28,7 @@
                     </div>
                 </section>
             </nav>
-            <div class="navbar__colormod"></div><!--The navbar color was changes of site-->
+            <!-- <div class="navbar__colormod"></div> The navbar color was changes of site-->
         </header>
         <aside id="sidebar"> <!-- div that contains sidebar items -->
             <section class="sidebar__container">
@@ -50,7 +50,7 @@
                     </ul>
                 </div>
             </section>
-            <section class="navbar__content --sidebar-position --appear_on_mobile">
+            <section class="flex-content --sidebar-position --appear_on_mobile">
                 <a href="{{ url_for('go_login') }}" class="button">Login</a>
                 <a href="{{ url_for('go_register') }}" class="button --sign-button__color">Sign Up</a>
             </section>

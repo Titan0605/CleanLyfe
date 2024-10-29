@@ -386,7 +386,7 @@ main {
     }
 }
 
-@media (400px >= width) {
+@media (425px >= width) {
 
     #sidebar {
         left: 0px;

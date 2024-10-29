@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/test/css/baseStyle-Test.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+        <title>Base-test</title>
+    </head>
+    <body>
+        <!--Section separator-->
+        <header>
+            <nav id="navbar"> <!--A nav that storage the navbar to center it and align it to the top -->
+                <div class="navbar__container">
+                    <i class="navbar__sidebar-button fa-solid fa-bars"></i>
+                    <img src="/static/img/Logo.png" alt="logoImagen" class="logo"> <!--Image of the app's logo-->
+                    <h1 class="navbar__title">CleanLyfe</h1> <!--The title of the app-->
+                </div>
+                <section class="navbar__container-buttons">
+                    <div class="flex-content --disappear_medium">
+                        <a href="" class="button --button_without_border">Home</a>
+                        <a href="" class="button --button_without_border">Misions</a>
+                    </div>
+                    <div class="navbar__user-profile">
+                        <a href="#" role="button" class="">
+                            <img src="/static/img/User_icon.png" alt="User" class="user-icon" >
+                        </a>
+                    </div>
+                </section>
+            </nav>
+            <!-- <div class="navbar__colormod"></div> The navbar color was changes of site--> 
+            <div id="user-options">
+                <ul class="user-options__container">
+                    <li class="user-options__content">
+                        <section class="user-options__profile">
+                            <img src="/static/img/User_icon.png" alt="User" class="user-icon" >
+                            <h1>User</h1>
+                        </section>
+                    </li>
+                    <li class="user-options__content --button-hover">
+                        <a role="button" class="user-options__button">
+                            <i class="fa-solid fa-user"></i>
+                            <p>Your profile</p>
+                        </a>
+                    </li>
+                    <li class="user-options__content --button-hover">
+                        <a role="button" class="user-options__button">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <p>Log out</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </header>
+        <main>
+            <aside id="sidebar"> <!-- div that contains sidebar items -->
+                <section class="sidebar__container">
+                    <div class="sidebar__container-top --sidebar__top-color">
+                        <img src="/static/img/Logo.png" alt="logoImagen" class="logo">
+                        <i role="button" class="fa-solid fa-xmark button sidebar__button --button_without_border"></i>
+                    </div>
+                    <div class="sidebar__container-body">
+                        <div class="sidebar__user-options">
+                            <ul class="sidebar__user-options_container">
+                                <li class="sidebar__user-profile">
+                                    <figure class="sidebar__profile">
+                                        <img src="/static/img/User_icon.png" alt="User" class="user-icon" >
+                                        <h1>User</h1>
+                                    </figure>
+                                </li>
+                                <li class="sidebar__content">
+                                    <a role="button" class="sidebar__button-link">
+                                        <i class="fa-solid fa-user"></i>
+                                        <p>Your profile</p>
+                                    </a>
+                                </li>
+                                <li class="sidebar__content">
+                                    <a role="button" class="sidebar__button-link">
+                                        <i class="fa-solid fa-right-from-bracket"></i>
+                                        <p>Log out</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="sidebar__pages-links">
+                            <ul>
+                                <li class="sidebar__content">
+                                    <a role="button" class="sidebar__button-link" href="">Home</a>
+                                </li>
+                                <li class="sidebar__content">
+                                    <a role="button" class="sidebar__button-link" href="">Misions</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+            </aside>
+        </main>
+        <footer class="footer">
+            <div class="footer__container">
+                <article class="footer__content">
+                    <figure>
+                        <img src="/static/img/Logo.png" alt="logoImagen" class="logo --logo-size">
+                    </figure>
+                    <ul class="footer__links">
+                        <li><a href="" class="button --button_without_border">Features</a></li>
+                        <li><a href="" class="button --button_without_border">About</a></li>
+                        <li><a href="" class="button --button_without_border">Pricing</a></li>
+                        <li><a href="" class="button --button_without_border">F.A.Q</a></li>
+                        <li><a href="" class="button --button_without_border">Help</a></li>
+                        <li><a href="" class="button --button_without_border">Contact</a></li>
+                    </ul>
+                    <section class="footer__copyright flex-content">
+                        <i class="fa-regular fa-copyright"></i>
+                        <p>2024 CleanLyfe. All rights reserved</p>
+                    </section>
+                </article>
+                <section class="footer__content">
+                    <ul class="footer__apps">
+                        <li><h3>Coming soon</h3></li>
+                        <li >
+                            <figure class="footer_app">
+                                <i class="fa-brands fa-apple footer_app-icon"></i>
+                                <div class="footer__app-text">
+                                    <p>Download on the</p>
+                                    <h2>App Store</h2>
+                                </div>
+                            </figure>
+                        </li>
+                        <li >
+                            <figure class="footer_app">
+                                <i class="fa-brands fa-google-play footer_app-icon"></i>
+                                <div class="footer__app-text">
+                                    <p>GET IT ON</p>
+                                    <h2>Google Play</h2>
+                                </div>
+                            </figure>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+        </footer>
+    </body>
+    <script src="/static/javascript/index.js"></script> <!--Script to javascript functions-->
+</html> 

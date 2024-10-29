@@ -37,6 +37,7 @@ li, a, button { /*This set the properties for a diffent elements*/
 .navbar__colormod { /*This modify background color of the navbar*/
     z-index: 1;
     position: fixed;
+    top: 0;
     width: 100%;
     height: 60px;
     background: linear-gradient(135deg, rgba(30, 32, 31, 0.774), rgba(82, 90, 93, 0.551));
@@ -87,6 +88,7 @@ li, a, button { /*This set the properties for a diffent elements*/
 #sidebar { /*This are the main properties of the sidebar*/
     z-index: 2;
     position: fixed;
+    top: 0;
     width: 200px;
     height: 100%;
     background: #282d32;
@@ -162,64 +164,3 @@ li, a, button { /*This set the properties for a diffent elements*/
     height: 32px;
     font-size: 16px;
 }
-
-.huella{
-    height: 480px;
-    width: 2500px;
-    margin-top: 50px;
-    margin-right: 50px;
-}
-
-.text{
-    padding-top: 180px;
-    display: flex;
-    margin-right: 500px;
-    margin-left: 190px;
-    border: 0px solid;
-    width: 80%;
-}
-
-.description{
-    margin-top: 20px;
-    margin-right: 180px;
-    line-height: 1.5;
-}
-
-p{
-    color: #5d5d5d;
-}
-
-h2{
-    font-family: Tahoma;
-    font-weight: bold;
-    color: #06d53e;
-}
-
-dl{
-    color:#5d5d5d ;
-}
-
-/* .nav-container {
-    flex-grow: 1; 
-    display: flex;
-    justify-content: center;
-} */
-
-/* .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-    margin: 0;
-}
-
-.nav-links li {
-    display: inline-block;
-}
-
-.nav-links li a {
-    transition: all 0.3s ease 0s;
-}
-
-.nav-links li a:hover {
-    color: #57cc99;
-} */

@@ -1,0 +1,36 @@
+<!--inheritance of the base html-->
+{% extends 'layouts/base.html' %}
+<!--Renferences to extra css-->
+{%block css%}
+<link rel="stylesheet" href="../static/css/cleanlyfeStyle.css">
+{%endblock%}
+
+<!--title of the page-->
+{% block title%}CleanLyfe{% endblock%}
+{%block referencee%}<a href="{{ url_for('go_cleanlyfe', id=user.0) }}" class="button --button_without_border">Home</a>{%endblock%}
+{%block reference_missions%}<a href="{{ url_for('go_missions', id=user.0) }}" class="button --button_without_border">Missions</a>{%endblock%}
+{%block user%}{{ user.4 }}{%endblock%}
+{%block usero%}{{ user.4 }}{%endblock%}
+{%block reference%}<a href="{{ url_for('go_cleanlyfe', id=user.0) }}" class="button --button_without_border">Home</a>{%endblock%}
+{%block referencee_missions%}<a role="button" class="sidebar__button-link" href="{{ url_for('go_missions', id=user.0) }}">Missions</a>{%endblock%}
+
+<!--Extra code of the page-->
+{%block content%}
+<div class="text">
+    <img class="huella" src="{{ url_for('static', filename='img/Huella.jpg') }}" alt="Imagen de huellas ecologicas">
+    <div class="description">
+        <h2>Nuestros objetivos:</h2>
+        <p>El objetivo es que las personas mentalicen sobre que las acciones diarias de cada uno afectan al medio ambiente y si las personas cambian sus habitos diarios ayuda a cuidar al planeta tierra. Con esto, esta generacion y las futuras generaciones tendran una mejor calidad de vida.</p>
+        <h2>Lo que puedes hacer:</h2>
+        <p>En CleanLyfe tiene muchas herramientas para disminuir la huella ecololiga. Estas herramientas son:</p>
+        <dl>
+            <dt>Medidor</dt>
+                <dd>Para calcular la huella ecologica se necesita meter todos los datos de las acciones diarias.</dd>
+            <dt>Historial</dt>
+                <dd>Tener un historial de todas las semanas que calcules la huella ecologica.</dd>
+            <dt>Consejos</dt>
+                <dd>Al calcular la huella ecologica. Con los resultados calculados, se dara consejos para reducir en donde mas impacto tenga.</dd>
+        </dl>
+    </div>
+</div>
+{%endblock%}

@@ -58,4 +58,5 @@ def vehicleEmission(distance, fuel, fuel_type, cylinders, old):
     
     
 print("alvrrrr")
+#Example os
 vehicleEmission(200, 20, 'gasoline', 6, 2012)

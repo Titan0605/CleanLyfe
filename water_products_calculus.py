@@ -29,11 +29,11 @@ def toilet(times_per_day, toilet_type):
     #there are two standard types of toilet, traditional and water_saving
     match toilet_type:
         case 'traditional_toilet':
-            #Each use spends 6 liters
-            total = times_per_day * 6 * 7
+            #Each use spends 16 liters
+            total = times_per_day * 16 * 7
         case 'water_saving_toilet':
-            #Each use spends 4 liters
-            total = times_per_day * 4 * 7
+            #Each use spends 5 liters
+            total = times_per_day * 5 * 7
             
     return total
 
@@ -146,7 +146,7 @@ def coffe(cups_per_week):
     
     return water_total, carbon_total
 
-def tea (cups_per_week):
+def tea(cups_per_week):
     water_total = 0.0
     carbon_total = 0.0
     
@@ -288,4 +288,3 @@ def bread_slices(pieces):
     #To produce one slide og bread, it's necessary 40 liters of water
     water_total = pieces * 40
     return water_total, carbon_total
-

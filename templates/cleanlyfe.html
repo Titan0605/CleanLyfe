@@ -7,12 +7,12 @@
 
 <!--title of the page-->
 {% block title%}CleanLyfe{% endblock%}
-{%block referencee%}<a href="{{ url_for('go_cleanlyfe', id=user.0) }}" class="button --button_without_border">Home</a>{%endblock%}
-{%block reference_missions%}<a href="{{ url_for('go_missions', id=user.0) }}" class="button --button_without_border">Missions</a>{%endblock%}
-{%block user%}{{ user.4 }}{%endblock%}
-{%block usero%}{{ user.4 }}{%endblock%}
-{%block reference%}<a href="{{ url_for('go_cleanlyfe', id=user.0) }}" class="button --button_without_border">Home</a>{%endblock%}
-{%block referencee_missions%}<a role="button" class="sidebar__button-link" href="{{ url_for('go_missions', id=user.0) }}">Missions</a>{%endblock%}
+{%block referencee%}<a href="{{ url_for('go_cleanlyfe') }}" class="button --button_without_border">Home</a>{%endblock%}
+{%block reference_missions%}<a href="{{ url_for('go_missions') }}" class="button --button_without_border">Missions</a>{%endblock%}
+{%block user%}{{ user }}{%endblock%}
+{%block usero%}{{ user }}{%endblock%}
+{%block reference%}<a href="{{ url_for('go_cleanlyfe') }}" class="button --button_without_border">Home</a>{%endblock%}
+{%block referencee_missions%}<a role="button" class="sidebar__button-link" href="{{ url_for('go_missions') }}">Missions</a>{%endblock%}
 
 <!--Extra code of the page-->
 {%block content%}

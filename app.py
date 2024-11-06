@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_mysqldb import MySQL
 
 #este es para declarar una varianble tipo flask (es obligatorio)
@@ -11,9 +11,8 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'cleanlyfe'
-app.config['MYSQL_PORT'] = 3306
+app.config['MYSQL_PORT'] = 3307
 mysql = MySQL(app)
-
 
 #el app route con el / es para que sea la primera pagina en aparecer
 @app.route('/')
@@ -28,20 +27,26 @@ def login_fun():
         #Creamos las variables necesarias para verificar el inicio de sesion, el valor se trae desde name del HTML
         user_name = request.form['user_name']
         password = request.form["password"]
-        user_id = 0
         #Creamos un cursor, que es como un traductor/comunicador entre el backend y la base de datos
         cur = mysql.connection.cursor()
         #Con el comando execute pides que quieres hacer (CRUD o lo que quieras)
         cur.execute('SELECT * FROM tusers WHERE user_name = %s AND user_password = %s', (user_name, password))
         #El fecthall se hace en los selects para traer todos los datos, se va a traer una lista dentro de otra lista con todos los datos
         data = cur.fetchone()
+
         
         #Si el confirmation es 1 se va a mandar a la funcion de go_main_page que va a renderizar el html cleanlyfe, si es diferente de 1 entonces va a renderizar la misma pagina
         if data:
+            
+            session['user']=user_name
+            session['password']=password
+            session['first_name']= data[2]
+            session['last_name']= data[3]
+            session['email']= data[5]
+            session['id']= data[0]
             #El flash es un mensaje que se va a mandar a los html por medio de jinja2
-            user_id = data[0]
             flash('You have been logged in')
-            return redirect(url_for('go_cleanlyfe', id = user_id))
+            return redirect(url_for('go_cleanlyfe'))
         else:
             flash('The data was wrong')
             return redirect(url_for('go_login'))
@@ -50,12 +55,23 @@ def login_fun():
 def redirect_reg():
     if request.method == 'GET':
         return redirect(url_for('go_register'))
+    
+@app.route('/logout', methods=['GET'])
+def logout():
+    if 'user' in session:
+        session.pop('user', None)
+        session.pop('password', None)
+        session.pop('first_name', None)
+        session.pop('last_name', None)
+        session.pop('email', None)
+        session.pop('id', None)
+        return render_template('index.html')
 
 @app.route('/register_fun', methods=['POST'])
 def register_fun():
     if request.method == 'POST':
         email = request.form['email']
-        user_name = request.form['usuario']
+        user_name = request.form['user']
         password = request.form['password']
         con_password = request.form['con_password']
         first_name = request.form['first_name']
@@ -105,20 +121,24 @@ def go_main_page():
         return render_template('index.html')
 
 #This route is for opening and renderising the cleanlyfe page
-@app.route('/go_cleanlyfe/<id>', methods=['GET', 'POST'])
-def go_cleanlyfe(id):
+@app.route('/go_cleanlyfe', methods=['GET', 'POST'])
+def go_cleanlyfe():
     if request.method == 'POST' or request.method == 'GET':
-        id = int(id)
-        cur = mysql.connection.cursor()
-        cur.execute('SELECT * FROM tusers WHERE id_user = %s', (id,))
-        data = cur.fetchall()
-        return render_template('cleanlyfe.html', user = data[0])
+        
+        if 'user' in session:
+            user = session['user']
+            return render_template('cleanlyfe.html', user = user)
+        
+        return 'You must log in'
 
 #This route is for opening and renderising the missions page
-@app.route('/go_missions/<id>', methods=['GET', 'POST'])
-def go_missions(id):
+@app.route('/go_missions', methods=['GET', 'POST'])
+def go_missions():
     if request.method == 'POST' or request.method == 'GET':
-        id = int(id)
+        
+        if 'id' in session:
+            id = session['id']
+        
         cur = mysql.connection.cursor()
         cur.execute('SELECT * FROM tusers WHERE id_user = %s', (id,))
         data = cur.fetchall()

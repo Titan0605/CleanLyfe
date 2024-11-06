@@ -3,8 +3,6 @@
 
 {% block title%}Profile{% endblock%}
 
-
-
 {% block content %}
     <article class="user-profile__container">
         <div class="user-profile">            
@@ -56,6 +54,7 @@
             <h3 class="namesection">RESIDENTIAL ADDRESS</h3>
 
             <form method="POST">
+                <!---->
                 <input type="text" class="controls" name="street-address" value="" placeholder="Street Address">
                 <br>
                 
@@ -72,6 +71,9 @@
                 <br>
 
                 <input type="text" class="controls" name="country" value="" placeholder="Country">
+                <br>
+
+                <input class="buttons" type="submit" name="submit_update_register" value="Update">
                 <br>
             </form>
         </div>

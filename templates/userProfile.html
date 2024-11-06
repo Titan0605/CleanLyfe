@@ -1,0 +1,35 @@
+<!--inheritance of the base html-->
+{% extends 'layouts/base.html' %}
+<!--Renferences to extra css-->
+{%block css%}
+<link rel="stylesheet" href="../static/css/cleanlyfeStyle.css">
+{%endblock%}
+
+<!--title of the page-->
+{% block title%}CleanLyfe{% endblock%}
+{%block referencee%}<a href="{{ url_for('go_cleanlyfe', id=user.0) }}" class="button --button_without_border">Home</a>{%endblock%}
+{%block reference_missions%}<a href="{{ url_for('go_missions', id=user.0) }}" class="button --button_without_border">Missions</a>{%endblock%}
+{%block user%}{{ user.4 }}{%endblock%}
+{%block usero%}{{ user.4 }}{%endblock%}
+{%block reference%}<a href="{{ url_for('go_cleanlyfe', id=user.0) }}" class="button --button_without_border">Home</a>{%endblock%}
+{%block referencee_missions%}<a role="button" class="sidebar__button-link" href="{{ url_for('go_missions', id=user.0) }}">Missions</a>{%endblock%}
+
+
+{% block content %}
+    <section class="container">
+        <div class="infoprofile">            
+            <h6 class="infoprofile__namesection">User Profile</h6>
+            <div class="profile">
+                <!--This is the user's photo profile-->
+                <img class="profile__imgUser" src="" alt="">
+                <!--This is the username-->
+                <h5 class="profile__username">Username</h5>
+                <!--This is the user's points-->
+                <h6 class="profile__points">Points: 99999</h6>
+                <!--Here the user can change their profile photo-->
+                <input class="profile__selectImg" type="file" name="select_image">
+            </div>
+            
+        </div>         
+    </section>
+{% endblock %}

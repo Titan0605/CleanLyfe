@@ -1,0 +1,36 @@
+
+.huella{
+    height: 480px;
+    width: 2500px;
+    margin-top: 50px;
+    margin-right: 50px;
+}
+
+.text{
+    padding-top: 180px;
+    display: flex;
+    margin-right: 500px;
+    margin-left: 190px;
+    border: 0px solid;
+    width: 80%;
+}
+
+.description{
+    margin-top: 20px;
+    margin-right: 180px;
+    line-height: 1.5;
+}
+
+p{
+    color: #5d5d5d;
+}
+
+h2{
+    font-family: Tahoma;
+    font-weight: bold;
+    color: #06d53e;
+}
+
+dl{
+    color:#5d5d5d ;
+}

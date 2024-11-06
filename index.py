@@ -14,7 +14,6 @@ app.config['MYSQL_DB'] = 'cleanlyfe'
 app.config['MYSQL_PORT'] = 3307
 mysql = MySQL(app)
 
-app.secret_key = 'mysecretkey'
 
 #el app route con el / es para que sea la primera pagina en aparecer 
 @app.route('/')
@@ -29,23 +28,18 @@ def login_fun():
         #Creamos las variables necesarias para verificar el inicio de sesion, el valor se trae desde name del HTML 
         user_name = request.form['user_name']
         password = request.form["password"]
-        #Esta variable es para confirmar si el password y el user name son iguales a los de la base de datos
-        confirmation = 3
+        user_id = 0
         #Creamos un cursor, que es como un traductor/comunicador entre el backend y la base de datos
         cur = mysql.connection.cursor()
         #Con el comando execute pides que quieres hacer (CRUD o lo que quieras)
-        cur.execute('SELECT * FROM tusers')
+        cur.execute('SELECT * FROM tusers WHERE user_name = %s AND user_password = %s', (user_name, password))
         #El fecthall se hace en los selects para traer todos los datos, se va a traer una lista dentro de otra lista con todos los datos
-        data = cur.fetchall()
-        #Este for es para recorrer todas las listas puestas y verificar
-        for login in data:
-            #Si los datos son iguales entonces confirmation se va a cambiar a uno
-            if login[4] == user_name and login[6] == password:
-                confirmation = 1
-                break
-        #Si el confirmation es 1 se va a mandar a la funcion de go_main_page que va a renderizar el html cleanlyfe, si es diferente de 1 entonces va a renderizar la misma pagina     
-        if confirmation == 1:
+        data = cur.fetchone()
+        
+        #Si el confirmation es 1 se va a mandar a la funcion de go_main_page que va a renderizar el html cleanlyfe, si es diferente de 1 entonces va a renderizar la misma pagina
+        if data:
             #El flash es un mensaje que se va a mandar a los html por medio de jinja2
+            user_id = data[0]
             flash('You have been logged in')
             return redirect(url_for('go_main_page'))
         else:
@@ -66,15 +60,28 @@ def register_fun():
         con_password = request.form['con_password']
         first_name = request.form['first_name']
         last_name = request.form['last_name']
+
+        cur = mysql.connection.cursor()
         
-        if password == con_password:
-            cur = mysql.connection.cursor()
-            cur.execute('INSERT INTO tusers (id_type_member, first_name, last_name, user_name, user_email, user_password, active, created_at) VALUES (1, %s, %s, %s, %s, %s, 1, NOW())', (first_name, last_name, user_name, email, password))
-            mysql.connection.commit()
-            flash('You have been registered')
-            return redirect(url_for('go_login'))
+        cur.execute('SELECT * FROM tusers')
+        data = cur.fetchall()
+        
+        for user in data:
+            if user[4] == user_name:
+                flash('That user has already been taken')
+                return redirect(url_for('go_register'))
+        
+        if len(password) >= 8:
+            if password == con_password:
+                cur.execute('INSERT INTO tusers (id_type_member, first_name, last_name, user_name, user_email, user_password, active, created_at) VALUES (1, %s, %s, %s, %s, %s, 1, NOW())', (first_name, last_name, user_name, email, password))
+                mysql.connection.commit()
+                flash('You have been registered')
+                return redirect(url_for('go_login'))
+            else:
+                flash('The confirm password was not the same')
+                return redirect(url_for('go_register'))
         else:
-            flash('The confirm password was not the same')
+            flash('The length of the password can not be less than 8 characters')
             return redirect(url_for('go_register'))
         
         
@@ -118,8 +125,8 @@ def go_index():
 #This is a method that recieves an error and renderising the error handle page
 def page_not_found(error):
     return render_template("404.html"), 404
-    
-#Esto es para que corra la pagina como un servidor
+
+#This is for running the application as a server
 if __name__ == "__main__":
     #This prevents that appears an error of page not found and shows a error handle page
     app.register_error_handler(404, page_not_found)

@@ -49,22 +49,22 @@ main {
     height: 80rem;
     border-radius: 50%;
     top: -45rem;
-    right: 5rem;
+    right: 25rem;
 }
 
 .--top-right {
     width: 60rem;
     height: 60rem;
     border-radius: 50%;
-    top: -30rem;
-    right: -45rem;
+    top: -25rem;
+    right: -35rem;
 }
 
 .--bottom-right {
     width: 60rem;
     height: 60rem;
     border-radius: 50%;
-    right: -45rem;
+    right: -40rem;
     bottom: -15rem;
 }
 
@@ -96,15 +96,24 @@ main {
     background-color: transparent;
 }
 
-.register__container {
+.home-button {
+    padding: 1rem;
+}
+
+.home-button__button {
+    font-size: 1.5rem;
+    color: black;
+}
+
+.register-login__container {
     width: 100%;
     height: 100%;
     position: relative;
 }
 
-.register {
+.register-login {
     position: absolute;
-    top: 50%;
+    top: calc(50% - 2rem);
     left: 50%;
     transform: translate(-50%, -50%);
     width: 35rem;
@@ -119,7 +128,7 @@ main {
     padding: 2rem 0rem 4rem 0rem;
 }
 
-.register__tittle {
+.register-login__tittle {
     width: 100%;
     text-align: center;
     font-size: 1.2rem;
@@ -127,7 +136,7 @@ main {
     border-bottom: 0.3rem rgb(132, 136, 141) solid;
 }
 
-.register__form {
+.register-login__form {
     width: 100%;
 }
 
@@ -164,7 +173,7 @@ main {
     height: 100%;
 }
 
-.register__footer {
+.register-login__footer {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -172,7 +181,7 @@ main {
     gap: 0.5rem;
 }
 
-.--register__button {
+.--register-login__button {
     background-color: rgba(54, 172, 117, 0.9);
     border-radius: 10px;
     display: flex;
@@ -184,22 +193,22 @@ main {
     /* transition: all 0.5s linear; */
 }
 
-.--register__button:hover {
+.--register-login__button:hover {
     color: rgba(255, 255, 255, 1);
     background: linear-gradient(135deg, rgba(82, 183, 136, 0.8), rgba(22, 138, 173, 0.6));
 }
 
-.register__login-redirect {
+.register-login__redirect-button {
     display: flex;
     gap: 0.5rem;
 }
 
-.register__login-button {
+.register-login__link-button {
     text-decoration: none;
     color: rgb(0, 49, 246);
 }
 
-.register__login-button:hover {
+.register-login__link-button:hover {
     text-decoration: underline;
 }
 
@@ -559,7 +568,17 @@ main {
     }
 }
 
+@media (600px >= width) {
+    .register-login {
+        width: 30rem;
+    }
+}
+
 @media (500px >= width){
+    .register-login {
+        width: 26rem;
+    }
+
     .content {
        flex-direction: column;
     }
@@ -578,6 +597,10 @@ main {
 }
 
 @media (400px >= width) {
+    .register-login {
+        width: 23rem;
+    }
+
     #sidebar {
         left: 0px;
         display: none;
@@ -641,16 +664,16 @@ main {
 
 @media (prefers-color-scheme: dark) {
     .gradient-background {
-        background: linear-gradient(180deg, rgb(62, 62, 62) 0%, rgba(3,3,3,1) 78%);
+        background: linear-gradient(180deg, rgb(79, 79, 79) 0%, rgba(3,3,3,1) 100%);
         /* background-image: linear-gradient(180deg, rgba(33, 37, 41, 0.01), rgba(33, 37, 41, 1) 100%), radial-gradient(ellipse at top left, rgba(13, 110, 253, 0.5), transparent 50%), radial-gradient(ellipse at top right, rgba(255, 228, 132, 0.5), transparent 50%), radial-gradient(ellipse at bottom right, rgba(112.520718, 44.062154, 249.437846, 0.5), transparent 50%), radial-gradient(ellipse at bottom left, rgba(214, 51, 132, 0.5), transparent 50%); */
     }
     
     .--down {
-        background-image: radial-gradient( rgba(30, 0, 77,1), transparent 80%);
+        background-image: radial-gradient( rgb(46, 0, 121), transparent 80%);
     }
     
     .--top {
-        background-image: radial-gradient( rgb(23, 23, 23), transparent 200%);
+        background-image: radial-gradient( rgba(40, 132, 89, 0.4), transparent 200%);
     }
     
     .--top-right {
@@ -658,20 +681,24 @@ main {
     }
     
     .--bottom-right {
-        background-image: radial-gradient( rgba(1, 92, 104, 1), transparent 80%);;
+        background-image: radial-gradient( rgba(1, 92, 104, 1), transparent 100%);
     }
     
     .background-top {
         backdrop-filter: blur(215px);
     }
 
-    .register {
+    .home-button__button {
+        color: white;
+    }
+
+    .register-login {
         box-shadow: 15px 20px 50px #000;
         background-color: rgba(217, 217, 217, 0.1);
         color: white;
     }
     
-    .register__tittle {
+    .register-login__tittle {
         border-bottom: 0.3rem rgb(132, 136, 141) solid;
         color: white;
     }
@@ -693,16 +720,16 @@ main {
         color: rgb(162, 164, 167);
     }
     
-    .--register__button {
+    .--register-login__button {
         background-color: rgba(54, 172, 117, 0.4);
     }
     
-    .--register__button:hover {
+    .--register-login__button:hover {
         color: rgba(255, 255, 255, 1);
         background-color: #30363b;
     }
     
-    .register__login-button {
+    .register-login__link-button {
         color: rgb(128, 152, 249);
     }
 }

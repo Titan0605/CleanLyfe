@@ -94,14 +94,10 @@ def go_register():
         return render_template('register.html')
 
 #This route is for opening the user's profile
-@app.route('/go_user_profile/<id>', methods=['GET', 'POST'])
-def go_user_profile(id):
+@app.route('/go_user_profile', methods=['GET', 'POST'])
+def go_user_profile():
     if request.method == 'POST' or request.method == 'GET':
-        id = int(id)
-        cur = mysql.connection.cursor()
-        cur.execute('SELECT * FROM tusers WHERE id_user = %s', (id,))
-        data = cur.fetchall()
-        return render_template('userProfile.html', user = data[0])        
+        return render_template('userProfile.html')   
     
 #Esta ruta es para renderizar la main page
 @app.route('/go_main_page', methods=['GET', 'POST'])

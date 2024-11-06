@@ -71,7 +71,7 @@ def logout():
 def register_fun():
     if request.method == 'POST':
         email = request.form['email']
-        user_name = request.form['user']
+        user_name = request.form['username']
         password = request.form['password']
         con_password = request.form['con_password']
         first_name = request.form['first_name']

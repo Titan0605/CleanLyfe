@@ -11,7 +11,7 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'cleanlyfe'
-app.config['MYSQL_PORT'] = 3307
+app.config['MYSQL_PORT'] = 3306
 mysql = MySQL(app)
 
 #el app route con el / es para que sea la primera pagina en aparecer
@@ -34,7 +34,8 @@ def login_fun():
         #El fecthall se hace en los selects para traer todos los datos, se va a traer una lista dentro de otra lista con todos los datos
         data = cur.fetchone()
 
-        
+        print(user_name)
+        print(password)
         #Si el confirmation es 1 se va a mandar a la funcion de go_main_page que va a renderizar el html cleanlyfe, si es diferente de 1 entonces va a renderizar la misma pagina
         if data:
             
@@ -73,9 +74,7 @@ def register_fun():
         email = request.form['email']
         user_name = request.form['username']
         password = request.form['password']
-        con_password = request.form['con_password']
-        first_name = request.form['first_name']
-        last_name = request.form['last_name']
+        con_password = request.form['confirm-password']        
 
         cur = mysql.connection.cursor()
         
@@ -89,7 +88,7 @@ def register_fun():
         
         if len(password) >= 8:
             if password == con_password:
-                cur.execute('INSERT INTO tusers (id_type_member, first_name, last_name, user_name, user_email, user_password, active, created_at) VALUES (1, %s, %s, %s, %s, %s, 1, NOW())', (first_name, last_name, user_name, email, password))
+                cur.execute('INSERT INTO tusers (id_type_member, user_name, user_email, user_password, active, created_at) VALUES (1, %s, %s, %s, 1, NOW())', (user_name, email, password))
                 mysql.connection.commit()
                 flash('You have been registered')
                 return redirect(url_for('go_login'))

@@ -72,11 +72,9 @@ def logout():
 def register_fun():
     if request.method == 'POST':
         email = request.form['email']
-        user_name = request.form['user']
+        user_name = request.form['username']
         password = request.form['password']
-        con_password = request.form['con_password']
-        first_name = request.form['first_name']
-        last_name = request.form['last_name']
+        con_password = request.form['confirm-password']        
 
         cur = mysql.connection.cursor()
         
@@ -90,7 +88,7 @@ def register_fun():
         
         if len(password) >= 8:
             if password == con_password:
-                cur.execute('INSERT INTO tusers (id_type_member, first_name, last_name, user_name, user_email, user_password, active, created_at) VALUES (1, %s, %s, %s, %s, %s, 1, NOW())', (first_name, last_name, user_name, email, password))
+                cur.execute('INSERT INTO tusers (id_type_member, user_name, user_email, user_password, active, created_at) VALUES (1, %s, %s, %s, 1, NOW())', (user_name, email, password))
                 mysql.connection.commit()
                 flash('You have been registered')
                 return redirect(url_for('go_login'))

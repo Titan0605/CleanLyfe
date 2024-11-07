@@ -194,6 +194,7 @@ main {
 }
 
 .--register-login__button:hover {
+    cursor: pointer;
     color: rgba(255, 255, 255, 1);
     background: linear-gradient(135deg, rgba(82, 183, 136, 0.8), rgba(22, 138, 173, 0.6));
 }

@@ -13,7 +13,7 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'cleanlyfe'
 #YOU MUST CHANGE THE PORT IF ANOTHER PERSON WERE EDITING THE CODE (You have to put your own port of your xampp)
-app.config['MYSQL_PORT'] = 3306
+app.config['MYSQL_PORT'] = 3307
 mysql = MySQL(app)
 
 #el app route con el / es para que sea la primera pagina en aparecer
@@ -67,6 +67,7 @@ def logout():
         session.pop('email', None)
         session.pop('id', None)
         return render_template('index.html')
+    return render_template('index.html')
 
 @app.route('/register_fun', methods=['POST'])
 def register_fun():
@@ -135,7 +136,10 @@ def go_cleanlyfe():
             return render_template('404.html')
         
         user = session['user']
-        return render_template('cleanlyfe.html', user = user)
+        if user == 'invited':
+            return render_template('404.html')
+        else:
+            return render_template('cleanlyfe.html', user = user)
 
 
 #This route is for opening and renderising the missions page
@@ -145,11 +149,11 @@ def go_missions():
 
         if 'id' in session:
             id_user = session['id']
-
-            cur = mysql.connection.cursor()
-            cur.execute('SELECT * FROM tusers WHERE id_user = %s', (id_user,))
-            data = cur.fetchone()
-            return render_template('misions.html', user = data[4])
+            if id_user == 10:
+                return 'You have not logged in yet'
+            else:
+                user_name =session['user']
+                return render_template('misions.html', user = user_name)
         return "You have not logged in yet"
 
 #This route is for opening and renderising the missions page
@@ -178,8 +182,6 @@ def hidric_cal_1():
         shower_type = request.form['shower_type']
         minutes_shower = request.form['minutes_shower']
         shower_times = request.form['shower_times']
-        
-        user_id = 0
 
         total_shower = water_products_calculus.showers(minutes_shower, shower_type, shower_times)
 
@@ -200,8 +202,12 @@ def hidric_cal_1():
         return render_template('cal_hid_1.html')
 
 #This is a method that recieves an error and renderising the error handle page
+@app.route('/page_not_found')
 def page_not_found(error):
-    return render_template("404.html"), 404
+    if 'id' in session:
+        user_id = session['id']
+        user_name = session['user']    
+        return render_template("404.html", id = user_id, user = user_name), 404
 
 #This is for running the application as a server
 if __name__ == "__main__":

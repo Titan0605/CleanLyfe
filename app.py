@@ -11,7 +11,8 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'cleanlyfe'
-app.config['MYSQL_PORT'] = 3306
+#YOU MUST CHANGE THE PORT IF ANOTHER PERSON WERE EDITING THE CODE (You have to put your own port of your xampp)
+app.config['MYSQL_PORT'] = 3307
 mysql = MySQL(app)
 
 #el app route con el / es para que sea la primera pagina en aparecer
@@ -33,9 +34,7 @@ def login_fun():
         cur.execute('SELECT * FROM tusers WHERE user_name = %s AND user_password = %s', (user_name, password))
         #El fecthall se hace en los selects para traer todos los datos, se va a traer una lista dentro de otra lista con todos los datos
         data = cur.fetchone()
-
-        print(user_name)
-        print(password)
+        
         #Si el confirmation es 1 se va a mandar a la funcion de go_main_page que va a renderizar el html cleanlyfe, si es diferente de 1 entonces va a renderizar la misma pagina
         if data:
             
@@ -123,12 +122,14 @@ def go_main_page():
 @app.route('/go_cleanlyfe', methods=['GET', 'POST'])
 def go_cleanlyfe():
     if request.method == 'POST' or request.method == 'GET':
+ 
+        if not 'user' in session:
+            flash('You have not logged in yet')
+            return render_template('404.html')
         
-        if 'user' in session:
-            user = session['user']
-            return render_template('cleanlyfe.html', user = user)
-        
-        return 'You must log in'
+        user = session['user']
+        return render_template('cleanlyfe.html', user = user)
+
 
 #This route is for opening and renderising the missions page
 @app.route('/go_missions', methods=['GET', 'POST'])
@@ -136,12 +137,13 @@ def go_missions():
     if request.method == 'POST' or request.method == 'GET':
         
         if 'id' in session:
-            id = session['id']
-        
-        cur = mysql.connection.cursor()
-        cur.execute('SELECT * FROM tusers WHERE id_user = %s', (id,))
-        data = cur.fetchall()
-        return render_template('misions.html', user = data[0])
+            id_user = session['id']
+
+            cur = mysql.connection.cursor()
+            cur.execute('SELECT * FROM tusers WHERE id_user = %s', (id_user,))
+            data = cur.fetchall()
+            return render_template('misions.html', user = data[0])
+        return "You have not logged in yet"
 
 #This route is for opening and renderising the missions page
 @app.route('/go_index', methods=['GET', 'POST'])

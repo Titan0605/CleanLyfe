@@ -1,0 +1,7 @@
+{%extends '/layouts/base.html'%}
+{%block css%}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/nombre_del_css') }}">
+{%endblock%}
+{% block title%} Water calculator {% endblock%}
+{%block content%}
+{%endblock%}

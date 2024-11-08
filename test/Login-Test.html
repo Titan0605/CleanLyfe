@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/bases/baseStyle.css">
+    <link rel="stylesheet" href="/test/css/baseStyle-Test.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <title>Register</title>
+    <title>Login-Test</title>
 </head>
 <body>
     <div class="gradient-background">
@@ -16,21 +16,17 @@
         <section class="background-top"></section>
     </div>
     <figure class="home-button">
-        <a href="{{ url_for('go_index') }}" class="home-button__button">
+        <a href="Index-Test.html" class="home-button__button">
             <i class="fa-solid fa-house home-button__button-icon"></i>
         </a>
     </figure>
     <article class="register-login__container">
-        <form class="register-login" action="{{ url_for('register_fun') }}" method="POST">
+        <form class="register-login">
             <header class="register-login__tittle">
-                <h1>Register</h1>
+                <h1>Login</h1>
             </header>
             <section class="register-login__form">
                 <div class="input-box">
-                    <div class="input-box__input-container">
-                        <i class="fa-solid fa-user input-box__input-icon"></i>
-                        <input name="username" type="text" value="" placeholder="Username" class="input-box__input">
-                    </div>
                     <div class="input-box__input-container">
                         <i class="fa-solid fa-envelope input-box__input-icon"></i>
                         <input name="email" type="email" value="" placeholder="Email" class="input-box__input">
@@ -39,18 +35,14 @@
                         <i class="fa-solid fa-lock input-box__input-icon"></i>
                         <input name="password" type="password" value="" placeholder="Password" class="input-box__input">
                     </div>
-                    <div class="input-box__input-container">
-                        <i class="fa-solid fa-key input-box__input-icon"></i>
-                        <input name="confirm-password" type="password" value="" placeholder="Confirm password" class="input-box__input">
-                    </div>
                 </div>
             </section>
             <footer class="register-login__footer">
-                <!-- <a role="button" class="button --register-login__button --button_without_border" href="">SIGN UP</a> -->
-                <input class="button --register-login__button --button_without_border" type="submit" name="submit_register" value="Sign Up">
+                <!-- <a role="button" class="button --register-login__button --button_without_border" href="">Login</a> -->
+                <input class="button --register-login__button --button_without_border" type="submit" name="submit_register" value="Login">
                 <section class="register-login__redirect-button">
-                    <p>You have an account?</p>
-                    <a class="register-login__link-button" href="{{ url_for('go_login') }}">Login now</a>
+                    <p>Are you new?</p>
+                    <a class="register-login__link-button" href="Register-test.html">Register now</a>
                 </section>
             </footer>
         </form>

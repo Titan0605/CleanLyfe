@@ -1,0 +1,83 @@
+<!--inheritance of the base html-->
+{% extends 'layouts/base.html' %}
+
+{% block title%}Profile{% endblock%}
+
+{% block content %}
+    <article class="user-profile__container">
+        <div class="user-profile">            
+            <header class="user-profile__header">
+                <h3 class="user-profile__header__namesection">User Profile</h3>
+                <div class="profile">
+                    <!--This is the user's photo profile-->
+                    <figure>
+                        <img class="profile__img-user" src="" alt="">
+                    </figure>
+
+                    <!--This is the username-->
+                    <section class="user-profile__information">
+                        <h4 class="profile__username">Username</h4>
+                        <!--This is the user's points-->
+                        <h5 class="profile__points">Points: 99999</h5>
+
+                        <!--This is the buttons-->
+                        <div class="user-profile__information__buttons">
+                            <!--Button to select the photo-->
+                            <div>
+                                <input class="user-profile__information__buttons__btn-selc-img" type="file" name="select-img">
+                            </div>
+                            <!--Button to delete the photo-->
+                            <div>
+                                <input class="user-profile__information__buttons__btn-del-img" type="file" name="delete-img">
+                            </div>
+                            
+                        </div>
+                        <!--Here the user can change their profile photo-->                        
+                    </section>
+                </div>
+            </header>                           
+        </div>         
+    </article>
+
+    <article class="">
+        <div class="user-information">
+            <!--Name of the section-->
+            <h3 class="namesection">USER INFORMATION</h3>
+
+            <form method="POST">
+                <input class="controls" type="text" name="username" value="" placeholder="Username">
+                <br>
+            </form>    
+        </div>
+        
+        <div class="residenrial-address">
+            <h3 class="namesection">RESIDENTIAL ADDRESS</h3>
+
+            <form method="POST">
+                <!---->
+                <input type="text" class="controls" name="street-address" value="" placeholder="Street Address">
+                <br>
+                
+                <input type="text" class="controls" name="street-address-optional" value="" placeholder="Street Address (Optional)">
+                <br>
+
+                <input type="number" class="controls" name="postal-code" value="" placeholder="Postal Code">
+                <br>
+                
+                <input type="text" class="controls" name="city" value="" placeholder="City">
+                <br>
+
+                <input type="text" class="controls" name="state" value="" placeholder="State" >
+                <br>
+
+                <input type="text" class="controls" name="country" value="" placeholder="Country">
+                <br>
+
+                <input class="buttons" type="submit" name="submit_update_register" value="Update">
+                <br>
+            </form>
+        </div>
+        
+    </article>
+    
+{% endblock %}

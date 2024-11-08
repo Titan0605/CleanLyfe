@@ -8,16 +8,17 @@
 /*I putted a default font and a background image in login.html and register.html*/
 body{
     font-family: arial;
-    background-image: url(/CleanLyfe/img/fondo.avif);
+    background-image: url("/static/img/fondo.avif");
 }
 
 /*The next design will afect only one section in login.html*/
 .login{
+    border-radius: 50px;
     width: 400px;
     height: 340px;
     background: #373837;
     margin: auto;
-    margin-top: 180px;
+    margin-top: 90px;
     box-shadow: 15px 20px 50px #000;
     padding: 20px 30px;
     color: white;
@@ -25,10 +26,11 @@ body{
 
 /*The next design will afect only one section in register.html*/
 .register{
+    border-radius: 50px;
     width: 500px;
     height: 580px;
     margin: auto;
-    margin-top: 130px;
+    margin-top: 20px;
     box-shadow: 15px 20px 50px #000;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter:(10px);
@@ -37,8 +39,7 @@ body{
 
 /*The next design will afect only one section to come back to the index in login.html*/
 .back{
-    margin-top: -514px;
-    margin-left: 5px;
+    margin: 10px;
 }
 
 /*The next design will afect only one section to come back to the index in register.html*/
@@ -82,36 +83,50 @@ body{
 
 /*This design will affect some inputs with the class buttons in login.html and register.html*/
 .buttons{
+    border-radius: 10px;
     width: 100%;
     height: 40px;
     background: #257945;
     border: none;
     color:white;
     margin-bottom: 16px;
+    cursor: pointer;
+}
+
+.buttons:hover {
+    background: linear-gradient(135deg, rgba(82, 183, 136, 0.8), rgba(22, 138, 173, 0.6));
 }
 
 /*This design will affect the button for coming back to the index in login.html and register.html*/
 .g_back{
+    border-radius: 50px;
     width: 110px;
     height: 40px;
     background: #257945;
     border: none;
     color: white;
-    margin-top: 660px;
+    cursor: pointer;
+}
+
+.g_back:hover {
+    background: rgb(97, 97, 97);
+    width: 115px;
+    height: 45px;
+    margin-bottom: -5px;
 }
 
 /*This design will affect the stuff with the tag p in login.html*/
-.login p{
+/* .login p{
     height: 40px;
     text-align: center;
     border-bottom: 1px solid;
-}
+} */
 
 /*This design will affect the tag a in login.html*/
-.login a{
+.login a input{
     color: white;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 /*This design will affect the tag a when the mouse is going over it in login.html*/
@@ -142,4 +157,40 @@ body{
     background-color: #3abe2e;
     text-align: center;
     border-radius: 10px;
+}
+
+.bottom__buttons a {
+    color: #4493f8;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+#register a {
+    margin-left: 5px;
+    color: #4493f8;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+#register a:hover {
+    text-decoration: underline;
+}
+
+.button_forget {
+    margin: 10px;
+    display: block;
+    text-align: center;
+}
+
+#register {
+    text-align: center;
+}
+
+.register__text {
+    display: inline;
+    color: #ffffff;
+}
+
+.register__link {
+    display: inline;
 }

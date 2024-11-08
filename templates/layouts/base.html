@@ -19,8 +19,10 @@
                 </div>
                 <section class="navbar__container-buttons">
                     <div class="flex-content --disappear_medium">
-                        {%block referencee%}{%endblock%}
-                        {%block reference_missions%}{%endblock%}
+                        {% if id != 10%}
+                        <a href="{{ url_for('go_cleanlyfe') }}" class="button --button_without_border">Home</a>
+                        <a href="{{ url_for('go_missions') }}" class="button --button_without_border">Missions</a>
+                        {% endif %}
                     </div>
                     <div class="navbar__user-profile">
                         <a href="#" role="button" class="">
@@ -35,7 +37,7 @@
                     <li class="user-options__content">
                         <section class="user-options__profile">
                             <img src="{{ url_for('static', filename='img/User_icon.png') }}" alt="User" class="user-icon" >
-                            <h1>{%block user%}{%endblock%}</h1>
+                            <h1>{{ user }}</h1>
                         </section>
                     </li>
                     <li class="user-options__content --button-hover">
@@ -64,7 +66,7 @@
                                 <li class="sidebar__user-profile">
                                     <figure class="sidebar__profile">
                                         <img src="{{ url_for('static', filename='img/User_icon.png') }}" alt="User" class="user-icon" >
-                                        <h1>{%block usero%}{%endblock%}</h1>
+                                        <h1>{{ user }}</h1>
                                     </figure>
                                 </li>
                                 <li class="sidebar__content">
@@ -82,14 +84,16 @@
                             </ul>
                         </div>
                         <div class="sidebar__pages-links">
+                            {% if id != 10 %}
                             <ul>
                                 <li class="sidebar__content">
-                                    {%block reference%}{%endblock%}
+                                    <a href="{{ url_for('go_cleanlyfe') }}" class="button --button_without_border">Home</a>
                                 </li>
                                 <li class="sidebar__content">
-                                    {%block referencee_missions%}{%endblock%}
+                                    <a role="button" class="sidebar__button-link" href="{{ url_for('go_missions') }}">Missions</a>
                                 </li>
                             </ul>
+                            {% endif %}
                         </div>
                     </div>
                 </section>

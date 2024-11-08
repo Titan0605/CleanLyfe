@@ -13,7 +13,7 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'cleanlyfe'
 #YOU MUST CHANGE THE PORT IF ANOTHER PERSON WERE EDITING THE CODE (You have to put your own port of your xampp)
-app.config['MYSQL_PORT'] = 3307
+app.config['MYSQL_PORT'] = 3306
 mysql = MySQL(app)
 
 #el app route con el / es para que sea la primera pagina en aparecer
@@ -142,7 +142,7 @@ def go_cleanlyfe():
 @app.route('/go_missions', methods=['GET', 'POST'])
 def go_missions():
     if request.method == 'POST' or request.method == 'GET':
-        
+
         if 'id' in session:
             id_user = session['id']
 
@@ -157,7 +157,7 @@ def go_missions():
 def go_index():
     if request.method == 'POST' or request.method == 'GET':
         return render_template('index.html')
-    
+
 @app.route('/go_hidric_cal', methods=['GET'])
 def go_hidric_cal():
     if request.method == 'GET':
@@ -169,9 +169,9 @@ def go_hidric_cal():
             session['user']='invited'
             user_id = session['id']
             user_name = session['user']
-            
+
         return render_template('cal_hid.html', user = user_name, id = user_id)
-    
+
 @app.route('/hidric_cal_1', methods=['POST'])
 def hidric_cal_1():
     if request.method == 'POST':

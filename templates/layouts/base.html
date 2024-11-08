@@ -22,6 +22,7 @@
                         {% if id != 10%}
                         <a href="{{ url_for('go_cleanlyfe') }}" class="button --button_without_border">Home</a>
                         <a href="{{ url_for('go_missions') }}" class="button --button_without_border">Missions</a>
+                        <a href="{{ url_for('go_hidric_cal') }}" class="button --button_without_border">Calculator</a>
                         {% endif %}
                     </div>
                     <div class="navbar__user-profile">
@@ -31,7 +32,6 @@
                     </div>
                 </section>
             </nav>
-            <!-- <div class="navbar__colormod"></div> The navbar color was changes of site--> 
             <div id="user-options">
                 <ul class="user-options__container">
                     <li class="user-options__content">
@@ -87,10 +87,13 @@
                             {% if id != 10 %}
                             <ul>
                                 <li class="sidebar__content">
-                                    <a href="{{ url_for('go_cleanlyfe') }}" class="button --button_without_border">Home</a>
+                                    <a href="{{ url_for('go_cleanlyfe') }}" class="sidebar__button-link">Home</a>
                                 </li>
                                 <li class="sidebar__content">
                                     <a role="button" class="sidebar__button-link" href="{{ url_for('go_missions') }}">Missions</a>
+                                </li>
+                                <li class="sidebar__content">
+                                    <a role="button" class="sidebar__button-link" href="{{ url_for('go_hidric_cal') }}">Calculator</a>
                                 </li>
                             </ul>
                             {% endif %}
@@ -100,14 +103,18 @@
             </aside>
         </header>
         <main>
+            <div class="gradient-background">
+                <section class="elipse --down"></section>
+                <section class="elipse --top"></section>
+                <section class="elipse --top-right"></section>
+                <section class="elipse --bottom-right"></section>
+                <section class="background-top"></section>
+            </div>
             {% block content %}{% endblock %} <!--Here's going to be all the  own content of each page-->
         </main>
         <footer class="footer">
             <div class="footer__container">
                 <article class="footer__content">
-                    <figure>
-                        <img src="{{ url_for('static', filename='img/Logo.png') }}" alt="logoImagen" class="logo --logo-size">
-                    </figure>
                     <ul class="footer__links">
                         <li><a href="" class="button --button_without_border">Features</a></li>
                         <li><a href="" class="button --button_without_border">About</a></li>
@@ -121,29 +128,6 @@
                         <p>2024 CleanLyfe. All rights reserved</p>
                     </section>
                 </article>
-                <section class="footer__content">
-                    <ul class="footer__apps">
-                        <li><h3>Coming soon</h3></li>
-                        <li >
-                            <figure class="footer_app">
-                                <i class="fa-brands fa-apple footer_app-icon"></i>
-                                <div class="footer__app-text">
-                                    <p>Download on the</p>
-                                    <h2>App Store</h2>
-                                </div>
-                            </figure>
-                        </li>
-                        <li >
-                            <figure class="footer_app">
-                                <i class="fa-brands fa-google-play footer_app-icon"></i>
-                                <div class="footer__app-text">
-                                    <p>GET IT ON</p>
-                                    <h2>Google Play</h2>
-                                </div>
-                            </figure>
-                        </li>
-                    </ul>
-                </section>
             </div>
         </footer>
     </body>

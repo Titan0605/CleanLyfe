@@ -1,9 +1,86 @@
-<!---->
+<!--Values
+-shower_type
+-shower_times
+-minutes_shower
+-toilet_type
+-bathroom_times
+-->
 {%extends '/layouts/base.html'%}
 {%block css%}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/nombre_del_css') }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Itim&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cal_hidStyle.css') }}">
 {%endblock%}
 {% block title%} Water calculator {% endblock%}
 {%block content%}
-div.
+<main class="rectangulo">
+
+    <section class="container-1">
+            
+        <h1 class="title">Shower</h1>
+
+        <h1>What type of shower do you have?</h1>
+        <form>
+
+            <div>
+                <input type="radio" name="shower_type" id="shower1" value="Tradicional_shower">
+                <label for="type1">Tradicional shower</label>
+            </div>
+
+            <div>
+                <input type="radio" name="shower_type" id="shower2" value="water-saving shower">
+                <label for="type2">Water-Saving shower</label>
+            </div>
+
+            <div>
+                <input type="radio" name="shower_type" id="shower3" value="bathtud">
+                <label for="type3">Bathtud</label>
+            </div>
+
+        </form>
+
+        <h1>How many time do you go to the bathroom?</h1>
+        <select name="shower_times">
+            {% for i in range(1, 7) %}
+                <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </select>
+
+        <h1>How many minutes do you take a shower?</h1>
+        <select name="minutes_shower">
+            {% for i in range(1, 31) %}
+                <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+        </select>
+
+    </section>
+
+
+
+    <section class="container-2">
+
+        <h1 class="title-2">Toilet</h1>
+
+        <h1>What type of toilet do you have?</h1>
+        <div>
+            <input type="radio" name="toilet_type" id="toilet-1" value="tradicional_toilet">
+            <label for="toilet-1">Tradicional toilet</label>
+        </div>
+
+        <div>
+            <input type="radio" name="toilet_type" id="toilet-2" value="water-saving Toilet">
+            <label for="toilet-2">Water-Saving toilet</label>
+        </div>
+
+        <h1>How many times do you go to the bathroom a day?</h1>
+        <select name="bathroom_times">
+            {% for i in range(1, 7) %}
+                <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+
+    </section>
+    
+
+</main>
 {%endblock%}

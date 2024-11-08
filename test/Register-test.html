@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/bases/baseStyle.css">
+    <link rel="stylesheet" href="/test/css/baseStyle-Test.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <title>Register</title>
+    <title>Register-Test</title>
 </head>
 <body>
     <div class="gradient-background">
@@ -16,12 +16,12 @@
         <section class="background-top"></section>
     </div>
     <figure class="home-button">
-        <a href="{{ url_for('go_index') }}" class="home-button__button">
+        <a href="Index-Test.html" class="home-button__button">
             <i class="fa-solid fa-house home-button__button-icon"></i>
         </a>
     </figure>
     <article class="register-login__container">
-        <form class="register-login" action="{{ url_for('register_fun') }}" method="POST">
+        <form class="register-login">
             <header class="register-login__tittle">
                 <h1>Register</h1>
             </header>
@@ -50,7 +50,7 @@
                 <input class="button --register-login__button --button_without_border" type="submit" name="submit_register" value="Sign Up">
                 <section class="register-login__redirect-button">
                     <p>You have an account?</p>
-                    <a class="register-login__link-button" href="{{ url_for('go_login') }}">Login now</a>
+                    <a class="register-login__link-button" href="Login-Test.html">Login now</a>
                 </section>
             </footer>
         </form>

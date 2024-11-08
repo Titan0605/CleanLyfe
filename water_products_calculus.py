@@ -139,7 +139,7 @@ def coffe(cups_per_week):
     
     #The variables that will be used for calculating are going to be converted in a float variable
     cups_per_week = float(cups_per_week)
-    
+
     #each cup of coffe uses 7 mg aprox of coffe, and to make 1 kg of coffe is necessary 21000 liters of water, it means that one cup needs 140 literls plus the water promedium in a cup (0.24)
     water_total = cups_per_week * (140 + 0.24)
     

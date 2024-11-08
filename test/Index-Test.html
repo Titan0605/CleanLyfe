@@ -1,106 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/test/css/baseStyle-Test.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-        <title>Index-test</title>
-    </head>
-    <body>
-        <!--Section separator-->
-        <header>
-            <nav id="navbar"> <!--A nav that storage the navbar to center it and align it to the top -->
-                <div class="navbar__container">
-                    <i class="navbar__sidebar-button fa-solid fa-bars"></i>
-                    <img src="/static/img/Logo.png" alt="logoImagen" class="logo"> <!--Image of the app's logo-->
-                    <h1 class="navbar__title">CleanLyfe</h1> <!--The title of the app-->
-                </div>
-                <section class="navbar__container-buttons">
-                    <div class="flex-content --disappear_medium">
-                        <a href="" class="button --button_without_border">Features</a>
-                        <a href="" class="button --button_without_border">About</a>
-                        <a href="" class="button --button_without_border">F.A.Q</a>
-                    </div>
-                    <div class="flex-content --dissapear_on_mobile">
-                        <a href="/templates/login.html" class="button --sign-buttons">Login</a>
-                        <a href="/templates/register.html" class="button --sign-buttons --sign-button__color">Sign Up</a>
-                    </div>
-                </section>
-            </nav>
-                <!-- <div class="navbar__colormod"></div> The navbar color was changes of site--> 
-        </header>
-        <main>
-            <aside id="sidebar"> <!-- div that contains sidebar items -->
-                <section class="sidebar__container">
-                    <div class="sidebar__container-top --sidebar__top-color">
-                        <img src="/static/img/Logo.png" alt="logoImagen" class="logo">
-                        <i role="button" class="fa-solid fa-xmark button sidebar__button --button_without_border"></i>
-                    </div>
-                    <div class="sidebar__container-body">
-                        <ul>
-                            <li class="sidebar__content">
-                                <a role="button" class="sidebar__button-link" href="">Features</a>
-                            </li>
-                            <li class="sidebar__content">
-                                <a role="button" class="sidebar__button-link" href="">About</a>
-                            </li>
-                            <li role="button" class="sidebar__content">
-                                <a role="button" class="sidebar__button-link" href="">F.A.Q</a>
-                            </li>
-                        </ul>
-                    </div>
-                </section>
-                <section class="flex-content --sidebar-position --appear_on_mobile">
-                    <a href="" class="button">Login</a>
-                    <a href="" class="button --sign-button__color">Sign Up</a>
-                </section>
-            </aside>
-        </main>
-        <footer class="footer">
-            <div class="footer__container">
-                <article class="footer__content">
-                    <figure>
-                        <img src="/static/img/Logo.png" alt="logoImagen" class="logo --logo-size">
-                    </figure>
-                    <ul class="footer__links">
-                        <li><a href="" class="button --button_without_border">Features</a></li>
-                        <li><a href="" class="button --button_without_border">About</a></li>
-                        <li><a href="" class="button --button_without_border">Pricing</a></li>
-                        <li><a href="" class="button --button_without_border">F.A.Q</a></li>
-                        <li><a href="" class="button --button_without_border">Help</a></li>
-                        <li><a href="" class="button --button_without_border">Contact</a></li>
-                    </ul>
-                    <section class="footer__copyright flex-content">
-                        <i class="fa-regular fa-copyright"></i>
-                        <p>2024 CleanLyfe. All rights reserved</p>
-                    </section>
-                </article>
-                <section class="footer__content">
-                    <ul class="footer__apps">
-                        <li><h3>Coming soon</h3></li>
-                        <li >
-                            <figure class="footer_app">
-                                <i class="fa-brands fa-apple footer_app-icon"></i>
-                                <div class="footer__app-text">
-                                    <p>Download on the</p>
-                                    <h2>App Store</h2>
-                                </div>
-                            </figure>
-                        </li>
-                        <li >
-                            <figure class="footer_app">
-                                <i class="fa-brands fa-google-play footer_app-icon"></i>
-                                <div class="footer__app-text">
-                                    <p>GET IT ON</p>
-                                    <h2>Google Play</h2>
-                                </div>
-                            </figure>
-                        </li>
-                    </ul>
-                </section>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/test/css/baseStyle-Test.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <title>Index-Test</title>
+</head>
+<body>
+    <header>
+        <nav id="navbar">
+            <div class="navbar__container">
+                <i class="navbar__sidebar-button fa-solid fa-bars"></i>
+                <img src="/static/img/Logo_mini.png" alt="logoImagen" class="logo">
+                <h1 class="navbar__title">CleanLyfe</h1>
             </div>
-        </footer>
-    </body>
-    <script src="/static/javascript/index.js"></script> <!--Script to javascript functions-->
-</html> 
+            <section class="navbar__container-buttons">
+                <div class="flex-content --disappear_medium">
+                    <a href="" class="button --button_without_border">Features</a>
+                    <a href="" class="button --button_without_border">About</a>
+                    <a href="" class="button --button_without_border">Calculator</a>
+                </div>
+                <div class="flex-content --dissapear_on_mobile">
+                    <a href="Login-Test.html" class="button --sign-buttons">Login</a>
+                    <a href="Register-test.html" class="button --sign-buttons --sign-button__color">Sign Up</a>
+                </div>
+            </section>
+        </nav>
+    </header>
+    <main>
+        <div class="gradient-background">
+            <section class="elipse --down"></section>
+            <section class="elipse --top"></section>
+            <section class="elipse --top-right"></section>
+            <section class="elipse --bottom-right"></section>
+            <section class="background-top"></section>
+        </div>
+        <aside id="sidebar"> <!-- div that contains sidebar items -->
+            <section class="sidebar__container">
+                <div class="sidebar__container-top --sidebar__top-color">
+                    <img src="/static/img/Logo_mini.png" alt="logoImagen" class="logo">
+                    <i role="button" class="fa-solid fa-xmark button sidebar__button --button_without_border"></i>
+                </div>
+                <div class="sidebar__container-body">
+                    <ul>
+                        <li class="sidebar__content">
+                            <a role="button" class="sidebar__button-link" href="">Features</a>
+                        </li>
+                        <li class="sidebar__content">
+                            <a role="button" class="sidebar__button-link" href="">About</a>
+                        </li>
+                        <li role="button" class="sidebar__content">
+                            <a role="button" class="sidebar__button-link" href="">Calculator</a>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <section class="flex-content --sidebar-position --appear_on_mobile">
+                <a href="" class="button">Login</a>
+                <a href="" class="button --sign-button__color">Sign Up</a>
+            </section>
+        </aside>
+    </main>
+    <footer class="footer">
+        <div class="footer__container">
+            <article class="footer__content">
+                <!-- <figure>
+                    <img src="/static/img/Logo_mini.png" alt="logoImagen" class="logo --logo-size">
+                </figure> -->
+                <ul class="footer__links">
+                    <li><a href="" class="button --button_without_border">Features</a></li>
+                    <li><a href="" class="button --button_without_border">About</a></li>
+                    <li><a href="" class="button --button_without_border">Pricing</a></li>
+                    <li><a href="" class="button --button_without_border">F.A.Q</a></li>
+                    <li><a href="" class="button --button_without_border">Help</a></li>
+                    <li><a href="" class="button --button_without_border">Contact</a></li>
+                </ul>
+                <section class="footer__copyright flex-content">
+                    <i class="fa-regular fa-copyright"></i>
+                    <p>2024 CleanLyfe. All rights reserved</p>
+                </section>
+            </article>
+            <!-- <section class="footer__content">
+                <ul class="footer__apps">
+                    <li><h3>Coming soon</h3></li>
+                    <li >
+                        <figure class="footer_app">
+                            <i class="fa-brands fa-apple footer_app-icon"></i>
+                            <div class="footer__app-text">
+                                <p>Download on the</p>
+                                <h2>App Store</h2>
+                            </div>
+                        </figure>
+                    </li>
+                    <li >
+                        <figure class="footer_app">
+                            <i class="fa-brands fa-google-play footer_app-icon"></i>
+                            <div class="footer__app-text">
+                                <p>GET IT ON</p>
+                                <h2>Google Play</h2>
+                            </div>
+                        </figure>
+                    </li>
+                </ul>
+            </section> -->
+        </div>
+    </footer>
+</body>
+<script src="/static/javascript/index.js"></script>
+</body>
+</html>

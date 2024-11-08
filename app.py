@@ -142,8 +142,8 @@ def go_missions():
 
             cur = mysql.connection.cursor()
             cur.execute('SELECT * FROM tusers WHERE id_user = %s', (id_user,))
-            data = cur.fetchall()
-            return render_template('misions.html', user = data[0])
+            data = cur.fetchone()
+            return render_template('misions.html', user = data[4])
         return "You have not logged in yet"
 
 #This route is for opening and renderising the missions page
@@ -155,7 +155,16 @@ def go_index():
 @app.route('/go_hidric_cal', methods=['GET'])
 def go_hidric_cal():
     if request.method == 'GET':
-        return render_template('cal_hid.html')
+        if 'id' in session:
+            user_name = session['user']
+            user_id = session['id']
+        else:
+            session['id']= int(10)
+            session['user']='invited'
+            user_id = session['id']
+            user_name = session['user']
+            
+        return render_template('cal_hid.html', user = user_name, id = user_id)
     
 @app.route('/hidric_cal_1', methods=['POST'])
 def hidric_cal_1():
@@ -163,6 +172,8 @@ def hidric_cal_1():
         shower_type = request.form['shower_type']
         minutes_shower = request.form['minutes_shower']
         shower_times = request.form['shower_times']
+        
+        user_id = 0
 
         total_shower = water_products_calculus.showers(minutes_shower, shower_type, shower_times)
 
@@ -170,6 +181,15 @@ def hidric_cal_1():
         bathroom_times = request.form['bathroom_times']
 
         total_toilet = water_products_calculus.toilet(bathroom_times,toilet_type)
+        
+        if 'id' in session:
+            id_user = session['id']
+
+        
+        cur = mysql.connection.cursor()
+        
+        cur.execute('CALL prd_calc_hidric_begin (%s, %s, %s)', (id_user, total_shower, total_toilet))
+        cur.commit()
 
         return render_template('cal_hid_1.html')
 

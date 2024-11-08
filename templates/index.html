@@ -31,6 +31,13 @@
                 <!-- <div class="navbar__colormod"></div> The navbar color was changes of site--> 
         </header>
         <main>
+            <div class="gradient-background">
+                <section class="elipse --down"></section>
+                <section class="elipse --top"></section>
+                <section class="elipse --top-right"></section>
+                <section class="elipse --bottom-right"></section>
+                <section class="background-top"></section>
+            </div>
             <aside id="sidebar"> <!-- div that contains sidebar items -->
                 <section class="sidebar__container">
                     <div class="sidebar__container-top --sidebar__top-color">
@@ -46,7 +53,7 @@
                                 <a role="button" class="sidebar__button-link" href="">About</a>
                             </li>
                             <li role="button" class="sidebar__content">
-                                <a role="button" class="sidebar__button-link" href="">F.A.Q</a>
+                                <a role="button" class="sidebar__button-link" href="{{ url_for('go_hidric_cal') }}">Calculator</a>
                             </li>
                         </ul>
                     </div>
@@ -60,9 +67,6 @@
         <footer class="footer">
             <div class="footer__container">
                 <article class="footer__content">
-                    <figure>
-                        <img src="{{ url_for('static', filename='img/Logo.png') }}" alt="logoImagen" class="logo --logo-size">
-                    </figure>
                     <ul class="footer__links">
                         <li><a href="" class="button --button_without_border">Features</a></li>
                         <li><a href="" class="button --button_without_border">About</a></li>
@@ -76,29 +80,6 @@
                         <p>2024 CleanLyfe. All rights reserved</p>
                     </section>
                 </article>
-                <section class="footer__content">
-                    <ul class="footer__apps">
-                        <li><h3>Coming soon</h3></li>
-                        <li >
-                            <figure class="footer_app">
-                                <i class="fa-brands fa-apple footer_app-icon"></i>
-                                <div class="footer__app-text">
-                                    <p>Download on the</p>
-                                    <h2>App Store</h2>
-                                </div>
-                            </figure>
-                        </li>
-                        <li >
-                            <figure class="footer_app">
-                                <i class="fa-brands fa-google-play footer_app-icon"></i>
-                                <div class="footer__app-text">
-                                    <p>GET IT ON</p>
-                                    <h2>Google Play</h2>
-                                </div>
-                            </figure>
-                        </li>
-                    </ul>
-                </section>
             </div>
         </footer>
     </body>

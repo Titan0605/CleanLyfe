@@ -475,45 +475,13 @@ main {
     flex-wrap: wrap;
 }
 
-.--logo-size {
-    margin-left: 1rem;
-}
-
 .footer__copyright {
     color: #a3a5a4;
     text-align: center;
     padding-left: 1rem;
 }
 
-.footer__apps {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    width: 9rem;
-}
-
-.footer_app {
-    color: #a3a5a4;
-    border:0.1rem #fff solid;
-    border-radius: 10px;
-    padding: 0.5rem;
-    height: 3.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-}
-
-.footer_app-icon {
-    font-size: 2rem;
-}
-
-.footer__app-text {
-    font-size: 0.6rem;
-    display: block;
-}
-
-.content {
+.content { /*Starting here is css code to give style to Home page*/
     display: flex;
     align-items: center;
     padding: 2rem;
@@ -640,9 +608,6 @@ main {
         display: flex;
     }
 
-    .footer__content {
-        padding-inline: 1rem;
-    }
 }
 
 @media (400px >= width) {
@@ -686,18 +651,8 @@ main {
         gap: 1rem;
     }
 
-    .--logo-size {
-        margin: 0rem;
-        width: 5rem;
-        height: 5rem;
-    }
-
     .footer__copyright {
         padding-left: 0rem;
-    }
-
-    .footer__apps {
-        align-items: center;
     }
 
     .sidebar__user-profile {

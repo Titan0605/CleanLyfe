@@ -4,12 +4,6 @@
 
 <!--title of the page-->
 {% block title%}CleanLyfe{% endblock%}
-{%block referencee%}<a href="{{ url_for('go_cleanlyfe') }}" class="button --button_without_border">Home</a>{%endblock%}
-{%block reference_missions%}<a href="{{ url_for('go_missions') }}" class="button --button_without_border">Missions</a>{%endblock%}
-{%block user%}{{ user }}{%endblock%}
-{%block usero%}{{ user }}{%endblock%}
-{%block reference%}<a href="{{ url_for('go_cleanlyfe') }}" class="button --button_without_border">Home</a>{%endblock%}
-{%block referencee_missions%}<a role="button" class="sidebar__button-link" href="{{ url_for('go_missions') }}">Missions</a>{%endblock%}
 
 <!--Extra code of the page-->
 {%block content%}
@@ -25,15 +19,15 @@
             <p>En CleanLyfe tiene muchas herramientas para disminuir la huella ecololiga. Estas herramientas son:</p>
             <ul class="content__list">
                 <li class="content__list-parts">
-                    <h4>Medidor</h4>
+                    <h4 class="content__subtittle">Medidor</h4>
                     <p class="content__paragraph">Para calcular la huella ecologica se necesita meter todos los datos de las acciones diarias.</p>
                 </li>
                 <li class="content__list-parts">
-                    <h4>Historial</h4>
+                    <h4 class="content__subtittle">Historial</h4>
                     <p class="content__paragraph">Tener un historial de todas las semanas que calcules la huella ecologica.</p>
                 </li>
                 <li class="content__list-parts">
-                    <h4>Consejos</h4>
+                    <h4 class="content__subtittle">Consejos</h4>
                     <p class="content__paragraph">Al calcular la huella ecologica. Con los resultados calculados, se dara consejos para reducir en donde mas impacto tenga.</p>
                 </li>
             </ul>

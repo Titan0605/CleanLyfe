@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_mysqldb import MySQL
+import water_products_calculus
 
 #este es para declarar una varianble tipo flask (es obligatorio)
 app = Flask(__name__)
@@ -11,7 +12,8 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'cleanlyfe'
-app.config['MYSQL_PORT'] = 3307
+#YOU MUST CHANGE THE PORT IF ANOTHER PERSON WERE EDITING THE CODE (You have to put your own port of your xampp)
+app.config['MYSQL_PORT'] = 3306
 mysql = MySQL(app)
 
 #el app route con el / es para que sea la primera pagina en aparecer
@@ -33,7 +35,6 @@ def login_fun():
         cur.execute('SELECT * FROM tusers WHERE user_name = %s AND user_password = %s', (user_name, password))
         #El fecthall se hace en los selects para traer todos los datos, se va a traer una lista dentro de otra lista con todos los datos
         data = cur.fetchone()
-
         
         #Si el confirmation es 1 se va a mandar a la funcion de go_main_page que va a renderizar el html cleanlyfe, si es diferente de 1 entonces va a renderizar la misma pagina
         if data:
@@ -71,11 +72,9 @@ def logout():
 def register_fun():
     if request.method == 'POST':
         email = request.form['email']
-        user_name = request.form['user']
+        user_name = request.form['username']
         password = request.form['password']
-        con_password = request.form['con_password']
-        first_name = request.form['first_name']
-        last_name = request.form['last_name']
+        con_password = request.form['confirm-password']        
 
         cur = mysql.connection.cursor()
         
@@ -89,7 +88,7 @@ def register_fun():
         
         if len(password) >= 8:
             if password == con_password:
-                cur.execute('INSERT INTO tusers (id_type_member, first_name, last_name, user_name, user_email, user_password, active, created_at) VALUES (1, %s, %s, %s, %s, %s, 1, NOW())', (first_name, last_name, user_name, email, password))
+                cur.execute('INSERT INTO tusers (id_type_member, user_name, user_email, user_password, active, created_at) VALUES (1, %s, %s, %s, 1, NOW())', (user_name, email, password))
                 mysql.connection.commit()
                 flash('You have been registered')
                 return redirect(url_for('go_login'))
@@ -130,31 +129,75 @@ def go_main_page():
 @app.route('/go_cleanlyfe', methods=['GET', 'POST'])
 def go_cleanlyfe():
     if request.method == 'POST' or request.method == 'GET':
+ 
+        if not 'user' in session:
+            flash('You have not logged in yet')
+            return render_template('404.html')
         
-        if 'user' in session:
-            user = session['user']
-            return render_template('cleanlyfe.html', user = user)
-        
-        return 'You must log in'
+        user = session['user']
+        return render_template('cleanlyfe.html', user = user)
+
 
 #This route is for opening and renderising the missions page
 @app.route('/go_missions', methods=['GET', 'POST'])
 def go_missions():
     if request.method == 'POST' or request.method == 'GET':
-        
+
         if 'id' in session:
-            id = session['id']
-        
-        cur = mysql.connection.cursor()
-        cur.execute('SELECT * FROM tusers WHERE id_user = %s', (id,))
-        data = cur.fetchall()
-        return render_template('misions.html', user = data[0])
+            id_user = session['id']
+
+            cur = mysql.connection.cursor()
+            cur.execute('SELECT * FROM tusers WHERE id_user = %s', (id_user,))
+            data = cur.fetchone()
+            return render_template('misions.html', user = data[4])
+        return "You have not logged in yet"
 
 #This route is for opening and renderising the missions page
 @app.route('/go_index', methods=['GET', 'POST'])
 def go_index():
     if request.method == 'POST' or request.method == 'GET':
         return render_template('index.html')
+
+@app.route('/go_hidric_cal', methods=['GET'])
+def go_hidric_cal():
+    if request.method == 'GET':
+        if 'id' in session:
+            user_name = session['user']
+            user_id = session['id']
+        else:
+            session['id']= int(10)
+            session['user']='invited'
+            user_id = session['id']
+            user_name = session['user']
+
+        return render_template('cal_hid.html', user = user_name, id = user_id)
+
+@app.route('/hidric_cal_1', methods=['POST'])
+def hidric_cal_1():
+    if request.method == 'POST':
+        shower_type = request.form['shower_type']
+        minutes_shower = request.form['minutes_shower']
+        shower_times = request.form['shower_times']
+        
+        user_id = 0
+
+        total_shower = water_products_calculus.showers(minutes_shower, shower_type, shower_times)
+
+        toilet_type = request.form['toilet_type']
+        bathroom_times = request.form['bathroom_times']
+
+        total_toilet = water_products_calculus.toilet(bathroom_times,toilet_type)
+        
+        if 'id' in session:
+            id_user = session['id']
+
+        
+        cur = mysql.connection.cursor()
+        
+        cur.execute('CALL prd_calc_hidric_begin (%s, %s, %s)', (id_user, total_shower, total_toilet))
+        cur.commit()
+
+        return render_template('cal_hid_1.html')
 
 #This is a method that recieves an error and renderising the error handle page
 def page_not_found(error):

@@ -13,7 +13,7 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
 app.config['MYSQL_DB'] = 'cleanlyfe'
 #YOU MUST CHANGE THE PORT IF ANOTHER PERSON WERE EDITING THE CODE (You have to put your own port of your xampp)
-app.config['MYSQL_PORT'] = 3307
+app.config['MYSQL_PORT'] = 3306
 mysql = MySQL(app)
 
 #el app route con el / es para que sea la primera pagina en aparecer
@@ -446,6 +446,16 @@ def final_hid_calculator():
     else:
         return 'You have to log in first'
 
+@app.route('/go_cal_transport', methods=['GET', 'POST'])
+def go_cal_transport():
+    if 'id' in session:
+        user_id = session['id']
+        user_name = session['user']
+        return render_template('cal_transp.html', id = user_id, user = user_name)
+    else:
+        return 'You have to log in first'
+    
+    
 #This is a method that recieves an error and renderising the error handle page
 @app.route('/page_not_found')
 def page_not_found(error):
@@ -454,6 +464,14 @@ def page_not_found(error):
         user_name = session['user']    
         return render_template("404.html", id = user_id, user = user_name), 404
 
+def user_render_page(pageToRender):
+    if 'id' in session:
+        user_id = session['id']
+        user_name = session['user']
+        return render_template(pageToRender, id = user_id, user = user_name)
+    else:
+        return 'You have to log in first'
+    
 #This is for running the application as a server
 if __name__ == "__main__":
     #This prevents that appears an error of page not found and shows a error handle page

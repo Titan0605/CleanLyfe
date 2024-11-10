@@ -114,6 +114,12 @@ def go_register():
     if request.method=='POST' or request.method=='GET':
         return render_template('register.html')
 
+#This route is for opening the user's profile
+@app.route('/go_user_profile', methods=['GET', 'POST'])
+def go_user_profile():
+    if request.method == 'POST' or request.method == 'GET':
+        return render_template('userProfile.html')   
+    
 #Esta ruta es para renderizar la main page
 @app.route('/go_main_page', methods=['GET', 'POST'])
 def go_main_page():

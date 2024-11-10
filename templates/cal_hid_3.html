@@ -1,0 +1,94 @@
+{%extends '/layouts/base.html' %}
+{% block title %} Water calculator {% endblock %}
+
+{%block content %}
+<div class="fondo">
+    <form action="/hidric_cal_3" method="POST">
+        <section class="container-1" style="margin-top: 50px;">
+            <h1>Water the yard</h1>
+            <div class="question_1">
+                <h1>How do you water the yard?</h1>
+                <div>
+                    <input type="radio" name="watering_type" id="type_water1" value="hose">
+                    <label for="type1">Hose</label>
+                </div>
+                <div>
+                    <input type="radio" name="watering_type" id="type_water2" value="spraying">
+                    <label for="type2">Spraying</label>
+                </div>
+                <div>
+                    <input type="radio" name="watering_type" id="type_water3" value="dripping">
+                    <label for="type3">Dripping</label>
+                </div>
+                <div>
+                    <input type="radio" name="watering_type" id="type_water4" value="bottle">
+                    <label for="type4">Bottle</label>
+                </div>
+            </div>
+            <div class="question_2">
+                <h1>How many minutes do you water the yard?</h1>
+                <select name="watering_minutes">
+                    {% for i in range(0, 101) %}
+                        <option value="{{ i }}">{{ i }} times</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="question_3">
+                <h1>How big is your yard? (approximate in square meters)</h1>
+                <select name="yard_size">
+                    {% for i in range(0, 200) %}
+                        <option value="{{ i }}">{{ i }} square meters</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="question_4">
+                <h1>If you use bottles. How many liters do you use?</h1>
+                <select name="liters_bottle">
+                    {% for i in range(0, 50) %}
+                        <option value="{{ i }}">{{ i }} liters</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </section>
+        <section class="container-2">
+            <div class="question_5">
+                <h1>How often do you water the yard (in a week)</h1>
+                <select name="times_watering">
+                    {% for i in range(0, 16) %}
+                        <option value="{{ i }}">{{ i }} times</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <h1>If you water by dripping</h1>
+            <div class="question_6">
+                <h1>number of drippers</h1>
+                <select name="drippers_number">
+                    {% for i in range(0, 61) %}
+                        <option value="{{ i }}">{{ i }} square meters</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="question_7">
+                <h1>Flow rate of the drippers</h1>
+                <div>
+                    <input type="radio" name="flow_rate" id="flow_rate1" value="2">
+                    <label for="type1">2L per hour</label>
+                </div>
+                <div>
+                    <input type="radio" name="flow_rate" id="flow_rate2" value="4">
+                    <label for="type2">4L per hour</label>
+                </div>
+                <div>
+                    <input type="radio" name="flow_rate" id="flow_rate3" value="8">
+                    <label for="type3">8L per hour</label>
+                </div>
+                <div>
+                    <input type="radio" name="flow_rate" id="flow_rate4" value="16">
+                    <label for="type4">16L per hour</label>
+                </div>
+            </div>
+            <input type="submit" value="Next">
+        </section>
+    </form>
+</div>
+{% endblock %}

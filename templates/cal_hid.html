@@ -24,7 +24,7 @@
             <h1 class="title">Shower</h1>
 
             <h1>What type of shower do you have?</h1>
-            <form>
+            <form action="/hidric_cal_1" method="POST">
 
                 <div>
                     <input type="radio" name="shower_type" id="shower1" value="traditional_shower">
@@ -40,23 +40,22 @@
                     <input type="radio" name="shower_type" id="shower3" value="bathtub">
                     <label for="type3">Bathtub</label>
                 </div>
-
-            </form>
-            
+            <div>
             <h1>How many times do you bathe a day?</h1>
             <select name="shower_times">
                 {% for i in range(1, 7) %}
-                    <option value="{{ i }}">{{ i }}</option>
+                    <option value="{{ i }}">{{ i }} times</option>
                 {% endfor %}
             </select>
-
+            </div>
+            <div>
             <h1>How many minutes do you take a shower?</h1>
             <select name="minutes_shower">
                 {% for i in range(1, 31) %}
                     <option value="{{ i }}">{{ i }} minutes </option>
                 {% endfor %}
             </select>
-
+            </div>
 
         </section>
 
@@ -80,14 +79,16 @@
             <h1>How many times do you go to the bathroom a day?</h1>
             <select name="bathroom_times">
                 {% for i in range(1, 7) %}
-                    <option value="{{ i }}">{{ i }}</option>
+                    <option value="{{ i }}">{{ i }} times</option>
                 {% endfor %}
+
+                <div class="button">
+                    <input type="submit" value="NEXT">
+                </div>
             </select>
-
-
         </section>
-    
-
+        
+    </form>
     </main>
 
 </div>

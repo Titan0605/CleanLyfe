@@ -1,0 +1,37 @@
+{%extends '/layouts/base.html' %}
+{% block title %} Water calculator {% endblock %}
+
+{% block content %}
+<div class="fondo">
+    <form action="/hidric_cal_4" method="POST">
+        <section style="margin-top: 100px;">
+            <h1>Cleaning house</h1>
+            <div class="question_1">
+                <h1>How many times do you mop per day?</h1>
+                <select name="mop_times">
+                    {% for i in range(0, 6) %}
+                        <option value="{{ i }}">{{ i }} times</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="question_2">
+                <h1>How many buckets do you use per mopping?</h1>
+                <select name="buckets_number">
+                    {% for i in range(0, 6) %}
+                        <option value="{{ i }}">{{ i }} buckets</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="question_3">
+                <h1>How many liters does your bucket hold?</h1>
+                <select name="liters_bucket">
+                    {% for i in range(0, 31) %}
+                        <option value="{{ i }}">{{ i }} liters</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="submit" value="Next">
+        </section>
+    </form>
+</div>
+{% endblock %}

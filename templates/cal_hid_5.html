@@ -1,0 +1,126 @@
+{%extends '/layouts/base.html' %}
+{% block title %} Water calculator {% endblock %}
+
+{% block content %}
+<div class="fondo">
+    <form action="/hidric_cal_5" method="POST">
+        <section class="container-1" style="margin-top: 130px;">
+            <div class="question_1">
+                <h1>How many cups of coffe do you drink per week?</h1>
+                <select name="cups_coffe">
+                    {% for i in range(0, 41) %}
+                        <option value="{{ i }}">{{ i }} cups</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="question_2">
+                <h1>How many cups of tea do you drink per week?</h1>
+                <select name="cups_tea">
+                    {% for i in range(0, 41) %}
+                        <option value="{{ i }}">{{ i }} cups</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="question_3">
+                <h1>How many kg of beef do you eat per week?</h1>
+                <select name="kg_beef">
+                    {% for i in range(0, 21) %}
+                        <option value="{{ i }}">{{ i }} kg</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="question_4">
+                <h1>How many kg chicken meat do you eat per week?</h1>
+                <select name="kg_chicken">
+                    {% for i in range(0, 21) %}
+                        <option value="{{ i }}">{{ i }} kg</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="question_5">
+                <h1>How many kg pork meat do you eat per week?</h1>
+                <select name="pork_meat">
+                    {% for i in range(0, 21) %}
+                        <option value="{{ i }}">{{ i }} kg</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="question_6">
+                <h1>How many kg of rice do you eat per week?</h1>
+                <select name="kg_rice">
+                    {% for i in range(0, 21) %}
+                        <option value="{{ i }}">{{ i }} kg</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="question_7">
+                <h1>How many kg of sugar do you eat per week</h1>
+                <select name="kg_sugar">
+                    {% for i in range(0, 21) %}
+                        <option value="{{ i }}">{{ i }} kg</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </section>
+        <section class="container-2">
+            <div class="question_8">
+                <h1>How many kg of cheese do you eat per week?</h1>
+                <select name="kg_cheese">
+                    {% for i in range(0, 21) %}
+                        <option value="{{ i }}">{{ i }} kg</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="question_9">
+                <h1>How many liters of milk do you drink per week?</h1>
+                <select name="lt_milk">
+                    {% for i in range(0, 21) %}
+                        <option value="{{ i }}">{{ i }} liters</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="question_10">
+                <h1>How many liters of beer do you drink per week?</h1>
+                <select name="lt_beer">
+                    {% for i in range(0, 21) %}
+                        <option value="{{ i }}">{{ i }} liters</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="question_11">
+                <h1>How many liters of juice do you drink per week?</h1>
+                <select name="lt_juice">
+                    {% for i in range(0, 21) %}
+                        <option value="{{ i }}">{{ i }} liters</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="question_12">
+                <h1>How many liters of soda do you drink per week?</h1>
+                <select name="lt_soda">
+                    {% for i in range(0, 21) %}
+                        <option value="{{ i }}">{{ i }} liters</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="question_13">
+                <h1>How many eggs do you eat per week?</h1>
+                <select name="eggs">
+                    {% for i in range(0, 21) %}
+                        <option value="{{ i }}">{{ i }} eggs</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="question_14">
+                <h1>How many bread slices do you eat per week?</h1>
+                <select name="bread_slices">
+                    {% for i in range(0, 21) %}
+                        <option value="{{ i }}">{{ i }} slices</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="submit" value="FINISH">
+        </section>
+    </form>
+</div>
+{%endblock%}

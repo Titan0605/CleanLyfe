@@ -174,6 +174,23 @@ def go_hidric_cal():
             user_id = session['id']
             user_name = session['user']
             
+        if user_id != 10:
+            cur = mysql.connection.cursor()
+            cur.execute('SELECT page_water_footprint FROM tuser_log WHERE id_user = %s', (user_id,))
+            data = cur.fetchone()
+            page = data[0]
+            if page == 1:
+                return render_template('cal_hid.html', user = user_name, id = user_id)
+            elif page == 2:
+                return redirect(url_for('go_hidric_cal_2'))
+            elif page == 3:
+                return redirect(url_for('go_hidric_cal_3'))
+            elif page == 4:
+                return redirect(url_for('go_hidric_cal_4'))
+            elif page == 5:
+                return redirect(url_for('go_hidric_cal_5'))
+                
+            
         return render_template('cal_hid.html', user = user_name, id = user_id)
 
 @app.route('/hidric_cal_1', methods=['POST'])
@@ -205,7 +222,7 @@ def hidric_cal_1():
             mysql.connection.commit()
             
             if id_user != 10:
-                cur.execute('UPDATE tuser_log SET page_water_footprint = 2 WHERE id_user = %s', (id_user))
+                cur.execute('UPDATE tuser_log SET page_water_footprint = 2 WHERE id_user = %s', (id_user,))
                 mysql.connection.commit()
                 
             return redirect(url_for('go_hidric_cal_2'))
@@ -258,7 +275,7 @@ def hidric_cal_2():
             mysql.connection.commit()
             
             if user_id != 10:
-                cur.execute('UPDATE tuser_log SET page_water_footprint = 3 WHERE id_user = %s', (user_id))
+                cur.execute('UPDATE tuser_log SET page_water_footprint = 3 WHERE id_user = %s', (user_id,))
                 mysql.connection.commit()
             
             return redirect(url_for('go_hidric_cal_3'))
@@ -302,7 +319,7 @@ def hidric_cal_3():
             mysql.connection.commit()
             
             if user_id != 10:
-                cur.execute('UPDATE tuser_log SET page_water_footprint = 4 WHERE id_user = %s', (user_id))
+                cur.execute('UPDATE tuser_log SET page_water_footprint = 4 WHERE id_user = %s', (user_id,))
                 mysql.connection.commit()
                 
             return redirect(url_for('go_hidric_cal_4'))
@@ -336,7 +353,7 @@ def hidric_cal_4():
             mysql.connection.commit()
             
             if user_id != 10:
-                cur.execute('UPDATE tuser_log SET page_water_footprint = 5 WHERE id_user = %s', (user_id))
+                cur.execute('UPDATE tuser_log SET page_water_footprint = 5 WHERE id_user = %s', (user_id,))
                 mysql.connection.commit()
             
             return redirect(url_for('go_hidric_cal_5'))
@@ -406,7 +423,7 @@ def hidric_cal_5():
             mysql.connection.commit()
             
             if user_id != 10:
-                cur.execute('UPDATE tuser_log SET page_water_footprint = 1 WHERE id_user = %s', (user_id))
+                cur.execute('UPDATE tuser_log SET page_water_footprint = 1 WHERE id_user = %s', (user_id,))
                 mysql.connection.commit()
             
             return redirect(url_for('final_hid_calculator'))

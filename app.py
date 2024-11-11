@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_mysqldb import MySQL
 import water_products_calculus
+import vehicleCalculus
 
 #este es para declarar una varianble tipo flask (es obligatorio)
 app = Flask(__name__)
@@ -451,10 +452,34 @@ def go_cal_transport():
     if 'id' in session:
         user_id = session['id']
         user_name = session['user']
-        return render_template('cal_transp.html', id = user_id, user = user_name)
+        return render_template('cal_transport.html', id = user_id, user = user_name)
     else:
         return 'You have to log in first'
     
+@app.route('/cal_transport', method=['POST'])   
+def cal_transport(): 
+    if request.method == "POST":
+        if 'id' in session:
+            user_id = session["id"]
+            #Brings all the values from the form to send it at the method that do the calculus
+            fuel_type = request.form["fuel_type"]
+            cylinders = request.form["cylinders_count"]
+            old = request.form["vehicule-old"]
+            time_used = request.form["time_used"]
+            fuel = request.form["consumed_fuel"]
+            distance = request.form["distance_traveled"]
+            #Brings from the db the emission factor of the fuel type used by the user
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT emission_factor FROM tcat_fuel WHERE fuel_name = %s;", fuel_type)
+            fuel_emission_factor = cur.fetchall()
+            #Brings from db the cylinder adjustment of the number of cylinders of the user
+            cur.execute("SELECT cylinder_adjustment FROM tcat_cylinder WHERE number_cylinders = %s",cylinders)
+            cylinders_emission_factor = cur.fetchall()
+            #Brings from db the emission factor depending of how long is the vehicle
+            cur.execute("SELECT year_adjustment FROM tvechicule_year WHERE years = %s", old)
+            old_adjustment = cur.fetchall()
+            #Recieves two values from the merhod, the total factor and the fuel performance
+            transport_emission , fuel_performance = vehicleCalculus.vehicleEmission(distance, fuel, fuel_emission_factor, cylinders_emission_factor, old_adjustment)
     
 #This is a method that recieves an error and renderising the error handle page
 @app.route('/page_not_found')

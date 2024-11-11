@@ -470,13 +470,13 @@ def cal_transport():
             distance = request.form["distance_traveled"]
             #Brings from the db the emission factor of the fuel type used by the user
             cur = mysql.connection.cursor()
-            cur.execute("SELECT emission_factor FROM tcat_fuel WHERE fuel_name = %s;", fuel_type)
+            cur.execute("SELECT emission_factor FROM tcat_fuel WHERE fuel_name = %s;", (fuel_type,))
             fuel_emission_factor = cur.fetchall()
             #Brings from db the cylinder adjustment of the number of cylinders of the user
-            cur.execute("SELECT cylinder_adjustment FROM tcat_cylinder WHERE number_cylinders = %s",cylinders)
-            cylinders_emission_factor = cur.fetchall()
+            cur.execute("SELECT cylinder_adjustment FROM tcat_cylinder WHERE number_cylinders = %s",(cylinders,))
+            cylinders_emission_factor = cur.fetchall()                        
             #Brings from db the emission factor depending of how long is the vehicle
-            cur.execute("SELECT year_adjustment FROM tvechicule_year WHERE years = %s", old)
+            cur.execute("SELECT year_adjustment FROM tvechicule_year WHERE years = %s", (old,))
             old_adjustment = cur.fetchall()
             #Recieves two values from the merhod, the total factor and the fuel performance
             transport_emission , fuel_performance = vehicleCalculus.vehicleEmission(distance, fuel, fuel_emission_factor, cylinders_emission_factor, old_adjustment)

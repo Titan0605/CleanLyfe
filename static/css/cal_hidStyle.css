@@ -141,8 +141,15 @@ input[type="radio"]:checked::before {
 
 @media (750px > width) {
     .hidric-calculator {
-        display: flex;
-        justify-content: center;
+        position: static;
+        top: none;
+        left: none;
+        transform: none;
+        margin: 6rem 0rem 3rem 0rem;
+    }
+
+    .hidric-calculator__container {
+        gap: 2rem;
     }
 
     .hidric-calculator__form {
@@ -153,14 +160,31 @@ input[type="radio"]:checked::before {
     .hidric-calculator__form {
         align-items: center;
     }
+}
 
-    .hidric-calculator__side-header {
-        text-align:left;
+@media (400px > width) {
+    .hidric-calculator__aside {
+        width: 17rem;
+    }
+}
+
+@media (350px > width) {
+    .hidric-calculator__container {
+        padding-inline: 2rem;
+    }
+
+    .hidric-calculator__aside {
+        width: 16rem;
     }
 }
 
 @media (prefers-color-scheme: dark) {
     .hidric-calculator__container {
-        background: linear-gradient(180deg, rgba(82, 183, 136, 0.8), rgba(22, 138, 173, 0.6));
+        background: none;
+        background-color: rgba(217, 217, 217, 0.15);
+    }
+
+    .hidric-calculator__form {
+        color: #fff;
     }
 }

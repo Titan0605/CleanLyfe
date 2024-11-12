@@ -463,8 +463,8 @@ def cal_transport():
             user_id = session["id"]
             #Brings all the values from the form to send it at the method that do the calculus
             fuel_type = request.form["fuel_type"]
-            cylinders = request.form["cylinders_count"]
-            old = request.form["vehicule-old"]
+            cylinders_count = request.form["cylinders_count"]
+            vehicle_age = request.form["vehicule-old"]
             time_used = request.form["time_used"]
             fuel = request.form["consumed_fuel"]
             distance = request.form["distance_traveled"]
@@ -473,13 +473,17 @@ def cal_transport():
             cur.execute("SELECT emission_factor FROM tcat_fuel WHERE fuel_name = %s;", (fuel_type,))
             fuel_emission_factor = cur.fetchall()
             #Brings from db the cylinder adjustment of the number of cylinders of the user
-            cur.execute("SELECT cylinder_adjustment FROM tcat_cylinder WHERE number_cylinders = %s",(cylinders,))
+            cur.execute("SET @cylinder_adjustment = NULL;")
+            cur.execute("CALL prd_set_cylinder_adjustment (%s, @cylinder_adjustment);", (cylinders_count))
+            cur.execute("SELECT @cylinder_adjustment;")
             cylinders_emission_factor = cur.fetchall()                        
             #Brings from db the emission factor depending of how long is the vehicle
-            cur.execute("SELECT year_adjustment FROM tvechicule_year WHERE years = %s", (old,))
-            old_adjustment = cur.fetchall()
+            cur.execute("SET @year_adjustmentt = NULL;")
+            cur.execute("CALL prd_set_year_adjustment(%s, @year_adjustmentt);", (vehicle_age,))
+            cur.execute("SELECT @year_adjustmentt;")
+            old_emission_factor = cur.fetchone()[0]            
             #Recieves two values from the merhod, the total factor and the fuel performance
-            transport_emission , fuel_performance = vehicleCalculus.vehicleEmission(distance, fuel, fuel_emission_factor, cylinders_emission_factor, old_adjustment)
+            transport_emission , fuel_performance = vehicleCalculus.vehicleEmission(distance, fuel, fuel_emission_factor, cylinders_emission_factor, old_emission_factor)
     
 #This is a method that recieves an error and renderising the error handle page
 @app.route('/page_not_found')

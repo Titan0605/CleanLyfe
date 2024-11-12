@@ -348,6 +348,8 @@ main {
     justify-content: space-evenly;
     width: 100%;
     cursor: pointer;
+    color: #000;
+    text-decoration: none;
 }
 
 .--button-hover:hover {
@@ -485,6 +487,11 @@ main {
     display: flex;
     align-items: center;
     padding: 2rem;
+    margin-top: 15rem;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    color: white;
 }
 
 .content__huella {
@@ -505,6 +512,10 @@ main {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+}
+
+.content__section h2 {
+    color: #939393;
 }
 
 .content__list {
@@ -696,7 +707,7 @@ main {
     }
     
     .background-top {
-        backdrop-filter: blur(115px);
+        backdrop-filter: blur(215px);
     }
 
     .home-button__button {

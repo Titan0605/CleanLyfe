@@ -696,7 +696,7 @@ main {
     }
     
     .background-top {
-        backdrop-filter: blur(115px);
+        backdrop-filter: blur(215px);
     }
 
     .home-button__button {

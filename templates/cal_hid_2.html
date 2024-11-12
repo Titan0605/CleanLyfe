@@ -21,7 +21,7 @@
                 <h1>How many time do you wash the dishes a day?</h1>
                 <select name="times_per_day_dishes">
                     {% for i in range(1, 6) %}
-                        <option value="{{ i }}">{{ i }} times</option>
+                    <option value="{{ i }}">{{ i }} times</option>
                     {% endfor %}
                 </select>
             </div>
@@ -44,7 +44,7 @@
                 <h1>how many minutes do you spend washing dishes for each time?</h1>
                 <select name="minutes_washing_dishes">
                     {% for i in range(1, 61) %}
-                        <option value="{{ i }}">{{ i }} minutes</option>
+                    <option value="{{ i }}">{{ i }} minutes</option>
                     {% endfor %}
                 </select>
             </div>
@@ -52,7 +52,7 @@
                 <h1>If you use exact liters, how many liters do you use?</h1>
                 <select name="liters_by_hand">
                     {% for i in range(1, 31) %}
-                        <option value="{{ i }}">{{ i }} liters</option>
+                    <option value="{{ i }}">{{ i }} liters</option>
                     {% endfor %}
                 </select>
             </div>
@@ -78,12 +78,11 @@
                 <h1>How many times do you wash your clothes a week?</h1>
                 <select name="washing_clothes_times">
                     {% for i in range(1, 8) %}
-                        <option value="{{ i }}">{{ i }} times</option>
+                    <option value="{{ i }}">{{ i }} times</option>
                     {% endfor %}
                 </select>
             </div>
         </section>
-        
         <input type="submit" value="Next">
     </form>
 </div>

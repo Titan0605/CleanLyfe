@@ -73,17 +73,18 @@ main {
 }
 
 .button{
+    cursor: pointer;
     text-decoration: none;
     color: rgba(255, 255, 255, 0.85);
     border: 0.1rem white solid;
     border-radius: 50px;
     padding: 0.4rem 1rem;
+    transition: 200ms ease;
 }
 
 .button:hover {
     color: rgba(255, 255, 255, 1);
     background-color: #30363b;
-    border: 0.1rem #30363b solid;
 }
 
 .--button_without_border {

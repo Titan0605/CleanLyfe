@@ -17,11 +17,13 @@
 <main class="hidric-calculator">
     <form action="/hidric_cal_1" method="POST" class="hidric-calculator__container">
         <header class="hidric-calculator__header">
+            <i class="fa-solid fa-droplet hidric-calculator__icon"></i>
             <h1 class="hidric-calculator__title">Hidric Calculator</h1>
         </header>
         <section class="hidric-calculator__form">
             <article class="hidric-calculator__aside">
                 <header class="hidric-calculator__side-header">
+                    <i class="fa-solid fa-shower hidric-calculator__side-icon"></i>
                     <h2 class="hidric-calculator__side-title">Shower</h2>
                 </header>
                 <section class="hidric-calculator__side-question-radio">
@@ -53,15 +55,16 @@
                 <section class="hidric-calculator__side-question">
                     <h3 class="hidric-calculator__question-tittle">How many minutes do you take a shower?</h3>
                     <select class="hidric-calculator__question-select" name="minutes_shower">
-                        <option>1 minute</option>
+                        <option class="hidric-calculator__select-option">1 minute</option>
                         {% for i in range(2, 31) %}
-                        <option value="{{ i }}">{{ i }} minutes</option>
+                        <option class="hidric-calculator__select-option" value="{{ i }}">{{ i }} minutes</option>
                         {% endfor %}
                     </select>
                 </section>
             </article>
             <article class="hidric-calculator__aside">
                 <header class="hidric-calculator__side-header">
+                    <i class="fa-solid fa-toilet-paper hidric-calculator__side-icon"></i>
                     <h2 class="hidric-calculator__side-title">Toilet</h2>
                 </header>
                 <section class="hidric-calculator__side-question-radio">
@@ -80,7 +83,7 @@
                 <section class="hidric-calculator__side-question">
                     <h3 class="hidric-calculator__question-tittle">How many times do you go to the bathroom a day?</h3>
                     <select class="hidric-calculator__question-select" name="bathroom_times">
-                        <option>1 time </option>
+                        <option>1 time</option>
                         {% for i in range(2, 11) %}
                         <option value="{{ i }}">{{ i }} times</option>
                         {% endfor %}

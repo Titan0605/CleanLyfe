@@ -26,6 +26,13 @@
     border-radius: 10px;
 }
 
+.hidric-calculator__title {
+    font-family: "Host Grotesk", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+}
+
 .hidric-calculator__form {
     width: 100%;
     display: flex;
@@ -46,7 +53,19 @@
     text-align: center;
 }
 
+.hidric-calculator__side-title {
+    font-family: "Host Grotesk", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    color: rgba(0, 0, 0, 0.7);
+}
+
 .hidric-calculator__question-tittle {
+    font-family: "Host Grotesk", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
     margin-bottom: 1rem;
 }
 
@@ -57,11 +76,15 @@
 }
 
 .hidric-calculator__question-option {
-    font-size: 1.2em;
+    font-size: 1em;
     line-height: 1.1;
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    font-family: "Roboto Mono", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
 }
 
 input[type="radio"] {
@@ -86,7 +109,6 @@ input[type="radio"]::before {
     transform: scale(0);
     transition: 120ms transform ease-in-out;
     box-shadow: inset 1em 1em #000;
-
 }
 
 input[type="radio"]:checked::before {
@@ -104,7 +126,7 @@ input[type="radio"]:checked::before {
     padding: 0.3em 6em 0.3em 1em;
     background-color: #fff;
     border: 1px solid #caced1;
-    border-radius: 0.25rem;
+    border-radius: 0.5rem;
     color: #000;
     cursor: pointer;
 }
@@ -124,6 +146,11 @@ input[type="radio"]:checked::before {
     border-top: var(--size) solid black;
 }
 
+.hidric-calculator__side-question:focus{
+    border: none;
+    outline: none;
+}
+
 .hidric-calculator__question-option:focus-within {
     color: rgba(49, 113, 83, 0.81);
 }
@@ -137,6 +164,16 @@ input[type="radio"]:checked::before {
     width: 40%;
     background-color: rgba(54, 172, 117, 0.9);
     border: none;
+}
+
+@media (750px > height) {
+    .hidric-calculator {
+        position: static;
+        top: none;
+        left: none;
+        transform: none;
+        margin: 6rem 0rem 3rem 0rem;
+    }
 }
 
 @media (750px > width) {
@@ -182,6 +219,22 @@ input[type="radio"]:checked::before {
     .hidric-calculator__container {
         background: none;
         background-color: rgba(217, 217, 217, 0.15);
+    }
+
+    input[type="radio"]::before {
+        content: "";
+        width: 0.6em;
+        height: 0.6em;
+        border-radius: 50%;
+        transform: scale(0);
+        transition: 120ms transform ease-in-out;
+        box-shadow: inset 1em 1em #ffffff;
+    }
+
+    .hidric-calculator__side-question select {
+        background-color: rgba(153, 153, 153, 0.4);
+        border: 2px solid rgba(12, 14, 113, 0.3);
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
     }
 
     .hidric-calculator__form {

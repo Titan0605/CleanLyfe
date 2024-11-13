@@ -470,20 +470,30 @@ def cal_transport():
             distance = request.form["distance_traveled"]
             #Brings from the db the emission factor of the fuel type used by the user
             cur = mysql.connection.cursor()
-            cur.execute("SELECT emission_factor FROM tcat_fuel WHERE fuel_name = %s;", (fuel_type,))
-            fuel_emission_factor = cur.fetchall()
+            cur.execute("SET @id_fuel_adjustment = NULL;")
+            cur.execute("CALL prd_set_fuel_adjustment (%s, @id_fuel_adjustment);", (fuel_type,))
+            cur.execute("SELECT @id_fuel_adjustment;")
+            id_fuel = cur.fetchone()[0]#Bring the id of factor of the fuel used
+            cur.execute("SELECT emission_factor FROM tcat_fuel WHERE id_fuel = %s;", (id_fuel,))
+            fuel_emission_factor = cur.fetchone()[0]
             #Brings from db the cylinder adjustment of the number of cylinders of the user
-            cur.execute("SET @cylinder_adjustment = NULL;")
-            cur.execute("CALL prd_set_cylinder_adjustment (%s, @cylinder_adjustment);", (cylinders_count))
-            cur.execute("SELECT @cylinder_adjustment;")
-            cylinders_emission_factor = cur.fetchall()                        
+            cur.execute("SET @id_cylinder_adjustment = NULL;")
+            cur.execute("CALL prd_set_cylinder_adjustment (%s, @id_cylinder_adjustment);", (cylinders_count,))
+            cur.execute("SELECT @id_cylinder_adjustment;")
+            id_cylinder = cur.fetchone()[0]#Brings the id of the cylinder factor
+            cur.execute("SELECT cylinder_adjustment FROM tcat_cylinder where id_cylinder = %s", (id_cylinder,))
+            cylinders_emission_factor = cur.fetchone()[0]
             #Brings from db the emission factor depending of how long is the vehicle
-            cur.execute("SET @year_adjustmentt = NULL;")
-            cur.execute("CALL prd_set_year_adjustment(%s, @year_adjustmentt);", (vehicle_age,))
-            cur.execute("SELECT @year_adjustmentt;")
-            old_emission_factor = cur.fetchone()[0]            
+            cur.execute("SET @id_year_adjustmentt = NULL;")
+            cur.execute("CALL prd_set_year_adjustment(%s, @id_year_adjustmentt);", (vehicle_age,))
+            cur.execute("SELECT @id_year_adjustmentt;")
+            id_old = cur.fetchone()[0]#Bring the id of the factor of the age of the vehicle
+            cur.execute("SELECT year_adjustment FROM tvechicule_year WHERE id_vehicule_year = %s;", (id_old,))  
+            old_emission_factor = cur.fetchone()[0]
             #Recieves two values from the merhod, the total factor and the fuel performance
             transport_emission , fuel_performance = vehicleCalculus.vehicleEmission(distance, fuel, fuel_emission_factor, cylinders_emission_factor, old_emission_factor)
+            #Insert all the values returned to the db
+            cur.execute("CALL prd_insert_cal_transport_emission(%s, %s, %s, %s, %s, %s, %s, %s, %s);",)
     
 #This is a method that recieves an error and renderising the error handle page
 @app.route('/page_not_found')

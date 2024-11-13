@@ -456,17 +456,22 @@ def go_cal_transport():
     else:
         return 'You have to log in first'
     
-@app.route('/cal_transport', method=['POST'])   
+@app.route('/cal_transport', methods=['POST'])   
 def cal_transport(): 
     if request.method == "POST":
         if 'id' in session:            
             #Brings all the values from the form to send it at the method that do the calculus
             fuel_type = request.form["fuel_type"]
+            print('Tipo de fuel: ',fuel_type)
             cylinders_count = request.form["cylinders_count"]
-            vehicle_age = request.form["vehicule-old"]
-            time_used = request.form["time_used"]
-            fuel = request.form["consumed_fuel"]
-            distance = request.form["distance_traveled"]
+            print('Number of cylinders: ',cylinders_count)
+            vehicle_age = int(request.form["vehicule-old"])
+            print('age of vehicle: ',vehicle_age)
+            time_used = int(request.form["time_used"])
+            consumed_fuel = int(request.form["consumed_fuel"])
+            print('fuel consumed', consumed_fuel)        
+            distance = int(request.form["distance_traveled"])
+            print('Distance: ', distance)
             #Brings from the db the emission factor of the fuel type used by the user
             cur = mysql.connection.cursor()
             cur.execute("SET @id_fuel_adjustment = NULL;")
@@ -490,10 +495,12 @@ def cal_transport():
             cur.execute("SELECT year_adjustment FROM tvechicule_year WHERE id_vehicule_year = %s;", (id_old,))  
             old_emission_factor = cur.fetchone()[0]
             #Recieves two values from the merhod, the total factor and the fuel performance
-            transport_emission , fuel_performance = vehicleCalculus.vehicleEmission(distance, fuel, fuel_emission_factor, cylinders_emission_factor, old_emission_factor)
+            transport_emission , fuel_performance = vehicleCalculus.vehicleEmission(distance, consumed_fuel, fuel_emission_factor, cylinders_emission_factor, old_emission_factor)
             #Insert all the values returned to the db
-            cur.execute("CALL prd_insert_cal_transport_emission(%s, %s, %s, %s, %s, %s, %s, %s, %s);", (2, id_fuel, id_cylinder, id_old, time_used, fuel, distance, fuel_performance, transport_emission))
+            #cur.execute("CALL prd_insert_cal_transport_emission(%s, %s, %s, %s, %s, %s, %s, %s, %s);", (1, id_fuel, id_cylinder, id_old, time_used, consumed_fuel, distance, fuel_performance, transport_emission))
             
+            final_transport_emission = round(transport_emission, 2)
+            print(f'Tu emision es: {final_transport_emission}')
             return redirect(url_for('final_cal_transport'))
     
 @app.route('/final_cal_transport', methods=['GET'])    
@@ -502,7 +509,7 @@ def final_cal_transport():
         user_id = session['id']
         user_name = session['user']        
         
-        return render_template('final_cal_transport.html', id = user_id, user = user_name)
+        return render_template('final_cal_transport.html', id = user_id, user = user_name, total = 1)
     else:
         return 'You have to log in first'
 #This is a method that recieves an error and renderising the error handle page

@@ -11,7 +11,7 @@ app.secret_key = 'mysecretkey'
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'integrador'
+app.config['MYSQL_DB'] = 'cleanlyfe'
 #YOU MUST CHANGE THE PORT IF ANOTHER PERSON WERE EDITING THE CODE (You have to put your own port of your xampp)
 app.config['MYSQL_PORT'] = 3306
 mysql = MySQL(app)
@@ -198,17 +198,23 @@ def hidric_cal_1():
         if 'id' in session:
             id_user = session['id']
 
-            shower_type = request.form['shower_type']
-            print("Shower type: ", shower_type)
+            #If this variable does not exist, then it's going to be assigned a traditional valor
+            try:
+                shower_type = request.form['shower_type']
+            except:
+                shower_type = 'not_value'
+                
             minutes_shower = request.form['minutes_shower']
-            print("minutes_shower: ", minutes_shower)
             shower_times = request.form['shower_times']
-            print("shower_times", shower_times)
-
+            
             total_shower = water_products_calculus.showers(minutes_shower, shower_type, shower_times)
 
-            toilet_type = request.form['toilet_type']
-            print("toilet type: ", toilet_type)
+            #If this variable does not exist, then it's going to be assigned a traditional valor
+            try:
+                toilet_type = request.form['toilet_type']
+            except:
+                toilet_type = 'not_value'
+        
             bathroom_times = request.form['bathroom_times']
             print("bathroom times: ", bathroom_times)
 
@@ -241,31 +247,41 @@ def hidric_cal_2():
     if request.method == 'POST':
         if 'id' in session:
             user_id = session['id']
-            #variables for cleaning dishes
-            wash_type = request.form['wash_type']
-            print("wash type ", wash_type)
+            #variables for cleaning 
+            try:
+                wash_type = request.form['wash_type']
+            except:
+                wash_type = 'not_value'
+            #If this variable does not exist, then it's going to be assigned a traditional valor
+        
             times_per_day_dishes = request.form['times_per_day_dishes']
-            print("times per day dishes: ", times_per_day_dishes)
-            by_hand_type = request.form['by_hand_type']
-            print('by hand type: ', by_hand_type)
+            
+            #If this variable does not exist, then it's going to be assigned a traditional valor
+            try:
+                by_hand_type = request.form['by_hand_type']
+            except:
+                by_hand_type = 0
+                
             minutes_washing_dishes = request.form['minutes_washing_dishes']
-            print('minutes washing dishes ', minutes_washing_dishes)
             liters_by_hand = request.form['liters_by_hand']
-            print('liters by hand', liters_by_hand)
 
             #variables for cleaning clothes
-            washing_machine_type = request.form['washing_machine_type']
-            print('washing machine type ', washing_machine_type)
+                        
+            #If this variable does not exist, then it's going to be assigned a traditional valor
+            try:
+                washing_machine_type = request.form['washing_machine_type']
+            except:
+                washing_machine_type = 'not_value'
+            #If this variable does not exist, then it's going to be assigned a traditional valor
+                
             user_knows = 1
             washing_clothes_times = request.form['washing_clothes_times']
-            print('washing clothes times: ', washing_clothes_times)
 
+            #If this variable does not exist, then it's going to be assigned a traditional valor
             if washing_machine_type == 'dont_know':
                 user_knows = 0
 
             total_dishes = water_products_calculus.dishes(wash_type, times_per_day_dishes, minutes_washing_dishes, by_hand_type, liters_by_hand)
-
-            print('total dishes ', total_dishes)
 
             total_washing_machine = water_products_calculus.washing_clothest(washing_clothes_times, washing_machine_type, user_knows)
 
@@ -295,21 +311,21 @@ def hidric_cal_3():
     if request.method == 'POST':
         if 'id' in session:
             user_id = session['id']
-
-            watering_type = request.form['watering_type']
-            print('Watering type: ', watering_type)
+            #If this variable does not exist, then it's going to be assigned a traditional valor
+            try:
+                watering_type = request.form['watering_type']
+            except:
+                watering_type = 'not_value'
+                
             watering_minutes = request.form['watering_minutes']
-            print('watering minutes ', watering_minutes)
             yard_size = request.form['yard_size']
-            print('yard_size: ', yard_size)
             liters_bottle = request.form['liters_bottle']
-            print('liters_bottle ', liters_bottle)
             times_watering = request.form['times_watering']
-            print('times_watering ', times_watering)
             drippers_number = request.form['drippers_number']
-            print('drippers_number ', drippers_number)
-            flow_rate = request.form['flow_rate']
-            print('flow_rate ', flow_rate)
+            try:
+                flow_rate = request.form['flow_rate']
+            except:
+                flow_rate = 0
 
             total_watering_yard = water_products_calculus.garden_watering(watering_minutes, watering_type, liters_bottle, times_watering, yard_size, drippers_number, flow_rate)
 

@@ -4,7 +4,7 @@
 {% block content %} 
 <article class="vehicle-container">
     <div class="vehicle-containwe_form">        
-        <form action="POST">
+        <form action="/cal_transport" method="POST">
             <div>
                 <h1>What king of fuel do you use?</h1>
                 <div>
@@ -52,6 +52,10 @@
             <div>
                 <h1>How far did you travel in total?</h1>
                 <input type="number" name="distance_traveled">
+            </div>
+
+            <div class="button">
+                <input type="submit" value="NEXT">
             </div>
         </form>                
     </div>

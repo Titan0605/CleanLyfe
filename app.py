@@ -447,20 +447,19 @@ def final_hid_calculator():
     else:
         return 'You have to log in first'
 
-@app.route('/go_cal_transport', methods=['GET', 'POST'])
+@app.route('/go_cal_transport', methods=['GET'])
 def go_cal_transport():
     if 'id' in session:
         user_id = session['id']
         user_name = session['user']
-        return render_template('cal_transport.html', id = user_id, user = user_name)
+        return render_template('cal_transp.html', id = user_id, user = user_name)
     else:
         return 'You have to log in first'
     
 @app.route('/cal_transport', method=['POST'])   
 def cal_transport(): 
     if request.method == "POST":
-        if 'id' in session:
-            user_id = session["id"]
+        if 'id' in session:            
             #Brings all the values from the form to send it at the method that do the calculus
             fuel_type = request.form["fuel_type"]
             cylinders_count = request.form["cylinders_count"]
@@ -493,8 +492,19 @@ def cal_transport():
             #Recieves two values from the merhod, the total factor and the fuel performance
             transport_emission , fuel_performance = vehicleCalculus.vehicleEmission(distance, fuel, fuel_emission_factor, cylinders_emission_factor, old_emission_factor)
             #Insert all the values returned to the db
-            cur.execute("CALL prd_insert_cal_transport_emission(%s, %s, %s, %s, %s, %s, %s, %s, %s);",)
+            cur.execute("CALL prd_insert_cal_transport_emission(%s, %s, %s, %s, %s, %s, %s, %s, %s);", (2, id_fuel, id_cylinder, id_old, time_used, fuel, distance, fuel_performance, transport_emission))
+            
+            return redirect(url_for('final_cal_transport'))
     
+@app.route('/final_cal_transport', methods=['GET'])    
+def final_cal_transport():
+    if 'id' in session:
+        user_id = session['id']
+        user_name = session['user']        
+        
+        return render_template('final_cal_transport.html', id = user_id, user = user_name)
+    else:
+        return 'You have to log in first'
 #This is a method that recieves an error and renderising the error handle page
 @app.route('/page_not_found')
 def page_not_found(error):

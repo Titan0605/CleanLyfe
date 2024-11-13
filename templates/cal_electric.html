@@ -1,0 +1,18 @@
+{%extends '/layouts/base.html' %}
+
+{% block title %} Electric calculator {% endblock %}
+
+{% block conten %}
+<article>
+    <div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum quos assumenda ipsum at necessitatibus tempore beatae, sunt omnis rem, magnam, officiis distinctio dolores eligendi dolor repellendus itaque nam quibusdam impedit?
+        <!--ESTAS PREGUNTAS PUEDEN CAMBIAR-->
+        <form action="/cal_electric", method="POST">
+            <h1>What type of device are you using?</h1>
+            <div>
+                <input type="checkbox" value="1">
+            </div>
+        </form>
+    </div>
+</article>
+{% endblock %}

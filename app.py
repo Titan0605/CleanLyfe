@@ -461,17 +461,12 @@ def cal_transport():
     if request.method == "POST":
         if 'id' in session:            
             #Brings all the values from the form to send it at the method that do the calculus
-            fuel_type = request.form["fuel_type"]
-            print('Tipo de fuel: ',fuel_type)
-            cylinders_count = request.form["cylinders_count"]
-            print('Number of cylinders: ',cylinders_count)
-            vehicle_age = int(request.form["vehicule-old"])
-            print('age of vehicle: ',vehicle_age)
+            fuel_type = request.form["fuel_type"]            
+            cylinders_count = request.form["cylinders_count"]            
+            vehicle_age = int(request.form["vehicule-old"])            
             time_used = int(request.form["time_used"])
-            consumed_fuel = int(request.form["consumed_fuel"])
-            print('fuel consumed', consumed_fuel)        
-            distance = int(request.form["distance_traveled"])
-            print('Distance: ', distance)
+            consumed_fuel = int(request.form["consumed_fuel"])            
+            distance = int(request.form["distance_traveled"])            
             #Brings from the db the emission factor of the fuel type used by the user
             cur = mysql.connection.cursor()
             cur.execute("SET @id_fuel_adjustment = NULL;")

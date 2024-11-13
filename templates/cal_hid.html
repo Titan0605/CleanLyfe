@@ -46,7 +46,7 @@
                 <section class="hidric-calculator__side-question">
                     <h3 class="hidric-calculator__question-tittle">How many times do you bathe a day?</h3>
                     <select class="hidric-calculator__question-select" name="shower_times">
-                        <option>1 time</option>
+                        <option value="1">1 time</option>
                         {% for i in range(2, 11) %}
                         <option value="{{ i }}">{{ i }} times</option>
                         {% endfor %}
@@ -55,7 +55,7 @@
                 <section class="hidric-calculator__side-question">
                     <h3 class="hidric-calculator__question-tittle">How many minutes do you take a shower?</h3>
                     <select class="hidric-calculator__question-select" name="minutes_shower">
-                        <option class="hidric-calculator__select-option">1 minute</option>
+                        <option class="hidric-calculator__select-option" value="1">1 minute</option>
                         {% for i in range(2, 31) %}
                         <option class="hidric-calculator__select-option" value="{{ i }}">{{ i }} minutes</option>
                         {% endfor %}
@@ -83,7 +83,7 @@
                 <section class="hidric-calculator__side-question">
                     <h3 class="hidric-calculator__question-tittle">How many times do you go to the bathroom a day?</h3>
                     <select class="hidric-calculator__question-select" name="bathroom_times">
-                        <option>1 time</option>
+                        <option value="1">1 time</option>
                         {% for i in range(2, 11) %}
                         <option value="{{ i }}">{{ i }} times</option>
                         {% endfor %}

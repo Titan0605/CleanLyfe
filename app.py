@@ -11,7 +11,7 @@ app.secret_key = 'mysecretkey'
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'cleanlyfe_calculator'
+app.config['MYSQL_DB'] = 'integrador'
 #YOU MUST CHANGE THE PORT IF ANOTHER PERSON WERE EDITING THE CODE (You have to put your own port of your xampp)
 app.config['MYSQL_PORT'] = 3306
 mysql = MySQL(app)

@@ -1,10 +1,10 @@
-.hidric-calculator {
+.calculator {
     margin: 6rem 0rem 3rem 0rem; 
     display: flex;
     justify-content: center;
 }
 
-.hidric-calculator__container {
+.calculator__container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,7 +17,7 @@
     padding-inline: 3rem;
 }
 
-.hidric-calculator__header {
+.calculator__header {
     padding-inline: 1rem;
     background-color: rgba(255, 255, 255, 0.5);
     border-radius: 10px;
@@ -27,19 +27,19 @@
     gap: 1rem;
 }
 
-.hidric-calculator__icon{
+.calculator__icon{
     font-size: 1.5rem;
     color: rgb(0, 134, 217);
 }
 
-.hidric-calculator__title {
+.calculator__title {
     font-family: "Host Grotesk", sans-serif;
     font-optical-sizing: auto;
     font-weight: 800;
     font-style: normal;
 }
 
-.hidric-calculator__form {
+.calculator__form {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -48,14 +48,14 @@
     gap: 5rem;
 }
 
-.hidric-calculator__aside {
+.calculator__aside {
     width: 20rem;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
-.hidric-calculator__side-header {
+.calculator__side-header {
     color: rgba(0, 0, 0, 0.7);
     background-color: rgba(255, 255, 255, 0.5);
     display: flex;
@@ -67,22 +67,18 @@
     align-self: center;
 }
 
-.hidric-calculator__side-icon {
+.calculator__side-icon {
     font-size: 1.2rem;
 }
 
-.hidric-calculator__side-title {
+.calculator__side-title {
     font-family: "Host Grotesk", sans-serif;
     font-optical-sizing: auto;
     font-weight: 700;
     font-style: normal;
 }
 
-/* .hidric-calculator__side-question-radio {
-    font-size: 1.2rem;
-} */
-
-.hidric-calculator__question-tittle {
+.calculator__question-tittle {
     font-family: "Host Grotesk", sans-serif;
     font-optical-sizing: auto;
     font-weight: 500;
@@ -91,13 +87,13 @@
     font-size: 1.4rem;
 }
 
-.hidric-calculator__question-options {
+.calculator__question-options {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
 
-.hidric-calculator__question-option {
+.calculator__question-option {
     font-size: 1em;
     line-height: 1.1;
     display: flex;
@@ -137,11 +133,11 @@ input[type="radio"]:checked::before {
     transform: scale(1);
 }
 
-.hidric-calculator__side-question {
+.calculator__side-question {
     position: relative;
 }
 
-.hidric-calculator__side-question select {
+.calculator__side-question select {
     appearance: none;
     width: 100%;
     font-size: 1.15rem;
@@ -153,7 +149,7 @@ input[type="radio"]:checked::before {
     cursor: pointer;
 }
 
-.hidric-calculator__side-question::after{
+.calculator__side-question::after{
     --size: 0.3rem;
     content: "";
     position: absolute;
@@ -162,27 +158,27 @@ input[type="radio"]:checked::before {
     pointer-events: none;
 }
 
-.hidric-calculator__side-question::after {
+.calculator__side-question::after {
     border-left: var(--size) solid transparent;
     border-right: var(--size) solid transparent;
     border-top: var(--size) solid black;
 }
 
-.hidric-calculator__side-question:focus{
+.calculator__side-question:focus{
     border: none;
     outline: none;
 }
 
-.hidric-calculator__question-option:focus-within {
+.calculator__question-option:focus-within {
     color: rgba(255, 255, 255, 0.8);
 }
 
-.hidric-calculator__footer {
+.calculator__footer {
     width: 100%;
     text-align: right;
 }
 
-.hidric-calculator__submit-button {
+.calculator__submit-button {
     width: 15%;
     /* background-color: rgba(54, 172, 117, 0.9); */
     background: rgba(27, 155, 140,0.9);
@@ -197,7 +193,7 @@ input[type="radio"]:checked::before {
 }
 
 @media (750px > height) {
-    .hidric-calculator {
+    .calculator {
         position: static;
         top: none;
         left: none;
@@ -207,7 +203,7 @@ input[type="radio"]:checked::before {
 }
 
 @media (750px > width) {
-    .hidric-calculator {
+    .calculator {
         position: static;
         top: none;
         left: none;
@@ -215,68 +211,68 @@ input[type="radio"]:checked::before {
         margin: 6rem 0rem 3rem 0rem;
     }
 
-    .hidric-calculator__container {
+    .calculator__container {
         gap: 3rem;
     }
 
-    .hidric-calculator__form {
+    .calculator__form {
         flex-direction: column;
         gap: 3rem;
     }
 
-    .hidric-calculator__form {
+    .calculator__form {
         align-items: center;
     }
 
-    .hidric-calculator__submit-button {
+    .calculator__submit-button {
         width: 30%;
     }
 }
 
 @media (400px > width) {
-    .hidric-calculator__aside {
+    .calculator__aside {
         width: 17rem;
     }
 }
 
 @media (350px > width) {
-    .hidric-calculator__container {
+    .calculator__container {
         padding-inline: 2rem;
     }
 
-    .hidric-calculator__aside {
+    .calculator__aside {
         width: 16rem;
     }
 }
 
 @media (prefers-color-scheme: dark) {
-    .hidric-calculator__container {
+    .calculator__container {
         background: none;
         background-color: rgba(217, 217, 217, 0.15);
     }
 
-    .hidric-calculator__header {
+    .calculator__header {
         background-color: rgba(41, 41, 41, 0.3);
         color: #fff;
     }
 
-    .hidric-calculator__icon{
+    .calculator__icon{
         color: aqua;
     }
 
-    .hidric-calculator__title {
+    .calculator__title {
         color: rgb(237, 237, 237);
     }
 
-    .hidric-calculator__form {
+    .calculator__form {
         color: #fff;
     }
 
-    .hidric-calculator__question-option {
+    .calculator__question-option {
         font-weight: 300;
     }
 
-    .hidric-calculator__question-select {
+    .calculator__question-select {
         color: #fff;
     }
 
@@ -290,13 +286,13 @@ input[type="radio"]:checked::before {
         box-shadow: inset 1em 1em #ffffff;
     }
 
-    .hidric-calculator__side-question select {
+    .calculator__side-question select {
         background-color: rgba(234, 234, 234, 0.5);
         border: 2px solid rgba(12, 14, 113, 0.3);
         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
     }
 
-    .hidric-calculator__question-option:focus-within {
+    .calculator__question-option:focus-within {
         color: rgba(176, 176, 176, 0.8);
     }
 }

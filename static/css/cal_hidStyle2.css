@@ -1,0 +1,304 @@
+.calculator {
+    margin: 6rem 0rem 3rem 0rem; 
+    display: flex;
+    justify-content: center;
+}
+
+.calculator__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    /* background-color: rgba(217, 217, 217, 0.1); */
+    background: linear-gradient(180deg, rgba(82, 183, 136, 0.8), rgba(22, 138, 173, 0.6));
+    box-shadow: 0 3px 12px #000;
+    border-radius: 30px;
+    padding-block: 2rem;
+    padding-inline: 3rem;
+}
+
+.calculator__header {
+    padding-inline: 1rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.calculator__icon{
+    font-size: 1.5rem;
+    color: rgb(0, 134, 217);
+}
+
+.calculator__title {
+    font-family: "Host Grotesk", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+}
+
+.calculator__form {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 5rem;
+}
+
+.calculator__aside {
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.calculator__side-header {
+    color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 17rem;
+    border-radius: 10px;
+    align-self: center;
+    margin-top: 1.5rem;
+}
+
+.calculator__side-icon {
+    font-size: 1.2rem;
+    margin-left: 0.5rem;
+}
+
+.calculator__side-title {
+    font-family: "Host Grotesk", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.calculator__question-tittle {
+    font-family: "Host Grotesk", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+}
+
+.calculator__question-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.calculator__question-option {
+    font-size: 1em;
+    line-height: 1.1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    /* font-family: "Roboto Mono", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal; */
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 1.2rem;
+}
+
+input[type="radio"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: var(--form-background);
+    color: currentColor;
+    width: 1.2em;
+    height: 1.2em;
+    border: 0.15em solid currentColor;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type="radio"]::before {
+    content: "";
+    width: 0.6em;
+    height: 0.6em;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em #000;
+}
+
+input[type="radio"]:checked::before {
+    transform: scale(1);
+}
+
+.calculator__side-question {
+    position: relative;
+}
+
+.calculator__side-question select {
+    appearance: none;
+    width: 100%;
+    font-size: 1.15rem;
+    padding: 0.3em 6em 0.3em 1em;
+    background-color: #fff;
+    border: 1px solid #caced1;
+    border-radius: 0.5rem;
+    color: #000;
+    cursor: pointer;
+}
+
+.calculator__side-question::after{
+    --size: 0.3rem;
+    content: "";
+    position: absolute;
+    bottom: 0.85rem;
+    right: 1rem;
+    pointer-events: none;
+}
+
+.calculator__side-question::after {
+    border-left: var(--size) solid transparent;
+    border-right: var(--size) solid transparent;
+    border-top: var(--size) solid black;
+}
+
+.calculator__side-question:focus{
+    border: none;
+    outline: none;
+}
+
+.calculator__question-option:focus-within {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.calculator__footer {
+    width: 100%;
+    text-align: right;
+}
+
+.calculator__submit-button {
+    width: 15%;
+    /* background-color: rgba(54, 172, 117, 0.9); */
+    background: rgba(27, 155, 140,0.9);
+    border: none;
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 1.3rem;
+    font: bold;
+    padding-block: 0.5rem;
+}
+
+@media (750px > height) {
+    .calculator {
+        position: static;
+        top: none;
+        left: none;
+        transform: none;
+        margin: 6rem 0rem 3rem 0rem;
+    }
+}
+
+@media (750px > width) {
+    .calculator {
+        position: static;
+        top: none;
+        left: none;
+        transform: none;
+        margin: 6rem 0rem 3rem 0rem;
+    }
+
+    .calculator__container {
+        gap: 3rem;
+    }
+
+    .calculator__form {
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    .calculator__form {
+        align-items: center;
+    }
+
+    .calculator__submit-button {
+        width: 30%;
+    }
+}
+
+@media (400px > width) {
+    .calculator__aside {
+        width: 17rem;
+    }
+}
+
+@media (350px > width) {
+    .calculator__container {
+        padding-inline: 2rem;
+    }
+
+    .calculator__aside {
+        width: 16rem;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .calculator__container {
+        background: none;
+        background-color: rgba(217, 217, 217, 0.15);
+    }
+
+    .calculator__header {
+        background-color: rgba(41, 41, 41, 0.3);
+        color: #fff;
+    }
+
+    .calculator__icon{
+        color: aqua;
+    }
+
+    .calculator__title {
+        color: rgb(237, 237, 237);
+    }
+
+    .calculator__form {
+        color: #fff;
+    }
+
+    .calculator__question-option {
+        font-weight: 400;
+    }
+
+    .calculator__question-select {
+        color: #fff;
+    }
+
+    input[type="radio"]::before {
+        content: "";
+        width: 0.6em;
+        height: 0.6em;
+        border-radius: 50%;
+        transform: scale(0);
+        transition: 120ms transform ease-in-out;
+        box-shadow: inset 1em 1em #ffffff;
+    }
+
+    .calculator__side-question select {
+        background-color: rgba(234, 234, 234, 0.5);
+        border: 2px solid rgba(12, 14, 113, 0.3);
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    .calculator__question-option:focus-within {
+        color: rgba(176, 176, 176, 0.8);
+    }
+}

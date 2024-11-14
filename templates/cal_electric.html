@@ -3,16 +3,59 @@
 {% block title %} Electric calculator {% endblock %}
 
 {% block conten %}
-<article>
-    <div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum quos assumenda ipsum at necessitatibus tempore beatae, sunt omnis rem, magnam, officiis distinctio dolores eligendi dolor repellendus itaque nam quibusdam impedit?
-        <!--ESTAS PREGUNTAS PUEDEN CAMBIAR-->
-        <form action="/cal_electric", method="POST">
-            <h1>What type of device are you using?</h1>
-            <div>
-                <input type="checkbox" value="1">
-            </div>
-        </form>
-    </div>
-</article>
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, tempora assumenda? Odio nulla maxime, minus rem deleniti officia ipsum, esse iste eveniet corrupti delectus distinctio possimus? At consequatur vitae iure?
+Odio cupiditate labore voluptate nostrum eveniet molestiae, laborum debitis ad ut eligendi, minima incidunt fugiat excepturi hic exercitationem beatae ipsam voluptates. Vero placeat fugit voluptatibus neque ea ex sunt! Eligendi?
+Numquam in, fugiat incidunt delectus vero hic odio, fugit tempore non officia nihil exercitationem ducimus itaque modi, debitis libero suscipit dolor reiciendis quas dignissimos repellendus porro? Possimus, totam deleniti! Ipsam.
+Repellendus incidunt quia laboriosam velit eaque molestiae, quasi molestias iure adipisci, suscipit nobis eum ea, nemo ipsam ipsa aperiam accusamus doloribus est odio in quibusdam totam dolor? Ex, beatae aliquam!
+<main>
+    <form action="cal_electric" method="POST">
+        <section>
+            <article>
+                <header>
+                    <i></i>
+                    <h2>Electrical Consumption</h2>
+                </header>
+                <section>
+                    <h3>What was your electricity consumption this month?</h3>
+                    <div>
+                        <label for="">
+                            <input type="number" placeholder="Consumption (kWh)">
+                        </label>
+                    </div>
+                    <div>
+                        <input type="submit" value="Calculate">
+                    </div>
+                </section>          
+            </article>
+        </section>
+    </form>
+
+    <!-- <form action="cal_electric" method="POST">
+        <section>
+            <article>
+                <header>
+                    <i></i>
+                    <h2>Devices</h2>
+                </header>
+                <section>
+                    <h3>What type of device are you using?</h3>
+                    <div>
+                        <label for="">
+                            <option value=""></option>
+                        </label>
+                    </div>
+                </section>
+                <section>
+                    <h3>How old is the device?</h3>
+                    <label for="">
+                        <input type="number" value="age_device" placeholder="Years">
+                    </label>
+                </section>
+                <section>
+                    
+                </section>
+            </article>
+        </section>
+    </form> -->
+</main>
 {% endblock %}

@@ -55,7 +55,7 @@
                     <select class="calculator__question-select" name="shower_times">
                         <option class="calculator__select-option" value="0">0 time</option>
                         <option class="calculator__select-option" value="1">1 time</option>
-                        {% for i in range(0, 11) %}
+                        {% for i in range(2, 11) %}
                         <option class="calculator__select-option" value="{{ i }}">{{ i }} times</option>
                         {% endfor %}
                     </select>
@@ -66,7 +66,7 @@
                     <select class="calculator__question-select" name="minutes_shower">
                         <option class="calculator__select-option" value="0">0 minute</option>
                         <option class="calculator__select-option" value="1">1 minute</option>
-                        {% for i in range(0, 31) %}
+                        {% for i in range(2, 31) %}
                         <option class="calculator__select-option" value="{{ i }}">{{ i }} minutes</option>
                         {% endfor %}
                     </select>
@@ -100,7 +100,7 @@
                     <select class="calculator__question-select" name="bathroom_times">
                         <option value="0">0 time</option>
                         <option value="1">1 time</option>
-                        {% for i in range(0, 11) %}
+                        {% for i in range(2, 11) %}
                         <option value="{{ i }}">{{ i }} times</option>
                         {% endfor %}
                     </select>

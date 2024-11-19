@@ -3,7 +3,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Itim&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/cal_hidStyle.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cal_Style.css') }}">
 {%endblock%}
 {% block title%} Water calculator {% endblock%} 
 {%block content%}
@@ -45,8 +45,9 @@
                 <section class="calculator__side-question">
                     <h3 class="calculator__question-tittle">How many minutes do you water the yard?</h3>
                     <select class="calculator__question-select" name="watering_minutes">
+                        <option class="calculator__select-option" value="0">0 minute</option>
                         <option class="calculator__select-option" value="1">1 minute</option>
-                        {% for i in range(2, 31) %}
+                        {% for i in range(0, 31) %}
                         <option class="calculator__select-option" value="{{ i }}">{{ i }} minutes</option>
                         {% endfor %}
                     </select>
@@ -55,8 +56,9 @@
                 <section class="calculator__side-question">
                     <h3 class="calculator__question-tittle">How big is your yard? (approximate in square meters)</h3>
                     <select class="calculator__question-select" name="yard_size">
+                        <option class="calculator__select-option" value="0">0 square meter</option>
                         <option class="calculator__select-option" value="1">1 square meter</option>
-                        {% for i in range(2, 101) %}
+                        {% for i in range(0, 101) %}
                         <option class="calculator__select-option" value="{{ i }}">{{ i }} square meters</option>
                         {% endfor %}
                     </select>
@@ -65,8 +67,9 @@
                 <section class="calculator__side-question">
                     <h3 class="calculator__question-tittle">If you use bottles. How many liters do you use?</h3>
                     <select class="calculator__question-select" name="liters_bottle">
+                        <option class="calculator__select-option" value="0">0 liter</option>
                         <option class="calculator__select-option" value="1">1 liter</option>
-                        {% for i in range(2, 51) %}
+                        {% for i in range(0, 51) %}
                         <option class="calculator__select-option" value="{{ i }}">{{ i }} liters</option>
                         {% endfor %}
                     </select>
@@ -79,8 +82,9 @@
                 <section class="calculator__side-question --side-question-3">
                     <h3 class="calculator__question-tittle">How often do you water the yard (in a week)</h3>
                     <select class="calculator__question-select" name="times_watering">
+                        <option class="calculator__select-option" value="0">0 time</option>
                         <option class="calculator__select-option" value="1">1 time</option>
-                        {% for i in range(2, 31) %}
+                        {% for i in range(0, 31) %}
                         <option class="calculator__select-option" value="{{ i }}">{{ i }} times</option>
                         {% endfor %}
                     </select>
@@ -90,8 +94,9 @@
                     <h3 class="calculator__question-tittle">If you water by dripping</h3>
                     <h3 class="calculator__question-tittle">number of drippers</h3>
                     <select class="calculator__question-select" name="drippers_number">
+                        <option class="calculator__select-option" value="0">0 dripper</option>
                         <option class="calculator__select-option" value="1">1 dripper</option>
-                        {% for i in range(2, 21) %}
+                        {% for i in range(0, 21) %}
                         <option class="calculator__select-option" value="{{ i }}">{{ i }} drippers</option>
                         {% endfor %}
                     </select>

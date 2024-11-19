@@ -29,7 +29,7 @@
 
 .calculator__icon{
     font-size: 1.5rem;
-    color: rgb(0, 134, 217);
+    color: black;
 }
 
 .calculator__title {
@@ -67,10 +67,6 @@
     align-self: center;
 }
 
-.calculator__side-icon {
-    font-size: 1.2rem;
-}
-
 .calculator__side-title {
     font-family: "Host Grotesk", sans-serif;
     font-optical-sizing: auto;
@@ -78,13 +74,36 @@
     font-style: normal;
 }
 
+.calculator_header-questions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    gap: 0.8rem;
+}
+
+.calculator_header-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 6rem;
+    height: 3.4rem;
+    border: 0.2rem solid rgba(197, 197, 197, 0.7);
+    border-radius: 0.8rem;
+}
+
+.calculator__side-icon {
+    font-size: 1.5rem;
+}
+
 .calculator__question-tittle {
     font-family: "Host Grotesk", sans-serif;
     font-optical-sizing: auto;
     font-weight: 500;
     font-style: normal;
+    margin-top: 0.4rem;
     margin-bottom: 1rem;
-    font-size: 1.4rem;
+    font-size: 1.46rem;
 }
 
 .calculator__question-options {
@@ -99,10 +118,10 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-family: "Roboto Mono", serif;
-    font-optical-sizing: auto;
+    font-family: "Roboto", sans-serif;
     font-weight: 400;
-    font-style: normal;
+    font-style: italic;
+    font-size: 1.2rem;
 }
 
 input[type="radio"] {
@@ -174,6 +193,7 @@ input[type="radio"]:checked::before {
 }
 
 .calculator__footer {
+    position: relative;
     width: 100%;
     text-align: right;
 }
@@ -183,13 +203,60 @@ input[type="radio"]:checked::before {
     /* background-color: rgba(54, 172, 117, 0.9); */
     background: rgba(27, 155, 140,0.9);
     border: none;
-    font-family: "Roboto Mono", monospace;
+    /* font-family: "Roboto Mono", monospace;
     font-optical-sizing: auto;
     font-weight: 500;
     font-style: normal;
-    font-size: 1.3rem;
+    font-size: 1.3rem; */
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 1.4rem;
     font: bold;
     padding-block: 0.5rem;
+}
+
+.--container {
+    width: 33rem;
+}
+
+.--side-icon {
+    margin-top: 0.5rem;
+}
+
+.--submit-button {
+    width: 25%;
+}
+
+.--side-header-size-2 {
+    width: 17rem;
+}
+
+.--side-question-2 {
+    margin-top: 4rem;
+}
+
+.--side-header-size-3 {
+    width: 17rem;
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+.--side-question-3 {
+    margin-top: 4rem;
+}
+
+.--side-header-size-4 {
+    width: 17rem;
+}
+
+.--side-header-size-5 {
+    width: 14rem;
+    font-size: 1.2rem;
+}
+
+.--side-icon-5 {
+    font-size: 1.7rem;
 }
 
 @media (750px > height) {

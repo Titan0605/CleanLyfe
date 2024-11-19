@@ -101,6 +101,7 @@ def garden_watering(minutes, watering_type, liters, times_per_week, area, number
     times_per_week = float(times_per_week)
     area = float(area)
     dripper_flow_rate = float(dripper_flow_rate)
+    number_of_drippers = float(number_of_drippers)
     #This is in ca
     area = area * 10.764
     

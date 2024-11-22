@@ -25,18 +25,18 @@ main {
 }
 
 .gradient-background {
-    position: absolute;
+    position: fixed;
     overflow: hidden;
     z-index: -2;
     width: 100%;
     height: 100%;
-    transition: backdrop-filter 0.3s ease;
+/*     transition: backdrop-filter 0.3s ease; */
 }
 
 .elipse {
     position: absolute;
     border-radius: 50%;
-    backdrop-filter: blur(20px); 
+    /* backdrop-filter: blur(20px);  */
 }
 
 .--down {
@@ -668,28 +668,35 @@ main {
 
 @media (prefers-color-scheme: dark) {
     .gradient-background {
-        background-image: linear-gradient(180deg, rgb(89, 89, 89) 0%, rgba(3,3,3,1) 100%);
+        background-image: url(/static/img/Gradient-1920x1080px.webp);
+        background-size: cover;
+        background-position: center;
+        /* background-image: linear-gradient(180deg, rgb(89, 89, 89) 0%, rgba(3,3,3,1) 100%); */
         /* background-image: linear-gradient(180deg, rgba(33, 37, 41, 0.01), rgba(33, 37, 41, 1) 100%), radial-gradient(ellipse at top left, rgba(13, 110, 253, 0.5), transparent 50%), radial-gradient(ellipse at top right, rgba(255, 228, 132, 0.5), transparent 50%), radial-gradient(ellipse at bottom right, rgba(112.520718, 44.062154, 249.437846, 0.5), transparent 50%), radial-gradient(ellipse at bottom left, rgba(214, 51, 132, 0.5), transparent 50%); */
     }
     
     .--down {
-        background-image: radial-gradient( rgb(46, 0, 121), transparent 80%);
+        /* background-image: radial-gradient( rgb(46, 0, 121), transparent 80%); */
+        background-color: rgba(46, 0, 121,0.8);
     }
     
     .--top {
-        background-image: radial-gradient( rgba(40, 132, 89, 0.4), transparent 200%);
+        /* background-image: radial-gradient( rgba(40, 132, 89, 0.4), transparent 200%); */
+        background-color: rgba(40, 132, 89, 0.6);
     }
     
     .--top-right {
-        background-image: radial-gradient( rgba(17, 2, 94, 0.80), transparent 100%);
+        /* background-image: radial-gradient( rgba(17, 2, 94, 0.80), transparent 100%); */
+        background-color: rgba(17, 2, 94, 0.80);
     }
     
     .--bottom-right {
-        background-image: radial-gradient( rgba(1, 92, 104, 1), transparent 100%);
+        /* background-image: radial-gradient( rgba(1, 92, 104, 1), transparent 100%); */
+        background-color: rgba(1, 92, 104, 1);
     }
     
     .background-top {
-        backdrop-filter: blur(215px);
+        backdrop-filter: blur(115px);
     }
 
     .home-button__button {
@@ -735,5 +742,15 @@ main {
     
     .register-login__link-button {
         color: rgb(128, 152, 249);
+    }
+}
+
+@media (500px >= width) AND (prefers-color-scheme: dark){
+    .gradient-background {
+        background-image: url(/static/img/Gradient-500x1000px.webp);
+        background-size: cover;
+        background-position: center;
+        /* background-image: linear-gradient(180deg, rgb(89, 89, 89) 0%, rgba(3,3,3,1) 100%); */
+        /* background-image: linear-gradient(180deg, rgba(33, 37, 41, 0.01), rgba(33, 37, 41, 1) 100%), radial-gradient(ellipse at top left, rgba(13, 110, 253, 0.5), transparent 50%), radial-gradient(ellipse at top right, rgba(255, 228, 132, 0.5), transparent 50%), radial-gradient(ellipse at bottom right, rgba(112.520718, 44.062154, 249.437846, 0.5), transparent 50%), radial-gradient(ellipse at bottom left, rgba(214, 51, 132, 0.5), transparent 50%); */
     }
 }

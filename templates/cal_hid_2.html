@@ -1,90 +1,129 @@
 {%extends '/layouts/base.html' %}
+{%block css%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Itim&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cal_Style.css') }}">
+{%endblock%}
 {% block title %} Water calculator {% endblock %}
-
 {% block content %}
-<div class="fondo">
-    <form action="/hidric_cal_2" method="POST">
-        <h1>Dishes</h1>
-        <section class="container-1" style="margin-top: 30px;">
-            <div class="question_1">
-                <h1>How do you wash the dishes</h1>
-                <div>
-                    <input type="radio" name="wash_type" id="type_dish1" value="dishwasher">
-                    <label for="type1">Dishwasher</label>
-                </div>
-                <div>
-                    <input type="radio" name="wash_type" id="type_dish2" value="by_hand">
-                    <label for="type1">By hand</label>
-                </div>
-            </div>
-            <div class="question_2">
-                <h1>How many time do you wash the dishes a day?</h1>
-                <select name="times_per_day_dishes">
-                    {% for i in range(1, 6) %}
+<main class="calculator">
+
+    <form action="/hidric_cal_2" method="POST" class="calculator__container">
+
+        <section class="calculator__form">
+
+            <article class="calculator__aside">
+
+                <header class="calculator__side-header">
+                    <i class="fa-solid fa-hands-bubbles calculator__side-icon"></i>
+                    <h2 class="calculator__side-title">Dishes</h2>
+                </header>
+                <section class="calculator__side-question-radio">
+                    <h3 class="calculator__question-tittle">How do you wash the dishes?</h3>
+                    <div class="calculator__question-options">
+                        <label for="wash-1" class="calculator__question-option">
+                            <input type="radio" name="wash_type" id="wash-1" value="Dishwasher">
+                            Dishwasher
+                        </label>
+                        <label for="wash-2" class="calculator__question-option">
+                            <input type="radio" name="wash_type" id="wash-2" value="By_hand">
+                            By hand
+                        </label>
+                    </div>
+                </section>
+
+                <section class="calculator__side-question">
+                    <h3 class="calculator__question-tittle">How many times do you wash the dishes per day?</h3>
+                    <select class="calculator__question-select" name="times_per_day_dishes">
+                        <option value="0">0 time</option>
+                        <option value="1">1 time</option>
+                        {% for i in range(2, 11) %}
                         <option value="{{ i }}">{{ i }} times</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="question_3">
-                <h1>If you wash your dishes by hand</h1>
-                <div>
-                    <input type="radio" name="by_hand_type" id="type_hand1" value="0">
-                    <label for="type1">The water is always open</label>
-                </div>
-                <div>
-                    <input type="radio" name="by_hand_type" id="type_hand2" value="1">
-                    <label for="type2">You turn on the water when you need it</label>
-                </div>
-                <div>
-                    <input type="radio" name="by_hand_type" id="type_hand3" value="2">
-                    <label for="type3">Use exact liters</label>
-                </div>
-            </div>
-            <div class="question_4">
-                <h1>how many minutes do you spend washing dishes for each time?</h1>
-                <select name="minutes_washing_dishes">
-                    {% for i in range(1, 61) %}
-                        <option value="{{ i }}">{{ i }} minutes</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="question_5">
-                <h1>If you use exact liters, how many liters do you use?</h1>
-                <select name="liters_by_hand">
-                    {% for i in range(1, 31) %}
+                        {% endfor %}
+                    </select>
+                </section>
+
+                <section class="calculator__side-question-radio">
+                    <h3 class="calculator__question-tittle">If you wash your dishes by hand</h3>
+                    <div class="calculator__question-options">
+                        <label for="ByHand-1" class="calculator__question-option">
+                            <input type="radio" name="by_hand_type" id="ByHand-1" value="0">
+                            Water always open
+                        </label>
+                        <label for="ByHand-2" class="calculator__question-option">
+                            <input type="radio" name="by_hand_type" id="ByHand-2" value="1">
+                            You turn on the water when you need it
+                        </label>
+                        <label for="ByHand-3" class="calculator__question-option">
+                            <input type="radio" name="by_hand_type" id="ByHand-3" value="2">
+                            Use exact liters
+                        </label>  
+                    </div>
+                </section>
+
+                <section class="calculator__side-question">
+                    <h3 class="calculator__question-tittle">How many minutes do you spend washing dishes for each time?</h3>
+                    <select class="calculator__question-select" name="minutes_washing_dishes">
+                        <option class="calculator__select-option" value="0">0 minute</option>
+                        <option class="calculator__select-option" value="1">1 minute</option>
+                        {% for i in range(2, 31) %}
+                        <option class="calculator__select-option" value="{{ i }}">{{ i }} minutes</option>
+                        {% endfor %}
+                    </select>
+                </section>
+
+            </article>
+
+            <article class="calculator__aside">
+
+                <section class="calculator__side-question --side-question-2">
+                    <h3 class="calculator__question-tittle">If you use exact liters, how many liters do you use?</h3>
+                    <select class="calculator__question-select" name="liters_by_hand">
+                        <option value="0">0 liter</option>
+                        <option value="1">1 liter</option>
+                        {% for i in range(2, 31) %}
                         <option value="{{ i }}">{{ i }} liters</option>
-                    {% endfor %}
-                </select>
-            </div>
-        </section>
-        <section class="container-2">
-            <h1>Cleaning Clothes</h1>
-            <div class="question_6">
-                <h1>What type of washing-machine do you have?</h1>
-                <div>
-                    <input type="radio" name="washing_machine_type" id="type_washing_machine1" value="front_loading">
-                    <label for="type1">Front loading</label>
-                </div>
-                <div>
-                    <input type="radio" name="washing_machine_type" id="type_washing_machine2" value="top_loading">
-                    <label for="type2">Top loading</label>
-                </div>
-                <div>
-                    <input type="radio" name="washing_machine_type" id="type_washing_machine3" value="dont_know">
-                    <label for="type3">I don't know</label>
-                </div>
-            </div>
-            <div class="question_7">
-                <h1>How many times do you wash your clothes a week?</h1>
-                <select name="washing_clothes_times">
-                    {% for i in range(1, 8) %}
+                        {% endfor %}
+                    </select>
+                </section>
+
+                <header class="calculator__side-header --side-header-size-2">
+                    <i class="fa-solid fa-shirt calculator__side-icon"></i>
+                    <h2 class="calculator__side-title">Cleaning Clothes</h2>
+                </header>
+                <section class="calculator__side-question-radio">
+                    <h3 class="calculator__question-tittle">What type of washing-maching do you have?</h3>
+                    <div class="calculator__question-options">
+                        <label for="type_washing_machine1" class="calculator__question-option">
+                            <input type="radio" name="washing_machine_type" id="type_washing_machine1" value="0">
+                            Front loading
+                        </label>
+                        <label for="type_washing_machine2" class="calculator__question-option">
+                            <input type="radio" name="washing_machine_type" id="type_washing_machine2" value="1">
+                            Top loading
+                        </label>
+                        <label for="type_washing_machine3" class="calculator__question-option">
+                            <input type="radio" name="washing_machine_type" id="type_washing_machine3" value="2">
+                            Don't know
+                        </label>
+                    </div>
+                </section>
+                <section class="calculator__side-question">
+                    <h3 class="calculator__question-tittle">How many times do you wash your clothes?</h3>
+                    <select class="calculator__question-select" name="washing_clothes_times">
+                        <option value="0">0 time</option>
+                        <option value="1">1 time</option>
+                        {% for i in range(2, 11) %}
                         <option value="{{ i }}">{{ i }} times</option>
-                    {% endfor %}
-                </select>
-            </div>
+                        {% endfor %}
+                    </select>
+                </section>
+            </article>
         </section>
-        
-        <input type="submit" value="Next">
+        <footer class="calculator__footer">
+            <input class="calculator__submit-button button" type="submit" value="NEXT">
+        </footer>
     </form>
-</div>
+</main>
 {% endblock %}

@@ -73,17 +73,18 @@ main {
 }
 
 .button{
+    cursor: pointer;
     text-decoration: none;
     color: rgba(255, 255, 255, 0.85);
     border: 0.1rem white solid;
     border-radius: 50px;
     padding: 0.4rem 1rem;
+    transition: 200ms ease;
 }
 
 .button:hover {
     color: rgba(255, 255, 255, 1);
     background-color: #30363b;
-    border: 0.1rem #30363b solid;
 }
 
 .--button_without_border {
@@ -348,6 +349,8 @@ main {
     justify-content: space-evenly;
     width: 100%;
     cursor: pointer;
+    color: #000;
+    text-decoration: none;
 }
 
 .--button-hover:hover {
@@ -485,6 +488,11 @@ main {
     display: flex;
     align-items: center;
     padding: 2rem;
+    margin-top: 15rem;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    color: white;
 }
 
 .content__huella {
@@ -507,6 +515,10 @@ main {
     gap: 1rem;
 }
 
+.content__section h2 {
+    color: #939393;
+}
+
 .content__list {
     display: flex;
     flex-direction: column;
@@ -522,6 +534,10 @@ main {
 
 .content__paragraph {
     padding-left: 1rem;
+}
+
+.--button_without_border-1 {
+    background: none;
 }
 
 @media (700px >= width){
@@ -666,6 +682,38 @@ main {
     }
 }
 
+.--disappear_medium a {
+    display: block;
+    transition: all 500ms ease;
+}
+
+.--disappear_medium a:hover {
+    background: rgba(234, 234, 234, 0.2);
+}
+
+.menu {
+    display: flex;
+    width: 9rem;
+}
+
+.munu-1 {
+    gap: 1rem;
+}
+
+.--calculator-icon {
+    margin-left: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.submenu {
+    background-color: transparent;
+    display: none;
+}
+
+.--disappear_medium ul li a:hover + ul, .submenu:hover {
+    display: block;
+}
+
 @media (prefers-color-scheme: dark) {
     .gradient-background {
         background-image: url(/static/img/Gradient-1920x1080px.webp);
@@ -696,7 +744,7 @@ main {
     }
     
     .background-top {
-        backdrop-filter: blur(115px);
+        backdrop-filter: blur(215px);
     }
 
     .home-button__button {

@@ -1,5 +1,5 @@
 #Method that realices the calculus of the vehicule emissions
-def transportEmission(distance, consumed_fuel, fuel_emission_factor, cylinders_emission_factor, old_emission_factor):            
+def transportEmission(distance, consumed_fuel,old_emission_factor, cylinders_emission_factor,  fuel_emission_factor):            
     fuel_performance = distance / consumed_fuel
     
     fuel_consume = 1/ fuel_performance        

@@ -49,9 +49,9 @@
 
                 <section class="calculator__side-question">
                     <h3 class="calculator__question-tittle">How many cylinders is your vehicle?</h3>
-                    <select class="calculator__question-select" name="shower_times">
+                    <select class="calculator__question-select" name="cylinders_count">
                         <option class="calculator__select-option" value="1">1 cylinder</option>
-                        {% for i in range(2, 17) %}
+                        {% for i in range(2, 11) %}
                         <option class="calculator__select-option" value="{{ i }}">{{ i }} cylinders</option>
                         {% endfor %}
                     </select>
@@ -59,10 +59,9 @@
 
                 <section class="calculator__side-question">
                     <h3 class="calculator__question-tittle">How old is your vehicle?</h3>
-                    <select class="calculator__question-select" name="shower_times">
-                        <option class="calculator__select-option" value="1">1 year</option>
-                        {% for i in range(2, 31) %}
-                        <option class="calculator__select-option" value="{{ i }}">{{ i }} years</option>
+                    <select class="calculator__question-select" name="vehicule_old">
+                        {% for i in range(2025, 1949, -1) %}
+                        <option class="calculator__select-option" value="{{ i }}">{{ i }}</option>
                         {% endfor %}
                     </select>
                 </section>
@@ -76,7 +75,7 @@
                     <select class="calculator__question-select" name="time_used">
                         <option class="calculator__select-option" value="0">0 hour</option>
                         <option class="calculator__select-option" value="1">1 hour</option>
-                        {% for i in range(2, 16) %}
+                        {% for i in range(2, 25) %}
                         <option class="calculator__select-option" value="{{ i }}">{{ i }} hours</option>
                         {% endfor %}
                     </select>
@@ -84,24 +83,26 @@
 
                 <section class="calculator__side-question">
                     <h3 class="calculator__question-tittle">How much fuel did you use (liters)?</h3>
-                    <select class="calculator__question-select" name="time_used">
+                    <input type="number" name="consumed_fuel" placeholder="liters" class="">
+                    <!-- <select class="calculator__question-select" name="time_used">
                         <option class="calculator__select-option" value="0">0 liter</option>
                         <option class="calculator__select-option" value="1">1 liter</option>
                         {% for i in range(2, 16) %}
                         <option class="calculator__select-option" value="{{ i }}">{{ i }} liters</option>
-                        {% endfor %}
-                    </select>
+                        {% endfor %}                    
+                    </select> -->
                 </section>
 
                 <section class="calculator__side-question">
                     <h3 class="calculator__question-tittle">How far did you travel in total?</h3>
-                    <select class="calculator__question-select" name="distance_traveled">
+                    <input type="number" name="distance_traveled" placeholder="Km">
+                    <!-- <select class="calculator__question-select" name="distance_traveled">
                         <option class="calculator__select-option" value="0">0 km</option>
                         <option class="calculator__select-option" value="1">1 km</option>
                         {% for i in range(2, 16) %}
                         <option class="calculator__select-option" value="{{ i }}">{{ i }} km</option>
-                        {% endfor %}
-                    </select>
+                        {% endfor %} 
+                    </select>-->
                 </section>
 
             </article>

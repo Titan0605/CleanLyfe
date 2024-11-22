@@ -467,7 +467,7 @@ def go_cal_transport():
     if 'id' in session:
         user_id = session['id']
         user_name = session['user']
-        return render_template('cal_transp.html', id = user_id, user = user_name)
+        return render_template('cal_veh_1.html', id = user_id, user = user_name)
     else:
         return 'You have to log in first'
     

@@ -536,6 +536,10 @@ main {
     padding-left: 1rem;
 }
 
+.--button_without_border-1 {
+    background: none;
+}
+
 @media (700px >= width){
     .--down {
         width: 100rem;
@@ -676,6 +680,38 @@ main {
     .navbar__user-profile {
         display: none;
     }
+}
+
+.--disappear_medium a {
+    display: block;
+    transition: all 500ms ease;
+}
+
+.--disappear_medium a:hover {
+    background: rgba(234, 234, 234, 0.2);
+}
+
+.menu {
+    display: flex;
+    width: 9rem;
+}
+
+.munu-1 {
+    gap: 1rem;
+}
+
+.--calculator-icon {
+    margin-left: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.submenu {
+    background-color: transparent;
+    display: none;
+}
+
+.--disappear_medium ul li a:hover + ul, .submenu:hover {
+    display: block;
 }
 
 @media (prefers-color-scheme: dark) {

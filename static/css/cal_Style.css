@@ -28,7 +28,7 @@
 }
 
 .calculator__icon{
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     color: black;
 }
 
@@ -259,6 +259,10 @@ input[type="radio"]:checked::before {
     font-size: 1.7rem;
 }
 
+.--icon-1 {
+    color: #000;
+}
+
 @media (750px > height) {
     .calculator {
         position: static;
@@ -324,7 +328,7 @@ input[type="radio"]:checked::before {
     }
 
     .calculator__icon{
-        color: aqua;
+        color: aqua; 
     }
 
     .calculator__title {
@@ -361,5 +365,9 @@ input[type="radio"]:checked::before {
 
     .calculator__question-option:focus-within {
         color: rgba(176, 176, 176, 0.8);
+    }
+
+    .--icon-1 {
+        color: rgb(160, 160, 160);
     }
 }

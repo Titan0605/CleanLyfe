@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_mysqldb import MySQL
 import water_products_calculus
+import transportCalculus, DbConection
+import pymysql
 
 #este es para declarar una varianble tipo flask (es obligatorio)
 app = Flask(__name__)
@@ -67,6 +69,7 @@ def logout():
         session.pop('email', None)
         session.pop('id', None)
         return render_template('index.html')
+    return render_template('index.html')
 
 @app.route('/register_fun', methods=['POST'])
 def register_fun():
@@ -135,7 +138,10 @@ def go_cleanlyfe():
             return render_template('404.html')
         
         user = session['user']
-        return render_template('cleanlyfe.html', user = user)
+        if user == 'invited':
+            return render_template('404.html')
+        else:
+            return render_template('cleanlyfe.html', user = user)
 
 
 #This route is for opening and renderising the missions page
@@ -145,11 +151,11 @@ def go_missions():
 
         if 'id' in session:
             id_user = session['id']
-
-            cur = mysql.connection.cursor()
-            cur.execute('SELECT * FROM tusers WHERE id_user = %s', (id_user,))
-            data = cur.fetchone()
-            return render_template('misions.html', user = data[4])
+            if id_user == 10:
+                return 'You have not logged in yet'
+            else:
+                user_name =session['user']
+                return render_template('misions.html', user = user_name)
         return "You have not logged in yet"
 
 #This route is for opening and renderising the missions page
@@ -169,40 +175,395 @@ def go_hidric_cal():
             session['user']='invited'
             user_id = session['id']
             user_name = session['user']
-
+            
+        if user_id != 10:
+            cur = mysql.connection.cursor()
+            cur.execute('SELECT page_water_footprint FROM tuser_log WHERE id_user = %s', (user_id,))
+            data = cur.fetchone()
+            page = data[0]
+            if page == 1:
+                return render_template('cal_hid.html', user = user_name, id = user_id)
+            elif page == 2:
+                return redirect(url_for('go_hidric_cal_2'))
+            elif page == 3:
+                return redirect(url_for('go_hidric_cal_3'))
+            elif page == 4:
+                return redirect(url_for('go_hidric_cal_4'))
+            elif page == 5:
+                return redirect(url_for('go_hidric_cal_5'))
+                
+            
         return render_template('cal_hid.html', user = user_name, id = user_id)
 
 @app.route('/hidric_cal_1', methods=['POST'])
 def hidric_cal_1():
     if request.method == 'POST':
-        shower_type = request.form['shower_type']
-        minutes_shower = request.form['minutes_shower']
-        shower_times = request.form['shower_times']
-        
-        user_id = 0
-
-        total_shower = water_products_calculus.showers(minutes_shower, shower_type, shower_times)
-
-        toilet_type = request.form['toilet_type']
-        bathroom_times = request.form['bathroom_times']
-
-        total_toilet = water_products_calculus.toilet(bathroom_times,toilet_type)
-        
         if 'id' in session:
             id_user = session['id']
+            
+            shower_type = request.form['shower_type']
+            print("Shower type: ", shower_type)
+            minutes_shower = request.form['minutes_shower']
+            print("minutes_shower: ", minutes_shower)
+            shower_times = request.form['shower_times']
+            print("shower_times", shower_times)
 
+            total_shower = water_products_calculus.showers(minutes_shower, shower_type, shower_times)
+
+            toilet_type = request.form['toilet_type']
+            print("toilet type: ", toilet_type)
+            bathroom_times = request.form['bathroom_times']
+            print("bathroom times: ", bathroom_times)
+
+            total_toilet = water_products_calculus.toilet(bathroom_times,toilet_type)
+            
+
+            
+            cur = mysql.connection.cursor()
+            cur.execute('CALL prd_calc_hidric_beginnn (%s, %s, %s)', (id_user, total_shower, total_toilet))
+            mysql.connection.commit()
+            
+            if id_user != 10:
+                cur.execute('UPDATE tuser_log SET page_water_footprint = 2 WHERE id_user = %s', (id_user,))
+                mysql.connection.commit()
+                
+            return redirect(url_for('go_hidric_cal_2'))
+        else:
+            return 'you have to logged in first'
+    
+@app.route('/go_hidric_cal_2', methods=['GET'])
+def go_hidric_cal_2():
+    if request.method == 'GET':
+        if 'id' in session:
+                user_id = session['id']
+                user_name = session['user']
+        return render_template('cal_hid_2.html', id = user_id, user = user_name)
+
+@app.route('/hidric_cal_2', methods=['POST'])
+def hidric_cal_2():
+    if request.method == 'POST':
+        if 'id' in session:
+            user_id = session['id']
+            #variables for cleaning dishes
+            wash_type = request.form['wash_type']
+            print("wash type ", wash_type)
+            times_per_day_dishes = request.form['times_per_day_dishes']
+            print("times per day dishes: ", times_per_day_dishes)
+            by_hand_type = request.form['by_hand_type']
+            print('by hand type: ', by_hand_type)
+            minutes_washing_dishes = request.form['minutes_washing_dishes']
+            print('minutes washing dishes ', minutes_washing_dishes)
+            liters_by_hand = request.form['liters_by_hand']
+            print('liters by hand', liters_by_hand)
+            
+            #variables for cleaning clothes
+            washing_machine_type = request.form['washing_machine_type']
+            print('washing machine type ', washing_machine_type)
+            user_knows = 1
+            washing_clothes_times = request.form['washing_clothes_times']
+            print('washing clothes times: ', washing_clothes_times)
+            
+            if washing_machine_type == 'dont_know':
+                user_knows = 0
+            
+            total_dishes = water_products_calculus.dishes(wash_type, times_per_day_dishes, minutes_washing_dishes, by_hand_type, liters_by_hand)
+            
+            print('total dishes ', total_dishes)
+            
+            total_washing_machine = water_products_calculus.washing_clothest(washing_clothes_times, washing_machine_type, user_knows)
+            
+            cur = mysql.connection.cursor()
+            cur.execute('CALL cal_hidric_two (%s, %s, %s);', (user_id, total_dishes, total_washing_machine))
+            mysql.connection.commit()
+            
+            if user_id != 10:
+                cur.execute('UPDATE tuser_log SET page_water_footprint = 3 WHERE id_user = %s', (user_id,))
+                mysql.connection.commit()
+            
+            return redirect(url_for('go_hidric_cal_3'))
+        else:
+            return 'You have to log in first'
         
+@app.route('/go_hidric_cal_3', methods=['GET'])
+def go_hidric_cal_3():
+    if 'id' in session:
+        user_id = session['id']
+        user_name = session['user']
+        return render_template('cal_hid_3.html', id = user_id, user = user_name)
+    else:
+        return 'You have to log in first'
+
+@app.route('/hidric_cal_3', methods=['POST'])
+def hidric_cal_3():
+    if request.method == 'POST':
+        if 'id' in session:
+            user_id = session['id']
+            
+            watering_type = request.form['watering_type']
+            print('Watering type: ', watering_type)
+            watering_minutes = request.form['watering_minutes']
+            print('watering minutes ', watering_minutes)
+            yard_size = request.form['yard_size']
+            print('yard_size: ', yard_size)
+            liters_bottle = request.form['liters_bottle']
+            print('liters_bottle ', liters_bottle)
+            times_watering = request.form['times_watering']
+            print('times_watering ', times_watering)
+            drippers_number = request.form['drippers_number']
+            print('drippers_number ', drippers_number)
+            flow_rate = request.form['flow_rate']
+            print('flow_rate ', flow_rate)
+            
+            total_watering_yard = water_products_calculus.garden_watering(watering_minutes, watering_type, liters_bottle, times_watering, yard_size, drippers_number, flow_rate)
+            
+            cur = mysql.connection.cursor()
+            cur.execute('CALL cal_hidric_three (%s, %s);', (user_id, total_watering_yard))
+            mysql.connection.commit()
+            
+            if user_id != 10:
+                cur.execute('UPDATE tuser_log SET page_water_footprint = 4 WHERE id_user = %s', (user_id,))
+                mysql.connection.commit()
+                
+            return redirect(url_for('go_hidric_cal_4'))
+        else:
+            return 'You have to log in first'
+        
+@app.route('/go_hidric_cal_4', methods=['GET'])
+def go_hidric_cal_4():
+    if 'id' in session:
+        user_id = session['id']
+        user_name = session['user']
+        return render_template('cal_hid_4.html', id = user_id, user = user_name)
+    else:
+        return 'You have to log in first'
+    
+@app.route('/hidric_cal_4', methods=['POST'])
+def hidric_cal_4():
+    if request.method == 'POST':
+        if 'id' in session:
+            user_id = session['id']
+            
+            mop_times = request.form['mop_times']
+            buckets_number = request.form['buckets_number']
+            liters_bucket = request.form['liters_bucket']
+            
+            total_cleaning_house = water_products_calculus.house_cleaning(liters_bucket, buckets_number, mop_times)
+            
+            cur = mysql.connection.cursor()
+            
+            cur.execute('CALL cal_hidric_four (%s, %s);', (user_id, total_cleaning_house))
+            mysql.connection.commit()
+            
+            if user_id != 10:
+                cur.execute('UPDATE tuser_log SET page_water_footprint = 5 WHERE id_user = %s', (user_id,))
+                mysql.connection.commit()
+            
+            return redirect(url_for('go_hidric_cal_5'))
+        else:
+            return 'You have to log in first'
+        
+@app.route('/go_hidric_cal_5', methods=['GET'])
+def go_hidric_cal_5():
+    if 'id' in session:
+        user_id = session['id']
+        user_name = session['user']
+        return render_template('cal_hid_5.html', id = user_id, user = user_name)
+    else:
+        return 'You have to log in first'
+    
+@app.route('/hidric_cal_5', methods=['POST'])
+def hidric_cal_5():
+    if request.method == 'POST':
+        if 'id' in session:
+            user_id = session['id']
+            
+            cups_coffe = request.form['cups_coffe']
+            total_coffe = water_products_calculus.coffe(cups_coffe)
+            
+            cups_tea = request.form['cups_tea']
+            total_tea = water_products_calculus.tea(cups_tea)
+            
+            kg_beef = request.form['kg_beef']
+            total_beef = water_products_calculus.cow_meat(kg_beef)
+            
+            kg_chicken = request.form['kg_chicken']
+            total_chicken = water_products_calculus.chicken_meat(kg_chicken)
+            
+            pork_meat = request.form['pork_meat']
+            total_pork = water_products_calculus.pork_meat(pork_meat)
+            
+            kg_rice = request.form['kg_rice']
+            total_rice = water_products_calculus.rice(kg_rice)
+            
+            kg_sugar = request.form['kg_sugar']
+            total_sugar = water_products_calculus.sugar(kg_sugar)
+            
+            kg_cheese = request.form['kg_cheese']
+            total_cheese = water_products_calculus.cheese(kg_cheese)
+            
+            lt_milk = request.form['lt_milk']
+            total_milk = water_products_calculus.milk(lt_milk)
+            
+            lt_beer = request.form['lt_beer']
+            total_beer = water_products_calculus.beer(lt_beer)
+            
+            lt_juice = request.form['lt_juice']
+            total_juice = water_products_calculus.processed_juice(lt_juice)
+            
+            lt_soda = request.form['lt_soda']
+            total_soda = water_products_calculus.soda(lt_soda)
+            
+            eggs = request.form['eggs']
+            total_eggs = water_products_calculus.eggs(eggs)
+            
+            bread_slices = request.form['bread_slices']
+            total_bread = water_products_calculus.bread_slices(bread_slices)
+            
+            cur = mysql.connection.cursor()
+            
+            cur.execute('CALL prd_cal_hidric_final (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', (user_id, total_coffe, total_tea, total_beef, total_chicken, total_pork, total_rice, total_sugar, total_cheese, total_milk, total_beer, total_juice, total_soda, total_eggs, total_bread))
+            mysql.connection.commit()
+            
+            if user_id != 10:
+                cur.execute('UPDATE tuser_log SET page_water_footprint = 1 WHERE id_user = %s', (user_id,))
+                mysql.connection.commit()
+            
+            return redirect(url_for('final_hid_calculator'))
+        else:
+            return 'You have to log in'
+
+@app.route('/final_hid_calculator', methods=['GET'])
+def final_hid_calculator():
+    if 'id' in session:
+        user_id = session['id']
+        user_name = session['user']
         cur = mysql.connection.cursor()
+        cur.execute('SELECT water_footprint.total_water FROM water_footprint WHERE id_water_footprint = (SELECT MAX(id_water_footprint) FROM footprints_user WHERE id_user = %s);', (user_id,))
+        total_water_footprint = cur.fetchall()
         
-        cur.execute('CALL prd_calc_hidric_begin (%s, %s, %s)', (id_user, total_shower, total_toilet))
-        cur.commit()
+        formatted_value = "{:.2f}".format(total_water_footprint[0][0])
 
-        return render_template('cal_hid_1.html')
+        
+        return render_template('final_cal_hid.html', id = user_id, user = user_name, total = formatted_value)
+    else:
+        return 'You have to log in first'
 
+@app.route('/go_cal_transport', methods=['GET'])
+def go_cal_transport():
+    if 'id' in session:
+        user_id = session['id']
+        user_name = session['user']
+        return render_template('cal_transp.html', id = user_id, user = user_name)
+    else:
+        return 'You have to log in first'
+    
+@app.route('/cal_transport', methods=['POST'])   
+def cal_transport(): 
+    if request.method == "POST":
+        if 'id' in session:            
+            #Brings all the values from the form to send it at the method that do the calculus
+            fuel_type = request.form["fuel_type"]            
+            cylinders_count = request.form["cylinders_count"]            
+            vehicle_age = int(request.form["vehicule-old"])            
+            time_used = int(request.form["time_used"])
+            consumed_fuel = int(request.form["consumed_fuel"])            
+            distance = int(request.form["distance_traveled"])            
+            #Brings from the db the emission factor of the fuel type used by the user
+            cur = mysql.connection.cursor()
+            cur.execute("SET @id_fuel_adjustment = NULL;")
+            cur.execute("CALL prd_set_fuel_adjustment (%s, @id_fuel_adjustment);", (fuel_type,))
+            cur.execute("SELECT @id_fuel_adjustment;")
+            id_fuel = cur.fetchone()[0]#Bring the id of factor of the fuel used
+            cur.execute("SELECT emission_factor FROM tcat_fuel WHERE id_fuel = %s;", (id_fuel,))
+            fuel_emission_factor = cur.fetchone()[0]
+            #Brings from db the cylinder adjustment of the number of cylinders of the user
+            cur.execute("SET @id_cylinder_adjustment = NULL;")
+            cur.execute("CALL prd_set_cylinder_adjustment (%s, @id_cylinder_adjustment);", (cylinders_count,))
+            cur.execute("SELECT @id_cylinder_adjustment;")
+            id_cylinder = cur.fetchone()[0]#Brings the id of the cylinder factor
+            cur.execute("SELECT cylinder_adjustment FROM tcat_cylinder where id_cylinder = %s", (id_cylinder,))
+            cylinders_emission_factor = cur.fetchone()[0]
+            #Brings from db the emission factor depending of how long is the vehicle
+            cur.execute("SET @id_year_adjustmentt = NULL;")
+            cur.execute("CALL prd_set_year_adjustment(%s, @id_year_adjustmentt);", (vehicle_age,))
+            cur.execute("SELECT @id_year_adjustmentt;")
+            id_old = cur.fetchone()[0]#Bring the id of the factor of the age of the vehicle
+            cur.execute("SELECT year_adjustment FROM tvechicule_year WHERE id_vehicule_year = %s;", (id_old,))  
+            old_emission_factor = cur.fetchone()[0]
+            #Recieves two values from the merhod, the total factor and the fuel performance
+            transport_emission , fuel_performance = transportCalculus.transportEmission(distance, consumed_fuel, fuel_emission_factor, cylinders_emission_factor, old_emission_factor)
+            #Insert all the values returned to the db
+            #cur.execute("CALL prd_insert_cal_transport_emission(%s, %s, %s, %s, %s, %s, %s, %s, %s);", (1, id_fuel, id_cylinder, id_old, time_used, consumed_fuel, distance, fuel_performance, transport_emission))
+            
+            final_transport_emission = round(transport_emission, 2)
+            print(f'Tu emision es: {final_transport_emission}')
+            return redirect(url_for('final_cal_transport'))
+#Redirects to the page that shows your emision
+@app.route('/final_cal_transport', methods=['GET'])    
+def final_cal_transport():
+    if 'id' in session:
+        user_id = session['id']
+        user_name = session['user']        
+        
+        return render_template('final_cal_transport.html', id = user_id, user = user_name, total = 1)
+    else:
+        return 'You have to log in first'
+#Redirects to the page to do the electrical calculus
+@app.route('/go_cal_electric', methods=['GET'])
+def go_cal_electric():
+    if 'id' in session:
+        user_id = session['id']
+        user_name = session['user']
+        return render_template('cal_electric.html', id = user_id, user = user_name)
+    else:
+        return 'You have to log in first'
+@app.route('/cal_electric', methods=['POST']) 
+def cal_electric():
+    if request.method == 'POST':
+        if 'id' in session:
+            finalList = []#En este dict se van a guardar todos los dict traidos de la db
+            cur = DbConection.get_dict_cursor()
+            
+            mylist = request.form.getlist('device')#Trae los checkbox seleccionados
+            print("valores en la lista: ", mylist)
+            # for name in mylist:
+            #     name = name.strip("'").strip('"') 
+            #     print("Nombres:", name)       
+            #     cur.execute("SELECT * FROM people WHERE name = %s;", (name,))
+            #     rows = cur.fetchall()        
+            #     for row in rows:
+            #         finalList.append(row)                            
+            # print(f"Cada lista: {finalList}")
+            # print(f"Sacando algo en especifico: {finalList[2].get('age')}")
+            return redirect(url_for('final_cal_electric'))        
+        else:
+            return 'You have to log in first'
+        
+@app.route('/final_cal_electric', methods=['GET'])
+def final_cal_electric():
+    if 'id' in session:
+        user_id = session['id']
+        user_name = session['user']        
+        
+        return render_template('final_cal_electric.html', id = user_id, user = user_name, total = 1)
+    else:
+        return 'You have to log in first'
 #This is a method that recieves an error and renderising the error handle page
+@app.route('/page_not_found')
 def page_not_found(error):
-    return render_template("404.html"), 404
+    if 'id' in session:
+        user_id = session['id']
+        user_name = session['user']    
+        return render_template("404.html", id = user_id, user = user_name), 404
 
+def user_render_page(pageToRender):
+    if 'id' in session:
+        user_id = session['id']
+        user_name = session['user']
+        return render_template(f'{pageToRender}', id = user_id, user = user_name)
+    else:
+        return 'You have to log in first'
+    
 #This is for running the application as a server
 if __name__ == "__main__":
     #This prevents that appears an error of page not found and shows a error handle page

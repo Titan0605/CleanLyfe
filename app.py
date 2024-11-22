@@ -575,27 +575,80 @@ def go_cal_carbon_products():
 @app.route('/cal_carbon_products', methods=['POST'])
 def cal_carbon_products():
     if request.method == 'POST':
-        cow_meat_kg = int(request.form['cow_meat_kg'])
-        cow_meat_transport = int(request.form['cow_meat_transport'])
-        cow_meat_packaging = int(request.form['cow_meat_packaging'])
-        cow_meat_refrigeration = int(request.form['cow_meat_refrigeration'])
-        
+        if 'id' in session:
+            
+            user_id = session['id']
+            
+            cow_meat_kg = int(request.form['cow_meat_kg'])
+            pork_meat_kg = int(request.form['pork_meat_kg'])
+            chicken_meat_kg = int(request.form['chicken_meat_kg'])
+            
+            meat_transport = request.form['meat_transport']
+            meat_packaging = request.form['meat_packaging']
+            meat_refrigeration = request.form['meat_refrigeration']
+            
+            cur = mysql.connection.cursor()
+            
+            send_emission = products_adjustements(1, cow_meat_kg, meat_transport, meat_packaging, meat_refrigeration, user_id)
+            if send_emission == 0:
+                return 'There is a error sending cow meat product carbon emission'
+            
+            send_emission = products_adjustements(2, pork_meat_kg, meat_transport, meat_packaging, meat_refrigeration, user_id)
+            if send_emission == 0:
+                return 'There is a error sending pork meat product carbon emission'
+            
+            send_emission = products_adjustements(3, chicken_meat_kg, meat_transport, meat_packaging, meat_refrigeration, user_id)
+            if send_emission == 0:
+                return 'There is a error sending chicken product carbon emission'
+            
+            milk_liters = int(request.form['milk_liters'])
+            cheese_kg = int(request.form['cheese_kg'])
+            dairy_transport = request.form['dairy_transport']
+            dairy_packaging = request.form['dairy_packaging']
+            dairy_refrigeration = request.form['dairy_refrigeration']
+            
+            send_emission = products_adjustements(4, milk_liters, dairy_transport, dairy_packaging, dairy_refrigeration, user_id)
+            if send_emission == 0:
+                return 'There is a error sending milk product carbon emission'
+            
+            send_emission = products_adjustements(5, cheese_kg, dairy_transport, dairy_packaging, cheese_refrigeration, user_id)
+            if send_emission == 0:
+                return 'There is a error sending cheese product carbon emission'
+            
+            cheese_kg = int(request.form['cheese_kg'])
+            cheese_transport = request.form['cheese_transport']
+            cheese_packaging = request.form['cheese_packaging']
+            cheese_refrigeration = request.form['cheese_refrigeration']
+            
+            send_emission = products_adjustements(5, cheese_kg, cheese_transport, cheese_packaging, cheese_refrigeration, user_id)
+            if send_emission == 0:
+                return 'There is a error sending cheese product carbon emission'
+            
+            
+            
+            return
+    return
+
+def products_adjustements(product_id, product_unit, transport, packaging, refrigeration, user_id):
+    try:
         cur = mysql.connection.cursor()
-        
-        cur.execute('CALL prd_carbon_cow_adjustements(1, %s, %s, %s, @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement);', (cow_meat_transport, cow_meat_packaging, cow_meat_refrigeration))
+        cur.execute('CALL prd_carbon_cow_adjustements(%s, %s, %s, %s, @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement);', (product_id, transport, packaging, refrigeration))
         cur.execute('SELECT @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement;')
         adjustements = cur.fetchall()
         
-        carbon_emission = adjustements[0]
-        transport_adjustement = adjustements[1]
-        packaging_adjustement = adjustements[2]
-        refrigeration_adjustement = adjustements[3]
+        carbon_emission = float(adjustements[0])
+        transport_adjustement = float(adjustements[1])
+        packaging_adjustement = float(adjustements[2])
+        refrigeration_adjustement = float(adjustements[3])
         
-        final_cow_meat_emission = carbon_products_calculus.product_carbon_emission(cow_meat_kg, carbon_emission, transport_adjustement, packaging_adjustement, refrigeration_adjustement)
+        final_emission = carbon_products_calculus.product_carbon_emission(product_unit, carbon_emission, transport_adjustement, packaging_adjustement, refrigeration_adjustement)
         
-        cur.execute('CALL prd_insert_product_carbon_emission(1, %s)', (final_cow_meat_emission,))
-        return
-    return
+        cur.execute('CALL prd_insert_product_carbon_emission(%s, %s, %s)', (user_id, product_id, final_emission,))
+        
+        successful = 1
+    except:
+        successful = 0
+    return successful
 
 #This is a method that recieves an error and renderising the error handle page
 @app.route('/page_not_found')

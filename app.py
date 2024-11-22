@@ -3,6 +3,7 @@ from flask_mysqldb import MySQL
 import water_products_calculus
 import transportCalculus, DbConection
 import pymysql
+import carbon_products_calculus
 
 #este es para declarar una varianble tipo flask (es obligatorio)
 app = Flask(__name__)
@@ -559,10 +560,43 @@ def final_cal_electric():
     if 'id' in session:
         user_id = session['id']
         user_name = session['user']        
-        
         return render_template('final_cal_electric.html', id = user_id, user = user_name, total = 1)
     else:
         return 'You have to log in first'
+    
+@app.route('/go_cal_carbon_products', methods=['GET'])
+def go_cal_carbon_products():
+    if 'id' in session:
+        if session['id'] != 10:
+            return render_template('cal_carbon_products')
+        return 'you have to log in first'
+    return 'you have to log in first'
+
+@app.route('/cal_carbon_products', methods=['POST'])
+def cal_carbon_products():
+    if request.method == 'POST':
+        cow_meat_kg = int(request.form['cow_meat_kg'])
+        cow_meat_transport = int(request.form['cow_meat_transport'])
+        cow_meat_packaging = int(request.form['cow_meat_packaging'])
+        cow_meat_refrigeration = int(request.form['cow_meat_refrigeration'])
+        
+        cur = mysql.connection.cursor()
+        
+        cur.execute('CALL prd_carbon_cow_adjustements(1, %s, %s, %s, @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement);', (cow_meat_transport, cow_meat_packaging, cow_meat_refrigeration))
+        cur.execute('SELECT @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement;')
+        adjustements = cur.fetchall()
+        
+        carbon_emission = adjustements[0]
+        transport_adjustement = adjustements[1]
+        packaging_adjustement = adjustements[2]
+        refrigeration_adjustement = adjustements[3]
+        
+        final_cow_meat_emission = carbon_products_calculus.product_carbon_emission(cow_meat_kg, carbon_emission, transport_adjustement, packaging_adjustement, refrigeration_adjustement)
+        
+        cur.execute('CALL prd_insert_product_carbon_emission(1, %s)', (final_cow_meat_emission,))
+        return
+    return
+
 #This is a method that recieves an error and renderising the error handle page
 @app.route('/page_not_found')
 def page_not_found(error):

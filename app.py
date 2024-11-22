@@ -37,10 +37,10 @@ def login_fun():
         cur.execute('SELECT * FROM tusers WHERE user_name = %s AND user_password = %s', (user_name, password))
         #El fecthall se hace en los selects para traer todos los datos, se va a traer una lista dentro de otra lista con todos los datos
         data = cur.fetchone()
-        
+
         #Si el confirmation es 1 se va a mandar a la funcion de go_main_page que va a renderizar el html cleanlyfe, si es diferente de 1 entonces va a renderizar la misma pagina
         if data:
-            
+
             session['user']=user_name
             session['password']=password
             session['first_name']= data[2]
@@ -58,7 +58,7 @@ def login_fun():
 def redirect_reg():
     if request.method == 'GET':
         return redirect(url_for('go_register'))
-    
+
 @app.route('/logout', methods=['GET'])
 def logout():
     if 'user' in session:
@@ -77,18 +77,18 @@ def register_fun():
         email = request.form['email']
         user_name = request.form['username']
         password = request.form['password']
-        con_password = request.form['confirm-password']        
+        con_password = request.form['confirm-password']
 
         cur = mysql.connection.cursor()
-        
+
         cur.execute('SELECT * FROM tusers')
         data = cur.fetchall()
-        
+
         for user in data:
             if user[4] == user_name:
                 flash('That user has already been taken')
                 return redirect(url_for('go_register'))
-        
+
         if len(password) >= 8:
             if password == con_password:
                 cur.execute('INSERT INTO tusers (id_type_member, user_name, user_email, user_password, active, created_at) VALUES (1, %s, %s, %s, 1, NOW())', (user_name, email, password))
@@ -120,7 +120,7 @@ def go_register():
 @app.route('/go_user_profile', methods=['GET', 'POST'])
 def go_user_profile():
     if request.method == 'POST' or request.method == 'GET':
-        return render_template('userProfile.html')   
+        return render_template('userProfile.html')
     
 #Esta ruta es para renderizar la main page
 @app.route('/go_main_page', methods=['GET', 'POST'])

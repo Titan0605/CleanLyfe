@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_mysqldb import MySQL
 import water_products_calculus
-import vehicleCalculus
+import transportCalculus, DbConection
+import pymysql
 
 #este es para declarar una varianble tipo flask (es obligatorio)
 app = Flask(__name__)
@@ -476,17 +477,12 @@ def cal_transport():
     if request.method == "POST":
         if 'id' in session:            
             #Brings all the values from the form to send it at the method that do the calculus
-            fuel_type = request.form["fuel_type"]
-            print('Tipo de fuel: ',fuel_type)
-            cylinders_count = request.form["cylinders_count"]
-            print('Number of cylinders: ',cylinders_count)
-            vehicle_age = int(request.form["vehicule-old"])
-            print('age of vehicle: ',vehicle_age)
+            fuel_type = request.form["fuel_type"]            
+            cylinders_count = request.form["cylinders_count"]            
+            vehicle_age = int(request.form["vehicule-old"])            
             time_used = int(request.form["time_used"])
-            consumed_fuel = int(request.form["consumed_fuel"])
-            print('fuel consumed', consumed_fuel)        
-            distance = int(request.form["distance_traveled"])
-            print('Distance: ', distance)
+            consumed_fuel = int(request.form["consumed_fuel"])            
+            distance = int(request.form["distance_traveled"])            
             #Brings from the db the emission factor of the fuel type used by the user
             cur = mysql.connection.cursor()
             cur.execute("SET @id_fuel_adjustment = NULL;")
@@ -510,14 +506,14 @@ def cal_transport():
             cur.execute("SELECT year_adjustment FROM tvechicule_year WHERE id_vehicule_year = %s;", (id_old,))  
             old_emission_factor = cur.fetchone()[0]
             #Recieves two values from the merhod, the total factor and the fuel performance
-            transport_emission , fuel_performance = vehicleCalculus.vehicleEmission(distance, consumed_fuel, fuel_emission_factor, cylinders_emission_factor, old_emission_factor)
+            transport_emission , fuel_performance = transportCalculus.transportEmission(distance, consumed_fuel, fuel_emission_factor, cylinders_emission_factor, old_emission_factor)
             #Insert all the values returned to the db
             #cur.execute("CALL prd_insert_cal_transport_emission(%s, %s, %s, %s, %s, %s, %s, %s, %s);", (1, id_fuel, id_cylinder, id_old, time_used, consumed_fuel, distance, fuel_performance, transport_emission))
             
             final_transport_emission = round(transport_emission, 2)
             print(f'Tu emision es: {final_transport_emission}')
             return redirect(url_for('final_cal_transport'))
-    
+#Redirects to the page that shows your emision
 @app.route('/final_cal_transport', methods=['GET'])    
 def final_cal_transport():
     if 'id' in session:
@@ -525,6 +521,46 @@ def final_cal_transport():
         user_name = session['user']        
         
         return render_template('final_cal_transport.html', id = user_id, user = user_name, total = 1)
+    else:
+        return 'You have to log in first'
+#Redirects to the page to do the electrical calculus
+@app.route('/go_cal_electric', methods=['GET'])
+def go_cal_electric():
+    if 'id' in session:
+        user_id = session['id']
+        user_name = session['user']
+        return render_template('cal_electric.html', id = user_id, user = user_name)
+    else:
+        return 'You have to log in first'
+@app.route('/cal_electric', methods=['POST']) 
+def cal_electric():
+    if request.method == 'POST':
+        if 'id' in session:
+            finalList = []#En este dict se van a guardar todos los dict traidos de la db
+            cur = DbConection.get_dict_cursor()
+            
+            mylist = request.form.getlist('device')#Trae los checkbox seleccionados
+            print("valores en la lista: ", mylist)
+            # for name in mylist:
+            #     name = name.strip("'").strip('"') 
+            #     print("Nombres:", name)       
+            #     cur.execute("SELECT * FROM people WHERE name = %s;", (name,))
+            #     rows = cur.fetchall()        
+            #     for row in rows:
+            #         finalList.append(row)                            
+            # print(f"Cada lista: {finalList}")
+            # print(f"Sacando algo en especifico: {finalList[2].get('age')}")
+            return redirect(url_for('final_cal_electric'))        
+        else:
+            return 'You have to log in first'
+        
+@app.route('/final_cal_electric', methods=['GET'])
+def final_cal_electric():
+    if 'id' in session:
+        user_id = session['id']
+        user_name = session['user']        
+        
+        return render_template('final_cal_electric.html', id = user_id, user = user_name, total = 1)
     else:
         return 'You have to log in first'
 #This is a method that recieves an error and renderising the error handle page
@@ -539,7 +575,7 @@ def user_render_page(pageToRender):
     if 'id' in session:
         user_id = session['id']
         user_name = session['user']
-        return render_template(pageToRender, id = user_id, user = user_name)
+        return render_template(f'{pageToRender}', id = user_id, user = user_name)
     else:
         return 'You have to log in first'
     

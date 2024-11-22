@@ -1,0 +1,64 @@
+{%extends '/layouts/base.html' %}
+{% block title %} Transport calculator {% endblock %}
+
+{% block content %} 
+<article class="vehicle-container">
+    <div class="vehicle-containwe_form">        
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas veniam nemo aspernatur saepe odio officia iusto deserunt, sequi sapiente consectetur assumenda, illo nulla magnam minus aut reiciendis cupiditate architecto. Et!
+        <form action="/cal_transport" method="POST">
+            <div>
+                <h1>What king of fuel do you use?</h1>
+                <div>
+                    <input type="radio" name="fuel_type" value="Gas">
+                    <label for="type1">Gas</label>
+                </div>
+                <div>
+                    <input type="radio" name="fuel_type" value="Diesel">
+                    <label for="type1">Diesel</label>
+                </div>
+                <div>
+                    <input type="radio" name="fuel_type" value="GNV">
+                    <label for="type">NGV (Natural Gas Vehicles)</label>
+                </div>
+                <div>
+                    <input type="radio" name="fuel_type" value="Electric">
+                <label for="type1">Electric</label>
+                </div>                
+            </div>
+            
+            <div>
+                <h1>How many cylinders is your vehicle</h1>
+                <select name="cylinders_count">
+                    {% for i in range(1, 8) %}
+                        <option value="{{ i }}">{{ i }} cylinders</option>
+                    {% endfor %}                    
+                </select>
+            </div>
+
+            <div>
+                <h1>How old is your vehicle</h1>
+                <input type="number" name="vehicule-old">
+            </div>
+
+            <div>
+                <h1>How long did you use your vehicle (No.hours)?</h1>
+                <input type="number" name="time_used">
+            </div>
+
+            <div>
+                <h1>How much fuel did you use (litres)?</h1>
+                <input type="number" name="consumed_fuel">
+            </div>
+
+            <div>
+                <h1>How far did you travel in total?</h1>
+                <input type="number" name="distance_traveled">
+            </div>
+
+            <div class="button">
+                <input type="submit" value="NEXT">
+            </div>
+        </form>                
+    </div>
+</article>
+{% endblock %}

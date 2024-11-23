@@ -170,6 +170,7 @@ def go_hidric_cal():
         if 'id' in session:
             user_name = session['user']
             user_id = session['id']
+            
         else:
             session['id']= int(10)
             session['user']='invited'
@@ -475,52 +476,39 @@ def go_cal_transport():
 @app.route('/cal_transport', methods=['POST'])   
 def cal_transport(): 
     if request.method == "POST":
-        if 'id' in session:            
-            #Brings all the values from the form to send it at the method that do the calculus
+        if 'id' in session:
+            user_id = session['id']
+            #Brings all the values from the form to send it at the method that do the calculus        
             fuel_type = request.form["fuel_type"]            
-            cylinders_count = request.form["cylinders_count"]            
-            vehicle_age = int(request.form["vehicule-old"])            
+            cylinder_count = int(request.form["cylinders_count"])
+            vehicle_year = int(request.form["vehicule_old"])            
             time_used = int(request.form["time_used"])
             consumed_fuel = int(request.form["consumed_fuel"])            
             distance = int(request.form["distance_traveled"])            
-            #Brings from the db the emission factor of the fuel type used by the user
+            #Brings from the db the emission factors and their ids
             cur = mysql.connection.cursor()
-            cur.execute("SET @id_fuel_adjustment = NULL;")
-            cur.execute("CALL prd_set_fuel_adjustment (%s, @id_fuel_adjustment);", (fuel_type,))
-            cur.execute("SELECT @id_fuel_adjustment;")
-            id_fuel = cur.fetchone()[0]#Bring the id of factor of the fuel used
-            cur.execute("SELECT emission_factor FROM tcat_fuel WHERE id_fuel = %s;", (id_fuel,))
-            fuel_emission_factor = cur.fetchone()[0]
-            #Brings from db the cylinder adjustment of the number of cylinders of the user
-            cur.execute("SET @id_cylinder_adjustment = NULL;")
-            cur.execute("CALL prd_set_cylinder_adjustment (%s, @id_cylinder_adjustment);", (cylinders_count,))
-            cur.execute("SELECT @id_cylinder_adjustment;")
-            id_cylinder = cur.fetchone()[0]#Brings the id of the cylinder factor
-            cur.execute("SELECT cylinder_adjustment FROM tcat_cylinder where id_cylinder = %s", (id_cylinder,))
-            cylinders_emission_factor = cur.fetchone()[0]
-            #Brings from db the emission factor depending of how long is the vehicle
-            cur.execute("SET @id_year_adjustmentt = NULL;")
-            cur.execute("CALL prd_set_year_adjustment(%s, @id_year_adjustmentt);", (vehicle_age,))
-            cur.execute("SELECT @id_year_adjustmentt;")
-            id_old = cur.fetchone()[0]#Bring the id of the factor of the age of the vehicle
-            cur.execute("SELECT year_adjustment FROM tvechicule_year WHERE id_vehicule_year = %s;", (id_old,))  
-            old_emission_factor = cur.fetchone()[0]
+            cur.execute('CALL prd_get_vehicule_adjustments(%s, %s, %s, @year_adjustment, @cylinder_adjustment, @fuel_adjustment, @id_year_adjustment, @id_cyilinder_adjustment, @id_fuel_adjustment);', (vehicle_year, cylinder_count, fuel_type))
+            cur.execute('SELECT @year_adjustment, @cylinder_adjustment, @fuel_adjustment, @id_year_adjustment, @id_cyilinder_adjustment, @id_fuel_adjustment')
+            outputs_list = cur.fetchone()
+            outputs_and_adjustments = list(outputs_list)            
             #Recieves two values from the merhod, the total factor and the fuel performance
-            transport_emission , fuel_performance = transportCalculus.transportEmission(distance, consumed_fuel, fuel_emission_factor, cylinders_emission_factor, old_emission_factor)
-            #Insert all the values returned to the db
-            #cur.execute("CALL prd_insert_cal_transport_emission(%s, %s, %s, %s, %s, %s, %s, %s, %s);", (1, id_fuel, id_cylinder, id_old, time_used, consumed_fuel, distance, fuel_performance, transport_emission))
-            
+            transport_emission , fuel_performance = transportCalculus.transportEmission(distance, consumed_fuel, outputs_and_adjustments[0], outputs_and_adjustments[1], outputs_and_adjustments[2])
             final_transport_emission = round(transport_emission, 2)
-            print(f'Tu emision es: {final_transport_emission}')
+            print(f'Final emission: {final_transport_emission}')
+            #Insert all the values returned to the db
+            cur.execute('CALL prd_insert_calc_transport_emission(%s, %s, %s, %s, %s, %s, %s, %s, %s);', (user_id, outputs_and_adjustments[5], outputs_and_adjustments[4], outputs_and_adjustments[3], time_used, consumed_fuel, distance, fuel_performance, final_transport_emission))                        
             return redirect(url_for('final_cal_transport'))
 #Redirects to the page that shows your emision
 @app.route('/final_cal_transport', methods=['GET'])    
 def final_cal_transport():
     if 'id' in session:
         user_id = session['id']
-        user_name = session['user']        
-        
-        return render_template('final_cal_transport.html', id = user_id, user = user_name, total = 1)
+        user_name = session['user']
+        cur = mysql.connection.cursor()        
+        cur.execute('SELECT ttransport_emission.transport_emission FROM tuser_footprint JOIN tfootprints_records ON tuser_footprint.id_footprint_record = tfootprints_records.id_footprint_record JOIN tcarbon_footprint ON tfootprints_records.id_carbon_footprint = tcarbon_footprint.id_carbon_footprint JOIN ttransport_emission ON tcarbon_footprint.Id_transport_emission = ttransport_emission.Id_transport_emission WHERE tfootprints_records.id_footprint_record = ( SELECT MAX(id_footprint_record) FROM tfootprints_records AS record WHERE tfootprints_records.id_footprint_record = tuser_footprint.id_footprint_record AND tuser_footprint.Id_user = %s);', (user_id,))
+        emission = cur.fetchall()
+        formatted_value = "{:.2f}".format(emission[0][0])
+        return render_template('final_cal_transport.html', id = user_id, user = user_name, total = formatted_value)
     else:
         return 'You have to log in first'
 #Redirects to the page to do the electrical calculus

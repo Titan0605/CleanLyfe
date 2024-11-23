@@ -170,6 +170,7 @@ def go_hidric_cal():
         if 'id' in session:
             user_name = session['user']
             user_id = session['id']
+            
         else:
             session['id']= int(10)
             session['user']='invited'
@@ -484,34 +485,30 @@ def cal_transport():
             time_used = int(request.form["time_used"])
             consumed_fuel = int(request.form["consumed_fuel"])            
             distance = int(request.form["distance_traveled"])            
-            #Brings from the db the emission factor of the fuel type used by the user
+            #Brings from the db the emission factors and their ids
             cur = mysql.connection.cursor()
-            cur.execute('CALL prd_get_vehicule_adjustments(%s, %s, %s, @year_adjustment, @cylinder_adjustment, @fuel_adjustment);', (vehicle_year, cylinder_count, fuel_type))
-            cur.execute('SELECT @year_adjustment, @cylinder_adjustment, @fuel_adjustment;')
+            cur.execute('CALL prd_get_vehicule_adjustments(%s, %s, %s, @year_adjustment, @cylinder_adjustment, @fuel_adjustment, @id_year_adjustment, @id_cyilinder_adjustment, @id_fuel_adjustment);', (vehicle_year, cylinder_count, fuel_type))
+            cur.execute('SELECT @year_adjustment, @cylinder_adjustment, @fuel_adjustment, @id_year_adjustment, @id_cyilinder_adjustment, @id_fuel_adjustment')
             outputs_list = cur.fetchone()
             outputs_and_adjustments = list(outputs_list)            
-            print('Tupla adjustment_values: ',outputs_and_adjustments)
-            print('indice 0: ',outputs_and_adjustments[0])
-            print('indice 2: ',outputs_and_adjustments[1])
-            print('indice 3: ',outputs_and_adjustments[2])
-            print('indice 4: ',outputs_and_adjustments[3])
-            print('indice 5: ',outputs_and_adjustments[4])
             #Recieves two values from the merhod, the total factor and the fuel performance
             transport_emission , fuel_performance = transportCalculus.transportEmission(distance, consumed_fuel, outputs_and_adjustments[0], outputs_and_adjustments[1], outputs_and_adjustments[2])
             final_transport_emission = round(transport_emission, 2)
             print(f'Final emission: {final_transport_emission}')
-            cur.execute('CALL prd_insert_calc_transport_emission(%s, %s, %s, %s, %s, %s, %s, %s, %s);', (user_id, 'here id_fuel', 'here id_cylindricalRating', 'here id_vehicule_year', time_used, consumed_fuel, distance, fuel_performance, final_transport_emission))
-            #Insert all the values returned to the db    
-            
+            #Insert all the values returned to the db
+            cur.execute('CALL prd_insert_calc_transport_emission(%s, %s, %s, %s, %s, %s, %s, %s, %s);', (user_id, outputs_and_adjustments[5], outputs_and_adjustments[4], outputs_and_adjustments[3], time_used, consumed_fuel, distance, fuel_performance, final_transport_emission))                        
             return redirect(url_for('final_cal_transport'))
 #Redirects to the page that shows your emision
 @app.route('/final_cal_transport', methods=['GET'])    
 def final_cal_transport():
     if 'id' in session:
         user_id = session['id']
-        user_name = session['user']        
-        
-        return render_template('final_cal_transport.html', id = user_id, user = user_name, total = 1)
+        user_name = session['user']
+        cur = mysql.connection.cursor()        
+        cur.execute('SELECT ttransport_emission.transport_emission FROM tuser_footprint JOIN tfootprints_records ON tuser_footprint.id_footprint_record = tfootprints_records.id_footprint_record JOIN tcarbon_footprint ON tfootprints_records.id_carbon_footprint = tcarbon_footprint.id_carbon_footprint JOIN ttransport_emission ON tcarbon_footprint.Id_transport_emission = ttransport_emission.Id_transport_emission WHERE tfootprints_records.id_footprint_record = ( SELECT MAX(id_footprint_record) FROM tfootprints_records AS record WHERE tfootprints_records.id_footprint_record = tuser_footprint.id_footprint_record AND tuser_footprint.Id_user = %s);', (user_id,))
+        emission = cur.fetchall()
+        formatted_value = "{:.2f}".format(emission[0][0])
+        return render_template('final_cal_transport.html', id = user_id, user = user_name, total = formatted_value)
     else:
         return 'You have to log in first'
 #Redirects to the page to do the electrical calculus

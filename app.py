@@ -587,19 +587,17 @@ def cal_carbon_products():
             meat_packaging = request.form['meat_packaging']
             meat_refrigeration = request.form['meat_refrigeration']
             
-            cur = mysql.connection.cursor()
-            
             send_emission = products_adjustements(1, cow_meat_kg, meat_transport, meat_packaging, meat_refrigeration, user_id)
             if send_emission == 0:
-                return 'There is a error sending cow meat product carbon emission'
+                return 'There is an error sending cow meat product carbon emission'
             
             send_emission = products_adjustements(2, pork_meat_kg, meat_transport, meat_packaging, meat_refrigeration, user_id)
             if send_emission == 0:
-                return 'There is a error sending pork meat product carbon emission'
+                return 'There is an error sending pork meat product carbon emission'
             
             send_emission = products_adjustements(3, chicken_meat_kg, meat_transport, meat_packaging, meat_refrigeration, user_id)
             if send_emission == 0:
-                return 'There is a error sending chicken product carbon emission'
+                return 'There is an error sending chicken product carbon emission'
             
             milk_liters = int(request.form['milk_liters'])
             cheese_kg = int(request.form['cheese_kg'])
@@ -609,22 +607,92 @@ def cal_carbon_products():
             
             send_emission = products_adjustements(4, milk_liters, dairy_transport, dairy_packaging, dairy_refrigeration, user_id)
             if send_emission == 0:
-                return 'There is a error sending milk product carbon emission'
+                return 'There is an error sending milk product carbon emission'
             
-            send_emission = products_adjustements(5, cheese_kg, dairy_transport, dairy_packaging, cheese_refrigeration, user_id)
+            send_emission = products_adjustements(5, cheese_kg, dairy_transport, dairy_packaging, dairy_refrigeration, user_id)
             if send_emission == 0:
-                return 'There is a error sending cheese product carbon emission'
+                return 'There is an error sending cheese product carbon emission'
             
-            cheese_kg = int(request.form['cheese_kg'])
-            cheese_transport = request.form['cheese_transport']
-            cheese_packaging = request.form['cheese_packaging']
-            cheese_refrigeration = request.form['cheese_refrigeration']
+            #Fruits
+            local_production_kg = int(request.form['local_production_kg'])
+            greenhouse_production_kg = int(request.form['greenhouse_production_kg'])
+            imported_production_kg = int(request.form['imported_production_kg'])
             
-            send_emission = products_adjustements(5, cheese_kg, cheese_transport, cheese_packaging, cheese_refrigeration, user_id)
+            fruits_transport = request.form['fruits_transport']
+            fruits_packaging = request.form['fruits_packaging']
+            fruits_refrigeration = request.form['fruits_refrigeration']
+            
+            send_emission = products_adjustements(6, local_production_kg, fruits_transport, fruits_packaging, fruits_refrigeration, user_id)
             if send_emission == 0:
-                return 'There is a error sending cheese product carbon emission'
+                return 'There is an error sending local production product carbon emission'
             
+            send_emission = products_adjustements(7, greenhouse_production_kg, fruits_transport, fruits_packaging, fruits_refrigeration, user_id)
+            if send_emission == 0:
+                return 'There is an error sending greenhouse production product carbon emission'
             
+            send_emission = products_adjustements(8, imported_production_kg, fruits_transport, fruits_packaging, fruits_refrigeration, user_id)
+            if send_emission == 0:
+                return 'There is an error sending imported production product carbon emission'
+            
+            #Clothes
+            t_shirt_unit = int(request.form['t_shirt_unit'])
+            denim_pants_unit = int(request.form['denim_pants_unit'])
+            shoes_unit = int(request.form['shoes_unit'])
+            
+            clothes_transport = request.form['clothes_transport']
+            clothes_packaging = request.form['clothes_packaging']
+            
+            send_emission = products_adjustements(9, t_shirt_unit, clothes_transport, clothes_packaging, 8, user_id)
+            if send_emission == 0:
+                return 'There is an error sending tshirt product carbon emission'
+            
+            send_emission = products_adjustements(10, denim_pants_unit, clothes_transport, clothes_packaging, 8, user_id)
+            if send_emission == 0:
+                return 'There is an error sending denim pants product carbon emission'
+            
+            send_emission = products_adjustements(11, shoes_unit, clothes_transport, clothes_packaging, 8, user_id)
+            if send_emission == 0:
+                return 'There is an error sending shoes product carbon emission'
+            
+            #Electronic devices
+            cellphone_unit = int(request.form['cellphone_unit'])
+            laptop_unit = int(request.form['laptop_unit'])
+            television_unit = int(request.form['television_unit'])
+            
+            electronic_transport = request.form['electronic_transport']
+            electronic_packaging = request.form['electronic_packaging']
+            
+            send_emission = products_adjustements(12, cellphone_unit, electronic_transport, electronic_packaging, 8, user_id)
+            if send_emission == 0:
+                return 'There is an error sending cellphone product carbon emission'
+            
+            send_emission = products_adjustements(13, laptop_unit, electronic_transport, electronic_packaging, 8, user_id)
+            if send_emission == 0:
+                return 'There is an error sending laptop product carbon emission'
+            
+            send_emission = products_adjustements(14, television_unit, electronic_transport, electronic_packaging, 8, user_id)
+            if send_emission == 0:
+                return 'There is an error sending television product carbon emission'
+            
+            #Cleaning products
+            detergent_kg = int(request.form['detergent_kg'])
+            softener_lt = int(request.form['softener_lt'])
+            all_purpose_lt = int(request.form['all_purpose_lt'])
+            
+            cleaning_transport = request.form['cleaning_transport']
+            cleaning_packaging = request.form['cleaning_packaging']
+            
+            send_emission = products_adjustements(15, detergent_kg, cleaning_transport, cleaning_packaging, 8, user_id)
+            if send_emission == 0:
+                return 'There is an error sending detergent product carbon emission'
+            
+            send_emission = products_adjustements(16, softener_lt, cleaning_transport, cleaning_packaging, 8, user_id)
+            if send_emission == 0:
+                return 'There is an error sending softener product carbon emission'
+            
+            send_emission = products_adjustements(17, all_purpose_lt, cleaning_transport, cleaning_packaging, 8, user_id)
+            if send_emission == 0:
+                return 'There is an error sending all purpose product carbon emission'
             
             return
     return

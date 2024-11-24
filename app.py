@@ -528,18 +528,19 @@ def cal_electric():
             cur = DbConection.get_dict_cursor()
             
             devices_selectes_list = request.form.getlist('device')#Brings all the chekboxes selected
-            print("valores en la lista: ", devices_selectes_list)                        
+            print("Dispositivos seleccionados: ", len(devices_selectes_list))                        
             
             for device in devices_selectes_list:
-                device_info = {'id': 0, 'name': '', 'device_active_power': 0.0, 'active_used_hours': 0.0, 'device_standby_power': 0.0, 'standby_used_hours': 0.0, 'device_efficiency': 0.0}                
+                device_info = {'id_device': 0, 'name': '', 'device_active_power': 0.0, 'active_used_hours': 0.0, 'device_standby_power': 0.0, 'standby_used_hours': 0.0, 'device_efficiency': 0.0}                
                 cur.execute("SELECT device_name FROM tcat_device WHERE id_device = %s;", (device,))
-                device_info['name'] = cur.fetchone()['device_name']                             
+                device_info['name'] = cur.fetchone()['device_name'] 
+                device_info['id_device'] = device                            
                 devices_used.append(device_info)
             
             print('Lista de diccionarios": ',devices_used)
-            print('Imprimir un nombre: ', devices_used[2]['name'])
+            print('Nombre del primer dispositivo: ', devices_used[0]['name'])
             session['devices_selected'] = devices_used#Saves the list to be able to access to it in any part
-            return redirect(url_for('electric_devices_info'))        
+            return redirect(url_for('go_electric_devices_info'))        
         else:
             return 'You have to log in first'
 @app.route('/go_electric_devices_info', methods=['GET'])
@@ -547,15 +548,37 @@ def go_electric_devices_info():
     if 'id' in session:
         user_id = session['id']
         user_name = session['user']
-        devices_selected_list = session.get('devices_selected', [])        
+        devices_selected_list = session.get('devices_selected', [])  
+        print('DISPOSITIVOS ANTES DE SER ENVIADOS AL FORM DE INFO: ', devices_selected_list)      
         return render_template('cal_electric_device_info.html', id = user_id, user = user_name, devices_list = devices_selected_list)
     
 @app.route('/electric_devices_info', methods=['POST'])
 def electric_devices_info():
     if request.method == "POST":
         if 'id' in session:
-            print()
-            
+            device_ids = request.form.getlist('device_id')
+            active_powers = request.form.getlist('device_active_power')
+            active_hours = request.form.getlist('active_used_hours')
+            standby_powers = request.form.getlist('device_standby_power')
+            standby_hours = request.form.getlist('standby_used_hours')
+            device_efficiencies = request.form.getlist('device_efficiency')
+            #Dictionary that saves the dictionaries generated for each device
+            devices_data = []
+            print('IDS DE LOS DISPOSITIVOS REGRESADOS POR EL FORM CON INFO: ', device_ids)
+            #Iterate each device data recolected from the form
+            for i in range(len(device_ids)):
+                device_data = {
+                    'device_id': int(device_ids[i]),
+                    'active_power': float(active_powers[i]),
+                    'active_hour': float(active_hours[i]),
+                    'standby_power': float(standby_powers[i]),
+                    'standby_hour': float(standby_hours[i]),
+                    'device_efficiency': float(device_efficiencies[i]),
+                }
+                #Saves each dictionary generated for each device
+                devices_data.append(device_data)
+                print('Lista final', devices_data[i])                
+            return redirect(url_for('final_cal_electric'))        
         else:
             return 'You have to log in first'
 @app.route('/final_cal_electric', methods=['GET'])

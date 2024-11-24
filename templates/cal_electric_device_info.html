@@ -1,0 +1,52 @@
+{%extends '/layouts/base.html' %}
+
+{%block title%} Electric Calculator {% endblock %}
+
+{% block content %}
+Lorem ipsum, dolor sit amet consectetur adipisicing elit. Provident tempore accusamus sit est reiciendis facere aliquam
+repellat aperiam nulla accusantium, laborum exercitationem esse voluptate eaque sequi corporis optio molestiae fuga!
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi cum et enim modi porro, ipsam rem quisquam quam sequi
+assumenda corrupti atque, laudantium consequuntur sunt non ducimus dicta officia numquam?
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex quos maxime enim quas, nemo corporis repellendus quod
+mollitia perferendis quam earum dignissimos assumenda commodi sunt veniam reprehenderit natus quo voluptates?
+Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum est aperiam voluptatum. Inventore enim molestiae dolor
+aspernatur iure! Voluptatum totam veritatis sit ipsum unde cupiditate consequatur eum esse officia odit!
+Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nihil eius dignissimos laborum, tempore qui nisi placeat
+tenetur eos doloremque molestiae aliquam odio voluptas itaque quisquam sapiente, dolor aliquid dolores? Temporibus?
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut doloremque vero vel necessitatibus facilis praesentium sit
+molestiae ullam omnis iste asperiores dignissimos autem numquam voluptates illo, voluptatem alias doloribus expedita.
+<main>
+    <h2>Devices used</h2>
+    <form action="/no" method="POST" class="calculator_container">
+        <section>
+            <article>
+                {% for device in devices_list %}
+                <h2>{{ device['name'] }}</h2>
+                <h3>What is the active power of the device?</h3>
+                <label for="">
+                    <input type="number" name="device_active_power" placeholder="kw" class="">
+                </label>
+                <h3>Hours of active use</h3>
+                <label for="">
+                    <input type="number" name="device_used_hours" placeholder="hours" class="">
+                </label>
+                <h3>What is the standby power of the device?</h3>
+                <label for="">
+                    <input type="number" name="device_used_hours" placeholder="kw" class="">
+                </label>
+                <h3>Hours of standby use</h3>
+                <label for="">
+                    <input type="number" name="device_used_hours" placeholder="hours" class="">
+                </label>
+                <h3>What is the efficiency of the device?</h3>
+                <label for="">
+                    <input type="number" name="device_used_hours" placeholder="kw" class="">
+                </label>
+                {% endfor %}
+
+            </article>
+        </section>
+    </form>
+
+</main>
+{% endblock %}

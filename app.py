@@ -524,24 +524,33 @@ def go_cal_electric():
 def cal_electric():
     if request.method == 'POST':
         if 'id' in session:
-            finalList = []#En este dict se van a guardar todos los dict traidos de la db
+            devices_used = list()#In this dict, is going to save all the infor os the usage of each device
             cur = DbConection.get_dict_cursor()
             
-            mylist = request.form.getlist('device')#Trae los checkbox seleccionados
-            print("valores en la lista: ", mylist)
-            # for name in mylist:
-            #     name = name.strip("'").strip('"') 
-            #     print("Nombres:", name)       
-            #     cur.execute("SELECT * FROM people WHERE name = %s;", (name,))
-            #     rows = cur.fetchall()        
-            #     for row in rows:
-            #         finalList.append(row)                            
-            # print(f"Cada lista: {finalList}")
-            # print(f"Sacando algo en especifico: {finalList[2].get('age')}")
-            return redirect(url_for('final_cal_electric'))        
+            devices_selectes_list = request.form.getlist('device')#Brings all the chekboxes selected
+            print("valores en la lista: ", devices_selectes_list)                        
+            
+            for device in devices_selectes_list:
+                device_info = {'id': 0, 'name': '', 'device_active_power': 0.0, 'active_used_hours': 0.0, 'device_standby_power': 0.0, 'standby_used_hours': 0.0, 'device_efficiency': 0.0}                
+                cur.execute("SELECT device_name FROM tcat_device WHERE id_device = %s;", (device,))
+                device_info['name'] = cur.fetchone()['device_name']                             
+                devices_used.append(device_info)
+            
+            print('Lista de diccionarios": ',devices_used)
+            print('Imprimir un nombre: ', devices_used[2]['name'])
+            session['devices_selected'] = devices_used#Saves the list to be able to access to it in any part
+            return redirect(url_for('electric_devices_info'))        
         else:
             return 'You have to log in first'
-        
+@app.route('/electric_devices_info', methods=['GET'])
+def electric_devices_info():
+    if 'id' in session:
+        user_id = session['id']
+        user_name = session['user']
+        devices_selected_list = session.get('devices_selected', [])        
+        return render_template('cal_electric_device_info.html', id = user_id, user = user_name, devices_list = devices_selected_list)
+    
+    
 @app.route('/final_cal_electric', methods=['GET'])
 def final_cal_electric():
     if 'id' in session:

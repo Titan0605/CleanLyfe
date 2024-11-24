@@ -18,6 +18,8 @@ def showers(shower_minutes, shower_type, times_per_day):
         case 'bathtub':
             #The liters that are spent in a bathtub are 150 liters 
             total = 150 * times_per_day * 7
+        case 'not_value':
+            total = 0
     
     return total
 
@@ -34,6 +36,8 @@ def toilet(times_per_day, toilet_type):
         case 'water_saving_toilet':
             #Each use spends 5 liters
             total = times_per_day * 5 * 7
+        case 'not_value':
+            total = 0
             
     return total
 
@@ -61,6 +65,8 @@ def dishes(wash_type, times_per_day, minutes, faucet_open, liters_used):
             elif faucet_open == 2:
                 #This else means when the user use a exactly number of liters
                 total = liters_used * times_per_day * 7
+        case 'not_value':
+            total = 0
     
     return total
 
@@ -78,6 +84,9 @@ def washing_clothest(cycles_per_week, washing_machine_type, user_knows):
             case 'top_loading':
                 #The average of a top loading is 80 liters per cycle
                 total = cycles_per_week * 80
+            case 'not_value':
+                total = 0
+                
     elif user_knows == 0:
         #If the user does not know, the application will use the average in general which is 65 liters
         total = cycles_per_week * 65
@@ -92,6 +101,7 @@ def garden_watering(minutes, watering_type, liters, times_per_week, area, number
     times_per_week = float(times_per_week)
     area = float(area)
     dripper_flow_rate = float(dripper_flow_rate)
+    number_of_drippers = float(number_of_drippers)
     #This is in ca
     area = area * 10.764
     
@@ -116,6 +126,8 @@ def garden_watering(minutes, watering_type, liters, times_per_week, area, number
         case 'bottle':
             #The user will insert the liters he uses in case he waters the garden with a bottle
             total = liters * times_per_week
+        case 'not_value':
+            total = 0
             
     return total
 
@@ -240,7 +252,7 @@ def milk(liters):
     
     #The variables that will be used for calculating are going to be converted in the respective variable
     liters = float(liters)
-     #To produce one liter of milk, it's necessary 200 liters of water
+    #To produce one liter of milk, it's necessary 200 liters of water
     water_total = liters * 1000
     return water_total
 
@@ -250,7 +262,7 @@ def beer(liters):
     
     #The variables that will be used for calculating are going to be converted in the respective variable
     liters = float(liters)
-     #To produce one liter of beer, it's necessary 200 liters of water
+    #To produce one liter of beer, it's necessary 200 liters of water
     water_total = liters * 300
     return water_total
 
@@ -260,7 +272,7 @@ def processed_juice(liters):
     
     #The variables that will be used for calculating are going to be converted in the respective variable
     liters = float(liters)
-     #To produce one liter of processed juice, it's necessary 200 liters of water
+    #To produce one liter of processed juice, it's necessary 200 liters of water
     water_total = liters * 850
     return water_total
 
@@ -270,7 +282,7 @@ def soda(liters):
     
     #The variables that will be used for calculating are going to be converted in the respective variable
     liters = float(liters)
-     #To produce one liter of soda, it's necessary 175 liters of water
+    #To produce one liter of soda, it's necessary 175 liters of water
     water_total = liters * 175
     return water_total
 

@@ -21,29 +21,28 @@ molestiae ullam omnis iste asperiores dignissimos autem numquam voluptates illo,
         <section>
             <article>
                 {% for device in devices_list %}
-                <h2>{{ device['name'] }}</h2>
-                <h3>What is the active power of the device?</h3>
-                <label for="">
+                <section>
+                    <h2>{{ device['name'] }}</h2>
+                    <h3>What is the active power of the device?</h3>
                     <input type="number" name="device_active_power" placeholder="kw" class="">
-                </label>
-                <h3>Hours of active use</h3>
-                <label for="">
-                    <input type="number" name="device_used_hours" placeholder="hours" class="">
-                </label>
-                <h3>What is the standby power of the device?</h3>
-                <label for="">
-                    <input type="number" name="device_used_hours" placeholder="kw" class="">
-                </label>
-                <h3>Hours of standby use</h3>
-                <label for="">
-                    <input type="number" name="device_used_hours" placeholder="hours" class="">
-                </label>
-                <h3>What is the efficiency of the device?</h3>
-                <label for="">
-                    <input type="number" name="device_used_hours" placeholder="kw" class="">
-                </label>
+                </section>
+                <section>
+                    <h3>Hours of active use</h3>
+                    <input type="number" name="active_used_hours" placeholder="hours" class="">
+                </section>
+                <section>
+                    <h3>What is the standby power of the device?</h3>
+                    <input type="number" name="device_standby_power" placeholder="kw" class="">
+                </section>
+                <section>
+                    <h3>Hours of standby use</h3>
+                    <input type="number" name="standby_used_hours" placeholder="hours" class="">
+                </section>
+                <section>
+                    <h3>What is the efficiency of the device?</h3>
+                    <input type="number" name="device_efficiency" placeholder="kw" class="">
+                </section>
                 {% endfor %}
-
             </article>
         </section>
     </form>

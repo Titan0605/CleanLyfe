@@ -542,15 +542,22 @@ def cal_electric():
             return redirect(url_for('electric_devices_info'))        
         else:
             return 'You have to log in first'
-@app.route('/electric_devices_info', methods=['GET'])
-def electric_devices_info():
+@app.route('/go_electric_devices_info', methods=['GET'])
+def go_electric_devices_info():
     if 'id' in session:
         user_id = session['id']
         user_name = session['user']
         devices_selected_list = session.get('devices_selected', [])        
         return render_template('cal_electric_device_info.html', id = user_id, user = user_name, devices_list = devices_selected_list)
     
-    
+@app.route('/electric_devices_info', methods=['POST'])
+def electric_devices_info():
+    if request.method == "POST":
+        if 'id' in session:
+            print()
+            
+        else:
+            return 'You have to log in first'
 @app.route('/final_cal_electric', methods=['GET'])
 def final_cal_electric():
     if 'id' in session:

@@ -579,18 +579,22 @@ def cal_carbon_products():
             
             user_id = session['id']
             
+            #First of all, it's necessary call the answers of the user on the frontend which are the how many products the user consume (the name of the unit depends of the kind product, for example for the meat, we use kg)   
             cow_meat_kg = int(request.form['cow_meat_kg'])
             pork_meat_kg = int(request.form['pork_meat_kg'])
             chicken_meat_kg = int(request.form['chicken_meat_kg'])
             
+            #Now, we bring the data about the transport, packaging and refrigeration of the products and we are bringing these data in each topic (meat, dairy, fruits)
             meat_transport = request.form['meat_transport']
             meat_packaging = request.form['meat_packaging']
             meat_refrigeration = request.form['meat_refrigeration']
             
+            #I made a function that its process send the information to the database, the first parameter is the id of the product (you can see it on the database, in this case is 1), the second parameter is the unit (in this case is the cow meat kg), the next parameter is the transport, the next parameter is the packaging, the next parameter is the refrigeration and finally, the last parameter is the user id which was declarated before
             send_emission = products_adjustements(1, cow_meat_kg, meat_transport, meat_packaging, meat_refrigeration, user_id)
+            #If the function returns a 0 it means that there is an error, and I made this to find easier the error
             if send_emission == 0:
                 return 'There is an error sending cow meat product carbon emission'
-            
+            #the process of sending the information it will be necessary in each product
             send_emission = products_adjustements(2, pork_meat_kg, meat_transport, meat_packaging, meat_refrigeration, user_id)
             if send_emission == 0:
                 return 'There is an error sending pork meat product carbon emission'
@@ -598,7 +602,8 @@ def cal_carbon_products():
             send_emission = products_adjustements(3, chicken_meat_kg, meat_transport, meat_packaging, meat_refrigeration, user_id)
             if send_emission == 0:
                 return 'There is an error sending chicken product carbon emission'
-            
+            #Dairy
+            #And now, the process is repeated in each topic (in this case is dairy)
             milk_liters = int(request.form['milk_liters'])
             cheese_kg = int(request.form['cheese_kg'])
             dairy_transport = request.form['dairy_transport']
@@ -697,24 +702,31 @@ def cal_carbon_products():
             return
     return
 
+#This is the function that receives the parameters and will send the information and the final emission of each product to the database.
 def products_adjustements(product_id, product_unit, transport, packaging, refrigeration, user_id):
     try:
         cur = mysql.connection.cursor()
+        #The funcion in this part takes the different adjustements
         cur.execute('CALL prd_carbon_cow_adjustements(%s, %s, %s, %s, @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement);', (product_id, transport, packaging, refrigeration))
         cur.execute('SELECT @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement;')
         adjustements = cur.fetchall()
         
+        #It adds the different adjustements in variables
         carbon_emission = float(adjustements[0])
         transport_adjustement = float(adjustements[1])
         packaging_adjustement = float(adjustements[2])
         refrigeration_adjustement = float(adjustements[3])
         
+        #it sends the adjustements and the units of the product to calculate the final emission and return it into a variable
         final_emission = carbon_products_calculus.product_carbon_emission(product_unit, carbon_emission, transport_adjustement, packaging_adjustement, refrigeration_adjustement)
         
+        #Here it inserts the result on the database
         cur.execute('CALL prd_insert_product_carbon_emission(%s, %s, %s)', (user_id, product_id, final_emission,))
+        mysql.connection.commit()
         
         successful = 1
     except:
+        #If there is an error, it will return a 0
         successful = 0
     return successful
 

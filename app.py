@@ -707,7 +707,7 @@ def products_adjustements(product_id, product_unit, transport, packaging, refrig
     try:
         cur = mysql.connection.cursor()
         #The funcion in this part takes the different adjustements
-        cur.execute('CALL prd_carbon_cow_adjustements(%s, %s, %s, %s, @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement);', (product_id, transport, packaging, refrigeration))
+        cur.execute('CALL prd_carbon_product_adjustements(%s, %s, %s, %s, %s, @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement);', (user_id, product_id, transport, packaging, refrigeration))
         cur.execute('SELECT @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement;')
         adjustements = cur.fetchall()
         

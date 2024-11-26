@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_mysqldb import MySQL
 import water_products_calculus
-import transportCalculus, DbConection
+import transportCalculus, DbConection, water_products_calculator
 import pymysql
 
 #este es para declarar una varianble tipo flask (es obligatorio)
@@ -504,7 +504,7 @@ def final_cal_transport():
     if 'id' in session:
         user_id = session['id']
         user_name = session['user']
-        cur = mysql.connection.cursor()        
+        cur = mysql.connection.cursor()    
         cur.execute('SELECT ttransport_emission.transport_emission FROM tuser_footprint JOIN tfootprints_records ON tuser_footprint.id_footprint_record = tfootprints_records.id_footprint_record JOIN tcarbon_footprint ON tfootprints_records.id_carbon_footprint = tcarbon_footprint.id_carbon_footprint JOIN ttransport_emission ON tcarbon_footprint.Id_transport_emission = ttransport_emission.Id_transport_emission WHERE tfootprints_records.id_footprint_record = ( SELECT MAX(id_footprint_record) FROM tfootprints_records AS record WHERE tfootprints_records.id_footprint_record = tuser_footprint.id_footprint_record AND tuser_footprint.Id_user = %s);', (user_id,))
         emission = cur.fetchall()
         formatted_value = "{:.2f}".format(emission[0][0])
@@ -551,6 +551,33 @@ def final_cal_electric():
         return render_template('final_cal_electric.html', id = user_id, user = user_name, total = 1)
     else:
         return 'You have to log in first'
+@app.route('/go_cal_water_products', methods=['GET'])
+def go_cal_water_products():
+    if 'id' in session:
+        user_id = session['id']
+        user_name = session['user']
+        return render_template('cal_water_products.html', id = user_id, user = user_name, total = 1)
+    else:
+        return 'You have to log in first'  
+@app.route('/cal_water_products', methods=['POST']) 
+def cal_water_products():
+    if request.method == 'POST':
+        if 'id' in session:            
+            cold_water = 0
+            hot_water = 0
+            #--------------------------#
+            water_consumed = float(request.form['water_consumed'])
+            water_heated = int(request.form['water_heated'])            
+            
+            if water_heated_percentage != 0:
+                cold_water = water_consumed
+            else:
+                hot_water = water_heated / 100 * water_consumed
+            
+            
+            return redirect(url_for('final_cal_electric'))
+        else:
+            return 'You have to log in first'
 #This is a method that recieves an error and renderising the error handle page
 @app.route('/page_not_found')
 def page_not_found(error):

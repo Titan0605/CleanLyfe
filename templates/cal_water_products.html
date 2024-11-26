@@ -1,0 +1,32 @@
+{%extends '/layouts/base.html'%}
+
+{% block title%} Water products calculator {% endblock%} 
+{%block content%}
+<main>
+    <section>
+        <form action="/cal_water_products" method="post" class="">
+            <h3>How many liters of water did you consume this week?</h3>
+            <input type="number" name="water_consumed" placeholder="Liters" required> 
+
+            <h3>What percentage of that water do you heat?</h3>
+            <input type="number" name="water_heated" placeholder="Without % symbol" required>
+
+            <div>
+                <label for="heater_type_2">
+                    <input type="radio" name="heater_type" id="heater_type_2" value="2" required>Heating with LP gas  
+                </label>
+                <label for="heater_type_3">
+                    <input type="radio" name="heater_type" id="heater_type_3" value="3">Heating with natural gas 
+                </label>
+                <label for="heater_type_4">
+                    <input type="radio" name="heater_type" id="heater_type_4" value="4">Heating with electricity
+                </label>
+                <label for="heater_type_5">
+                    <input type="radio" name="heater_type" id="heater_type_5" value="5">Water was not heated
+                </label>
+            </div>
+            <input type="submit" value="FINISH">
+        </form>
+    </section>
+</main>
+{%endblock%}

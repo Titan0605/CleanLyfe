@@ -699,8 +699,19 @@ def cal_carbon_products():
             if send_emission == 0:
                 return 'There is an error sending all purpose product carbon emission'
             
-            return
-    return
+            return redirect(url_for('go_final_products'))
+    return 'You have to log in first'
+
+@app.route('/go_final_products', methods=['GET'])
+def go_final_products():
+    if 'id' in session:
+        cur = mysql.connection.cursor();
+        user_id = session['id']
+        cur.execute('SELECT products_emission FROM VW_User_Products_Emission WHERE id_user = %s;', (user_id,))
+        data = cur.fetchone[0]
+        
+        return render_template('final_cal_products.html', final_emission_product = data)
+    return 'You have to log in first'
 
 #This is the function that receives the parameters and will send the information and the final emission of each product to the database.
 def products_adjustements(product_id, product_unit, transport, packaging, refrigeration, user_id):

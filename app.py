@@ -568,7 +568,7 @@ def final_cal_electric():
 def go_cal_carbon_products():
     if 'id' in session:
         if session['id'] != 10:
-            return render_template('cal_carbon_products')
+            return render_template('cal_carbon_products.html')
         return 'you have to log in first'
     return 'you have to log in first'
 

@@ -8,7 +8,7 @@
 <br>
 <br>
 <br>
-    <form action="/cal_carbon_products">
+    <form action="/cal_carbon_products" method="POST">
         <section name="parte1">
             <div name="adjustements_for_meat">
                 <h1>How is your...</h1>
@@ -237,7 +237,7 @@
                 </div>
                 <div class="imported production">
                     <h3>How many kg from imported production do you consume?</h3>
-                    <select class="calculator__question-select" name="impotrted_production_kg">
+                    <select class="calculator__question-select" name="imported_production_kg">
                         <option class="calculator__select-option" value="0">0 kg</option>
                         <option class="calculator__select-option" value="1">1 kg</option>
                         {% for i in range(2, 31) %}

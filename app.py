@@ -705,40 +705,38 @@ def cal_carbon_products():
 @app.route('/go_final_products', methods=['GET'])
 def go_final_products():
     if 'id' in session:
-        cur = mysql.connection.cursor();
+        cur = mysql.connection.cursor()
         user_id = session['id']
         cur.execute('SELECT products_emission FROM VW_User_Products_Emission WHERE id_user = %s;', (user_id,))
-        data = cur.fetchone[0]
+        data = cur.fetchone()[0]
+        print(data)
         
         return render_template('final_cal_products.html', final_emission_product = data)
     return 'You have to log in first'
 
 #This is the function that receives the parameters and will send the information and the final emission of each product to the database.
 def products_adjustements(product_id, product_unit, transport, packaging, refrigeration, user_id):
-    try:
-        cur = mysql.connection.cursor()
-        #The funcion in this part takes the different adjustements
-        cur.execute('CALL prd_carbon_product_adjustements(%s, %s, %s, %s, %s, @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement);', (user_id, product_id, transport, packaging, refrigeration))
-        cur.execute('SELECT @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement;')
-        adjustements = cur.fetchall()
+    cur = mysql.connection.cursor()
+    #The funcion in this part takes the different adjustements
+    cur.execute('CALL prd_carbon_product_adjustements(%s, %s, %s, %s, %s, @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement);', (user_id, product_id, transport, packaging, refrigeration))
+    cur.execute('SELECT @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement;')
+    adjustements = cur.fetchone()
         
-        #It adds the different adjustements in variables
-        carbon_emission = float(adjustements[0])
-        transport_adjustement = float(adjustements[1])
-        packaging_adjustement = float(adjustements[2])
-        refrigeration_adjustement = float(adjustements[3])
+    #It adds the different adjustements in variables
+    carbon_emission = float(adjustements[0])
+    transport_adjustement = float(adjustements[1])
+    packaging_adjustement = float(adjustements[2])
+    refrigeration_adjustement = float(adjustements[3])
         
-        #it sends the adjustements and the units of the product to calculate the final emission and return it into a variable
-        final_emission = carbon_products_calculus.product_carbon_emission(product_unit, carbon_emission, transport_adjustement, packaging_adjustement, refrigeration_adjustement)
+    #it sends the adjustements and the units of the product to calculate the final emission and return it into a variable
+    final_emission = carbon_products_calculus.product_carbon_emission(product_unit, carbon_emission, transport_adjustement, packaging_adjustement, refrigeration_adjustement)
         
-        #Here it inserts the result on the database
-        cur.execute('CALL prd_insert_product_carbon_emission(%s, %s, %s)', (user_id, product_id, final_emission,))
-        mysql.connection.commit()
+    #Here it inserts the result on the database
+    cur.execute('CALL prd_insert_product_carbon_emission(%s, %s, %s, %s)', (user_id, product_id, product_unit, final_emission,))
+    mysql.connection.commit()
         
-        successful = 1
-    except:
-        #If there is an error, it will return a 0
-        successful = 0
+    successful = 1
+
     return successful
 
 #This is a method that recieves an error and renderising the error handle page

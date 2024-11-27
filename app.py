@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_mysqldb import MySQL
 import water_products_calculus
-import transportCalculus, DbConection, water_products_calculator
+import transportCalculus, DbConection
 import pymysql
 
 #este es para declarar una varianble tipo flask (es obligatorio)
@@ -565,16 +565,26 @@ def cal_water_products():
         if 'id' in session:            
             cold_water = 0
             hot_water = 0
-            #--------------------------#
-            water_consumed = float(request.form['water_consumed'])
-            water_heated = int(request.form['water_heated'])            
-            
-            if water_heated_percentage != 0:
-                cold_water = water_consumed
-            else:
-                hot_water = water_heated / 100 * water_consumed
-            
-            
+            water_consumed = int(request.form['water_consumed'])
+            water_heated_percentage = int(request.form['water_heated_percentage'])
+            id_heater_type = int(request.form['heater_type'])
+            if id_heater_type == 5:
+                water_heated_percentage = 0
+            #Percentages of each type of water temperature                
+            cold_water_percentage = 100 - water_heated_percentage            
+            hot_water_percentage = 100 - cold_water_percentage
+            #Print all values obtained
+            print('Percentage of cold water: ', cold_water_percentage)
+            print('Percentage of hot water: ', hot_water_percentage)
+            print('Id of the type of heater: ', id_heater_type)
+            #Round the values to an easy handle of them
+            hot_water = round((water_consumed * hot_water_percentage) / 100)            
+            cold_water = round((water_consumed * cold_water_percentage) / 100)            
+            print('Cold water: ', cold_water)
+            print('Hot water', hot_water)
+            #Prd that inserts all the values obtained            
+            cur = mysql.connection.cursor()    
+            cur.execute("CALL prd_insert_water_product_carbon_emission(%s, %s, %s, %s);", (water_consumed, cold_water, hot_water, id_heater_type))                              
             return redirect(url_for('final_cal_electric'))
         else:
             return 'You have to log in first'

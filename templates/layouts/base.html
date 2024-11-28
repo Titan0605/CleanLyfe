@@ -14,22 +14,28 @@
             <nav id="navbar"> <!--A nav that storage the navbar to center it and align it to the top -->
                 <div class="navbar__container">
                     <i class="navbar__sidebar-button fa-solid fa-bars"></i>
-                    <img src="{{ url_for('static', filename='img/Logo.png') }}" alt="logoImagen" class="logo"> <!--Image of the app's logo-->
-                    <h1 class="navbar__title">CleanLyfe</h1> <!--The title of the app-->
+                    <a class="calculator_title-link" href="{{ url_for('go_cleanlyfe') }}"><img src="{{ url_for('static', filename='img/Logo.png') }}" alt="logoImagen" class="logo"></a> <!--Image of the app's logo-->
+                    <a class="calculator_title-link" href="{{ url_for('go_cleanlyfe') }}"><h1 class="navbar__title">CleanLyfe</h1></a> <!--The title of the app-->
                 </div>
                 <section class="navbar__container-buttons">
                     <div class="flex-content --disappear_medium">
                         {% if id != 10%}
                         <a href="{{ url_for('go_cleanlyfe') }}" class="button --button_without_border">Home</a>
                         <a href="{{ url_for('go_missions') }}" class="button --button_without_border">Missions</a>
-                        <ul class="menu">
+                        <!-- <ul class="menu">
                             <li><a href="#" class="button --button_without_border">Calculators<i class="fa-solid fa-angle-down --calculator-icon"></i></a>
                                 <ul class="submenu">
                                     <li><a href="{{ url_for('go_hidric_cal') }}" class="button --button_without_border">Calculator</a></li>
                                     <li><a href="{{ url_for('go_cal_transport') }}" class="button --button_without_border">Calculator 2</a></li>
                                 </ul>
                             </li>
-                        </ul>
+                        </ul> -->
+                        <!-- <a href="{{ url_for('go_hidric_cal') }}" class="button --button_without_border">Calculator</a>
+                        <a href="{{ url_for('go_cal_transport') }}" class="button --button_without_border">Calculator transport</a>
+                        <a href="{{ url_for('cal_electric') }}" class="button --button_without_border">Calculator energy</a> -->
+                        <a href="{{ url_for('go_hidric_cal') }}" class="button --button_without_border">Calculator</a>
+                        <a href="{{ url_for('go_cal_transport') }}" class="button --button_without_border">Calculator transport</a>
+                        <a href="{{ url_for('go_cal_electric') }}" class="button --button_without_border">Calculator energy</a>
                         {% endif %}
                     </div>
                     <div class="navbar__user-profile">

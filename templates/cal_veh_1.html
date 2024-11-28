@@ -29,7 +29,7 @@
                     <h3 class="calculator__question-tittle">What kind of fuel do you use?</h3>
                     <div class="calculator__question-options">
                         <label for="fuel_type-1" class="calculator__question-option">
-                            <input type="radio" name="fuel_type" id="fuel_type-1" value="Gas">
+                            <input type="radio" name="fuel_type" id="fuel_type-1" value="Gas" required>
                             Gas
                         </label>
                         <label for="fuel_type-2" class="calculator__question-option">
@@ -49,7 +49,7 @@
 
                 <section class="calculator__side-question">
                     <h3 class="calculator__question-tittle">How many cylinders is your vehicle?</h3>
-                    <select class="calculator__question-select" name="cylinders_count">
+                    <select class="calculator__question-select" name="cylinders_count" required>
                         <option class="calculator__select-option" value="1">1 cylinder</option>
                         {% for i in range(2, 11) %}
                         <option class="calculator__select-option" value="{{ i }}">{{ i }} cylinders</option>
@@ -59,7 +59,7 @@
 
                 <section class="calculator__side-question">
                     <h3 class="calculator__question-tittle">How old is your vehicle?</h3>
-                    <select class="calculator__question-select" name="vehicule_old">
+                    <select class="calculator__question-select" name="vehicule_old" required>
                         {% for i in range(2025, 1949, -1) %}
                         <option class="calculator__select-option" value="{{ i }}">{{ i }}</option>
                         {% endfor %}
@@ -72,7 +72,7 @@
 
                 <section class="calculator__side-question">
                     <h3 class="calculator__question-tittle">How long did you use your vehicle (No.hours)?</h3>
-                    <select class="calculator__question-select" name="time_used">
+                    <select class="calculator__question-select" name="time_used" required>
                         <option class="calculator__select-option" value="0">0 hour</option>
                         <option class="calculator__select-option" value="1">1 hour</option>
                         {% for i in range(2, 25) %}
@@ -83,7 +83,7 @@
 
                 <section class="calculator__side-question">
                     <h3 class="calculator__question-tittle">How much fuel did you use (liters)?</h3>
-                    <input type="number" name="consumed_fuel" placeholder="liters" class="">
+                    <input type="number" name="consumed_fuel" placeholder="liters" class="" required>
                     <!-- <select class="calculator__question-select" name="time_used">
                         <option class="calculator__select-option" value="0">0 liter</option>
                         <option class="calculator__select-option" value="1">1 liter</option>
@@ -95,7 +95,7 @@
 
                 <section class="calculator__side-question">
                     <h3 class="calculator__question-tittle">How far did you travel in total?</h3>
-                    <input type="number" name="distance_traveled" placeholder="Km">
+                    <input type="number" name="distance_traveled" placeholder="Km" required>
                     <!-- <select class="calculator__question-select" name="distance_traveled">
                         <option class="calculator__select-option" value="0">0 km</option>
                         <option class="calculator__select-option" value="1">1 km</option>

@@ -5,4 +5,8 @@
 <div style="margin-top: 200px;">
     <label for="">Your total transport footprint is {{ total }}</label>
 </div>
+
+<div>
+    <iframe src="{{ grafana_last_emission }}" width="600" height="350" frameborder="0"></iframe>
+</div>
 {%endblock%}

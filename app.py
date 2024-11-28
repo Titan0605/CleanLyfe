@@ -559,32 +559,35 @@ def go_cal_water_products():
         return render_template('cal_water_products.html', id = user_id, user = user_name, total = 1)
     else:
         return 'You have to log in first'  
-@app.route('/cal_water_products', methods=['POST']) 
+@app.route('/cal_water_products', methods=['POST'])
 def cal_water_products():
     if request.method == 'POST':
-        if 'id' in session:            
+        if 'id' in session:
+            user_id = session['id']
             cold_water = 0
             hot_water = 0
+            #Brings the information of the user from the frontend
             water_consumed = int(request.form['water_consumed'])
             water_heated_percentage = int(request.form['water_heated_percentage'])
             id_heater_type = int(request.form['heater_type'])
+            #Compares the heater
             if id_heater_type == 5:
                 water_heated_percentage = 0
-            #Percentages of each type of water temperature                
-            cold_water_percentage = 100 - water_heated_percentage            
+            #Percentages of each type of water temperature
+            cold_water_percentage = 100 - water_heated_percentage
             hot_water_percentage = 100 - cold_water_percentage
             #Print all values obtained
             print('Percentage of cold water: ', cold_water_percentage)
             print('Percentage of hot water: ', hot_water_percentage)
             print('Id of the type of heater: ', id_heater_type)
             #Round the values to an easy handle of them
-            hot_water = round((water_consumed * hot_water_percentage) / 100)            
-            cold_water = round((water_consumed * cold_water_percentage) / 100)            
+            hot_water = round((water_consumed * hot_water_percentage) / 100)
+            cold_water = round((water_consumed * cold_water_percentage) / 100)
             print('Cold water: ', cold_water)
             print('Hot water', hot_water)
             #Prd that inserts all the values obtained            
-            cur = mysql.connection.cursor()    
-            cur.execute("CALL prd_insert_water_product_carbon_emission(%s, %s, %s, %s);", (water_consumed, cold_water, hot_water, id_heater_type))                              
+            cur = mysql.connection.cursor()
+            cur.execute("CALL prd_calc_water_emission(%s, %s, %s, %s);", (user_id, cold_water, hot_water, id_heater_type))
             return redirect(url_for('final_cal_electric'))
         else:
             return 'You have to log in first'

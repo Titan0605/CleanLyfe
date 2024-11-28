@@ -138,6 +138,13 @@
     gap: 0.8rem;
 }
 
+.calculator_header-questions-electric {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    gap: 0.8rem;
+}
+
 .calculator_header-icon {
     display: flex;
     align-items: center;
@@ -203,6 +210,7 @@
 input[type="number"] {
     width: 18rem;
     height: 1.9rem;
+    margin-left: 5rem;
     padding-left: 0.9rem;
     font-size: 1.3rem;
     border: 1px solid rgba(0, 0, 0, 0.5);
@@ -397,6 +405,11 @@ input[type="radio"]:checked::before {
 .--icon-lightning-2 {
     color: rgb(240, 216, 0);
     font-size: 3rem;
+}
+
+.--header-icon-electric {
+    width: 4rem;
+    height: 4rem;
 }
 
 @media (750px > height) {

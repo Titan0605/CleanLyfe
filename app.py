@@ -454,7 +454,8 @@ def final_hid_calculator():
         user_id = session['id']
         user_name = session['user']
         cur = mysql.connection.cursor()
-        cur.execute('SELECT water_footprint.total_water FROM water_footprint WHERE id_water_footprint = (SELECT MAX(id_water_footprint) FROM footprints_user WHERE id_user = %s);', (user_id,))
+        cur.execute('CALL prd_get_hidric_footprint (%s, @final_emission);', (user_id,))
+        cur.execute('SELECT @final_emission;')
         total_water_footprint = cur.fetchall()
 
         formatted_value = "{:.2f}".format(total_water_footprint[0][0])

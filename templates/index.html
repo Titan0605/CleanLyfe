@@ -20,14 +20,7 @@
                     <div class="flex-content --disappear_medium">
                         <a href="" class="button --button_without_border">Features</a>
                         <a href="" class="button --button_without_border">About</a>
-                        <ul class="menu">
-                            <li><a href="#" class="button --button_without_border">Calculators<i class="fa-solid fa-angle-down --calculator-icon"></i></a>
-                                <ul class="submenu">
-                                    <li><a href="{{ url_for('go_hidric_cal') }}" class="button --button_without_border">Calculator</a></li>
-                                    <li><a href="{{ url_for('go_cal_transport') }}" class="button --button_without_border">Calculator 2</a></li>
-                                </ul>
-                            </li>
-                        </ul>
+                        <a href="{{ url_for('go_hidric_cal') }}" class="button --button_without_border">Calculator</a>
                     </div>
                     <div class="flex-content --dissapear_on_mobile">
                         <a href="{{ url_for('go_login') }}" class="button --sign-buttons">Login</a>
@@ -52,20 +45,11 @@
                         <i role="button" class="fa-solid fa-xmark button sidebar__button --button_without_border"></i>
                     </div>
                     <div class="sidebar__container-body">
-                        <ul>
-                            <li class="sidebar__content">
-                                <a role="button" class="sidebar__button-link" href="">Features</a>
-                            </li>
-                            <li class="sidebar__content">
-                                <a role="button" class="sidebar__button-link" href="">About</a>
-                            </li>
-                            <li role="button" class="sidebar__content">
-                                <a role="button" class="sidebar__button-link" href="{{ url_for('go_hidric_cal') }}">Calculator</a>
-                            </li>
-                            <li role="button" class="sidebar__content">
-                                <a role="button" class="sidebar__button-link" href="{{ url_for('go_cal_transport') }}">Calculator2</a>
-                            </li>
-                        </ul>
+                        <a role="button" class="sidebar__button-link" href="">Features</a>
+                        <a role="button" class="sidebar__button-link" href="">About</a>
+                        <!-- <a role="button" class="sidebar__button-link" href="{{ url_for('go_hidric_cal') }}">Calculator</a>
+                        <a role="button" class="sidebar__button-link" href="{{ url_for('go_cal_transport') }}">Calculator2</a>
+                        <a role="button" class="sidebar__button-link" href="{{ url_for('cal_water_products') }}">Calculator water products</a> -->
                     </div>
                 </section>
                 <section class="flex-content --sidebar-position --appear_on_mobile">

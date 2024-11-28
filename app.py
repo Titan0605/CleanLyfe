@@ -499,9 +499,8 @@ def cal_transport():
             print(f'Final emission: {final_transport_emission}')
             #Insert all the values returned to the db
             cur.execute('CALL prd_insert_calc_transport_emission(%s, %s, %s, %s, %s, %s, %s, %s, %s);', (user_id, outputs_and_adjustments[5], outputs_and_adjustments[4], outputs_and_adjustments[3], time_used, consumed_fuel, distance, fuel_performance, final_transport_emission))                        
-            return redirect(url_for('final_cal_transport'))
+            return redirect(url_for('go_cal_electric'))
 #Redirects to the page that shows your emision
-
 #Redirects to the page to do the electrical calculus
 @app.route('/go_cal_electric', methods=['GET'])
 def go_cal_electric():
@@ -511,6 +510,7 @@ def go_cal_electric():
         return render_template('cal_electric.html', id = user_id, user = user_name)
     else:
         return 'You have to log in first'
+    
 @app.route('/cal_electric', methods=['POST'])
 def cal_electric():
     if request.method == 'POST':
@@ -534,6 +534,7 @@ def cal_electric():
             return redirect(url_for('go_electric_devices_info'))
         else:
             return 'You have to log in first'
+        
 @app.route('/go_electric_devices_info', methods=['GET'])
 def go_electric_devices_info():
     if 'id' in session:
@@ -581,18 +582,9 @@ def electric_devices_info():
                 print('Lista final', device)
 
             cur.execute("CALL prd_calculate_total_energy_emission(%s);", (user_id,))
-            return redirect(url_for('final_cal_electric'))
+            return redirect(url_for('go_cal_carbon_products'))
         else:
             return 'You have to log in first'
-
-@app.route('/final_cal_electric', methods=['GET'])
-def final_cal_electric():
-    if 'id' in session:
-        user_id = session['id']
-        user_name = session['user']
-        return render_template('final_cal_electric.html', id = user_id, user = user_name, total = 1)
-    else:
-        return 'You have to log in first'
       
 @app.route('/go_cal_water_products', methods=['GET'])
 def go_cal_water_products():
@@ -602,6 +594,7 @@ def go_cal_water_products():
         return render_template('cal_water_products.html', id = user_id, user = user_name, total = 1)
     else:
         return 'You have to log in first'  
+    
 @app.route('/cal_water_products', methods=['POST'])
 def cal_water_products():
     if request.method == 'POST':
@@ -631,7 +624,7 @@ def cal_water_products():
             #Prd that inserts all the values obtained            
             cur = mysql.connection.cursor()
             cur.execute("CALL prd_calc_water_emission(%s, %s, %s, %s);", (user_id, cold_water, hot_water, id_heater_type))
-            return redirect(url_for('final_cal_electric'))
+            return redirect(url_for('go_final_cal_carbon_footprint'))
         else:
             return 'You have to log in first'
     
@@ -639,7 +632,9 @@ def cal_water_products():
 def go_cal_carbon_products():
     if 'id' in session:
         if session['id'] != 10:
-            return render_template('cal_carbon_products.html')
+            user_id = session['id']
+            user_name = session['user']
+            return render_template('cal_carbon_products.html', id = user_id, user = user_name)
         return 'you have to log in first'
     return 'you have to log in first'
 
@@ -770,21 +765,9 @@ def cal_carbon_products():
             if send_emission == 0:
                 return 'There is an error sending all purpose product carbon emission'
             
-            return redirect(url_for('go_final_products'))
-    return 'You have to log in first'
+            return redirect(url_for('go_cal_water_products'))
 
-@app.route('/go_final_products', methods=['GET'])
-def go_final_products():
-    if 'id' in session:
-        cur = mysql.connection.cursor()
-        user_id = session['id']
-        cur.execute('SELECT products_emission FROM VW_User_Products_Emission WHERE id_user = %s;', (user_id,))
-        data = cur.fetchone()[0]
-        print(data)
-        
-        return render_template('final_cal_products.html', final_emission_product = data)
     return 'You have to log in first'
-
 #This is the function that receives the parameters and will send the information and the final emission of each product to the database.
 def products_adjustements(product_id, product_unit, transport, packaging, refrigeration, user_id):
     cur = mysql.connection.cursor()
@@ -809,6 +792,17 @@ def products_adjustements(product_id, product_unit, transport, packaging, refrig
     successful = 1
 
     return successful
+
+@app.route('/go_final_cal_carbon_footprint', methods=['GET'])
+def go_final_cal_carbon_footprint():
+    if request.method == 'GET':
+        if 'id' in session:
+            user_id = session['id']
+            user_name = session['user']
+            #HERE IS WHERE GRAFANA SHOULD BE. THIS MESSAGE IS FOR JOSUE
+            return render_template('final_carbon_emission.html', id = user_id, user = user_name)
+    return 'You must log in before'
+
 #This is a method that recieves an error and renderising the error handle page
 @app.route('/page_not_found')
 def page_not_found(error):

@@ -506,11 +506,12 @@ def final_cal_transport():
     if 'id' in session:
         user_id = session['id']
         user_name = session['user']
+        iframe_url =f"http://localhost:3000/d-solo/be50weh568mwwa/final-and-second-last-emission?from=1732496234659&to=1732582634659&timezone=browser&var-query0=&var-idUser={user_id}&editIndex=0&orgId=1&panelId=1&__feature.dashboardSceneSolo"
         cur = mysql.connection.cursor()        
         cur.execute('SELECT ttransport_emission.transport_emission FROM tuser_footprint JOIN tfootprints_records ON tuser_footprint.id_footprint_record = tfootprints_records.id_footprint_record JOIN tcarbon_footprint ON tfootprints_records.id_carbon_footprint = tcarbon_footprint.id_carbon_footprint JOIN ttransport_emission ON tcarbon_footprint.Id_transport_emission = ttransport_emission.Id_transport_emission WHERE tfootprints_records.id_footprint_record = ( SELECT MAX(id_footprint_record) FROM tfootprints_records AS record WHERE tfootprints_records.id_footprint_record = tuser_footprint.id_footprint_record AND tuser_footprint.Id_user = %s);', (user_id,))
         emission = cur.fetchall()
         formatted_value = "{:.2f}".format(emission[0][0])
-        return render_template('final_cal_transport.html', id = user_id, user = user_name, total = formatted_value)
+        return render_template('final_cal_transport.html', id = user_id, user = user_name, total = formatted_value, grafana_last_emission = iframe_url)
     else:
         return 'You have to log in first'
 #Redirects to the page to do the electrical calculus
@@ -526,24 +527,73 @@ def go_cal_electric():
 def cal_electric():
     if request.method == 'POST':
         if 'id' in session:
-            finalList = []#En este dict se van a guardar todos los dict traidos de la db
+            devices_used = list()#In this dict, is going to save all the infor os the usage of each device
             cur = DbConection.get_dict_cursor()
             
-            mylist = request.form.getlist('device')#Trae los checkbox seleccionados
-            print("valores en la lista: ", mylist)
-            # for name in mylist:
-            #     name = name.strip("'").strip('"') 
-            #     print("Nombres:", name)       
-            #     cur.execute("SELECT * FROM people WHERE name = %s;", (name,))
-            #     rows = cur.fetchall()        
-            #     for row in rows:
-            #         finalList.append(row)                            
-            # print(f"Cada lista: {finalList}")
-            # print(f"Sacando algo en especifico: {finalList[2].get('age')}")
+            devices_selectes_list = request.form.getlist('device')#Brings all the chekboxes selected
+            print("Dispositivos seleccionados: ", len(devices_selectes_list))                        
+            
+            for device in devices_selectes_list:
+                device_info = {'id_device': 0, 'name': '', 'device_active_power': 0.0, 'active_used_hours': 0.0, 'device_standby_power': 0.0, 'standby_used_hours': 0.0, 'device_efficiency': 0.0}                
+                cur.execute("SELECT device_name FROM tcat_device WHERE id_device = %s;", (device,))
+                device_info['name'] = cur.fetchone()['device_name'] 
+                device_info['id_device'] = device                            
+                devices_used.append(device_info)
+            
+            print('Lista de diccionarios": ',devices_used)
+            print('Nombre del primer dispositivo: ', devices_used[0]['name'])
+            session['devices_selected'] = devices_used#Saves the list to be able to access to it in any part
+            return redirect(url_for('go_electric_devices_info'))        
+        else:
+            return 'You have to log in first'
+@app.route('/go_electric_devices_info', methods=['GET'])
+def go_electric_devices_info():
+    if 'id' in session:
+        user_id = session['id']
+        user_name = session['user']
+        devices_selected_list = session.get('devices_selected', [])  
+        print('DISPOSITIVOS ANTES DE SER ENVIADOS AL FORM DE INFO: ', devices_selected_list)      
+        return render_template('cal_electric_device_info.html', id = user_id, user = user_name, devices_list = devices_selected_list)
+    
+@app.route('/electric_devices_info', methods=['POST'])
+def electric_devices_info():
+    if request.method == "POST":
+        if 'id' in session:
+            user_id = session['id']
+            cur = mysql.connection.cursor()
+            device_ids = request.form.getlist('device_id')
+            active_powers = request.form.getlist('device_active_power')
+            active_hours = request.form.getlist('active_used_hours')
+            standby_powers = request.form.getlist('device_standby_power')
+            standby_hours = request.form.getlist('standby_used_hours')
+            device_efficiencies = request.form.getlist('device_efficiency')
+            #Dictionary that saves the dictionaries generated for each device
+            devices_data = []
+            print('IDS DE LOS DISPOSITIVOS REGRESADOS POR EL FORM CON INFO: ', device_ids)
+            #Iterate each device data recolected from the form
+            for i in range(len(device_ids)):
+                device_data = {
+                    'device_id': int(device_ids[i]),
+                    'active_power': float(active_powers[i]),
+                    'active_hour': float(active_hours[i]),
+                    'standby_power': float(standby_powers[i]),
+                    'standby_hour': float(standby_hours[i]),
+                    'device_efficiency': float(device_efficiencies[i]),
+                }
+                #Saves each dictionary generated for each device
+                devices_data.append(device_data)
+                print('Lista final', devices_data[i])
+            for device in devices_data:
+                if device['device_efficiency'] == 0:
+                    device['device_efficiency'] = 1
+                else:
+                    device['device_efficiency'] = device['device_efficiency'] / 100
+                cur.execute("CALL prd_insert_devices_values(%s, %s, %s, %s, %s, %s, %s);", (user_id, device['device_id'], device['active_power'], device['active_hour'], device['standby_power'], device['standby_hour'], device['device_efficiency']))
+                print('Lista final', device)
+            cur.execute("CALL prd_calculate_total_energy_emission(%s);", user_id)
             return redirect(url_for('final_cal_electric'))        
         else:
             return 'You have to log in first'
-        
 @app.route('/final_cal_electric', methods=['GET'])
 def final_cal_electric():
     if 'id' in session:
@@ -552,6 +602,47 @@ def final_cal_electric():
         return render_template('final_cal_electric.html', id = user_id, user = user_name, total = 1)
     else:
         return 'You have to log in first'
+      
+@app.route('/go_cal_water_products', methods=['GET'])
+def go_cal_water_products():
+    if 'id' in session:
+        user_id = session['id']
+        user_name = session['user']
+        return render_template('cal_water_products.html', id = user_id, user = user_name, total = 1)
+    else:
+        return 'You have to log in first'  
+@app.route('/cal_water_products', methods=['POST'])
+def cal_water_products():
+    if request.method == 'POST':
+        if 'id' in session:
+            user_id = session['id']
+            cold_water = 0
+            hot_water = 0
+            #Brings the information of the user from the frontend
+            water_consumed = int(request.form['water_consumed'])
+            water_heated_percentage = int(request.form['water_heated_percentage'])
+            id_heater_type = int(request.form['heater_type'])
+            #Compares the heater
+            if id_heater_type == 5:
+                water_heated_percentage = 0
+            #Percentages of each type of water temperature
+            cold_water_percentage = 100 - water_heated_percentage
+            hot_water_percentage = 100 - cold_water_percentage
+            #Print all values obtained
+            print('Percentage of cold water: ', cold_water_percentage)
+            print('Percentage of hot water: ', hot_water_percentage)
+            print('Id of the type of heater: ', id_heater_type)
+            #Round the values to an easy handle of them
+            hot_water = round((water_consumed * hot_water_percentage) / 100)
+            cold_water = round((water_consumed * cold_water_percentage) / 100)
+            print('Cold water: ', cold_water)
+            print('Hot water', hot_water)
+            #Prd that inserts all the values obtained            
+            cur = mysql.connection.cursor()
+            cur.execute("CALL prd_calc_water_emission(%s, %s, %s, %s);", (user_id, cold_water, hot_water, id_heater_type))
+            return redirect(url_for('final_cal_electric'))
+        else:
+            return 'You have to log in first'
     
 @app.route('/go_cal_carbon_products', methods=['GET'])
 def go_cal_carbon_products():
@@ -727,7 +818,6 @@ def products_adjustements(product_id, product_unit, transport, packaging, refrig
     successful = 1
 
     return successful
-
 #This is a method that recieves an error and renderising the error handle page
 @app.route('/page_not_found')
 def page_not_found(error):
@@ -747,5 +837,5 @@ def user_render_page(pageToRender):
 #This is for running the application as a server
 if __name__ == "__main__":
     #This prevents that appears an error of page not found and shows a error handle page
-    app.register_error_handler(404, page_not_found)
+    #app.register_error_handler(404, page_not_found)
     app.run(port= 5000, debug=True)

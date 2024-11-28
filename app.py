@@ -501,19 +501,7 @@ def cal_transport():
             cur.execute('CALL prd_insert_calc_transport_emission(%s, %s, %s, %s, %s, %s, %s, %s, %s);', (user_id, outputs_and_adjustments[5], outputs_and_adjustments[4], outputs_and_adjustments[3], time_used, consumed_fuel, distance, fuel_performance, final_transport_emission))                        
             return redirect(url_for('final_cal_transport'))
 #Redirects to the page that shows your emision
-@app.route('/final_cal_transport', methods=['GET'])    
-def final_cal_transport():
-    if 'id' in session:
-        user_id = session['id']
-        user_name = session['user']
-        iframe_url =f"http://localhost:3000/d-solo/be50weh568mwwa/final-and-second-last-emission?from=1732496234659&to=1732582634659&timezone=browser&var-query0=&var-idUser={user_id}&editIndex=0&orgId=1&panelId=1&__feature.dashboardSceneSolo"
-        cur = mysql.connection.cursor()        
-        cur.execute('SELECT ttransport_emission.transport_emission FROM tuser_footprint JOIN tfootprints_records ON tuser_footprint.id_footprint_record = tfootprints_records.id_footprint_record JOIN tcarbon_footprint ON tfootprints_records.id_carbon_footprint = tcarbon_footprint.id_carbon_footprint JOIN ttransport_emission ON tcarbon_footprint.Id_transport_emission = ttransport_emission.Id_transport_emission WHERE tfootprints_records.id_footprint_record = ( SELECT MAX(id_footprint_record) FROM tfootprints_records AS record WHERE tfootprints_records.id_footprint_record = tuser_footprint.id_footprint_record AND tuser_footprint.Id_user = %s);', (user_id,))
-        emission = cur.fetchall()
-        formatted_value = "{:.2f}".format(emission[0][0])
-        return render_template('final_cal_transport.html', id = user_id, user = user_name, total = formatted_value, grafana_last_emission = iframe_url)
-    else:
-        return 'You have to log in first'
+
 #Redirects to the page to do the electrical calculus
 @app.route('/go_cal_electric', methods=['GET'])
 def go_cal_electric():

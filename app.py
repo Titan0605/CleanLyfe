@@ -588,6 +588,7 @@ def electric_devices_info():
                     device['device_efficiency'] = device['device_efficiency'] / 100
                 cur.execute("CALL prd_insert_devices_values(%s, %s, %s, %s, %s, %s, %s);", (user_id, device['device_id'], device['active_power'], device['active_hour'], device['standby_power'], device['standby_hour'], device['device_efficiency']))
                 print('Lista final', device)
+            cur.execute("CALL prd_calculate_total_energy_emission(%s);", user_id)
             return redirect(url_for('final_cal_electric'))        
         else:
             return 'You have to log in first'

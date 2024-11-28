@@ -481,12 +481,12 @@ def cal_transport():
         if 'id' in session:
             user_id = session['id']
             #Brings all the values from the form to send it at the method that do the calculus        
-            fuel_type = request.form["fuel_type"]            
+            fuel_type = request.form["fuel_type"]
             cylinder_count = int(request.form["cylinders_count"])
-            vehicle_year = int(request.form["vehicule_old"])            
+            vehicle_year = int(request.form["vehicule_old"])
             time_used = int(request.form["time_used"])
-            consumed_fuel = int(request.form["consumed_fuel"])            
-            distance = int(request.form["distance_traveled"])            
+            consumed_fuel = int(request.form["consumed_fuel"])
+            distance = int(request.form["distance_traveled"])
             #Brings from the db the emission factors and their ids
             cur = mysql.connection.cursor()
             cur.execute('CALL prd_get_vehicule_adjustments(%s, %s, %s, @year_adjustment, @cylinder_adjustment, @fuel_adjustment, @id_year_adjustment, @id_cyilinder_adjustment, @id_fuel_adjustment);', (vehicle_year, cylinder_count, fuel_type))
@@ -523,27 +523,27 @@ def go_cal_electric():
         return render_template('cal_electric.html', id = user_id, user = user_name)
     else:
         return 'You have to log in first'
-@app.route('/cal_electric', methods=['POST']) 
+@app.route('/cal_electric', methods=['POST'])
 def cal_electric():
     if request.method == 'POST':
         if 'id' in session:
             devices_used = list()#In this dict, is going to save all the infor os the usage of each device
             cur = DbConection.get_dict_cursor()
-            
+
             devices_selectes_list = request.form.getlist('device')#Brings all the chekboxes selected
-            print("Dispositivos seleccionados: ", len(devices_selectes_list))                        
-            
+            print("Dispositivos seleccionados: ", len(devices_selectes_list))
+
             for device in devices_selectes_list:
                 device_info = {'id_device': 0, 'name': '', 'device_active_power': 0.0, 'active_used_hours': 0.0, 'device_standby_power': 0.0, 'standby_used_hours': 0.0, 'device_efficiency': 0.0}                
                 cur.execute("SELECT device_name FROM tcat_device WHERE id_device = %s;", (device,))
-                device_info['name'] = cur.fetchone()['device_name'] 
-                device_info['id_device'] = device                            
+                device_info['name'] = cur.fetchone()['device_name']
+                device_info['id_device'] = device
                 devices_used.append(device_info)
-            
+
             print('Lista de diccionarios": ',devices_used)
             print('Nombre del primer dispositivo: ', devices_used[0]['name'])
             session['devices_selected'] = devices_used#Saves the list to be able to access to it in any part
-            return redirect(url_for('go_electric_devices_info'))        
+            return redirect(url_for('go_electric_devices_info'))
         else:
             return 'You have to log in first'
 @app.route('/go_electric_devices_info', methods=['GET'])
@@ -551,10 +551,10 @@ def go_electric_devices_info():
     if 'id' in session:
         user_id = session['id']
         user_name = session['user']
-        devices_selected_list = session.get('devices_selected', [])  
-        print('DISPOSITIVOS ANTES DE SER ENVIADOS AL FORM DE INFO: ', devices_selected_list)      
+        devices_selected_list = session.get('devices_selected', [])
+        print('DISPOSITIVOS ANTES DE SER ENVIADOS AL FORM DE INFO: ', devices_selected_list)
         return render_template('cal_electric_device_info.html', id = user_id, user = user_name, devices_list = devices_selected_list)
-    
+
 @app.route('/electric_devices_info', methods=['POST'])
 def electric_devices_info():
     if request.method == "POST":
@@ -583,6 +583,7 @@ def electric_devices_info():
                 #Saves each dictionary generated for each device
                 devices_data.append(device_data)
                 print('Lista final', devices_data[i])
+
             for device in devices_data:
                 if device['device_efficiency'] == 0:
                     device['device_efficiency'] = 1
@@ -590,15 +591,17 @@ def electric_devices_info():
                     device['device_efficiency'] = device['device_efficiency'] / 100
                 cur.execute("CALL prd_insert_devices_values(%s, %s, %s, %s, %s, %s, %s);", (user_id, device['device_id'], device['active_power'], device['active_hour'], device['standby_power'], device['standby_hour'], device['device_efficiency']))
                 print('Lista final', device)
-            cur.execute("CALL prd_calculate_total_energy_emission(%s);", user_id)
-            return redirect(url_for('final_cal_electric'))        
+
+            cur.execute("CALL prd_calculate_total_energy_emission(%s);", (user_id,))
+            return redirect(url_for('final_cal_electric'))
         else:
             return 'You have to log in first'
+
 @app.route('/final_cal_electric', methods=['GET'])
 def final_cal_electric():
     if 'id' in session:
         user_id = session['id']
-        user_name = session['user']        
+        user_name = session['user']
         return render_template('final_cal_electric.html', id = user_id, user = user_name, total = 1)
     else:
         return 'You have to log in first'

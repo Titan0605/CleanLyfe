@@ -161,7 +161,6 @@
 
 .calculator__question-tittle {
     font-family: "Host Grotesk", sans-serif;
-    font-optical-sizing: auto;
     font-weight: 500;
     font-style: normal;
     margin-top: 0.4rem;
@@ -176,7 +175,7 @@
 }
 
 .calculator__side-question-radio {
-    width: 35rem;
+    width: auto;
 }
 
 .calculator__question-option {
@@ -297,7 +296,7 @@ input[type="radio"]:checked::before {
 }
 
 .calculator__submit-button {
-    width: 15%;
+    width: auto;
     /* background-color: rgba(54, 172, 117, 0.9); */
     background: rgba(27, 155, 140,0.9);
     border: none;

@@ -3,6 +3,7 @@ from flask_mysqldb import MySQL
 import water_products_calculus
 import transportCalculus, DbConection
 import pymysql
+import carbon_products_calculus
 
 #este es para declarar una varianble tipo flask (es obligatorio)
 app = Flask(__name__)
@@ -179,7 +180,7 @@ def go_hidric_cal():
 
         if user_id != 10:
             cur = mysql.connection.cursor()
-            cur.execute('SELECT page_water_footprint FROM tuser_log WHERE id_user = %s', (user_id,))
+            cur.execute('SELECT hidric_page FROM tuser_log WHERE id_user = %s', (user_id,))
             data = cur.fetchone()
             page = data[0]
             if page == 1:
@@ -226,11 +227,11 @@ def hidric_cal_1():
 
 
             cur = mysql.connection.cursor()
-            cur.execute('CALL prd_calc_hidric_beginnn (%s, %s, %s)', (id_user, total_shower, total_toilet))
+            cur.execute('CALL prd_calc_hidric_1 (%s, %s, %s)', (id_user, total_shower, total_toilet))
             mysql.connection.commit()
 
             if id_user != 10:
-                cur.execute('UPDATE tuser_log SET page_water_footprint = 2 WHERE id_user = %s', (id_user,))
+                cur.execute('UPDATE tuser_log SET hidric_page = 2 WHERE id_user = %s', (id_user,))
                 mysql.connection.commit()
 
             return redirect(url_for('go_hidric_cal_2'))
@@ -289,11 +290,11 @@ def hidric_cal_2():
             total_washing_machine = water_products_calculus.washing_clothest(washing_clothes_times, washing_machine_type, user_knows)
 
             cur = mysql.connection.cursor()
-            cur.execute('CALL cal_hidric_two (%s, %s, %s);', (user_id, total_dishes, total_washing_machine))
+            cur.execute('CALL prd_calc_hidric_2 (%s, %s, %s);', (user_id, total_dishes, total_washing_machine))
             mysql.connection.commit()
 
             if user_id != 10:
-                cur.execute('UPDATE tuser_log SET page_water_footprint = 3 WHERE id_user = %s', (user_id,))
+                cur.execute('UPDATE tuser_log SET hidric_page = 3 WHERE id_user = %s', (user_id,))
                 mysql.connection.commit()
 
             return redirect(url_for('go_hidric_cal_3'))
@@ -333,11 +334,11 @@ def hidric_cal_3():
             total_watering_yard = water_products_calculus.garden_watering(watering_minutes, watering_type, liters_bottle, times_watering, yard_size, drippers_number, flow_rate)
 
             cur = mysql.connection.cursor()
-            cur.execute('CALL cal_hidric_three (%s, %s);', (user_id, total_watering_yard))
+            cur.execute('CALL prd_calc_hidric_3 (%s, %s);', (user_id, total_watering_yard))
             mysql.connection.commit()
 
             if user_id != 10:
-                cur.execute('UPDATE tuser_log SET page_water_footprint = 4 WHERE id_user = %s', (user_id,))
+                cur.execute('UPDATE tuser_log SET hidric_page = 4 WHERE id_user = %s', (user_id,))
                 mysql.connection.commit()
 
             return redirect(url_for('go_hidric_cal_4'))
@@ -367,11 +368,11 @@ def hidric_cal_4():
 
             cur = mysql.connection.cursor()
 
-            cur.execute('CALL cal_hidric_four (%s, %s);', (user_id, total_cleaning_house))
+            cur.execute('CALL prd_calc_hidric_4 (%s, %s);', (user_id, total_cleaning_house))
             mysql.connection.commit()
 
             if user_id != 10:
-                cur.execute('UPDATE tuser_log SET page_water_footprint = 5 WHERE id_user = %s', (user_id,))
+                cur.execute('UPDATE tuser_log SET hidric_page = 5 WHERE id_user = %s', (user_id,))
                 mysql.connection.commit()
 
             return redirect(url_for('go_hidric_cal_5'))
@@ -437,11 +438,11 @@ def hidric_cal_5():
 
             cur = mysql.connection.cursor()
 
-            cur.execute('CALL prd_cal_hidric_final (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', (user_id, total_coffe, total_tea, total_beef, total_chicken, total_pork, total_rice, total_sugar, total_cheese, total_milk, total_beer, total_juice, total_soda, total_eggs, total_bread))
+            cur.execute('CALL prd_calc_hidric_5 (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)', (user_id, total_coffe, total_tea, total_beef, total_chicken, total_pork, total_rice, total_sugar, total_cheese, total_milk, total_beer, total_juice, total_soda, total_eggs, total_bread))
             mysql.connection.commit()
 
             if user_id != 10:
-                cur.execute('UPDATE tuser_log SET page_water_footprint = 1 WHERE id_user = %s', (user_id,))
+                cur.execute('UPDATE tuser_log SET hidric_page = 1 WHERE id_user = %s', (user_id,))
                 mysql.connection.commit()
 
             return redirect(url_for('final_hid_calculator'))
@@ -454,7 +455,8 @@ def final_hid_calculator():
         user_id = session['id']
         user_name = session['user']
         cur = mysql.connection.cursor()
-        cur.execute('SELECT water_footprint.total_water FROM water_footprint WHERE id_water_footprint = (SELECT MAX(id_water_footprint) FROM footprints_user WHERE id_user = %s);', (user_id,))
+        cur.execute('CALL prd_get_hidric_footprint (%s, @final_emission);', (user_id,))
+        cur.execute('SELECT @final_emission;')
         total_water_footprint = cur.fetchall()
 
         formatted_value = "{:.2f}".format(total_water_footprint[0][0])
@@ -547,10 +549,185 @@ def final_cal_electric():
     if 'id' in session:
         user_id = session['id']
         user_name = session['user']        
-        
         return render_template('final_cal_electric.html', id = user_id, user = user_name, total = 1)
     else:
         return 'You have to log in first'
+    
+@app.route('/go_cal_carbon_products', methods=['GET'])
+def go_cal_carbon_products():
+    if 'id' in session:
+        if session['id'] != 10:
+            return render_template('cal_carbon_products.html')
+        return 'you have to log in first'
+    return 'you have to log in first'
+
+@app.route('/cal_carbon_products', methods=['POST'])
+def cal_carbon_products():
+    if request.method == 'POST':
+        if 'id' in session:
+            
+            user_id = session['id']
+            
+            #First of all, it's necessary call the answers of the user on the frontend which are the how many products the user consume (the name of the unit depends of the kind product, for example for the meat, we use kg)   
+            cow_meat_kg = int(request.form['cow_meat_kg'])
+            pork_meat_kg = int(request.form['pork_meat_kg'])
+            chicken_meat_kg = int(request.form['chicken_meat_kg'])
+            
+            #Now, we bring the data about the transport, packaging and refrigeration of the products and we are bringing these data in each topic (meat, dairy, fruits)
+            meat_transport = request.form['meat_transport']
+            meat_packaging = request.form['meat_packaging']
+            meat_refrigeration = request.form['meat_refrigeration']
+            
+            #I made a function that its process send the information to the database, the first parameter is the id of the product (you can see it on the database, in this case is 1), the second parameter is the unit (in this case is the cow meat kg), the next parameter is the transport, the next parameter is the packaging, the next parameter is the refrigeration and finally, the last parameter is the user id which was declarated before
+            send_emission = products_adjustements(1, cow_meat_kg, meat_transport, meat_packaging, meat_refrigeration, user_id)
+            #If the function returns a 0 it means that there is an error, and I made this to find easier the error
+            if send_emission == 0:
+                return 'There is an error sending cow meat product carbon emission'
+            #the process of sending the information it will be necessary in each product
+            send_emission = products_adjustements(2, pork_meat_kg, meat_transport, meat_packaging, meat_refrigeration, user_id)
+            if send_emission == 0:
+                return 'There is an error sending pork meat product carbon emission'
+            
+            send_emission = products_adjustements(3, chicken_meat_kg, meat_transport, meat_packaging, meat_refrigeration, user_id)
+            if send_emission == 0:
+                return 'There is an error sending chicken product carbon emission'
+            #Dairy
+            #And now, the process is repeated in each topic (in this case is dairy)
+            milk_liters = int(request.form['milk_liters'])
+            cheese_kg = int(request.form['cheese_kg'])
+            dairy_transport = request.form['dairy_transport']
+            dairy_packaging = request.form['dairy_packaging']
+            dairy_refrigeration = request.form['dairy_refrigeration']
+            
+            send_emission = products_adjustements(4, milk_liters, dairy_transport, dairy_packaging, dairy_refrigeration, user_id)
+            if send_emission == 0:
+                return 'There is an error sending milk product carbon emission'
+            
+            send_emission = products_adjustements(5, cheese_kg, dairy_transport, dairy_packaging, dairy_refrigeration, user_id)
+            if send_emission == 0:
+                return 'There is an error sending cheese product carbon emission'
+            
+            #Fruits
+            local_production_kg = int(request.form['local_production_kg'])
+            greenhouse_production_kg = int(request.form['greenhouse_production_kg'])
+            imported_production_kg = int(request.form['imported_production_kg'])
+            
+            fruits_transport = request.form['fruits_transport']
+            fruits_packaging = request.form['fruits_packaging']
+            fruits_refrigeration = request.form['fruits_refrigeration']
+            
+            send_emission = products_adjustements(6, local_production_kg, fruits_transport, fruits_packaging, fruits_refrigeration, user_id)
+            if send_emission == 0:
+                return 'There is an error sending local production product carbon emission'
+            
+            send_emission = products_adjustements(7, greenhouse_production_kg, fruits_transport, fruits_packaging, fruits_refrigeration, user_id)
+            if send_emission == 0:
+                return 'There is an error sending greenhouse production product carbon emission'
+            
+            send_emission = products_adjustements(8, imported_production_kg, fruits_transport, fruits_packaging, fruits_refrigeration, user_id)
+            if send_emission == 0:
+                return 'There is an error sending imported production product carbon emission'
+            
+            #Clothes
+            t_shirt_unit = int(request.form['t_shirt_unit'])
+            denim_pants_unit = int(request.form['denim_pants_unit'])
+            shoes_unit = int(request.form['shoes_unit'])
+            
+            clothes_transport = request.form['clothes_transport']
+            clothes_packaging = request.form['clothes_packaging']
+            
+            send_emission = products_adjustements(9, t_shirt_unit, clothes_transport, clothes_packaging, 8, user_id)
+            if send_emission == 0:
+                return 'There is an error sending tshirt product carbon emission'
+            
+            send_emission = products_adjustements(10, denim_pants_unit, clothes_transport, clothes_packaging, 8, user_id)
+            if send_emission == 0:
+                return 'There is an error sending denim pants product carbon emission'
+            
+            send_emission = products_adjustements(11, shoes_unit, clothes_transport, clothes_packaging, 8, user_id)
+            if send_emission == 0:
+                return 'There is an error sending shoes product carbon emission'
+            
+            #Electronic devices
+            cellphone_unit = int(request.form['cellphone_unit'])
+            laptop_unit = int(request.form['laptop_unit'])
+            television_unit = int(request.form['television_unit'])
+            
+            electronic_transport = request.form['electronic_transport']
+            electronic_packaging = request.form['electronic_packaging']
+            
+            send_emission = products_adjustements(12, cellphone_unit, electronic_transport, electronic_packaging, 8, user_id)
+            if send_emission == 0:
+                return 'There is an error sending cellphone product carbon emission'
+            
+            send_emission = products_adjustements(13, laptop_unit, electronic_transport, electronic_packaging, 8, user_id)
+            if send_emission == 0:
+                return 'There is an error sending laptop product carbon emission'
+            
+            send_emission = products_adjustements(14, television_unit, electronic_transport, electronic_packaging, 8, user_id)
+            if send_emission == 0:
+                return 'There is an error sending television product carbon emission'
+            
+            #Cleaning products
+            detergent_kg = int(request.form['detergent_kg'])
+            softener_lt = int(request.form['softener_lt'])
+            all_purpose_lt = int(request.form['all_purpose_lt'])
+            
+            cleaning_transport = request.form['cleaning_transport']
+            cleaning_packaging = request.form['cleaning_packaging']
+            
+            send_emission = products_adjustements(15, detergent_kg, cleaning_transport, cleaning_packaging, 8, user_id)
+            if send_emission == 0:
+                return 'There is an error sending detergent product carbon emission'
+            
+            send_emission = products_adjustements(16, softener_lt, cleaning_transport, cleaning_packaging, 8, user_id)
+            if send_emission == 0:
+                return 'There is an error sending softener product carbon emission'
+            
+            send_emission = products_adjustements(17, all_purpose_lt, cleaning_transport, cleaning_packaging, 8, user_id)
+            if send_emission == 0:
+                return 'There is an error sending all purpose product carbon emission'
+            
+            return redirect(url_for('go_final_products'))
+    return 'You have to log in first'
+
+@app.route('/go_final_products', methods=['GET'])
+def go_final_products():
+    if 'id' in session:
+        cur = mysql.connection.cursor()
+        user_id = session['id']
+        cur.execute('SELECT products_emission FROM VW_User_Products_Emission WHERE id_user = %s;', (user_id,))
+        data = cur.fetchone()[0]
+        print(data)
+        
+        return render_template('final_cal_products.html', final_emission_product = data)
+    return 'You have to log in first'
+
+#This is the function that receives the parameters and will send the information and the final emission of each product to the database.
+def products_adjustements(product_id, product_unit, transport, packaging, refrigeration, user_id):
+    cur = mysql.connection.cursor()
+    #The funcion in this part takes the different adjustements
+    cur.execute('CALL prd_carbon_product_adjustements(%s, %s, %s, %s, %s, @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement);', (user_id, product_id, transport, packaging, refrigeration))
+    cur.execute('SELECT @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement;')
+    adjustements = cur.fetchone()
+        
+    #It adds the different adjustements in variables
+    carbon_emission = float(adjustements[0])
+    transport_adjustement = float(adjustements[1])
+    packaging_adjustement = float(adjustements[2])
+    refrigeration_adjustement = float(adjustements[3])
+        
+    #it sends the adjustements and the units of the product to calculate the final emission and return it into a variable
+    final_emission = carbon_products_calculus.product_carbon_emission(product_unit, carbon_emission, transport_adjustement, packaging_adjustement, refrigeration_adjustement)
+        
+    #Here it inserts the result on the database
+    cur.execute('CALL prd_insert_product_carbon_emission(%s, %s, %s, %s)', (user_id, product_id, product_unit, final_emission,))
+    mysql.connection.commit()
+        
+    successful = 1
+
+    return successful
+
 #This is a method that recieves an error and renderising the error handle page
 @app.route('/page_not_found')
 def page_not_found(error):

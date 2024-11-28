@@ -19,6 +19,7 @@
                     <i class="fa-solid fa-hands-bubbles calculator__side-icon"></i>
                     <h2 class="calculator__side-title">Dishes</h2>
                 </header>
+                
                 <section class="calculator__side-question-radio">
                     <h3 class="calculator__question-tittle">How do you wash the dishes?</h3>
                     <div class="calculator__question-options">
@@ -71,6 +72,7 @@
                         <option class="calculator__select-option" value="{{ i }}">{{ i }} minutes</option>
                         {% endfor %}
                     </select>
+
                 </section>
 
             </article>
@@ -86,12 +88,14 @@
                         <option value="{{ i }}">{{ i }} liters</option>
                         {% endfor %}
                     </select>
+
                 </section>
 
                 <header class="calculator__side-header --side-header-size-2">
                     <i class="fa-solid fa-shirt calculator__side-icon"></i>
                     <h2 class="calculator__side-title">Cleaning Clothes</h2>
                 </header>
+                
                 <section class="calculator__side-question-radio">
                     <h3 class="calculator__question-tittle">What type of washing-maching do you have?</h3>
                     <div class="calculator__question-options">
@@ -109,7 +113,9 @@
                         </label>
                     </div>
                 </section>
+
                 <section class="calculator__side-question">
+
                     <h3 class="calculator__question-tittle">How many times do you wash your clothes?</h3>
                     <select class="calculator__question-select" name="washing_clothes_times">
                         <option value="0">0 time</option>
@@ -118,12 +124,18 @@
                         <option value="{{ i }}">{{ i }} times</option>
                         {% endfor %}
                     </select>
+
                 </section>
+
             </article>
+
         </section>
+
         <footer class="calculator__footer">
             <input class="calculator__submit-button button" type="submit" value="NEXT">
         </footer>
+
     </form>
+
 </main>
 {% endblock %}

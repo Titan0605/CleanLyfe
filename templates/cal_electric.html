@@ -1,135 +1,278 @@
 {%extends '/layouts/base.html' %}
+{%block css%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Itim&family=Noto+Sans+Kannada:wght@100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cal_Style.css') }}">
+{%endblock%}
 {% block title %} Electric calculator {% endblock %}
+{% block content %} 
 
-{% block content %}
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, tempora assumenda? Odio nulla maxime, minus rem deleniti officia ipsum, esse iste eveniet corrupti delectus distinctio possimus? At consequatur vitae iure?
-Odio cupiditate labore voluptate nostrum eveniet molestiae, laborum debitis ad ut eligendi, minima incidunt fugiat excepturi hic exercitationem beatae ipsam voluptates. Vero placeat fugit voluptatibus neque ea ex sunt! Eligendi?
-Numquam in, fugiat incidunt delectus vero hic odio, fugit tempore non officia nihil exercitationem ducimus itaque modi, debitis libero suscipit dolor reiciendis quas dignissimos repellendus porro? Possimus, totam deleniti! Ipsam.
-Repellendus incidunt quia laboriosam velit eaque molestiae, quasi molestias iure adipisci, suscipit nobis eum ea, nemo ipsam ipsa aperiam accusamus doloribus est odio in quibusdam totam dolor? Ex, beatae aliquam!
-<div><!--34 Devides-->    
-    <section>
-        <article>
-            <header>
-                <i></i>
-                <h2>Devices used</h2>
-            </header>
-            <section>                    
-                <form action="/cal_electric" method="POST">
-                    <h1>Kitchen</h1>
-                    <label for="device_1" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_1" value="1"> Fridge
-                    </label>
-                    <label for="device_2" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_2" value="2"> Microwave
-                    </label>
-                    <label for="device_3" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_3" value="3"> Electric Oven
-                    </label>
-                    <label for="device_4" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_4" value="4"> Coffee Machine
-                    </label>
-                    <label for="device_5" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_5" value="5"> Toaster
-                    </label>
-                    <label for="device_6" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_6" value="6"> Blender
-                    </label>
-                    <h1>Living Room</h1>
-                    <label for="device_7" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_7" value="7"> Tv
-                    </label>
-                    <label for="device_8" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_8" value="8"> Sound system / Sound bar
-                    </label>
-                    <label for="device_9" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_9" value="9"> Game Console
-                    </label>
-                    <label for="device_10" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_10" value="10"> DVD/Blu-ray player
-                    </label>
-                    <label for="device_11" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_11" value="11"> Wifi Router
-                    </label>
-                    <h1>Bedroom</h1>
-                    <label for="device_12" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_12" value="12"> Night Lamp
-                    </label>
-                    <label for="device_13" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_13" value="13"> Alarm Clock
-                    </label>
-                    <!--CHANGE THE VALUE AND THE TEXT-->
-                    <label for="device_14" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_14" value="14"> Fan or portable heater
-                    </label>
-                    <h1>Office / Study Room</h1>
-                    <label for="device_15" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_15" value="15"> Printer
-                    </label>
-                    <label for="device_16" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_16" value="16"> Scanner
-                    </label>
-                    <label for="device_17" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_17" value="17"> Monitor
-                    </label>
-                    <h1>Bathroom</h1>
-                    <label for="device_18" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_18" value="18"> Hair Dryer
-                    </label>
-                    <label for="device_19" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_19" value="19"> Electric Shaver
-                    </label>
-                    <label for="device_20" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_20" value="20"> Electric Toothbrush
-                    </label>
-                    <h1>Laundry Room</h1>
-                    <label for="device_21" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_21" value="21"> Washing Machine
-                    </label>
-                    <label for="device_22" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_22" value="22"> Dryer
-                    </label>
-                    <label for="device_23" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_23" value="23"> Iron
-                    </label>
-                    <h1>Mobile and portable devices</h1>
-                    <label for="device_24" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_24" value="24"> Smartphone
-                    </label>
-                    <label for="device_25" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_25" value="25"> Mobile device chargers
-                    </label>
-                    <label for="device_26" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_26" value="26"> Tablet
-                    </label>
-                    <label for="device_27" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_27" value="27"> Laptop
-                    </label>
-                    <label for="device_28" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_28" value="28"> E-Reader
-                    </label>
-                    <label for="device_29" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_29" value="29"> Smartwatch
-                    </label>
-                    <h1>Others</h1>
-                    <label for="device_30" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_30" value="30"> Air Conditioning
-                    </label>
-                    <label for="device_31" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_31" value="31"> Heater
-                    </label>
-                    <label for="device_32" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_32" value="32"> Vacuum
-                    </label>
-                    <label for="device_33" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_33" value="33"> Dehumidifier
-                    </label>
-                    <label for="device_34" class="calculator_question-checkbox">
-                        <input type="checkbox" name="device" id="device_34" value="34"> Humidifier
-                    </label>
-                    <input type="submit" value="FINISH">
-                </form>
-            </section>          
-        </article>
-    </section>    
-</div>
+<main class="calculator">
+
+    <form action="/cal_electric" method="POST" class="calculator__container">
+
+        <header class="calculator__header">
+            <i class="fa-solid fa-bolt calculator__icon --icon-lightning-1"></i>
+            <h1 class="calculator__title">Electric Calculator</h1>
+        </header>
+
+        <section class="calculator__form --form-electric">
+
+            <article class="calculator__aside">
+
+                <header class="calculator__side-header">
+                    <i class="fa-solid fa-kitchen-set calculator__side-icon"></i>
+                    <h2 class="calculator__side-title">Kitchen</h2>
+                </header>
+
+                <section class="calculator__side-check-box">
+
+                    <div class="calculator__question-checks">
+                        <label for="device_1" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_1" value="1">
+                            Fridge
+                        </label>
+                        <label for="device_2" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_2" value="2">
+                            Microwave
+                        </label>
+                        <label for="device_3" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_3" value="3">
+                            Electric Oven
+                        </label>
+                    </div>
+                    <div class="calculator__question-checks">
+                        <label for="device_4" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_4" value="4">
+                            Coffee Machine
+                        </label>
+                        <label for="device_5" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_5" value="5">
+                            Toaster
+                        </label>
+                        <label for="device_6" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_6" value="6">
+                            Blender
+                        </label>
+                    </div>
+
+                </section>
+
+                <header class="calculator__side-header --side-header-size-energy-1">
+                    <i class="fa-solid fa-couch calculator__side-icon"></i>
+                    <h2 class="calculator__side-title">Living Room</h2>
+                </header>
+
+                <section class="calculator__side-check-box">
+
+                    <div class="calculator__question-checks">
+                        <label for="device_7" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_7" value="7">
+                            TV
+                        </label>
+                        <label for="device_8" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_8" value="8">
+                            Sound system / Sound bar
+                        </label>
+                        <label for="device_9" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_9" value="9">
+                            Game Console
+                        </label>
+                        <label for="device_10" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_10" value="10">
+                            DVD/Blu-ray player
+                        </label>
+                        <label for="device_11" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_11" value="11">
+                            Wifi Router
+                        </label>
+                    </div>
+
+                </section>
+
+                <header class="calculator__side-header --side-header-size-energy-1-1">
+                    <i class="fa-solid fa-bed calculator__side-icon"></i>
+                    <h2 class="calculator__side-title">Bedroom</h2>
+                </header>
+
+                <section class="calculator__side-check-box">
+
+                    <div class="calculator__question-checks">
+                        <label for="device_12" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_12" value="12">
+                            Night Lamp
+                        </label>
+                        <label for="device_13" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_13" value="13">
+                            Alarm Clock
+                        </label>
+                        <label for="device_14" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_14" value="14">
+                            Fan or portable heater
+                        </label>
+                    </div>
+
+                </section>
+
+                <header class="calculator__side-header --side-header-size-energy-1-2">
+                    <i class="fa-solid fa-book calculator__side-icon"></i>
+                    <h2 class="calculator__side-title">Office / Study Room</h2>
+                </header>
+
+                <section class="calculator__side-check-box">
+
+                    <div class="calculator__question-checks">
+                        <label for="device_15" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_15" value="15">
+                            Printer
+                        </label>
+                        <label for="device_16" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_16" value="16">
+                            Scanner
+                        </label>
+                        <label for="device_17" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_17" value="17">
+                            Monitor
+                        </label>
+                    </div>
+
+                </section>
+
+            </article>
+
+            <article class="calculator__aside">
+
+                <header class="calculator__side-header --side-header-size-energy-1-1">
+                    <i class="fa-solid fa-toilet calculator__side-icon"></i>
+                    <h2 class="calculator__side-title">Bathroom</h2>
+                </header>
+
+                <section class="calculator__side-check-box">
+
+                    <div class="calculator__question-checks">
+                        <label for="device_18" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_18" value="18">
+                            Hair Dryer
+                        </label>
+                        <label for="device_19" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_19" value="19">
+                            Electric Shaver
+                        </label>
+                        <label for="device_20" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_20" value="20">
+                            Electric Toothbrush
+                        </label>
+                    </div>
+
+                </section>
+
+                <header class="calculator__side-header --side-header-size-energy-1-4">
+                    <i class="fa-solid fa-jug-detergent calculator__side-icon"></i>
+                    <h2 class="calculator__side-title">Laundry Room</h2>
+                </header>
+
+                <section class="calculator__side-check-box">
+
+                    <div class="calculator__question-checks">
+                        <label for="device_21" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_21" value="21">
+                            Washing Machine
+                        </label>
+                        <label for="device_22" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_22" value="22">
+                            Dryer
+                        </label>
+                        <label for="device_23" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_23" value="23">
+                            Iron
+                        </label>
+                    </div>
+
+                </section>
+
+                <header class="calculator__side-header --side-header-size-energy-1-3">
+                    <i class="fa-solid fa-mobile-screen-button calculator__side-icon"></i>
+                    <h2 class="calculator__side-title">Mobile and portable devices</h2>
+                </header>
+
+                <section class="calculator__side-check-box --side-check-box">
+
+                    <div class="calculator__question-checks">
+                        <label for="device_24" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_24" value="24">
+                            Smartphone
+                        </label>
+                        <label for="device_25" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_25" value="25">
+                            Mobile device chargers
+                        </label>
+                        <label for="device_26" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_26" value="26">
+                            Tablet
+                        </label>
+                    </div>
+                    <div class="calculator__question-checks">
+                        <label for="device_27" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_27" value="27">
+                            Laptop
+                        </label>
+                        <label for="device_28" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_28" value="28">
+                            E-Reader
+                        </label>
+                        <label for="device_29" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_29" value="29">
+                            Smartwatch
+                        </label>
+                    </div>
+
+                </section>
+
+                <header class="calculator__side-header --side-header-size-energy-1-5">
+                    <i class="fa-solid fa-plug calculator__side-icon"></i>
+                    <h2 class="calculator__side-title">Others</h2>
+                </header>
+
+                <section class="calculator__side-check-box">
+
+                    <div class="calculator__question-checks">
+                        <label for="device_30" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_30" value="30">
+                            Air Conditioning
+                        </label>
+                        <label for="device_31" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_31" value="31">
+                            Heater
+                        </label>
+                        <label for="device_32" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_32" value="32">
+                            Vacuum
+                        </label>
+                    </div>
+                    <div class="calculator__question-checks">
+                        <label for="device_33" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_33" value="33">
+                            Dehumidifier
+                        </label>
+                        <label for="device_34" class="calculator__question-check">
+                            <input type="checkbox" name="device" id="device_34" value="34">
+                            Humidifier
+                        </label>
+                    </div>
+
+                </section>
+
+            </article>
+
+        </section>
+
+        <footer class="calculator__footer">
+            <input class="calculator__submit-button --submit-button-electric-1 button" type="submit" value="NEXT">
+        </footer>
+
+    </form>
+
+</main>
+
 {% endblock %}

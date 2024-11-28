@@ -1,5 +1,4 @@
 {%extends '/layouts/base.html' %}
-
 {%block css%}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -7,14 +6,14 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/cal_Style.css') }}">
 {%endblock%}
 {% block title %} Electric calculator {% endblock %}
-{% block content %}
+{% block content %} 
 
 <main class="calculator">
 
     <form action="/cal_electric" method="POST" class="calculator__container">
 
         <header class="calculator__header">
-            <i class="fa-solid fa-bolt calculator__icon --icon-lightning"></i>
+            <i class="fa-solid fa-bolt calculator__icon --icon-lightning-1"></i>
             <h1 class="calculator__title">Electric Calculator</h1>
         </header>
 
@@ -269,7 +268,7 @@
         </section>
 
         <footer class="calculator__footer">
-            <input class="calculator__submit-button --submit-button-electric button" type="submit" value="FINISH">
+            <input class="calculator__submit-button --submit-button-electric-1 button" type="submit" value="NEXT">
         </footer>
 
     </form>

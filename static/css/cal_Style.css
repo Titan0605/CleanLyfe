@@ -27,6 +27,12 @@
     gap: 1rem;
 }
 
+.--header {
+    width: 5rem;
+    height: 5rem;
+    justify-content: center;
+}
+
 .calculator__icon{
     font-size: 1.7rem;
     color: black;
@@ -53,11 +59,22 @@
     gap: 10rem;
 }
 
+.--form-electric-1 {
+    display: flex;
+    gap: 5rem;
+    width: 38rem;
+}
+
 .calculator__aside {
     width: 20rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
+}
+
+.--aside-electric {
+    width: 30rem;
+    padding-left: 1rem;
 }
 
 .calculator__side-header {
@@ -77,6 +94,10 @@
     font-optical-sizing: auto;
     font-weight: 700;
     font-style: normal;
+}
+
+.--side-header-calculator {
+    width: 18rem;
 }
 
 .calculator__side-check-box {
@@ -147,6 +168,10 @@
     gap: 0.5rem;
 }
 
+.calculator__side-question-radio {
+    width: 35rem;
+}
+
 .calculator__question-option {
     font-size: 1em;
     line-height: 1.1;
@@ -165,6 +190,28 @@
 
 .calculator__question-check:focus-within {
     color: rgba(255, 255, 255, 0.8);
+}
+
+/* .active_power {
+    width: 16rem;
+    height: 1.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.5);
+} */
+
+input[type="number"] {
+    width: 18rem;
+    height: 1.9rem;
+    padding-left: 0.9rem;
+    font-size: 1.3rem;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+input::placeholder {
+    color: #000;
 }
 
 input[type="radio"] {
@@ -271,9 +318,14 @@ input[type="radio"]:checked::before {
     width: 25%;
 }
 
-.--submit-button-electric {
+.--submit-button-electric-1 {
     width: 17%;
 }
+
+.--submit-button-electric-2 {
+    width: 20%;
+}
+
 
 .--side-header-size-2 {
     width: 17rem;
@@ -336,6 +388,15 @@ input[type="radio"]:checked::before {
 
 .--side-header-size-energy-1-5 {
     width: 11rem;
+}
+
+.--icon-lightning-1 {
+    color: rgb(240, 216, 0);
+}
+
+.--icon-lightning-2 {
+    color: rgb(240, 216, 0);
+    font-size: 3rem;
 }
 
 @media (750px > height) {
@@ -403,8 +464,12 @@ input[type="radio"]:checked::before {
         color: aqua; 
     }
 
-    .--icon-lightning {
+    .--icon-lightning-1 {
         color: rgb(255, 230, 0);
+    }
+
+    .--icon-lightning-2 {
+        color: rgb(240, 216, 0);
     }
 
     .calculator__title {

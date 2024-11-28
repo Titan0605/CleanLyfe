@@ -1,50 +1,68 @@
 {%extends '/layouts/base.html' %}
-
-{%block title%} Electric Calculator {% endblock %}
-
+{%block css%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Itim&family=Noto+Sans+Kannada:wght@100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cal_Style.css') }}">
+{%endblock%}
+{% block title %} Electric calculator {% endblock %}
 {% block content %}
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Provident tempore accusamus sit est reiciendis facere aliquam
-repellat aperiam nulla accusantium, laborum exercitationem esse voluptate eaque sequi corporis optio molestiae fuga!
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi cum et enim modi porro, ipsam rem quisquam quam sequi
-assumenda corrupti atque, laudantium consequuntur sunt non ducimus dicta officia numquam?
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex quos maxime enim quas, nemo corporis repellendus quod
-mollitia perferendis quam earum dignissimos assumenda commodi sunt veniam reprehenderit natus quo voluptates?
-Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum est aperiam voluptatum. Inventore enim molestiae dolor
-aspernatur iure! Voluptatum totam veritatis sit ipsum unde cupiditate consequatur eum esse officia odit!
-Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nihil eius dignissimos laborum, tempore qui nisi placeat
-tenetur eos doloremque molestiae aliquam odio voluptas itaque quisquam sapiente, dolor aliquid dolores? Temporibus?
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut doloremque vero vel necessitatibus facilis praesentium sit
-molestiae ullam omnis iste asperiores dignissimos autem numquam voluptates illo, voluptatem alias doloribus expedita.
-<main>
-    <h2>Devices used</h2>
-    <form action="/electric_devices_info" method="POST" class="calculator_container">
+
+<main class="calculator">
+
+    <form action="/electric_devices_info" method="POST" class="calculator__container">
+
+        <header class="calculator__header --header">
+            <i class="fa-solid fa-bolt calculator__icon --icon-lightning-2"></i>
+        </header>
+
         {% for device in devices_list %}
-        <section>
-            <h2>{{ device['name'] }}</h2>
-            <input type="hidden" name="device_id" value="{{ device['id_device'] }}">
-            <section>
-                <h3>What is the active power of the device?</h3>
-                <input type="number" name="device_active_power" placeholder="kw" class="" required>
-            </section>
-            <section>
-                <h3>Hours of active use</h3>
-                <input type="number" name="active_used_hours" placeholder="hours" class="" required>
-            </section>
-            <section>
-                <h3>What is the standby power of the device?</h3>
-                <input type="number" name="device_standby_power" placeholder="kw" class="" required>
-            </section>
-            <section>
-                <h3>Hours of standby use</h3>
-                <input type="number" name="standby_used_hours" placeholder="hours" class="" required>
-            </section>
-            <section>
-                <h3>What is the efficiency of the device?</h3>
-                <input type="number" name="device_efficiency" placeholder="kw" class="" required>
-            </section>
+        <section class="calculator__form --form-electric-1">
+            
+            <article class="calculator__aside --aside-electric">
+
+                <header class="calculator__side-header --side-header-calculator">
+                    <h2 class="calculator__side-title">{{ device['name'] }}</h2>
+                    <input type="hidden" name="device_id" value="{{ device['id_device'] }}">
+                </header>
+
+                <section class="calculator__side-question-radio --side-question-radio-electric">
+                    <h3 class="calculator__question-tittle">What is the active power of the device?</h3>
+                    <input type="number" name="device_active_power" placeholder="kw" 
+                    required>
+                </section>
+
+                <section class="calculator__side-question-radio">
+                    <h3 class="calculator__question-tittle">Hours of active use</h3>
+                    <input type="number" name="active_used_hours" placeholder="hours" class="" required>
+                </section>
+
+                <section class="calculator__side-question-radio">
+                    <h3 class="calculator__question-tittle">What is the standby power of the device?</h3>
+                    <input type="number" name="device_standby_power" placeholder="kw" class="" required>
+                </section>
+
+                <section class="calculator__side-question-radio">
+                    <h3 class="calculator__question-tittle">Hours of standby use</h3>
+                    <input type="number" name="standby_used_hours" placeholder="hours" class="" required>
+                </section>
+
+                <section class="calculator__side-question-radio">
+                    <h3 class="calculator__question-tittle">What is the efficiency of the device?</h3>
+                    <input type="number" name="device_efficiency" placeholder="kw" class="" required>
+                </section>
+
+            </article>
+
         </section>
         {% endfor %}
-        <button type="submit">Finish</button>
+
+        <footer class="calculator__footer">
+            <input class="calculator__submit-button button --submit-button-electric-2" type="submit" value="FINISH">
+        </footer>
+
     </form>
+
 </main>
+
 {% endblock %}

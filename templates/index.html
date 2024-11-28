@@ -52,20 +52,11 @@
                         <i role="button" class="fa-solid fa-xmark button sidebar__button --button_without_border"></i>
                     </div>
                     <div class="sidebar__container-body">
-                        <ul>
-                            <li class="sidebar__content">
-                                <a role="button" class="sidebar__button-link" href="">Features</a>
-                            </li>
-                            <li class="sidebar__content">
-                                <a role="button" class="sidebar__button-link" href="">About</a>
-                            </li>
-                            <li role="button" class="sidebar__content">
-                                <a role="button" class="sidebar__button-link" href="{{ url_for('go_hidric_cal') }}">Calculator</a>
-                            </li>
-                            <li role="button" class="sidebar__content">
-                                <a role="button" class="sidebar__button-link" href="{{ url_for('go_cal_transport') }}">Calculator2</a>
-                            </li>
-                        </ul>
+                        <a role="button" class="sidebar__button-link" href="">Features</a>
+                        <a role="button" class="sidebar__button-link" href="">About</a>
+                        <a role="button" class="sidebar__button-link" href="{{ url_for('go_hidric_cal') }}">Calculator</a>
+                        <a role="button" class="sidebar__button-link" href="{{ url_for('go_cal_transport') }}">Calculator2</a>
+                        <a role="button" class="sidebar__button-link" href="{{ url_for('cal_water_products') }}">Calculator water products</a>
                     </div>
                 </section>
                 <section class="flex-content --sidebar-position --appear_on_mobile">

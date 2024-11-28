@@ -557,6 +557,8 @@ def go_electric_devices_info():
 def electric_devices_info():
     if request.method == "POST":
         if 'id' in session:
+            user_id = session['id']
+            cur = mysql.connection.cursor()
             device_ids = request.form.getlist('device_id')
             active_powers = request.form.getlist('device_active_power')
             active_hours = request.form.getlist('active_used_hours')
@@ -578,7 +580,14 @@ def electric_devices_info():
                 }
                 #Saves each dictionary generated for each device
                 devices_data.append(device_data)
-                print('Lista final', devices_data[i])                
+                print('Lista final', devices_data[i])
+            for device in devices_data:
+                if device['device_efficiency'] == 0:
+                    device['device_efficiency'] = 1
+                else:
+                    device['device_efficiency'] = device['device_efficiency'] / 100
+                cur.execute("CALL prd_insert_devices_values(%s, %s, %s, %s, %s, %s, %s);", (user_id, device['device_id'], device['active_power'], device['active_hour'], device['standby_power'], device['standby_hour'], device['device_efficiency']))
+                print('Lista final', device)
             return redirect(url_for('final_cal_electric'))        
         else:
             return 'You have to log in first'

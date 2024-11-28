@@ -1,36 +1,22 @@
 {%extends '/layouts/base.html'%}
-
+{%block css%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Itim&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cal_Style.css') }}">
+{%endblock%}
 {% block title%} Water products calculator {% endblock%} 
 {%block content%}
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis tempore rerum inventore excepturi odit necessitatibus sequi, impedit vitae, sunt esse quam eveniet doloremque a labore minus iste eaque dolore cupiditate?
-Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo sit iste vero laborum modi accusantium reiciendis commodi eius dolores laboriosam enim id consequuntur dolorum, atque quasi, culpa qui quos minima.
-Lorem ipsum, dolor sit amet consectetur adipisicing elit. Recusandae sit maxime quia officia modi. Praesentium atque quae eligendi aliquam error dolore. Odio ratione quis rerum veritatis delectus dignissimos, porro illum.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab porro magnam aliquam inventore error nobis magni tenetur id excepturi ipsam impedit exercitationem corrupti molestias autem aperiam, dolorem sapiente temporibus eos!
-<main>
-    <section>
-        <form action="/cal_water_products" method="post" class="">
-            <h3>How many liters of water did you consume this week?</h3>
-            <input type="number" name="water_consumed" placeholder="Liters" required> 
+<main class="calculator">
 
-            <h3>What percentage of that water do you heat?</h3>
-            <input type="number" name="water_heated_percentage" placeholder="Without % symbol" required>
+    <form action="/go_cal_water_products" method="POST" class="calculator__container">
 
-            <div>
-                <label for="heater_type_2">
-                    <input type="radio" name="heater_type" id="heater_type_2" value="2" required>Heating with LP gas  
-                </label>
-                <label for="heater_type_3">
-                    <input type="radio" name="heater_type" id="heater_type_3" value="3">Heating with natural gas 
-                </label>
-                <label for="heater_type_4">
-                    <input type="radio" name="heater_type" id="heater_type_4" value="4">Heating with electricity
-                </label>
-                <label for="heater_type_5">
-                    <input type="radio" name="heater_type" id="heater_type_5" value="5">Water was not heated
-                </label>
-            </div>
-            <input type="submit" value="FINISH">
-        </form>
-    </section>
+        <header class="calculator__header">
+            <i class="fa-solid fa-glass-water-droplet calculator__icon --icon-prodcuts-water"></i>
+            <h1 class="calculator__title">Water Products</h1>
+        </header>
+
+    </form>
+
 </main>
 {%endblock%}

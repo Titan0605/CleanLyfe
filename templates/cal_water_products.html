@@ -9,51 +9,72 @@
 {%endblock%}
 {% block title%} Water products calculator {% endblock%}
 {%block content%}
+
 <main class="calculator">
-    <section>
-        <form action="/cal_water_products" method="post" class="calculator__container">
 
-            <header class="calculator__header">
-                <i class="fa-solid fa-glass-water-droplet calculator__icon --icon-prodcuts-water"></i>
-                <h1 class="calculator__title">Water Products</h1>
-            </header>
+    <form action="/cal_water_products" method="POST" class="calculator__container">
 
-            <section class="calculator__aside">
+        <header class="calculator__header">
+            <i class="fa-solid fa-glass-water-droplet calculator__icon --icon-prodcuts-water"></i>
+            <h1 class="calculator__title">Water Products</h1>
+        </header>
 
-                <section class="calculator__side-question">
-                    <h3 class="calculator__question-tittle">How many liters of water did you consume this week?</h3>
-                    <input type="number" name="water_consumed" placeholder="Liters" required>
-                </section>
+        <section class="calculator__form --form-products">
 
-                <section class="calculator__side-question">
-                    <h3 class="calculator__question-tittle">What percentage of that water do you heat?</h3>
-                    <input type="number" name="water_heated_percentage" placeholder="Without % symbol" required>
-                </section>
+            <article class="calculator__aside --aside-products">
 
                 <section class="calculator__side-question-radio">
-                    <h3 class="calculator__question-tittle">What do you use to heat your water?</h3>
+                    <h3 class="calculator__question-tittle">What type of shower do you have?</h3>
                     <div class="calculator__question-options">
+                        <label for="heater_type_1" class="calculator__question-option">
+                            <input type="radio" name="heater_type" id="heater_type_1" value="2">
+                            Heating with LP gas
+                        </label>
                         <label for="heater_type_2" class="calculator__question-option">
-                            <input type="radio" name="heater_type" id="heater_type_2" value="2" required>Heating with LP gas
+                            <input type="radio" name="heater_type" id="heater_type_2" value="3">
+                            Heating with natural gas 
                         </label>
                         <label for="heater_type_3" class="calculator__question-option">
-                            <input type="radio" name="heater_type" id="heater_type_3" value="3">Heating with natural gas
+                            <input type="radio" name="heater_type" id="heater_type_3" value="4">
+                            Heating with electricity
                         </label>
                         <label for="heater_type_4" class="calculator__question-option">
-                            <input type="radio" name="heater_type" id="heater_type_4" value="4">Heating with electricity
-                        </label>
-                        <label for="heater_type_5" class="calculator__question-option">
-                            <input type="radio" name="heater_type" id="heater_type_5" value="5">Water was not heated
+                            <input type="radio" name="heater_type" id="heater_type_4" value="5">
+                            Heating with electricity
                         </label>
                     </div>
                 </section>
 
-                <footer class="calculator__footer">
-                    <input class="calculator__submit-button button" type="submit" value="FINISH">
-                </footer>
+                <section class="calculator__side-question-radio --side-question-radio-electric">
+                    <div class="calculator_header-questions-product">
+                        <div class="calculator_header-icon --header-icon-product">
+                            <i class="fa-solid fa-hand-holding-droplet calculator__side-icon --side-icon-5"></i>
+                        </div>
+                        <h3 class="calculator__question-tittle">How many liters of water did you consume this week?</h3>
+                    </div>
+                    <input type="number" name="water_consumed" placeholder="Liters" class="number-product" required>
+                </section>
 
-            </section>
-        </form>
-    </section>
+                <section class="calculator__side-question-radio --side-question-radio-electric">
+                    <div class="calculator_header-questions-product">
+                        <div class="calculator_header-icon --header-icon-product">
+                            <i class="fa-solid fa-fire-burner alculator__side-icon --side-icon-5"></i>
+                        </div>
+                        <h3 class="calculator__question-tittle">What percentage of that water do you heat?</h3>
+                    </div>
+                    <input type="number" name="water_heated_percentage" placeholder="Without % symbol" class="number-product" required>
+                </section>
+
+            </article>
+
+        </section>
+
+        <footer class="calculator__footer">
+            <input class="calculator__submit-button button --submit-button-product" type="submit" value="FINISH">
+        </footer>
+
+    </form>
+
 </main>
+
 {%endblock%}

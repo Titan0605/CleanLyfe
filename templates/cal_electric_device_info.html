@@ -33,7 +33,7 @@
                         </div>
                         <h3 class="calculator__question-tittle">What is the active power of the device?</h3>
                     </div>
-                    <input type="number" name="device_active_power" placeholder="kw" 
+                    <input type="number" name="device_active_power" placeholder="kw" class="number-energy"
                     required>
                 </section>
 
@@ -44,7 +44,7 @@
                         </div>
                         <h3 class="calculator__question-tittle">Hours of active use</h3>
                     </div>
-                    <input type="number" name="active_used_hours" placeholder="hours" class="" required>
+                    <input type="number" name="active_used_hours" placeholder="hours" class="number-energy" required>
                 </section>
 
                 <section class="calculator__side-question-radio">
@@ -54,7 +54,7 @@
                         </div>
                         <h3 class="calculator__question-tittle">What is the standby power of the device?</h3>
                     </div>
-                    <input type="number" name="device_standby_power" placeholder="kw" class="" required>
+                    <input type="number" name="device_standby_power" placeholder="kw" class="number-energy" required>
                 </section>
 
                 <section class="calculator__side-question-radio">
@@ -64,7 +64,7 @@
                         </div>
                         <h3 class="calculator__question-tittle">Hours of standby use</h3>
                     </div>
-                    <input type="number" name="standby_used_hours" placeholder="hours" class="" required>
+                    <input type="number" name="standby_used_hours" placeholder="hours" class="number-energy" required>
                 </section>
 
                 <section class="calculator__side-question-radio">
@@ -74,7 +74,7 @@
                         </div>
                         <h3 class="calculator__question-tittle">What is the efficiency of the device?</h3>
                     </div>
-                    <input type="number" name="device_efficiency" placeholder="kw" class="" required>
+                    <input type="number" name="device_efficiency" placeholder="kw" class="number-energy" required>
                 </section>
 
             </article>
@@ -83,7 +83,7 @@
         {% endfor %}
 
         <footer class="calculator__footer">
-            <input class="calculator__submit-button button --submit-button-electric-2" type="submit" value="FINISH">
+            <input class="calculator__submit-button button --submit-button-electric-2" type="submit" value="NEXT">
         </footer>
 
     </form>

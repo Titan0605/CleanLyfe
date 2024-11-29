@@ -1,37 +1,48 @@
 <!--inheritance of the base html-->
 {% extends 'layouts/base.html' %}
 <!--Renferences to extra css-->
-
+{%block css%}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home_Styles.css') }}">
+{% endblock%}
 <!--title of the page-->
 {% block title%}CleanLyfe{% endblock%}
 
 <!--Extra code of the page-->
 {%block content%}
-<div class="content">
-    <img class="content__huella" src="{{ url_for('static', filename='img/Huella.jpg') }}" alt="Imagen de huellas ecologicas">
-    <div class="content__description">
-        <section class="content__section">
-            <h2>Nuestros objetivos:</h2>
-            <p>El objetivo es que las personas mentalicen sobre que las acciones diarias de cada uno afectan al medio ambiente y si las personas cambian sus habitos diarios ayuda a cuidar al planeta tierra. Con esto, esta generacion y las futuras generaciones tendran una mejor calidad de vida.</p>
-        </section>
-        <section class="content__section">
-            <h2>Lo que puedes hacer:</h2>
-            <p>En CleanLyfe tiene muchas herramientas para disminuir la huella ecololiga. Estas herramientas son:</p>
-            <ul class="content__list">
-                <li class="content__list-parts">
-                    <h4 class="content__subtittle">Medidor</h4>
-                    <p class="content__paragraph">Para calcular la huella ecologica se necesita meter todos los datos de las acciones diarias.</p>
-                </li>
-                <li class="content__list-parts">
-                    <h4 class="content__subtittle">Historial</h4>
-                    <p class="content__paragraph">Tener un historial de todas las semanas que calcules la huella ecologica.</p>
-                </li>
-                <li class="content__list-parts">
-                    <h4 class="content__subtittle">Consejos</h4>
-                    <p class="content__paragraph">Al calcular la huella ecologica. Con los resultados calculados, se dara consejos para reducir en donde mas impacto tenga.</p>
-                </li>
-            </ul>
-        </section>
-    </div>
-</div>
+<article class="home">
+    <article class="home__container">
+        <header class="home__header">
+            <h1 class="home__welcome">Welcome back, {{user}}</h1>
+            <h2>Your next calculation will be in: 6 days</h2>
+        </header>
+        <main class="home__body">
+            <article class="home__aside">
+                <iframe src="{{ grafana_user_history }}" width="675" height="350" frameborder="0" class="home_grafana"></iframe>
+                <section class="home_grafana --grafana-section">
+                    <h3 class="home__subtittle">Your Last Footprints Records</h3>
+                    <div class="grafanas_united">
+                        <iframe src="{{ grafana_user_last_carbon }}" width="322" height="380" frameborder="0" class="home_grafana"></iframe>
+                        <iframe src="{{ grafana_user_last_hidric }}" width="322" height="380" frameborder="0" class="home_grafana"></iframe>
+                    </div>
+                </section>
+            </article>
+            <article class="home__aside --left-side">
+                <section class="home__footprint-info">
+                    <h3 class="home__subtittle">Carbon Footprint Info</h3>
+                    <div class="grafanas_united">
+                        <iframe src="{{ grafana_carbon_section }}" frameborder="0" class="home_grafana --manual-size"></iframe>
+                        <iframe src="{{ grafana_carbon_footprints }}" frameborder="0" class="home_grafana --manual-size"></iframe>
+                    </div>
+                </section>
+                <section class="home__footprint-info">
+                    <h3 class="home__subtittle">Hidric Footprint Info</h3>
+                    <div class="grafanas_united">
+                        <iframe src="{{ grafana_hidric_section }}" frameborder="0" class="home_grafana --manual-size"></iframe>
+                        <iframe src="{{ grafana_hidric_footprints }}" frameborder="0" class="home_grafana --manual-size"></iframe>
+                    </div>
+                </section>
+            </article>
+        </main>
+    </article>
+</article>
 {%endblock%}

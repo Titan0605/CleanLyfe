@@ -139,10 +139,19 @@ def go_cleanlyfe():
             return render_template('404.html')
 
         user = session['user']
+        id_user = session['id']
+        
         if user == 'invited':
             return render_template('404.html')
         else:
-            return render_template('cleanlyfe.html', user = user)
+            history_url = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732812935134&to=1732834535135&timezone=browser&var-idUser={id_user}&orgId=1&panelId=3&__feature.dashboardSceneSolo'
+            last_carbon = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732812935134&to=1732834535135&timezone=browser&var-idUser={id_user}&orgId=1&panelId=1&__feature.dashboardSceneSolo'
+            last_hidric = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732812935134&to=1732834535135&timezone=browser&var-idUser={id_user}&orgId=1&panelId=2&__feature.dashboardSceneSolo'
+            carbon_section = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732835486670&to=1732857086670&timezone=browser&var-idUser={id_user}&showCategory=Standard%20options&orgId=1&panelId=4&__feature.dashboardSceneSolo'
+            carbon_footprints = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732835486670&to=1732857086670&timezone=browser&var-idUser={id_user}&showCategory=Standard%20options&orgId=1&panelId=6&__feature.dashboardSceneSolo'
+            hidric_section = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732835486670&to=1732857086670&timezone=browser&var-idUser={id_user}&orgId=1&panelId=7&__feature.dashboardSceneSolo'
+            hidric_footprints = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732835486670&to=1732857086670&timezone=browser&var-idUser={id_user}&orgId=1&panelId=5&__feature.dashboardSceneSolo'
+            return render_template('cleanlyfe.html', user = user, grafana_user_history = history_url, grafana_user_last_carbon = last_carbon, grafana_user_last_hidric = last_hidric, grafana_carbon_section = carbon_section, grafana_carbon_footprints = carbon_footprints, grafana_hidric_section = hidric_section, grafana_hidric_footprints = hidric_footprints)
 
 
 #This route is for opening and renderising the missions page
@@ -499,21 +508,8 @@ def cal_transport():
             print(f'Final emission: {final_transport_emission}')
             #Insert all the values returned to the db
             cur.execute('CALL prd_insert_calc_transport_emission(%s, %s, %s, %s, %s, %s, %s, %s, %s);', (user_id, outputs_and_adjustments[5], outputs_and_adjustments[4], outputs_and_adjustments[3], time_used, consumed_fuel, distance, fuel_performance, final_transport_emission))                        
-            return redirect(url_for('final_cal_transport'))
+            return redirect(url_for('go_cal_electric'))
 #Redirects to the page that shows your emision
-@app.route('/final_cal_transport', methods=['GET'])    
-def final_cal_transport():
-    if 'id' in session:
-        user_id = session['id']
-        user_name = session['user']
-        iframe_url =f"http://localhost:3000/d-solo/be50weh568mwwa/final-and-second-last-emission?from=1732496234659&to=1732582634659&timezone=browser&var-query0=&var-idUser={user_id}&editIndex=0&orgId=1&panelId=1&__feature.dashboardSceneSolo"
-        cur = mysql.connection.cursor()        
-        cur.execute('SELECT ttransport_emission.transport_emission FROM tuser_footprint JOIN tfootprints_records ON tuser_footprint.id_footprint_record = tfootprints_records.id_footprint_record JOIN tcarbon_footprint ON tfootprints_records.id_carbon_footprint = tcarbon_footprint.id_carbon_footprint JOIN ttransport_emission ON tcarbon_footprint.Id_transport_emission = ttransport_emission.Id_transport_emission WHERE tfootprints_records.id_footprint_record = ( SELECT MAX(id_footprint_record) FROM tfootprints_records AS record WHERE tfootprints_records.id_footprint_record = tuser_footprint.id_footprint_record AND tuser_footprint.Id_user = %s);', (user_id,))
-        emission = cur.fetchall()
-        formatted_value = "{:.2f}".format(emission[0][0])
-        return render_template('final_cal_transport.html', id = user_id, user = user_name, total = formatted_value, grafana_last_emission = iframe_url)
-    else:
-        return 'You have to log in first'
 #Redirects to the page to do the electrical calculus
 @app.route('/go_cal_electric', methods=['GET'])
 def go_cal_electric():
@@ -523,6 +519,7 @@ def go_cal_electric():
         return render_template('cal_electric.html', id = user_id, user = user_name)
     else:
         return 'You have to log in first'
+    
 @app.route('/cal_electric', methods=['POST'])
 def cal_electric():
     if request.method == 'POST':
@@ -546,6 +543,7 @@ def cal_electric():
             return redirect(url_for('go_electric_devices_info'))
         else:
             return 'You have to log in first'
+        
 @app.route('/go_electric_devices_info', methods=['GET'])
 def go_electric_devices_info():
     if 'id' in session:
@@ -593,18 +591,9 @@ def electric_devices_info():
                 print('Lista final', device)
 
             cur.execute("CALL prd_calculate_total_energy_emission(%s);", (user_id,))
-            return redirect(url_for('final_cal_electric'))
+            return redirect(url_for('go_cal_carbon_products'))
         else:
             return 'You have to log in first'
-
-@app.route('/final_cal_electric', methods=['GET'])
-def final_cal_electric():
-    if 'id' in session:
-        user_id = session['id']
-        user_name = session['user']
-        return render_template('final_cal_electric.html', id = user_id, user = user_name, total = 1)
-    else:
-        return 'You have to log in first'
       
 @app.route('/go_cal_water_products', methods=['GET'])
 def go_cal_water_products():
@@ -614,6 +603,7 @@ def go_cal_water_products():
         return render_template('cal_water_products.html', id = user_id, user = user_name, total = 1)
     else:
         return 'You have to log in first'  
+    
 @app.route('/cal_water_products', methods=['POST'])
 def cal_water_products():
     if request.method == 'POST':
@@ -643,7 +633,7 @@ def cal_water_products():
             #Prd that inserts all the values obtained            
             cur = mysql.connection.cursor()
             cur.execute("CALL prd_calc_water_emission(%s, %s, %s, %s);", (user_id, cold_water, hot_water, id_heater_type))
-            return redirect(url_for('final_cal_electric'))
+            return redirect(url_for('go_final_cal_carbon_footprint'))
         else:
             return 'You have to log in first'
     
@@ -651,7 +641,9 @@ def cal_water_products():
 def go_cal_carbon_products():
     if 'id' in session:
         if session['id'] != 10:
-            return render_template('cal_carbon_products.html')
+            user_id = session['id']
+            user_name = session['user']
+            return render_template('cal_carbon_products.html', id = user_id, user = user_name)
         return 'you have to log in first'
     return 'you have to log in first'
 
@@ -782,24 +774,13 @@ def cal_carbon_products():
             if send_emission == 0:
                 return 'There is an error sending all purpose product carbon emission'
             
-            return redirect(url_for('go_final_products'))
-    return 'You have to log in first'
+            return redirect(url_for('go_cal_water_products'))
 
-@app.route('/go_final_products', methods=['GET'])
-def go_final_products():
-    if 'id' in session:
-        cur = mysql.connection.cursor()
-        user_id = session['id']
-        cur.execute('SELECT products_emission FROM VW_User_Products_Emission WHERE id_user = %s;', (user_id,))
-        data = cur.fetchone()[0]
-        print(data)
-        
-        return render_template('final_cal_products.html', final_emission_product = data)
     return 'You have to log in first'
-
 #This is the function that receives the parameters and will send the information and the final emission of each product to the database.
 def products_adjustements(product_id, product_unit, transport, packaging, refrigeration, user_id):
     cur = mysql.connection.cursor()
+    product_unit = float(product_unit)
     #The funcion in this part takes the different adjustements
     cur.execute('CALL prd_carbon_product_adjustements(%s, %s, %s, %s, %s, @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement);', (user_id, product_id, transport, packaging, refrigeration))
     cur.execute('SELECT @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement;')
@@ -812,7 +793,8 @@ def products_adjustements(product_id, product_unit, transport, packaging, refrig
     refrigeration_adjustement = float(adjustements[3])
         
     #it sends the adjustements and the units of the product to calculate the final emission and return it into a variable
-    final_emission = carbon_products_calculus.product_carbon_emission(product_unit, carbon_emission, transport_adjustement, packaging_adjustement, refrigeration_adjustement)
+    final_emission = float(carbon_products_calculus.product_carbon_emission(product_unit, carbon_emission, transport_adjustement, packaging_adjustement, refrigeration_adjustement))
+    print(final_emission)
         
     #Here it inserts the result on the database
     cur.execute('CALL prd_insert_product_carbon_emission(%s, %s, %s, %s)', (user_id, product_id, product_unit, final_emission,))
@@ -821,6 +803,17 @@ def products_adjustements(product_id, product_unit, transport, packaging, refrig
     successful = 1
 
     return successful
+
+@app.route('/go_final_cal_carbon_footprint', methods=['GET'])
+def go_final_cal_carbon_footprint():
+    if request.method == 'GET':
+        if 'id' in session:
+            user_id = session['id']
+            user_name = session['user']
+            #HERE IS WHERE GRAFANA SHOULD BE. THIS MESSAGE IS FOR JOSUE
+            return render_template('final_carbon_emission.html', id = user_id, user = user_name)
+    return 'You must log in before'
+
 #This is a method that recieves an error and renderising the error handle page
 @app.route('/page_not_found')
 def page_not_found(error):

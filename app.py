@@ -139,10 +139,19 @@ def go_cleanlyfe():
             return render_template('404.html')
 
         user = session['user']
+        id_user = session['id']
+        
         if user == 'invited':
             return render_template('404.html')
         else:
-            return render_template('cleanlyfe.html', user = user)
+            history_url = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732812935134&to=1732834535135&timezone=browser&var-idUser={id_user}&orgId=1&panelId=3&__feature.dashboardSceneSolo'
+            last_carbon = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732812935134&to=1732834535135&timezone=browser&var-idUser={id_user}&orgId=1&panelId=1&__feature.dashboardSceneSolo'
+            last_hidric = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732812935134&to=1732834535135&timezone=browser&var-idUser={id_user}&orgId=1&panelId=2&__feature.dashboardSceneSolo'
+            carbon_section = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732835486670&to=1732857086670&timezone=browser&var-idUser={id_user}&showCategory=Standard%20options&orgId=1&panelId=4&__feature.dashboardSceneSolo'
+            carbon_footprints = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732835486670&to=1732857086670&timezone=browser&var-idUser={id_user}&showCategory=Standard%20options&orgId=1&panelId=6&__feature.dashboardSceneSolo'
+            hidric_section = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732835486670&to=1732857086670&timezone=browser&var-idUser={id_user}&orgId=1&panelId=7&__feature.dashboardSceneSolo'
+            hidric_footprints = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732835486670&to=1732857086670&timezone=browser&var-idUser={id_user}&orgId=1&panelId=5&__feature.dashboardSceneSolo'
+            return render_template('cleanlyfe.html', user = user, grafana_user_history = history_url, grafana_user_last_carbon = last_carbon, grafana_user_last_hidric = last_hidric, grafana_carbon_section = carbon_section, grafana_carbon_footprints = carbon_footprints, grafana_hidric_section = hidric_section, grafana_hidric_footprints = hidric_footprints)
 
 
 #This route is for opening and renderising the missions page
@@ -771,6 +780,7 @@ def cal_carbon_products():
 #This is the function that receives the parameters and will send the information and the final emission of each product to the database.
 def products_adjustements(product_id, product_unit, transport, packaging, refrigeration, user_id):
     cur = mysql.connection.cursor()
+    product_unit = float(product_unit)
     #The funcion in this part takes the different adjustements
     cur.execute('CALL prd_carbon_product_adjustements(%s, %s, %s, %s, %s, @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement);', (user_id, product_id, transport, packaging, refrigeration))
     cur.execute('SELECT @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement;')
@@ -783,7 +793,8 @@ def products_adjustements(product_id, product_unit, transport, packaging, refrig
     refrigeration_adjustement = float(adjustements[3])
         
     #it sends the adjustements and the units of the product to calculate the final emission and return it into a variable
-    final_emission = carbon_products_calculus.product_carbon_emission(product_unit, carbon_emission, transport_adjustement, packaging_adjustement, refrigeration_adjustement)
+    final_emission = float(carbon_products_calculus.product_carbon_emission(product_unit, carbon_emission, transport_adjustement, packaging_adjustement, refrigeration_adjustement))
+    print(final_emission)
         
     #Here it inserts the result on the database
     cur.execute('CALL prd_insert_product_carbon_emission(%s, %s, %s, %s)', (user_id, product_id, product_unit, final_emission,))

@@ -24,19 +24,23 @@ main {
     flex-grow: 1;
 }
 
+.calculator_title-link {
+    text-decoration: none;
+}
+
 .gradient-background {
-    position: absolute;
+    position: fixed;
     overflow: hidden;
     z-index: -2;
-    width: 100vw;
-    height: 100vh;
-    transition: backdrop-filter 0.3s ease;
+    width: 100%;
+    height: 100%;
+/*     transition: backdrop-filter 0.3s ease; */
 }
 
 .elipse {
     position: absolute;
     border-radius: 50%;
-    backdrop-filter: blur(20px); 
+    /* backdrop-filter: blur(20px);  */
 }
 
 .--down {
@@ -73,17 +77,18 @@ main {
 }
 
 .button{
+    cursor: pointer;
     text-decoration: none;
     color: rgba(255, 255, 255, 0.85);
     border: 0.1rem white solid;
     border-radius: 50px;
     padding: 0.4rem 1rem;
+    transition: 200ms ease;
 }
 
 .button:hover {
     color: rgba(255, 255, 255, 1);
     background-color: #30363b;
-    border: 0.1rem #30363b solid;
 }
 
 .--button_without_border {
@@ -348,8 +353,8 @@ main {
     justify-content: space-evenly;
     width: 100%;
     cursor: pointer;
-    text-decoration: none;
     color: #000;
+    text-decoration: none;
 }
 
 .--button-hover:hover {
@@ -483,49 +488,40 @@ main {
     padding-left: 1rem;
 }
 
-.content { /*Starting here is css code to give style to Home page*/
-    display: flex;
-    align-items: center;
-    padding: 5rem 2rem;
-    gap: 1rem;
-    text-align: center;
+.--button_without_border-1 {
+    background: none;
 }
 
-.content__huella {
-    width: 18rem;
-    height: 20rem;
-    padding-bottom: 2rem;
+.--disappear_medium a {
+    display: block;
+    transition: all 500ms ease;
 }
 
-.content__description {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    gap: 2rem;
-    text-align: justify;
+.--disappear_medium a:hover {
+    background: rgba(234, 234, 234, 0.2);
 }
 
-.content__section {
+.menu {
     display: flex;
-    flex-direction: column;
+    width: 9rem;
+}
+
+.munu-1 {
     gap: 1rem;
 }
 
-.content__list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    list-style: circle;
+.--calculator-icon {
+    margin-left: 0.5rem;
+    font-size: 1.1rem;
 }
 
-.content__list-parts {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+.submenu {
+    background-color: transparent;
+    display: none;
 }
 
-.content__paragraph {
-    padding-left: 1rem;
+.--disappear_medium ul li a:hover + ul, .submenu:hover {
+    display: block;
 }
 
 @media (700px >= width){
@@ -590,9 +586,9 @@ main {
     }
 
     .--top-right, .--bottom-right {
-        width: 25rem;
-        height: 25rem;
-        right: -15rem;
+        width: 30rem;
+        height: 30rem;
+        right: -20rem;
         bottom: -10rem;
     }
 
@@ -615,27 +611,6 @@ main {
 }
 
 @media (400px >= width) {
-    .--down {
-        width: 60rem;
-        height: 60rem;
-        bottom: -30rem;
-        left: -10rem;
-    }
-
-    .--top {
-        width: 20rem;
-        height: 20rem;
-        top: -10rem;
-        right: 5rem;
-    }
-
-    .--top-right, .--bottom-right {
-        width: 15rem;
-        height: 15rem;
-        right: -10rem;
-        bottom: -5rem;
-    }
-
     .register-login {
         width: 23rem;
     }
@@ -691,26 +666,65 @@ main {
     }
 }
 
+.--disappear_medium a {
+    display: block;
+    transition: all 500ms ease;
+}
+
+.--disappear_medium a:hover {
+    background: rgba(234, 234, 234, 0.2);
+}
+
+.menu {
+    display: flex;
+    width: 9rem;
+}
+
+.munu-1 {
+    gap: 1rem;
+}
+
+.--calculator-icon {
+    margin-left: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.submenu {
+    background-color: transparent;
+    display: none;
+}
+
+.--disappear_medium ul li a:hover + ul, .submenu:hover {
+    display: block;
+}
+
 @media (prefers-color-scheme: dark) {
     .gradient-background {
-        background-image: linear-gradient(180deg, rgb(89, 89, 89) 0%, rgba(3,3,3,1) 100%);
+        background-image: url(/static/img/Gradient-1920x1080px.webp);
+        background-size: cover;
+        background-position: center;
+        /* background-image: linear-gradient(180deg, rgb(89, 89, 89) 0%, rgba(3,3,3,1) 100%); */
         /* background-image: linear-gradient(180deg, rgba(33, 37, 41, 0.01), rgba(33, 37, 41, 1) 100%), radial-gradient(ellipse at top left, rgba(13, 110, 253, 0.5), transparent 50%), radial-gradient(ellipse at top right, rgba(255, 228, 132, 0.5), transparent 50%), radial-gradient(ellipse at bottom right, rgba(112.520718, 44.062154, 249.437846, 0.5), transparent 50%), radial-gradient(ellipse at bottom left, rgba(214, 51, 132, 0.5), transparent 50%); */
     }
     
     .--down {
-        background-image: radial-gradient( rgb(46, 0, 121), transparent 80%);
+        /* background-image: radial-gradient( rgb(46, 0, 121), transparent 80%); */
+        background-color: rgba(46, 0, 121,0.8);
     }
     
     .--top {
-        background-image: radial-gradient( rgba(40, 132, 89, 0.4), transparent 200%);
+        /* background-image: radial-gradient( rgba(40, 132, 89, 0.4), transparent 200%); */
+        background-color: rgba(40, 132, 89, 0.6);
     }
     
     .--top-right {
-        background-image: radial-gradient( rgba(17, 2, 94, 0.80), transparent 100%);
+        /* background-image: radial-gradient( rgba(17, 2, 94, 0.80), transparent 100%); */
+        background-color: rgba(17, 2, 94, 0.80);
     }
     
     .--bottom-right {
-        background-image: radial-gradient( rgba(1, 92, 104, 1), transparent 100%);
+        /* background-image: radial-gradient( rgba(1, 92, 104, 1), transparent 100%); */
+        background-color: rgba(1, 92, 104, 1);
     }
     
     .background-top {
@@ -761,12 +775,14 @@ main {
     .register-login__link-button {
         color: rgb(128, 152, 249);
     }
+}
 
-    .content {
-        color: white;
-    }
-
-    .content__subtittle {
-        color: #9a9a9a;
+@media (500px >= width) AND (prefers-color-scheme: dark){
+    .gradient-background {
+        background-image: url(/static/img/Gradient-500x1000px.webp);
+        background-size: cover;
+        background-position: center;
+        /* background-image: linear-gradient(180deg, rgb(89, 89, 89) 0%, rgba(3,3,3,1) 100%); */
+        /* background-image: linear-gradient(180deg, rgba(33, 37, 41, 0.01), rgba(33, 37, 41, 1) 100%), radial-gradient(ellipse at top left, rgba(13, 110, 253, 0.5), transparent 50%), radial-gradient(ellipse at top right, rgba(255, 228, 132, 0.5), transparent 50%), radial-gradient(ellipse at bottom right, rgba(112.520718, 44.062154, 249.437846, 0.5), transparent 50%), radial-gradient(ellipse at bottom left, rgba(214, 51, 132, 0.5), transparent 50%); */
     }
 }

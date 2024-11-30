@@ -4,6 +4,14 @@
 {% block title%}Profile{% endblock%}
 
 {% block content %}
+Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis itaque, sit quae tempora, provident ratione minus cum repudiandae maiores fugiat ipsum dicta. Reiciendis nihil excepturi natus magnam quis ipsa. Ipsa!
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<form method="POST" action="/update_data" enctype="multipart/form-data">
     <article class="user-profile__container">
         <div class="user-profile">            
             <header class="user-profile__header">
@@ -11,23 +19,23 @@
                 <div class="profile">
                     <!--This is the user's photo profile-->
                     <figure>
-                        <img class="profile__img-user" src="" alt="">
+                        {% set path = 'static/user_img/' %}
+                        {% set photo = user_data.7 %}
+                        {% if photo %}
+                            <img class="" src="../{{ path }}{{ photo }}?v={{ random() }}" alt="{{ photo }}">
+                        {% else %}
+                            <img src="../static/img/User_icon.png" alt="not_image">
+                        {% endif%}
                     </figure>
                     <!--This is the username-->
                     <section class="user-profile__information">
-                        <h4 class="profile__username">Username</h4>
-                        <!--This is the user's points-->
-                        <h5 class="profile__points">Points: 99999</h5>
                         <!--This is the buttons-->
                         <div class="user-profile__information__buttons">
                             <!--Button to select the photo-->
                             <div>
-                                <input class="user-profile__information__buttons__btn-selc-img" type="file" name="select-img">
+                                <input class="user-profile__information__buttons__btn-selc-img" type="file" name="select_img">
                             </div>
                             <!--Button to delete the photo-->
-                            <div>
-                                <input class="user-profile__information__buttons__btn-del-img" type="file" name="delete-img">
-                            </div>
                         </div>
                         <!--Here the user can change their profile photo-->                        
                     </section>
@@ -39,25 +47,21 @@
         <div class="user-information">
             <!--Name of the section-->
             <h3 class="namesection">USER INFORMATION</h3>
-
-            <form method="POST">
-                <input class="controls" type="text" name="username" value="" placeholder="Username">
+                <input class="controls" type="text" name="username" placeholder="{{ user_data.4 }}">
+                {% if user_data.2 %}
+                <input class="controls" type="text" name="first_name" placeholder="{{ user_data.2 }}">
+                {% else %}
+                <input class="controls" type="text" name="first_name" placeholder="First name">
+                {% endif %}
+                {% if user_data.3 %} 
+                <input class="controls" type="text" name="last_name" placeholder="{{ user_data.3 }}">
+                {% else %}
+                <input class="controls" type="text" name="last_name" placeholder="Last name">
+                {% endif %}
+                <input class="controls" type="text" name="email" placeholder="{{ user_data.5 }}">
                 <br>
-            </form>    
-        </div> 
-        <div class="residenrial-address">
-            <h3 class="namesection">RESIDENTIAL ADDRESS</h3>
-            <form method="POST">
-                <!---->
-                <input type="text" class="controls" name="street-address" value="" placeholder="Street Address">
-                <input type="text" class="controls" name="street-address-optional" value="" placeholder="Street Address (Optional)">
-                <input type="number" class="controls" name="postal-code" value="" placeholder="Postal Code">
-                <input type="text" class="controls" name="city" value="" placeholder="City">
-                <input type="text" class="controls" name="state" value="" placeholder="State" >
-                <input type="text" class="controls" name="country" value="" placeholder="Country">
-                <input class="buttons" type="submit" name="submit_update_register" value="Update">
-            </form>
-        </div>
+        </div>     
     </article>
-    
+    <input type="submit">
+</form>
 {% endblock %}

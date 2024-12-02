@@ -875,9 +875,10 @@ def update_data():
             
             cur.execute('SELECT user_img_path FROM tusers WHERE id_user = %s', (user_id,))
             photo = cur.fetchone()[0]
+            print(photo)
             if photo:
                 basepath = os.path.dirname (__file__) #C:\xampp\htdocs\elmininar-archivos-con-Python-y-Flask\app
-                url_File = os.path.join (basepath, 'static/user_img', photo[0])
+                url_File = os.path.join (basepath, 'static/user_img', photo)
             
             
             

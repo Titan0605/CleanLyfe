@@ -135,11 +135,12 @@ def go_user_profile():
         if 'id' in session:
             user_id = session['id']
             user_name = session['user']
+            photo = session['img']
             cur = mysql.connection.cursor()
             cur.execute('SELECT * FROM tusers WHERE id_user = %s', (user_id,))
             data = cur.fetchone()
             print(data)
-            return render_template('userProfile.html', user_data = data, user = user_name)
+            return render_template('userProfile.html', user_data = data, user = user_name, photo = photo)
 
 #Esta ruta es para renderizar la main page
 @app.route('/go_main_page', methods=['GET', 'POST'])
@@ -899,12 +900,26 @@ def update_data():
                 upload_path = os.path.join (basepath, 'static/user_img', newNameFile) 
                 file.save(upload_path)
                 
-                cur.execute('UPDATE tusers SET first_name = %s, last_name = %s, user_name = %s, user_mail = %s, user_img_path = %s WHERE id_user = %s', (new_first_name, new_last_name, new_user_name, new_email, newNameFile, user_id))
+                session.pop('img', None)
+                session['img'] = newNameFile
+                
+                cur.execute('UPDATE tusers SET user_img_path = %s WHERE id_user = %s', (newNameFile, user_id))
                 mysql.connection.commit()
             else:
                 flash('You must put a image file')
                 
-            
+            session.pop('user', None)
+            session.pop('first_name', None)
+            session.pop('last_name', None)
+            session.pop('email', None)
+                
+            session['user']= new_user_name
+            session['first_name']= new_first_name
+            session['last_name']= new_last_name
+            session['email']= new_email
+                
+            cur.execute('UPDATE tusers SET first_name = %s, last_name = %s, user_name = %s, user_mail = %s WHERE id_user = %s', (new_first_name, new_last_name, new_user_name, new_email, user_id))
+            mysql.connection.commit()
             return redirect(url_for('go_user_profile'))
 
 #This is a method that recieves an error and renderising the error handle page

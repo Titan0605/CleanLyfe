@@ -872,22 +872,18 @@ def update_data():
             new_email = request.form['email']
             if not new_email:
                 new_email = session['email']
-            
-            cur.execute('SELECT user_img_path FROM tusers WHERE id_user = %s', (user_id,))
-            photo = cur.fetchone()[0]
-            print(photo)
-            if photo:
-                basepath = os.path.dirname (__file__) #C:\xampp\htdocs\elmininar-archivos-con-Python-y-Flask\app
-                url_File = os.path.join (basepath, 'static/user_img', photo)
-            
-            
-            
-            #verifcando si existe el archivo, con la funcion (path.exists) antes de de llamar remove 
-            # para eliminarlo, con el fin de evitar un error si no existe.
-                if os.path.exists(url_File):
-                    os.remove(url_File) #Borrar foto desde la carpeta
                 
             file     = request.files['select_img']
+            
+            if file:
+                cur.execute('SELECT user_img_path FROM tusers WHERE id_user = %s', (user_id,))
+                photo = cur.fetchone()[0]
+                if photo:
+                    basepath = os.path.dirname (__file__) #C:\xampp\htdocs\elmininar-archivos-con-Python-y-Flask\app
+                    url_File = os.path.join (basepath, 'static/user_img', photo)
+                    if os.path.exists(url_File):
+                        os.remove(url_File)
+            
             basepath = os.path.dirname (__file__) #La ruta donde se encuentra el archivo actual
             filename = secure_filename(file.filename) #Nombre original del archivo
                     

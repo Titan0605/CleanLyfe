@@ -86,6 +86,7 @@ def logout():
 @app.route('/register_fun', methods=['POST'])
 def register_fun():
     if request.method == 'POST':
+        encrypt_pass = 'ewte700et74j'
         email = request.form['email']
         user_name = request.form['username']
         password = request.form['password']
@@ -103,7 +104,7 @@ def register_fun():
 
         if len(password) >= 8:
             if password == con_password:
-                cur.execute('INSERT INTO tusers (id_type_member, user_name, user_email, user_password, active, created_at) VALUES (1, %s, %s, %s, 1, NOW())', (user_name, email, password))
+                cur.execute('INSERT INTO tusers (id_type_member, user_name, user_mail, user_password, active, created_at) VALUES (1, %s, aes_encrypt(%s, %s), SHA(%s), 1, NOW())', (user_name, email, encrypt_pass, password))
                 mysql.connection.commit()
                 flash('You have been registered')
                 return redirect(url_for('go_login'))
@@ -166,7 +167,7 @@ def go_cleanlyfe():
             history_url = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732812935134&to=1732834535135&timezone=browser&var-idUser={id_user}&orgId=1&panelId=3&__feature.dashboardSceneSolo'
             last_carbon = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732812935134&to=1732834535135&timezone=browser&var-idUser={id_user}&orgId=1&panelId=1&__feature.dashboardSceneSolo'
             last_hidric = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732812935134&to=1732834535135&timezone=browser&var-idUser={id_user}&orgId=1&panelId=2&__feature.dashboardSceneSolo'
-            carbon_section = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732835486670&to=1732857086670&timezone=browser&var-idUser={id_user}&showCategory=Standard%20options&orgId=1&panelId=4&__feature.dashboardSceneSolo'
+            carbon_section = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1733132785556&to=1733154385556&timezone=browser&var-idUser={id_user}&orgId=1&panelId=4&__feature.dashboardSceneSolo'
             carbon_footprints = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732835486670&to=1732857086670&timezone=browser&var-idUser={id_user}&showCategory=Standard%20options&orgId=1&panelId=6&__feature.dashboardSceneSolo'
             hidric_section = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732835486670&to=1732857086670&timezone=browser&var-idUser={id_user}&orgId=1&panelId=7&__feature.dashboardSceneSolo'
             hidric_footprints = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732835486670&to=1732857086670&timezone=browser&var-idUser={id_user}&orgId=1&panelId=5&__feature.dashboardSceneSolo'
@@ -204,12 +205,15 @@ def go_hidric_cal():
             user_name = session['user']
             user_id = session['id']
             photo = session['img']
+            if not photo:
+                photo = ''
             
         else:
             session['id']= int(10)
             session['user']='invited'
             user_id = session['id']
             user_name = session['user']
+            photo = ''
 
         if user_id != 10:
             cur = mysql.connection.cursor()
@@ -665,7 +669,7 @@ def cal_water_products():
             print('Hot water', hot_water)
             #Prd that inserts all the values obtained            
             cur = mysql.connection.cursor()
-            cur.execute("CALL prd_calc_water_emission(%s, %s, %s, %s);", (user_id, cold_water, hot_water, id_heater_type))
+            cur.execute("CALL prd_new_calc_water_emission(%s, %s, %s, %s);", (user_id, cold_water, hot_water, id_heater_type))
             return redirect(url_for('go_final_cal_carbon_footprint'))
         else:
             return 'You have to log in first'
@@ -816,7 +820,7 @@ def products_adjustements(product_id, product_unit, transport, packaging, refrig
     cur = mysql.connection.cursor()
     product_unit = float(product_unit)
     #The funcion in this part takes the different adjustements
-    cur.execute('CALL prd_carbon_product_adjustements(%s, %s, %s, %s, %s, @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement);', (user_id, product_id, transport, packaging, refrigeration))
+    cur.execute('CALL prd_new_carbon_product_adjustements(%s, %s, %s, %s, %s, @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement);', (user_id, product_id, transport, packaging, refrigeration))
     cur.execute('SELECT @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement;')
     adjustements = cur.fetchone()
         

@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Itim&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/static/css/bases/baseStyle.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-        <title>Index</title>
+        <title>Index-test</title>
     </head>
     <body>
         <!--Section separator-->
@@ -14,14 +13,14 @@
             <nav id="navbar"> <!--A nav that storage the navbar to center it and align it to the top -->
                 <div class="navbar__container">
                     <i class="navbar__sidebar-button fa-solid fa-bars"></i>
-                    <a class="calculator_title-link" href="{{ url_for('go_main_page') }}"><img src="{{ url_for('static', filename='img/Logo.png') }}" alt="logoImagen" class="logo"></a> <!--Image of the app's logo-->
-                    <a class="calculator_title-link" href="{{ url_for('go_main_page') }}"><h1 class="navbar__title">CleanLyfe</h1></a> <!--The title of the app-->
+                    <img src="{{ url_for('static', filename='img/Logo.png') }}" alt="logoImagen" class="logo"> <!--Image of the app's logo-->
+                    <h1 class="navbar__title">CleanLyfe</h1> <!--The title of the app-->
                 </div>
                 <section class="navbar__container-buttons">
                     <div class="flex-content --disappear_medium">
                         <a href="" class="button --button_without_border">Features</a>
                         <a href="" class="button --button_without_border">About</a>
-                        <a href="{{ url_for('go_hidric_cal') }}" class="button --button_without_border">Calculator</a>
+                        <a href="{{ url_for('go_hidric_cal') }}" class="button --button_without_border">Hidric Calculator</a>
                     </div>
                     <div class="flex-content --dissapear_on_mobile">
                         <a href="{{ url_for('go_login') }}" class="button --sign-buttons">Login</a>
@@ -46,10 +45,17 @@
                         <i role="button" class="fa-solid fa-xmark button sidebar__button --button_without_border"></i>
                     </div>
                     <div class="sidebar__container-body">
-                        <a role="button" class="sidebar__button-link" href="">Features</a>
-                        <a role="button" class="sidebar__button-link" href="">About</a>
-                        <a role="button" class="sidebar__button-link" href="{{ url_for('go_cal_transport') }}">Carbon Calculator</a>
-                        <a role="button" class="sidebar__button-link" href="{{ url_for('go_hidric_cal') }}">Hidric Calculator</a>
+                        <ul>
+                            <li class="sidebar__content">
+                                <a role="button" class="sidebar__button-link" href="">Features</a>
+                            </li>
+                            <li class="sidebar__content">
+                                <a role="button" class="sidebar__button-link" href="">About</a>
+                            </li>
+                            <li role="button" class="sidebar__content">
+                                <a role="button" class="sidebar__button-link" href="{{ url_for('go_hidric_cal') }}">Calculator</a>
+                            </li>
+                        </ul>
                     </div>
                 </section>
                 <section class="flex-content --sidebar-position --appear_on_mobile">
@@ -57,25 +63,6 @@
                     <a href="{{ url_for('go_register') }}" class="button --sign-button__color">Sign Up</a>
                 </section>
             </aside>
-
-            <main class="container">
-
-                <section class="index_container">
-
-                    <article class="index_content">
-
-                        <header class="header_index">
-                        <h2 class="heater_index_title">CleanLyfe functions</h2>
-                        </header> 
-        
-                        <p class="index_text">Lorem ipsum dolor sit amet consectetur adipisicing elit. At soluta praesentium adipisci? Doloribus eum odio in iste nemo deserunt debitis veritatis ex voluptas qui, tenetur inventore voluptates officia pariatur. Commodi.</p>
-
-                    </article>
-                    
-                </section>
-    
-            </main>
-
         </main>
         <footer class="footer">
             <div class="footer__container">

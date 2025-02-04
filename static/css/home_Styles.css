@@ -75,7 +75,10 @@
 
 .--left-side {
     width: 1150px;
-    align-self: center;
+}
+
+.--big-size {
+    height: 372px;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -13,13 +13,13 @@
     <article class="home__container">
         <header class="home__header">
             <h1 class="home__welcome">Welcome back, {{user}}</h1>
-            <h2>Your next calculation will be in: 6 days</h2>
+            <h2>Your next calculation will be in: 3 days</h2>
         </header>
         <main class="home__body">
             <article class="home__aside">
                 <iframe src="{{ grafana_user_history }}" width="675" height="350" frameborder="0" class="home_grafana"></iframe>
                 <section class="home_grafana --grafana-section">
-                    <h3 class="home__subtittle">Your Last Footprints Records</h3>
+                    <h3 class="home__subtittle">Your Weekly Footprints Records</h3>
                     <div class="grafanas_united">
                         <iframe src="{{ grafana_user_last_carbon }}" width="322" height="380" frameborder="0" class="home_grafana"></iframe>
                         <iframe src="{{ grafana_user_last_hidric }}" width="322" height="380" frameborder="0" class="home_grafana"></iframe>
@@ -37,8 +37,8 @@
                 <section class="home__footprint-info">
                     <h3 class="home__subtittle">Hidric Footprint Info</h3>
                     <div class="grafanas_united">
-                        <iframe src="{{ grafana_hidric_section }}" frameborder="0" class="home_grafana --manual-size"></iframe>
-                        <iframe src="{{ grafana_hidric_footprints }}" frameborder="0" class="home_grafana --manual-size"></iframe>
+                        <iframe src="{{ grafana_hidric_section }}" frameborder="0" class="home_grafana --manual-size --big-size"></iframe>
+                        <iframe src="{{ grafana_hidric_footprints }}" frameborder="0" class="home_grafana --manual-size --big-size"></iframe>
                     </div>
                 </section>
             </article>

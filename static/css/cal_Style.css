@@ -27,9 +27,19 @@
     gap: 1rem;
 }
 
+.--header {
+    width: 5rem;
+    height: 5rem;
+    justify-content: center;
+}
+
 .calculator__icon{
     font-size: 1.7rem;
     color: black;
+}
+
+.--icon-carbon {
+    color: #000;
 }
 
 .calculator__title {
@@ -48,11 +58,46 @@
     gap: 5rem;
 }
 
+.--form-carbon {
+    flex-direction: column;
+}
+
+.--form-electric {
+    display: flex;
+    gap: 10rem;
+}
+
+.--form-electric-1 {
+    display: flex;
+    gap: 5rem;
+    width: 38rem;
+}
+
+.--form-products {
+    display: flex;
+    width: 25rem;
+}
+
 .calculator__aside {
     width: 20rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
+}
+
+.--aside-carbon {
+    width: 28rem;
+    flex-direction: column;
+}
+
+.--aside-electric {
+    width: 35rem;
+    padding-left: 1rem;
+}
+
+.--aside-products {
+    width: 35rem;
+    padding-left: 1rem; 
 }
 
 .calculator__side-header {
@@ -74,6 +119,40 @@
     font-style: normal;
 }
 
+.--side-header-calculator {
+    width: 18rem;
+}
+
+.calculator__side-check-box {
+    width: 22rem;
+    display: flex;
+    gap: 2.3rem;
+}
+
+.--side-check-box {
+    gap: 1.5rem;
+}
+
+.calculator__question-checks {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 0.5rem;
+    gap: 0.5rem;
+}
+
+.calculator__question-check {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 1.2rem;
+   /*  font-family: "Host Grotesk", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 1rem; */
+}
+
 .calculator_header-questions {
     display: flex;
     align-items: center;
@@ -82,13 +161,28 @@
     gap: 0.8rem;
 }
 
+.calculator_header-questions-electric {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    gap: 0.8rem;
+}
+
+.calculator_header-questions-product {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    gap: 1rem;
+}
+
 .calculator_header-icon {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 6rem;
     height: 3.4rem;
-    border: 0.2rem solid rgba(197, 197, 197, 0.7);
+    border: 0.2rem solid rgba(255, 255, 255, 0.7);
     border-radius: 0.8rem;
 }
 
@@ -98,7 +192,6 @@
 
 .calculator__question-tittle {
     font-family: "Host Grotesk", sans-serif;
-    font-optical-sizing: auto;
     font-weight: 500;
     font-style: normal;
     margin-top: 0.4rem;
@@ -109,7 +202,11 @@
 .calculator__question-options {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.6rem;
+}
+
+.calculator__side-question-radio {
+    width: auto;
 }
 
 .calculator__question-option {
@@ -122,6 +219,40 @@
     font-weight: 400;
     font-style: italic;
     font-size: 1.2rem;
+}
+
+.calculator__question-option:focus-within {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.calculator__question-check:focus-within {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.number-energy {
+    width: 74%;
+    height: 100%;
+    margin-left: 4.5rem;
+    padding-left: 0.5rem;
+    font-size: 1.3rem;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.number-product {
+    width: 78%;
+    height: 1.9rem;
+    margin-left: 4rem;
+    padding-left: 0.5rem;
+    font-size: 1.3rem;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+input::placeholder {
+    color: #000;
 }
 
 input[type="radio"] {
@@ -199,7 +330,7 @@ input[type="radio"]:checked::before {
 }
 
 .calculator__submit-button {
-    width: 15%;
+    width: auto;
     /* background-color: rgba(54, 172, 117, 0.9); */
     background: rgba(27, 155, 140,0.9);
     border: none;
@@ -228,12 +359,28 @@ input[type="radio"]:checked::before {
     width: 25%;
 }
 
+.--submit-button-electric-1 {
+    width: 17%;
+}
+
+.--submit-button-electric-2 {
+    width: 20%;
+}
+
+.--submit-button-product {
+    width: 27%;
+}
+
 .--side-header-size-2 {
     width: 17rem;
 }
 
 .--side-question-2 {
     margin-top: 4rem;
+}
+
+.--aside-2 {
+    width: 30rem;
 }
 
 .--side-header-size-3 {
@@ -263,6 +410,44 @@ input[type="radio"]:checked::before {
     color: #000;
 }
 
+.--side-header-size-energy-1 {
+    width: 15rem;
+}
+
+.--side-header-size-energy-1-1 {
+    width: 13rem;
+}
+
+.--side-header-size-energy-1-2 {
+    width: 20rem;
+}
+
+.--side-header-size-energy-1-3 {
+    width: 24rem;
+}
+
+.--side-header-size-energy-1-4 {
+    width: 15rem;
+}
+
+.--side-header-size-energy-1-5 {
+    width: 11rem;
+}
+
+.--icon-lightning-1 {
+    color: rgb(240, 216, 0);
+}
+
+.--icon-lightning-2 {
+    color: rgb(240, 216, 0);
+    font-size: 3rem;
+}
+
+.--header-icon-electric {
+    width: 4rem;
+    height: 4rem;
+}
+
 @media (750px > height) {
     .calculator {
         position: static;
@@ -289,9 +474,6 @@ input[type="radio"]:checked::before {
     .calculator__form {
         flex-direction: column;
         gap: 3rem;
-    }
-
-    .calculator__form {
         align-items: center;
     }
 
@@ -317,6 +499,16 @@ input[type="radio"]:checked::before {
 }
 
 @media (prefers-color-scheme: dark) {
+    .calculator_header-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* width: 6rem;
+        height: 3.4rem; */
+        border: 0.2rem solid rgba(255, 255, 255, 0.5);
+        border-radius: 0.8rem;
+    }    
+
     .calculator__container {
         background: none;
         background-color: rgba(217, 217, 217, 0.15);
@@ -329,6 +521,18 @@ input[type="radio"]:checked::before {
 
     .calculator__icon{
         color: aqua; 
+    }
+
+    .--icon-lightning-1 {
+        color: rgb(255, 230, 0);
+    }
+
+    .--icon-lightning-2 {
+        color: rgb(240, 216, 0);
+    }
+
+    .--icon-carbon {
+        color: rgba(255, 255, 255, 0.7);
     }
 
     .calculator__title {
@@ -367,7 +571,15 @@ input[type="radio"]:checked::before {
         color: rgba(176, 176, 176, 0.8);
     }
 
+    .calculator__question-check:focus-within {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
     .--icon-1 {
         color: rgb(160, 160, 160);
+    }
+
+    .--icon-prodcuts-water {
+        color: rgba(0, 110, 255, 0.7);
     }
 }

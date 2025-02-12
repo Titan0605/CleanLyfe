@@ -1,0 +1,88 @@
+.home {
+    margin: 5rem 1rem 3rem 1rem; 
+    width: 100%;
+}
+
+.home__container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.home__header {
+    width: 80%;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: rgba(217, 217, 217, 0.15);
+    align-self: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.home__welcome {
+    font-size: 2rem;
+}
+
+.home__body {
+    display: flex;
+    gap: 1rem;
+}
+
+.home__aside {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.home_grafana {
+    border-radius: 15px;
+}
+
+.--grafana-section {
+    background-color: rgba(217, 217, 217, 0.15);
+    padding: 0.8rem;
+    border-radius: 30px;
+    width: 675px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.home__subtittle {
+    font-size: 1.5rem;
+    align-self: center;
+}
+
+.grafanas_united {
+    display: flex;
+    justify-content: space-between;
+}
+
+.home__footprint-info {
+    background-color: rgba(217, 217, 217, 0.15);
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0.6rem;
+    width: 100%;
+}
+
+.--manual-size {
+    width: 550px;
+    height: 299px;
+}
+
+.--left-side {
+    width: 1150px;
+}
+
+.--big-size {
+    height: 372px;
+}
+
+@media (prefers-color-scheme: dark) {
+    h1, h2, h3 {
+        color: white;
+    }
+}

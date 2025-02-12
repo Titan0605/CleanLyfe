@@ -5,7 +5,7 @@ def conection():
             host="localhost",
             user="root",
             password="",
-            database="testdictionary"
+            database="cleanlyfe"
         )
     return connection
 def get_dict_cursor():

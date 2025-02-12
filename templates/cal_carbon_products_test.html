@@ -1,0 +1,471 @@
+<!--Path of where is located the base html-->
+{% extends 'layouts/base.html' %}
+
+<!--template of the title of the page-->
+{% block title%} Carbon products calculator {% endblock%}
+{%block content%}
+<br>
+<br>
+<br>
+<br>
+    <form action="/cal_carbon_products" method="POST">
+        <section name="parte1">
+            <div name="adjustements_for_meat">
+                <h1>Food</h1>
+                <div name="first_ask">
+                    <h1>way to get meat?</h1>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="meat_transport" id="wash-1" value="1">
+                        Local
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="meat_transport" id="wash-1" value="2">
+                        Regional
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="meat_transport" id="wash-1" value="3">
+                        National
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="meat_transport" id="wash-1" value="4">
+                        International
+                    </label>
+                </div>
+                <div class="second_ask">
+                    <h1>meat packaged?</h1>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="meat_packaging" id="wash-1" value="5">
+                        Without packaging
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="meat_packaging" id="wash-1" value="6">
+                        Minimum packaging
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="meat_packaging" id="wash-1" value="7">
+                        Excessive packaging
+                    </label>
+                </div>
+                <div class="third_ask">
+                    <h1>meat fridged?</h1>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="meat_refrigeration" id="wash-1" value="8">
+                        Ambient temperature
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="meat_refrigeration" id="wash-1" value="9">
+                        Refrigerated
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="meat_refrigeration" id="wash-1" value="10">
+                        Frozen
+                    </label>
+                </div>
+                <div class="cow_meat_question">
+                    <h3>How many kg of cow meat do you consume?</h3>
+                    <select class="calculator__question-select" name="cow_meat_kg">
+                        <option class="calculator__select-option" value="0">0 kg</option>
+                        <option class="calculator__select-option" value="1">1 kg</option>
+                        {% for i in range(2, 31) %}
+                        <option class="calculator__select-option" value="{{ i }}">{{ i }} kg</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="pork_meat_kg">
+                    <h3>How many kg of pork meat do you consume?</h3>
+                    <select class="calculator__question-select" name="pork_meat_kg">
+                        <option class="calculator__select-option" value="0">0 kg</option>
+                        <option class="calculator__select-option" value="1">1 kg</option>
+                        {% for i in range(2, 31) %}
+                        <option class="calculator__select-option" value="{{ i }}">{{ i }} kg</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="chicken_meat_kg">
+                    <h3>How many kg of chicken meat do you consume?</h3>
+                    <select class="calculator__question-select" name="chicken_meat_kg">
+                        <option class="calculator__select-option" value="0">0 kg</option>
+                        <option class="calculator__select-option" value="1">1 kg</option>
+                        {% for i in range(2, 31) %}
+                        <option class="calculator__select-option" value="{{ i }}">{{ i }} kg</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+
+
+            <div name="adjustements_for_dairies">
+                <h1>How is your...</h1>
+                <div name="first_ask">
+                    <h1>way to get dairy products?</h1>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="dairy_transport" id="wash-1" value="1">
+                        Local
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="dairy_transport" id="wash-1" value="2">
+                        Regional
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="dairy_transport" id="wash-1" value="3">
+                        National
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="dairy_transport" id="wash-1" value="4">
+                        International
+                    </label>
+                </div>
+                <div class="second_ask">
+                    <h1>dairy packaged?</h1>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="dairy_packaging" id="wash-1" value="5">
+                        Without packaging
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="dairy_packaging" id="wash-1" value="6">
+                        Minimum packaging
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="dairy_packaging" id="wash-1" value="7">
+                        Excessive packaging
+                    </label>
+                </div>
+                <div class="third_ask">
+                    <h1>dairy fridged?</h1>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="dairy_refrigeration" id="wash-1" value="8">
+                        Ambient temperature
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="dairy_refrigeration" id="wash-1" value="9">
+                        Refrigerated
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="dairy_refrigeration" id="wash-1" value="10">
+                        Frozen
+                    </label>
+                </div>
+                <div class="liters">
+                    <h3>How many milk liters do you consume?</h3>
+                    <select class="calculator__question-select" name="milk_liters">
+                        <option class="calculator__select-option" value="0">0 liters</option>
+                        <option class="calculator__select-option" value="1">1 liter</option>
+                        {% for i in range(2, 31) %}
+                        <option class="calculator__select-option" value="{{ i }}">{{ i }} liters</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="cheese_kg">
+                    <h3>How many kg of cheese do you consume?</h3>
+                    <select class="calculator__question-select" name="cheese_kg">
+                        <option class="calculator__select-option" value="0">0 kg</option>
+                        <option class="calculator__select-option" value="1">1 kg</option>
+                        {% for i in range(2, 31) %}
+                        <option class="calculator__select-option" value="{{ i }}">{{ i }} kg</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+
+            
+            <div name="adjustements_for_fruits">
+                <h1>How is your...</h1>
+                <div name="first_ask">
+                    <h1>way to get fruit?</h1>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="fruits_transport" id="wash-1" value="1">
+                        Local
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="fruits_transport" id="wash-1" value="2">
+                        Regional
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="fruits_transport" id="wash-1" value="3">
+                        National
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="fruits_transport" id="wash-1" value="4">
+                        International
+                    </label>
+                </div>
+                <div class="second_ask">
+                    <h1>fruit packaged?</h1>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="fruits_packaging" id="wash-1" value="5">
+                        Without packaging
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="fruits_packaging" id="wash-1" value="6">
+                        Minimum packaging
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="fruits_packaging" id="wash-1" value="7">
+                        Excessive packaging
+                    </label>
+                </div>
+                <div class="third_ask">
+                    <h1>fruit fridged?</h1>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="fruits_refrigeration" id="wash-1" value="8">
+                        Ambient temperature
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="fruits_refrigeration" id="wash-1" value="9">
+                        Refrigerated
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="fruits_refrigeration" id="wash-1" value="10">
+                        Frozen
+                    </label>
+                </div>
+                <div class="local_production">
+                    <h3>How many kg from local production do you consume?</h3>
+                    <select class="calculator__question-select" name="local_production_kg">
+                        <option class="calculator__select-option" value="0">0 kg</option>
+                        <option class="calculator__select-option" value="1">1 kg</option>
+                        {% for i in range(2, 31) %}
+                        <option class="calculator__select-option" value="{{ i }}">{{ i }} kg</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="greenhouse production">
+                    <h3>How many kg from greenhouse production do you consume?</h3>
+                    <select class="calculator__question-select" name="greenhouse_production_kg">
+                        <option class="calculator__select-option" value="0">0 kg</option>
+                        <option class="calculator__select-option" value="1">1 kg</option>
+                        {% for i in range(2, 31) %}
+                        <option class="calculator__select-option" value="{{ i }}">{{ i }} kg</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="imported production">
+                    <h3>How many kg from imported production do you consume?</h3>
+                    <select class="calculator__question-select" name="imported_production_kg">
+                        <option class="calculator__select-option" value="0">0 kg</option>
+                        <option class="calculator__select-option" value="1">1 kg</option>
+                        {% for i in range(2, 31) %}
+                        <option class="calculator__select-option" value="{{ i }}">{{ i }} kg</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </section>
+
+
+
+        
+        <section name="parte2">
+            <div name="adjustements_for_clothes">
+                <h1>Clothes</h1>
+                <div name="first_ask">
+                    <h1>way to get meat clothes?</h1>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="clothes_transport" id="wash-1" value="1">
+                        Local
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="clothes_transport" id="wash-1" value="2">
+                        Regional
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="clothes_transport" id="wash-1" value="3">
+                        National
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="clothes_transport" id="wash-1" value="4">
+                        International
+                    </label>
+                </div>
+                <div class="second_ask">
+                    <h1>clothes packaged?</h1>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="clothes_packaging" id="wash-1" value="5">
+                        Without packaging
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="clothes_packaging" id="wash-1" value="6">
+                        Minimum packaging
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="clothes_packaging" id="wash-1" value="7">
+                        Excessive packaging
+                    </label>
+                </div>
+                <div class="t_shirt_unit">
+                    <h3>How many t-shirts have you bought this week?</h3>
+                    <select class="calculator__question-select" name="t_shirt_unit">
+                        <option class="calculator__select-option" value="0">0 kg</option>
+                        <option class="calculator__select-option" value="1">1 kg</option>
+                        {% for i in range(2, 31) %}
+                        <option class="calculator__select-option" value="{{ i }}">{{ i }} kg</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="pork_meat_kg">
+                    <h3>How many denim pants have you bought this week?</h3>
+                    <select class="calculator__question-select" name="denim_pants_unit">
+                        <option class="calculator__select-option" value="0">0 kg</option>
+                        <option class="calculator__select-option" value="1">1 kg</option>
+                        {% for i in range(2, 31) %}
+                        <option class="calculator__select-option" value="{{ i }}">{{ i }} kg</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="chicken_meat_kg">
+                    <h3>How many shoes have you bought this week?</h3>
+                    <select class="calculator__question-select" name="shoes_unit">
+                        <option class="calculator__select-option" value="0">0 kg</option>
+                        <option class="calculator__select-option" value="1">1 kg</option>
+                        {% for i in range(2, 31) %}
+                        <option class="calculator__select-option" value="{{ i }}">{{ i }} kg</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+
+
+            <div name="adjustements_for_devices">
+                <h1>How is your...</h1>
+                <div name="first_ask">
+                    <h1>way to get electric products?</h1>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="electronic_transport" id="wash-1" value="1">
+                        Local
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="electronic_transport" id="wash-1" value="2">
+                        Regional
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="electronic_transport" id="wash-1" value="3">
+                        National
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="electronic_transport" id="wash-1" value="4">
+                        International
+                    </label>
+                </div>
+                <div class="second_ask">
+                    <h1>dairy packaged?</h1>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="electronic_packaging" id="wash-1" value="5">
+                        Without packaging
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="electronic_packaging" id="wash-1" value="6">
+                        Minimum packaging
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="electronic_packaging" id="wash-1" value="7">
+                        Excessive packaging
+                    </label>
+                </div>
+                <div class="cellphone">
+                    <h3>How many cellphones have bought this week?</h3>
+                    <select class="calculator__question-select" name="cellphone_unit">
+                        <option class="calculator__select-option" value="0">0 cellphones</option>
+                        <option class="calculator__select-option" value="1">1 cellphone</option>
+                        {% for i in range(2, 31) %}
+                        <option class="calculator__select-option" value="{{ i }}">{{ i }} cellphones</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="laptops">
+                    <h3>How many laptops have you bought this week?</h3>
+                    <select class="calculator__question-select" name="laptop_unit">
+                        <option class="calculator__select-option" value="0">0 laptops</option>
+                        <option class="calculator__select-option" value="1">1 laptop</option>
+                        {% for i in range(2, 31) %}
+                        <option class="calculator__select-option" value="{{ i }}">{{ i }} laptops</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="television">
+                    <h3>How many television have you bought this week?</h3>
+                    <select class="calculator__question-select" name="television_unit">
+                        <option class="calculator__select-option" value="0">0 tvs</option>
+                        <option class="calculator__select-option" value="1">1 tv</option>
+                        {% for i in range(2, 31) %}
+                        <option class="calculator__select-option" value="{{ i }}">{{ i }} tvs</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+
+
+            <div name="adjustements_for_cleaning_products">
+                <h1>How is your...</h1>
+                <div name="first_ask">
+                    <h1>way to get cleaning products?</h1>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="cleaning_transport" id="wash-1" value="1">
+                        Local
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="cleaning_transport" id="wash-1" value="2">
+                        Regional
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="cleaning_transport" id="wash-1" value="3">
+                        National
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="cleaning_transport" id="wash-1" value="4">
+                        International
+                    </label>
+                </div>
+                <div class="second_ask">
+                    <h1>cleaning packaged?</h1>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="cleaning_packaging" id="wash-1" value="5">
+                        Without packaging
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="cleaning_packaging" id="wash-1" value="6">
+                        Minimum packaging
+                    </label>
+                    <label for="" class="calculator__question-option">
+                        <input type="radio" name="cleaning_packaging" id="wash-1" value="7">
+                        Excessive packaging
+                    </label>
+                </div>
+                <div class="detergent">
+                    <h3>How many detergent kg do you buy per week?</h3>
+                    <select class="calculator__question-select" name="detergent_kg">
+                        <option class="calculator__select-option" value="0">0 kg</option>
+                        <option class="calculator__select-option" value="1">1 kg</option>
+                        {% for i in range(2, 31) %}
+                        <option class="calculator__select-option" value="{{ i }}">{{ i }} kg</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="softener">
+                    <h3>How many softener liters do you buy per week?</h3>
+                    <select class="calculator__question-select" name="softener_lt">
+                        <option class="calculator__select-option" value="0">0 liters</option>
+                        <option class="calculator__select-option" value="1">1 liters</option>
+                        {% for i in range(2, 31) %}
+                        <option class="calculator__select-option" value="{{ i }}">{{ i }} liters</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="all_purpose">
+                    <h3>How many all purpose purpose liters doy you buy per week?</h3>
+                    <select class="calculator__question-select" name="all_purpose_lt">
+                        <option class="calculator__select-option" value="0">0 liters</option>
+                        <option class="calculator__select-option" value="1">1 liters</option>
+                        {% for i in range(2, 31) %}
+                        <option class="calculator__select-option" value="{{ i }}">{{ i }} liters</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <input type="submit" value="Next">
+        </section>
+    </form>
+{%endblock%}

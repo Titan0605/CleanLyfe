@@ -5,7 +5,7 @@ module.exports = {
         extend: {
             colors: {
                 cleanlyfe: {
-                    verdesote: '#06b865',
+                    green: '#06b865',
                     blue: '#09a5b9',
                 },
             },

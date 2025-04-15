@@ -1,0 +1,35 @@
+{%extends 'layouts/base.html' %}
+
+{%block title%}Sign up{%endblock%}
+
+{%block header%}{%endblock%}
+
+{%block main%}
+<div>
+    <form id="sign_up_form">
+        <div>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" min="1" maxlength="10" placeholder="Username">
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Email">
+        </div>
+        <div>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" min="4" placeholder="Create a password">
+        </div>
+        <div>
+            <label for="confirm-password">Confirm your password</label>
+            <input type="password" id="confirm-password" name="confirm-password" min="4" placeholder="Confirm password">
+        </div>
+        <div>
+            <button type="submit">Continue</button>
+        </div>
+    </form>
+</div>
+{%endblock%}
+
+{%block scripts%}
+<script src="{{ url_for('static', filename='javascript/authentication.js') }}"></script>
+{%endblock%}

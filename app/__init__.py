@@ -3,8 +3,8 @@ from config import Config
 from app.database.db import init_app
 from flask import Flask
 from dotenv import load_dotenv
-from app.utils.db_utils import get_cursor, get_table
-from app.routes import index
+from app.routes import index_view, home_view
+from app.services import index_service, home_service
 
 def create_app(config = Config):
     load_dotenv()
@@ -27,6 +27,8 @@ def create_app(config = Config):
         print(e)
     
     # Blueprints registration
-    app.register_blueprint(index.bp)
+    app.register_blueprint(index_view.bp)
+    app.register_blueprint(index_service.bp)
+    app.register_blueprint(home_view.bp)
     return app
 

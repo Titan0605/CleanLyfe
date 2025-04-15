@@ -7,34 +7,54 @@
     <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <title>Document</title>
+    <title>Cleanlyfe</title>
     
 </head>
 <body>
-    <header class="bg-gradient-to-r from-green-500 to-sky-500 text-white py-5 px-5 gap-3 w-screen h-20 flex items-center">
+    <header class="bg-gradient-to-r from-green-500 to-sky-500 text-white py-5 px-5 gap-3 w-screen h-20 flex items-center fixed top-0">
         <div>
-            <a href="">
+            <a href="/">
                 <img class="size-15" src="{{ url_for('static', filename='img/favicon.ico') }}" alt="Cleanlyfe logo">
             </a>
-            
         </div>
         <div class="text-4xl font-bold">
             <h1>Cleanlyfe</h1>
-        </div>
+        </div>        
     </header>
 
-    <main>
-        <div class="container grid-cols-4 bg-amber-100 gap-4">
-            <div>
-                <h1 class="text-5xl text-cyan-500">Monitorea tu huella</h1>
-                <p class="text-3xl text-black">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis, molestiae quisquam adipisci aliquam nihil rerum accusamus accusantium dolorum, laudantium voluptatum rem veniam delectus esse minima tempora voluptatibus deserunt nam ad?</p>
+    <main>     
+        <div class="grid lg: grid-cols-2 gap-10 mt-10 p-10 justify-self-center">
+            <div class="p-8 w-200">
+                <h1 class="text-5xl bg-gradient-to-r from-green-500 to-sky-500 bg-clip-text font-extrabold text-transparent">Transform your habits, save the planet.</h1>
+                <p class="text-2xl text-black mt-4">Cleanlyfe analyzes your lifestyle to help you understand the impact you have on the environment. Through dynamic surveys, we collect information about your energy consumption, transportation, food and more. We then show you your ecological footprint in interactive, visual dashboards, where you can explore each category, discover patterns and make more sustainable decisions based on your own data.</p>
             </div>
-            <div class="bg-amber-600">2</div>
+            <div class="p-8 w-200">
+                <img class="w-30 h-30" src="{{ url_for('static', filename='img/logo_compressed.png')}}" alt="Dashboards example">
+            </div>            
         </div>
+
+        <div class="grid lg: grid-cols-4 gap-10 mt-10 p-3 justify-self-center">
+            <div></div>
+            <div class="bg-green-400 text-2xl font-bold w-30 h-15 rounded-full text-center place-content-center">
+                <a href="/login">
+                    Login
+                </a>
+            </div>
+
+            <div class="bg-green-400 text-2xl font-bold w-30 h-15 rounded-full text-center place-content-center">
+                <button>
+                    <a href="/sign_up_view">
+                        Sign up
+                    </a>
+                </button>
+            </div>
+
+            <div></div>            
+        </div>        
     </main>
 
     <footer>
-
+        
     </footer>
 </body>
 </html>

@@ -6,10 +6,13 @@ bp = Blueprint("index_view", __name__)
 def index():
     return render_template('index.html')
 
-@bp.route('/sign_up_view')
+
+@bp.route('/sign_up')
 def sign_up():
     return render_template('sign_up.html')
 
+
 @bp.route('/login')
 def login():
+    print("Login view")
     return render_template('login.html')

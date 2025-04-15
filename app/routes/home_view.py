@@ -1,7 +1,7 @@
-from flask import Flask, render_template, Blueprint
+from flask import Flask, render_template, Blueprint, session
 
 bp = Blueprint("home_view", __name__)
 
-@bp.route("/home/<int:id>")
-def home(id):
+@bp.route("/home")
+def home():
     return render_template("home.html")

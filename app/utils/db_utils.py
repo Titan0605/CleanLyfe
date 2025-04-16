@@ -3,9 +3,16 @@ from app.database.db import mysql
 # Function that returns the cursor 
 def get_cursor():
     try:
-        return mysql.connection.cursor()
+        return mysql.connection.cursor() 
     except KeyError as e:
-        print(f"{e}")
+        print(f"Error getting the cursor: {e}")
+        raise
+
+def get_commit():
+    try:
+        return  mysql.connection.commit()
+    except KeyError as e:
+        print(f"Error getting the commit: {e}")
 
 # Function that returns the information from a db in json format
 def get_table(table):

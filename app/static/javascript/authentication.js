@@ -15,12 +15,12 @@ document.addEventListener("DOMContentLoaded", async function() {
             })
             .then(response => response.json())
             .then(data => {            
-                if (data.Status === "Login successfull.") {
+                if (data.Status === "Sign up successfull.") {
                     // redirect to home
                     window.location.href = '/login';
                 } else {
                     // error login manage
-                    alert("Fail login. Verify your credentials.");
+                    alert("Fail sign up. Verify your password confirmation.");
                 }
             })
             .catch((error) => {

@@ -5,5 +5,11 @@
 {%block header%}{%endblock%}
 
 {%block main%}
-    <div>Hello home</div>
+    <div>Hello {{user}}</div>
+
+    <button id="logout">Log out</button>
+{%endblock%}
+
+{%block scripts%}
+<script src="{{ url_for('static', filename='javascript/authentication.js') }}"></script>
 {%endblock%}

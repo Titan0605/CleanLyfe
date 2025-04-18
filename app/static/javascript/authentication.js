@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", async function() {
+    // Sign up
     try {
         document.getElementById("sign_up_form").addEventListener("submit", async function (e) {
             e.preventDefault();
@@ -24,22 +25,21 @@ document.addEventListener("DOMContentLoaded", async function() {
                 }
             })
             .catch((error) => {
-                console.error('Error:', error);
-                alert("Conection error. Try later.");
+                console.log('Error:', error);
+                alert("Something went wrong when signing up. Try later.");
             });
         });    
     } catch (error) {
         console.log(error);
     }
 
+    // Log in
     try {
         document.getElementById("login_form").addEventListener("submit", async function (e) {
             e.preventDefault();
     
             var formData = new FormData(e.target);
             var data = Object.fromEntries(formData);
-    
-            console.log(data);
     
             fetch("/login_service", {
                 method: 'POST',
@@ -55,15 +55,36 @@ document.addEventListener("DOMContentLoaded", async function() {
                     window.location.href = '/home';
                 } else {
                     // error login manage
-                    alert("Fail login. Verify your credentials.");
+                    alert(data.Status);
                 }
             })
             .catch((error) => {
-                console.error('Error:', error);
-                alert("Conection error. Try later.");
+                console.log('Error:', error);
+                alert(data.Status);
             });
         });    
     } catch (error) {
         console.log(error);
     }    
+
+    // Log out
+    try {
+        document.getElementById("logout").addEventListener("click", async function () {
+            console.log("Log out clicked")
+            fetch("/logout", {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            .then(response => response.json())
+            .then(data =>{
+                if(data.Status === "Log out successfull."){
+                    // redirect to root
+                    window.location.href = "/"
+                }
+            })
+        })
+    } catch (error) {
+        console.log('Error:', error);
+    }
 })

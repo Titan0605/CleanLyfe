@@ -33,9 +33,15 @@ class AuthenticationModel:
             query = "SELECT * FROM users WHERE username = %s and password = %s"
             values = (username, password,)
             self.cur.execute(query, values)
-            response = self.cur.fetchall()
-            self.closeCursor()
-            return "Login successfull.", response
+            response = self.cur.fetchone()
+            # if the response is empty
+            if not response:
+                self.closeCursor()
+                return None
+            else:
+                self.closeCursor()
+                return response
         except KeyError as e:
+            print("Error: ", e)
             response = None
-            return "Login error, credentials incorrects.", response
+            return response

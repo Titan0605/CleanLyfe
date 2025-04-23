@@ -1,0 +1,102 @@
+{%extends 'layouts/base.html' %}
+
+{%block main%}
+    <div class="container">
+        <div class="calculator">
+            <form id="form_carbonfp_transport" class="">
+                <header class="">
+                    <i class="" ></i>
+                    <h1 class="">Transport calculator</h1>
+                </header>
+        
+                <header class="">
+                    <i class=""></i> <!--here goes the icon of the title-->
+                    <h2 class="">Transport</h2>
+                </header>
+        
+                <section class="">
+        
+                    <article class="">
+        
+                        <section class="">
+                            <h3 class="">What type of fuel does your vehicle use?</h3>
+                            <div class="">
+                                <label for="fuel_type-1" class="">
+                                    <input type="radio" name="fuel_type" id="fuel_type-1" value="Gas" required>
+                                    Gas
+                                </label>
+                                <label for="fuel_type-2" class="">
+                                    <input type="radio" name="fuel_type" id="fuel_type-2" value="Diesel">
+                                    Diesel
+                                </label>
+                                <label for="fuel_type-3" class="">
+                                    <input type="radio" name="fuel_type" id="fuel_type-3" value="GNV">
+                                    GNV
+                                </label>
+                                <label for="fuel_type-4" class="">
+                                    <input type="radio" name="fuel_type" id="fuel_type-4" value="Electric">
+                                    Electric
+                                </label>
+                            </div>
+                        </section>
+        
+                        <section class="">
+                            <h3 class="">How many cylinders does your vehicle have?</h3>
+                            <select class="" name="cylinders_count" required>
+                                <option class="" value="1">1 cylinder</option>
+                                {% for i in range(2, 11) %}
+                                    <option class="" value="{{ i }}">{{ i }} cylinders</option>
+                                {% endfor %}
+                            </select>
+                        </section>
+        
+                        <section class="">
+                            <h3 class="">What year is your vehicle?</h3>
+                            <select class="" name="vehicule_old" required>
+                                {% for i in range(2026, 1949, -1) %}
+                                    <option class="" value="{{ i }}">{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                        </section>
+        
+                    </article>
+        
+                    <article class="">
+        
+                        <section class="">
+                            <h3 class="">How long did you use your vehicle (No.hours)?</h3>
+                            <select class="" name="time_used" required>
+                                <option class="" value="0">0 hour</option>
+                                <option class="" value="1">1 hour</option>
+                                {% for i in range(2, 25) %}
+                                    <option class="" value="{{ i }}">{{ i }} hours</option>
+                                {% endfor %}
+                            </select>
+                        </section>
+        
+                        <section class="">
+                            <h3 class="">How much fuel did you consume?</h3>
+                            <input type="number" name="consumed_fuel" placeholder="Fuel in liters" min="0" class="" required>
+                        </section>
+        
+                        <section class="">
+                            <h3 class="">How many kilometers did you drive??</h3>
+                            <input type="number" name="distance_traveled" placeholder="Distance in Km" min="0" class="" required>
+                        </section>
+        
+                    </article>
+        
+                </section>
+        
+                <footer class="">
+                    <button type="submit">Continue</button>
+                </footer>
+        
+            </form>
+        </div>
+    </div>
+{%endblock%}
+
+{%block scripts%}
+    <script src="{{ url_for('static', filename='javascript/carbonfp_transport.js') }}"></script>
+{%endblock%}

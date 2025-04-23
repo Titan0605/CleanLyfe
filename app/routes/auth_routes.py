@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, session
 from app.models.authentication_model import AuthenticationModel
 
-bp = Blueprint("authentication", __name__)
+bp = Blueprint("authentication_routes", __name__)
 
 authenModel = AuthenticationModel()
 

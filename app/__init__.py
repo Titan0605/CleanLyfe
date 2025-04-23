@@ -3,7 +3,7 @@ from config import Config
 from app.database.db import init_app
 from flask import Flask
 from dotenv import load_dotenv
-from app.routes import index_view, home_view, auth
+from app.routes import auth_routes, carbonfp_routes, carbonfp_view, index_view, home_view
 
 def create_app(config = Config):
     load_dotenv()
@@ -20,10 +20,14 @@ def create_app(config = Config):
     except KeyError as e:
         print(e)
     
-    # Blueprints registration
+    # Blueprints registration views
     app.register_blueprint(index_view.bp)
-    app.register_blueprint(auth.bp)
     app.register_blueprint(home_view.bp)
+    app.register_blueprint(carbonfp_view.bp)
+    
+    # Blueprint registration 
+    app.register_blueprint(auth_routes.bp)
+    app.register_blueprint(carbonfp_routes.bp)
     
     return app
 

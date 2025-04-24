@@ -1,7 +1,7 @@
 {%extends 'layouts/base.html' %}
 
 {%block main%}
-    <div class="container">
+    <div id="container">
         <div class="calculator">
             <form id="form_carbonfp_transport" class="">
                 <header class="">
@@ -46,7 +46,7 @@
                                 <option class="" value="1">1 cylinder</option>
                                 {% for i in range(2, 11) %}
                                     <option class="" value="{{ i }}">{{ i }} cylinders</option>
-                                {% endfor %}
+                                {% endfor %}
                             </select>
                         </section>
         
@@ -55,7 +55,7 @@
                             <select class="" name="vehicule_old" required>
                                 {% for i in range(2026, 1949, -1) %}
                                     <option class="" value="{{ i }}">{{ i }}</option>
-                                {% endfor %}
+                                {% endfor %}
                             </select>
                         </section>
         
@@ -64,25 +64,15 @@
                     <article class="">
         
                         <section class="">
-                            <h3 class="">How long did you use your vehicle (No.hours)?</h3>
-                            <select class="" name="time_used" required>
-                                <option class="" value="0">0 hour</option>
-                                <option class="" value="1">1 hour</option>
-                                {% for i in range(2, 25) %}
-                                    <option class="" value="{{ i }}">{{ i }} hours</option>
-                                {% endfor %}
-                            </select>
+                            <h3 class="">How many kilometers did you drive??</h3>
+                            <input type="number" name="distance_traveled" placeholder="Distance in Km" min="0" class="" required>
                         </section>
-        
+
                         <section class="">
                             <h3 class="">How much fuel did you consume?</h3>
                             <input type="number" name="consumed_fuel" placeholder="Fuel in liters" min="0" class="" required>
                         </section>
         
-                        <section class="">
-                            <h3 class="">How many kilometers did you drive??</h3>
-                            <input type="number" name="distance_traveled" placeholder="Distance in Km" min="0" class="" required>
-                        </section>
         
                     </article>
         
@@ -94,6 +84,12 @@
         
             </form>
         </div>
+
+        <!-- test -->
+        <!-- <div class="bg-amber-100">
+            <p class="text-5xl">Hola como estas</p>
+            <button class="bg-amber-300 cursor-pointer">Try again</button>
+        </div> -->
     </div>
 {%endblock%}
 

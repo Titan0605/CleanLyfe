@@ -3,8 +3,11 @@ class Transport_fp_calculator:
     #Method that realices the calculus of the vehicule emissions
     def calculate_transport_emission(self, distance, consumed_fuel, old_emission_factor, cylinders_emission_factor,  fuel_emission_factor):            
         try:
-            if consumed_fuel == 0:
-                return jsonify({"error": "Consumed fuel cannot be zero"}), 400
+            if distance > 0:
+                if consumed_fuel == 0:
+                    return jsonify({"error": "Consumed fuel cannot be zero when there is distance."}), 400
+            elif distance == 0 and consumed_fuel == 0:
+                return 0
             
             distance = float(distance)
             consumed_fuel = float(consumed_fuel)
@@ -19,7 +22,7 @@ class Transport_fp_calculator:
             
             return final_transport_emission
         except ValueError:
-            return jsonify({"error": "Distance and consumed fuel must be numbers"}), 400
+            return jsonify({"error": "Something went wrong, try again later."}), 400
 
 
 '''

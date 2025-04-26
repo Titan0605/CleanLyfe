@@ -1,9 +1,10 @@
 from app.database.db import mysql
+from flask_mysqldb import MySQLdb
 
 # Function that returns the cursor 
 def get_cursor():
     try:
-        return mysql.connection.cursor() 
+        return mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     except KeyError as e:
         print(f"Error getting the cursor: {e}")
         raise

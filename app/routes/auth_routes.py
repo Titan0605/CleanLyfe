@@ -26,9 +26,9 @@ def sign_up_service():
         
         else:
             status = "Password confirmation incorrect, verify your credentials."
-            return jsonify({"Status": status})
+            return jsonify({"Status": status, "Error": str(error)}), 401
     except KeyError as error:
-            return jsonify({"Status": status}, error)
+            return jsonify({"Status": status, "Error": str(error)}), 401
 
 @bp.route('/login_service', methods=["POST"])
 def login_service():
@@ -40,7 +40,7 @@ def login_service():
         
         # call model to get the user if exist
         response = authenModel.get_user(username, password) #example: (3, 'CleanUser', 'cleanlyfe_user@gmail.com')
-        
+        print("Response: ", response)
         # if there is no response
         if response == None:
             # change the type of status and return
@@ -50,13 +50,13 @@ def login_service():
             # change the type of status
             status = 'Login successfull.'
             # saves the session
-            session["id"] = response[0]
-            session["username"] = response[1]
-            session["email"] = response[2]
+            session["id"] = response['id']
+            session["username"] = response['username']
+            session["email"] = response['gmail']
             
             return jsonify({"Status": status}), 201
     except KeyError as error:
-        return jsonify({"Status": "Something went wrong when logging in, try later."}, error), 401
+        return jsonify({"Status": "Something went wrong when logging in, try later.", "Error": str(error)}), 401
     
 @bp.route('/logout', methods=['GET'])
 def logout():

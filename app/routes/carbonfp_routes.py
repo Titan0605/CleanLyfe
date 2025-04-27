@@ -56,9 +56,15 @@ def carbonfp_get_device_location(location):
     
     return jsonify(response)
 
-@bp.route('/carbonfp/get-devices-selected', methods=['POST'])
+@bp.route('/carbonfp/get-devices-name-selected', methods=['POST'])
 def getdevices():
-    response = request.get_json()
-    print(response)
     
-    return jsonify({"Status": "All ok"}), 201
+    response = request.get_json()    
+    
+    data = list()
+    
+    for id in response['device']:        
+        deviceName = elect_devices_model.getDeviceNameById(id)
+        data.append(deviceName)
+
+    return jsonify({"Status": "Devices collected successfully.", "devicesNames": data}), 201

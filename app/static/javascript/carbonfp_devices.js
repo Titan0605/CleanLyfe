@@ -13,31 +13,70 @@ document.addEventListener('DOMContentLoaded', async function() {
                 data[key].push(value);
             });
             
-            // fetch('/carbonfp/get-devices-selected', {
-            //     method: 'POST',
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //     },
-            //     body: JSON.stringify(data),
-            // })
+            fetch('/carbonfp/get-devices-name-selected', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(devices => {
+                if (devices.Status = "Devices collected successfully.") {
+                    console.log("Devices with name: ", devices.devicesNames)
+                    draw_get_device_info(devices.devicesNames);
+                }
+            })
     
             console.log(data);
 
-            get_device_info(data);
         } catch (error) {
             console.log(error)
         }
     });
 });
 
-function get_device_info(data) {
-    const container = getElementById('container');
+function draw_get_device_info(devices) {
+    const container = document.getElementById('container');
     container.innerHTML = ``;
 
     const device_form = document.createElement('form');
     device_form.id = 'devices_info_form';
 
-    data.forEach(device => {
-        
+    container.appendChild(device_form);
+    const form_div = document.createElement('div');
+    device_form.appendChild(form_div);
+
+    devices.forEach(device => {
+        const device_questions = document.createElement('div');
+        device_questions.className = 'bg-amber-100';
+        device_questions.innerHTML = `<header class="">
+                <i class=""></i>
+                <h2 class="text-3xl">${device.name}</h2>
+            </header>
+            <div>
+                <div>
+                    <h3 class="">What is the active power of the device?</h3>
+                    <input type="number" class="" name="device_active_power" placeholder="Kw" min="1" required>
+                </div>
+                <div>
+                    <h3 class="">Hours of active use</h3>
+                    <input type="number" class="" name="active_used_hours" placeholder="Hours" min="0" required>
+                </div>
+                <div>
+                    <h3 class="">What is the standby power of the device?</h3>
+                    <input type="number" class="" name="device_standby_power" placeholder="Kw" min="1" required>
+                </div>
+                <div>
+                    <h3 class="">Hours of standby use</h3>
+                    <input type="number" class="" name="standby_used_hours" placeholder="Hours" min="0" required>
+                </div>
+                <div>
+                    <h3 class="">What is the efficiency of the device?</h3>
+                    <input type="number" class="" name="device_efficiency" placeholder="Kw" min="1" required>
+                </div>
+            </div>`;
+
+            device_form.appendChild(device_questions);
     })
 }

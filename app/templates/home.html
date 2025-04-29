@@ -1,0 +1,19 @@
+{%extends 'layouts/base.html' %}
+
+{%block title%}Cleanlyfe{%endblock%}
+
+{%block header%}{%endblock%}
+
+{%block main%}
+    <div>Hello {{user}}</div>
+
+    <button id="logout">Log out</button>
+
+    <button>
+        <a href="/carbonfp/transport">Go transport footprint</a>
+    </button>
+{%endblock%}
+
+{%block scripts%}
+<script src="{{ url_for('static', filename='javascript/authentication.js') }}"></script>
+{%endblock%}

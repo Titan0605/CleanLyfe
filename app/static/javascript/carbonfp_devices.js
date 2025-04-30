@@ -21,17 +21,35 @@ document.addEventListener('DOMContentLoaded', async function() {
                 body: JSON.stringify(data),
             })
             .then(response => response.json())
-            .then(devices => {
-                if (devices.Status = "Devices collected successfully.") {
-                    console.log("Devices with name: ", devices.devicesNames)
-                    draw_get_device_info(devices.devicesNames);
+            .then(responseData => {
+                if (responseData.Status = "Devices collected successfully.") {
+                    draw_get_device_info(responseData.devices);
                 }
             })
-    
-            console.log(data);
 
         } catch (error) {
             console.log(error)
+        }
+    });
+
+    document.getElementById('devices_info_form').addEventListener('submit', async function (e) {
+        try {
+            preventDefault(e);
+
+            const formData = new FormData(e.target)
+            const data = {}
+
+            formData.forEach((value, key) => {
+                if (!data[key]) {
+                    data[key] = [];
+                }
+                data[key].push(value);
+            });
+
+            console.log(data)
+
+        } catch (error) {
+            console.log(error);
         }
     });
 });
@@ -55,6 +73,7 @@ function draw_get_device_info(devices) {
                 <h2 class="text-3xl">${device.name}</h2>
             </header>
             <div>
+                <input type="hidden" name="device_id" value="${device.id}">
                 <div>
                     <h3 class="">What is the active power of the device?</h3>
                     <input type="number" class="" name="device_active_power" placeholder="Kw" min="1" required>
@@ -79,4 +98,8 @@ function draw_get_device_info(devices) {
 
             device_form.appendChild(device_questions);
     })
+    const footer = document.createElement('footer');
+    footer.innerHTML = `<button type="submit">Continue</button>`
+
+    device_form.appendChild(footer)
 }

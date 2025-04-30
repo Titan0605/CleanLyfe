@@ -61,10 +61,16 @@ def getdevices():
     
     response = request.get_json()    
     
-    data = list()
+    data = []
     
     for id in response['device']:        
-        deviceName = elect_devices_model.getDeviceNameById(id)
-        data.append(deviceName)
+        device = elect_devices_model.getDeviceIdNameById(id)
+        data.append(device)
+        
+    print(data)
 
-    return jsonify({"Status": "Devices collected successfully.", "devicesNames": data}), 201
+    return jsonify({"Status": "Devices collected successfully.", "devices": data}), 201
+
+@bp.route('/carbonfp/devices-info')
+def carbonfp():
+    pass

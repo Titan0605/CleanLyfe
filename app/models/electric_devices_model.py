@@ -87,10 +87,10 @@ class Electric_devices_model:
             return None
         
     # Gets the device name by its id
-    def getDeviceNameById(self, deviceId):
+    def getDeviceIdNameById(self, deviceId):
         try:
             self.openCursor()
-            query = "SELECT name FROM devices WHERE id = %s"
+            query = "SELECT id, name FROM devices WHERE id = %s"
             values = (deviceId,)
             self.cur.execute(query, values)
             response = self.cur.fetchone()

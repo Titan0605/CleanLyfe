@@ -85,3 +85,21 @@ class Electric_devices_model:
         except KeyError as e:
             print("Error: ", e)
             return None
+        
+    # Gets the device name by its id
+    def getDeviceIdNameById(self, deviceId):
+        try:
+            self.openCursor()
+            query = "SELECT id, name FROM devices WHERE id = %s"
+            values = (deviceId,)
+            self.cur.execute(query, values)
+            response = self.cur.fetchone()
+            if not response:
+                self.closeCursor()
+                return None
+            else:
+                self.closeCursor()
+                return response
+        except KeyError as e:
+            print("Error: ", e)
+            return None

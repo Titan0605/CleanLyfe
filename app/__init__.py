@@ -1,18 +1,22 @@
 import os
+
+from flask_mysqldb import MySQL
+from app.utils.db_utils import init_db
 from config import Config
 from app.database.db import init_app
 from flask import Flask
 from dotenv import load_dotenv
 from app.routes import auth_routes, carbonfp_routes, carbonfp_view, index_view, home_view
 
-def create_app(config = Config):
+def create_app(config = Config) -> Flask:
     load_dotenv()
     
     app = Flask(__name__)
     
     app.config.from_object(config)
     
-    mysql = init_app(app)    
+    mysql: MySQL = init_app(app)
+    init_db(mysql)
     
     # env setup
     try:

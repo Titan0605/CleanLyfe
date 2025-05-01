@@ -1,11 +1,13 @@
 from flask import Flask, jsonify, session, Blueprint, request
 from app.services.transportCalculus import Transport_fp_calculator
+from app.services.electric_devices_calculator import Electric_devices_calculator
 from app.models.electric_devices_model import Electric_devices_model
 
 bp = Blueprint("carbonfp_routes", __name__)
 
 transCal = Transport_fp_calculator()
 elect_devices_model = Electric_devices_model()
+devicesCal = Electric_devices_calculator()
 
 @bp.route('/carbonfp/transport-data', methods=["POST"])
 def carbonfp_transport_data():
@@ -58,19 +60,37 @@ def carbonfp_get_device_location(location):
 
 @bp.route('/carbonfp/get-devices-name-selected', methods=['POST'])
 def getdevices():
-    
-    response = request.get_json()    
-    
-    data = []
-    
-    for id in response['device']:        
-        device = elect_devices_model.getDeviceIdNameById(id)
-        data.append(device)
+    try:
+        response = request.get_json()    
         
-    print(data)
+        data = []
+        
+        for id in response['device']:        
+            device = elect_devices_model.getDeviceIdNameById(id)
+            data.append(device)
+            
+        print(data)
 
-    return jsonify({"Status": "Devices collected successfully.", "devices": data}), 201
+        return jsonify({"Status": "Devices collected successfully.", "devices": data}), 201
+        
+    except KeyError as error:
+        return jsonify({"Status": error})
 
-@bp.route('/carbonfp/devices-info')
+
+@bp.route('/carbonfp/devices-info', methods=['POST'])
 def carbonfp():
-    pass
+    try:
+        '''provitional'''
+        # dictionary of list
+        response = request.get_json()
+        print(response)
+        print(f'lenght: {len(response['device_active_power'])}')
+        print(f'specific: {response['device_active_power'][0]}')
+        print(f'type inside: {type(response['device_active_power'])}')
+        # devicesCal.calculation_type('accurate', response)
+        
+        devicesCal.accurate_calculation(response, 8.5)
+        
+        return jsonify({'Status': "Carbonfp successfylly."})
+    except KeyError as error:
+        return jsonify({'Status': error})

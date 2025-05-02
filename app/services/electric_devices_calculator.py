@@ -11,20 +11,21 @@ class Electric_devices_calculator:
                 case 'accurate_calculation':
                     self.accurate_calculation(devices)
                 case _:
-                    return jsonify({'Status': 'Failed electrical calculation.'})
+                    return 'Failed electrical calculation.'
         
-            return jsonify({'Status': 'Electric calculation successfully.'})
+            return 'Electric calculation successfully.'
         except (Exception, TypeError) as error:
             print(f'Error found: {error}')
-            return jsonify({'Status': 'Failed electrical calculation.'})
+            return 'Failed electrical calculation.'
     
     
-    def basic_calculation(electricity_consumption: float, emission_factor: float):
+    def basic_calculation(self, electricity_consumption: float, emission_factor: float):
         try:
             if electricity_consumption > 0 and emission_factor > 0:
                 
                 final_emission = float(electricity_consumption * emission_factor)
                 
+                print(f'Total basic: {final_emission}')
                 return float(final_emission)
             else:
                 return 0.0
@@ -62,11 +63,11 @@ class Electric_devices_calculator:
                         'total_emission': total_emission
                     }
                     
-                    for device in devices_emissions:
-                        
-                        total_final_emission = round(total_final_emission + device['total_emission'], 3)
-                    
                     devices_emissions.append(devices_data)
+                
+                for device in devices_emissions:
+                    
+                    total_final_emission = round(total_final_emission + device['total_emission'], 3)
                 
                 return total_final_emission
             else:

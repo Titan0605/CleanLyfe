@@ -77,19 +77,29 @@ def getdevices():
         return jsonify({"Status": error})
 
 
-@bp.route('/carbonfp/devices-info', methods=['POST'])
-def carbonfp():
+@bp.route('/carbonfp/devices/calculation-basic', methods=['POST'])
+def carbonfp_basic():
     try:
-        '''provitional'''
-        # dictionary of list
         response = request.get_json()
         type_calculation = str(response['type_calculation'])
         electricity_consumption = float(response['electricity_consumption'])
+
+        status = devicesCal.calculation_type(type_calculation, electricity_consumption, response)
         
-        print(type_calculation)
+        return jsonify({'Status': status})
+    except KeyError as error:
+        return jsonify({'Status': error})
+
+
+@bp.route('/carbonfp/devices/calculation-accurate', methods=['POST'])
+def carbonfp_accurate():
+    try:
+        response = request.get_json()
+        electricity_consumption = response['electricity_consumption']
+        type_calculation = response['type_calculation'][0]
+    
+        status = devicesCal.calculation_type(type_calculation, electricity_consumption, response)
         
-        devicesCal.calculation_type(type_calculation, electricity_consumption, response)
-        
-        return jsonify({'Status': "Carbonfp successfully."})
+        return jsonify({'Status': status})
     except KeyError as error:
         return jsonify({'Status': error})

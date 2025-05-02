@@ -1,5 +1,5 @@
-document.addEventListener('DOMContentLoaded', async function() {
-    document
+document.addEventListener('DOMContentLoaded', async function () {
+    show_form('basic_calculation')
 
     document.getElementById('devices_select_form').addEventListener('submit', async function (e) {
         try {
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 data[key].push(value);
             });
-            
+
             fetch('/carbonfp/get-devices-name-selected', {
                 method: 'POST',
                 headers: {
@@ -22,12 +22,12 @@ document.addEventListener('DOMContentLoaded', async function() {
                 },
                 body: JSON.stringify(data),
             })
-            .then(response => response.json())
-            .then(responseData => {
-                if (responseData.Status = "Devices collected successfully.") {
-                    draw_get_device_info(responseData.devices);
-                }
-            })
+                .then(response => response.json())
+                .then(responseData => {
+                    if (responseData.Status = "Devices collected successfully.") {
+                        draw_get_device_info(responseData.devices);
+                    }
+                })
 
         } catch (error) {
             console.log(error)
@@ -38,39 +38,84 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (e.target && e.target.id === 'devices_info_form') {
             try {
                 e.preventDefault();
-    
+
                 const formData = new FormData(e.target)
                 const data = {}
-    
+
                 formData.forEach((value, key) => {
                     if (!data[key]) {
                         data[key] = [];
                     }
                     data[key].push(value);
                 });
-    
-                console.log(data)
-    
-                fetch('/carbonfp/devices-info', {
+
+                console.log('Entro a accurate calculation url: ', data)
+
+                fetch('/carbonfp/devices/calculation-accurate', {
                     method: 'POST',
                     headers: {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify(data),
                 })
-                .then(response => response.json())
-                .then(data => {
-                    if (data) {
-                        draw_message(data)
-                    }
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data) {
+                            draw_message(data)
+                        }
+                    })
+
+            } catch (error) {
+                console.log(error);
+            }
+        } else if (e.target && e.target.id === 'basic_calculation') {
+            try {
+                e.preventDefault();
+
+                const formData = new FormData(e.target)
+                const data = Object.fromEntries(formData)
+
+                console.log('Entro a basic calculation url: ', data)
+
+                fetch('/carbonfp/devices/calculation-basic', {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
                 })
-    
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data) {
+                            draw_message(data)
+                        }
+                    })
+
             } catch (error) {
                 console.log(error);
             }
         }
     });
 });
+
+function show_form(form_selected){
+
+    const forms = document.querySelectorAll('.form');
+    forms.forEach(form => {
+        form.hidden = true
+    });
+
+    // Mostrar el formulario seleccionado
+    document.getElementById(form_selected).hidden = false;
+
+    // Activar el botón correspondiente
+    let botonId;
+    if (form_selected === 'basic_calculation') botonId = 'btnBasic';
+    else if (form_selected === 'accurate_calculation') botonId = 'btnAccurate';
+    
+    document.getElementById(botonId).hidden = false;
+
+}
 
 function draw_get_device_info(devices) {
     const container = document.getElementById('container');
@@ -114,22 +159,25 @@ function draw_get_device_info(devices) {
                 </div>
             </div>`;
 
-            device_form.appendChild(device_questions);
+        device_form.appendChild(device_questions);
     })
+    
     const footer = document.createElement('footer');
-    footer.innerHTML = `<button type="submit">Continue</button>`
+    footer.innerHTML = `<input type="hidden" name="type_calculation" value="accurate_calculation">
+            <input type="hidden" name="electricity_consumption" value="0">
+            <button type="submit">Continue</button>`
 
     device_form.appendChild(footer)
 }
 
-function draw_message(data){
+function draw_message(data) {
     // Gets the div container
     const container = document.getElementById('container');
     // Deletes the inner content
     container.innerHTML = ``;
 
     // If there is an error in the response shows this
-    if(data.Status !== 'Carbonfp successfully.'){
+    if (data.Status !== 'Carbonfp successfully.') {
         // Creates a div
         const warning = document.createElement('div');
         // Adds the class name

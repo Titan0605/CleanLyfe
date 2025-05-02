@@ -77,20 +77,39 @@ def getdevices():
         return jsonify({"Status": error})
 
 
-@bp.route('/carbonfp/devices-info', methods=['POST'])
-def carbonfp():
+@bp.route('/carbonfp/devices/calculation-basic', methods=['POST'])
+def carbonfp_basic():
     try:
-        '''provitional'''
-        # dictionary of list
         response = request.get_json()
-        print(response)
-        print(f'lenght: {len(response['device_active_power'])}')
-        print(f'specific: {response['device_active_power'][0]}')
-        print(f'type inside: {type(response['device_active_power'])}')
-        # devicesCal.calculation_type('accurate', response)
+        type_calculation = str(response['type_calculation'])
+        electricity_consumption = float(response['electricity_consumption'])
+
+        status = devicesCal.calculation_type(type_calculation, electricity_consumption, response)
         
-        devicesCal.accurate_calculation(response, 8.5)
+        if status == 'Electric calculation successfully.':
+            status = 'Carbonfp successfully.'
+        elif status == 'Failed electrical calculation.':
+            status = 'Something went wrong, try again later.'
         
-        return jsonify({'Status': "Carbonfp successfylly."})
+        return jsonify({'Status': status})
+    except KeyError as error:
+        return jsonify({'Status': error})
+
+
+@bp.route('/carbonfp/devices/calculation-accurate', methods=['POST'])
+def carbonfp_accurate():
+    try:
+        response = request.get_json()
+        electricity_consumption = response['electricity_consumption']
+        type_calculation = response['type_calculation'][0]
+    
+        status = devicesCal.calculation_type(type_calculation, electricity_consumption, response)
+        
+        if status == 'Electric calculation successfully.':
+            status = 'Carbonfp successfully.'
+        elif status == 'Failed electrical calculation.':
+            status = 'Something went wrong, try again later.'
+        
+        return jsonify({'Status': status})
     except KeyError as error:
         return jsonify({'Status': error})

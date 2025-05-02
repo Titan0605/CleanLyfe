@@ -112,9 +112,9 @@ class FoodProductType(Enum):
     SODA = ('soda', 175)  # L/L
     BREAD = ('bread', 40)  # L/slice
 
-    def __init__(self, id: str, water_footprint: float):
-        self.id = id
-        self.water_footprint = water_footprint
+    def __init__(self, id: str, water_footprint: float) -> None:
+        self.id: str = id
+        self.water_footprint: float = water_footprint
 
 class HidricCalculator:
     """
@@ -124,12 +124,16 @@ class HidricCalculator:
     taking into account factors like duration, frequency, and method of use.
     
     Attributes:
-        TRADITIONAL_SHOWER_LITERS_PER_MIN (int): Water consumption rate for traditional showers in L/min
-        WATER_SAVING_SHOWER_LITERS_PER_MIN (int): Water consumption rate for eco-friendly showers in L/min
-        BATHTUB_LITERS (int): Standard water capacity of a bathtub in liters
-        HAND_WASHING_DISHES_LITERS_PER_MIN (int): Water consumption rate for hand washing dishes with running water
-        FILLED_SINK_DISHES_LITERS (int): Water consumption for washing dishes in a filled sink
-        DISHWASHER_LITERS (int): Water consumption per dishwasher cycle
+        TRADITIONAL_SHOWER_LITERS_PER_MIN (int): Water consumption rate for traditional showers (15 L/min)
+        WATER_SAVING_SHOWER_LITERS_PER_MIN (int): Water consumption rate for eco-friendly showers (8 L/min)
+        BATHTUB_LITERS (int): Standard water capacity of a bathtub (150 liters)
+        HAND_WASHING_DISHES_LITERS_PER_MIN (int): Water consumption rate for hand washing dishes with running water (12 L/min)
+        FILLED_SINK_DISHES_LITERS (int): Water consumption for washing dishes in a filled sink (20 L)
+        DISHWASHER_LITERS (int): Water consumption per dishwasher cycle (15 L)
+        FRONT_LOADING_WASHING_CLOTHES_LITERS_PER_MIN (int): Water usage for front-loading washing machine (50 L/cycle)
+        TOP_LOADING_WASHING_CLOTHES_LITERS_PER_MIN (int): Water usage for top-loading washing machine (80 L/cycle)
+        AVERAGE_WASHING_CLOTHES_LITERS_PER_MIN (int): Average water usage for washing machines (65 L/cycle)
+        HOSE_LITERS_PER_MIN (int): Water flow rate for garden hose (19 L/min)
     """
 
     # Constantes para el consumo de agua en duchas
@@ -289,7 +293,7 @@ class HidricCalculator:
         else:
             return self.calculate_liters_per_week(consumption, times_per_day)
         
-    def washing_clothest(self, cycles_per_week: int, washing_machine_type: str) -> int:
+    def washing_clothes(self, cycles_per_week: int, washing_machine_type: str) -> int:
         """
         Calculates the total weekly water usage (in liters) for washing clothes.
 
@@ -309,9 +313,9 @@ class HidricCalculator:
 
         Example:
             >>> calc = HidricCalculator()
-            >>> calc.washing_clothest(3, 'front_loading')
+            >>> calc.washing_clothes(3, 'front_loading')
             150  # (50L * 3cycles)
-            >>> calc.washing_clothest(2, 'top_loading')
+            >>> calc.washing_clothes(2, 'top_loading')
             160  # (80L * 2cycles)
         """
         try:
@@ -340,16 +344,16 @@ class HidricCalculator:
         time, and frequency. Each method has its own calculation formula.
 
         Args:
-            minutes (float): Duration of each watering session in minutes
-            times_per_week (float): Number of watering sessions per week
+            minutes (int): Duration of each watering session in minutes
+            times_per_week (int): Number of watering sessions per week
             watering_type (str): Type of watering method, must match one of the GardenWateringType values
             area (float, optional): Garden area in square meters (needed for spraying method). Defaults to 0.
-            liters (float, optional): Liters used per session (for bottle method). Defaults to 0.
-            number_of_drippers (float, optional): Number of drippers in the system (for dripping method). Defaults to 0.
+            liters (int, optional): Liters used per session (for bottle method). Defaults to 0.
+            number_of_drippers (int, optional): Number of drippers in the system (for dripping method). Defaults to 0.
             dripper_flow_rate (float, optional): Flow rate per dripper in L/hour (for dripping method). Defaults to 0.
 
         Returns:
-            float: Estimated total water usage in liters for the week
+            int: Estimated total water usage in liters for the week
             
         Raises:
             ValueError: If inputs are negative or watering_type is invalid
@@ -396,6 +400,28 @@ class HidricCalculator:
                 return 0
     
     def house_cleaning(self, liters_by_bucket: int, buckets: int, mopping_per_day: int) -> int:
+        """
+        Calculates the total weekly water usage (in liters) for house cleaning activities.
+
+        This method calculates water consumption for cleaning activities like mopping floors,
+        based on the number of buckets used, water per bucket, and cleaning frequency.
+
+        Args:
+            liters_by_bucket (int): Amount of water used per bucket in liters
+            buckets (int): Number of buckets used per cleaning session
+            mopping_per_day (int): Number of times cleaning is performed per day
+
+        Returns:
+            int: Total water usage in liters for the week
+
+        Raises:
+            ValueError: Inherited from calculate_liters_per_week if any input is negative
+
+        Example:
+            >>> calc = HidricCalculator()
+            >>> calc.house_cleaning(5, 2, 1)
+            70  # (5L/bucket * 2buckets * 1time * 7days)
+        """
         return self.calculate_liters_per_week((liters_by_bucket * buckets), mopping_per_day)
     
     def calculate_food_product_water(self, quantity: int, product_type: str) -> int:
@@ -411,7 +437,7 @@ class HidricCalculator:
             product_type (str): Type of product, must match one of the FoodProductType values
 
         Returns:
-            float: Total water footprint in liters
+            int: Total water footprint in liters
 
         Raises:
             ValueError: If quantity is negative or product_type is invalid
@@ -440,6 +466,6 @@ if __name__ == '__main__':
     hidric_calc = HidricCalculator()
     print(hidric_calc.showers(10, 10, 'traditional_shower'))
     print(hidric_calc.dishes(15, 2, 'hand_washing'))
-    print(hidric_calc. washing_clothest(2,'top_loading'))
+    print(hidric_calc.washing_clothes(2,'top_loading'))
     print(hidric_calc.calculate_food_product_water(1, 'cow_meat'))  # 15500L for 1kg of beef
     print(hidric_calc.calculate_food_product_water(2, 'coffee'))    # 280.48L for 2 cups of coffee

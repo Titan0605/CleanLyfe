@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', async function() {
+    document
+
     document.getElementById('devices_select_form').addEventListener('submit', async function (e) {
         try {
             e.preventDefault();
@@ -127,7 +129,7 @@ function draw_message(data){
     container.innerHTML = ``;
 
     // If there is an error in the response shows this
-    if(data.Status !== 'Carbonfp successfylly.'){
+    if(data.Status !== 'Carbonfp successfully.'){
         // Creates a div
         const warning = document.createElement('div');
         // Adds the class name

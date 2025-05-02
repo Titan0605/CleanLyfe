@@ -83,14 +83,13 @@ def carbonfp():
         '''provitional'''
         # dictionary of list
         response = request.get_json()
-        print(response)
-        print(f'lenght: {len(response['device_active_power'])}')
-        print(f'specific: {response['device_active_power'][0]}')
-        print(f'type inside: {type(response['device_active_power'])}')
-        # devicesCal.calculation_type('accurate', response)
+        type_calculation = str(response['type_calculation'])
+        electricity_consumption = float(response['electricity_consumption'])
         
-        devicesCal.accurate_calculation(response, 8.5)
+        print(type_calculation)
         
-        return jsonify({'Status': "Carbonfp successfylly."})
+        devicesCal.calculation_type(type_calculation, electricity_consumption, response)
+        
+        return jsonify({'Status': "Carbonfp successfully."})
     except KeyError as error:
         return jsonify({'Status': error})

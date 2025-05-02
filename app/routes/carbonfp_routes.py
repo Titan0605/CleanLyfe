@@ -86,6 +86,11 @@ def carbonfp_basic():
 
         status = devicesCal.calculation_type(type_calculation, electricity_consumption, response)
         
+        if status == 'Electric calculation successfully.':
+            status = 'Carbonfp successfully.'
+        elif status == 'Failed electrical calculation.':
+            status = 'Something went wrong, try again later.'
+        
         return jsonify({'Status': status})
     except KeyError as error:
         return jsonify({'Status': error})
@@ -99,6 +104,11 @@ def carbonfp_accurate():
         type_calculation = response['type_calculation'][0]
     
         status = devicesCal.calculation_type(type_calculation, electricity_consumption, response)
+        
+        if status == 'Electric calculation successfully.':
+            status = 'Carbonfp successfully.'
+        elif status == 'Failed electrical calculation.':
+            status = 'Something went wrong, try again later.'
         
         return jsonify({'Status': status})
     except KeyError as error:

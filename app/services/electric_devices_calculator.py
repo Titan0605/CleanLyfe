@@ -69,6 +69,8 @@ class Electric_devices_calculator:
                     
                     total_final_emission = round(total_final_emission + device['total_emission'], 3)
                 
+                print(f'Total basic: {total_final_emission}')
+                
                 return total_final_emission
             else:
                 return None

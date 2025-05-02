@@ -201,7 +201,7 @@ function draw_message(data) {
         <div class="bg-blue-500">
             <p class="text-5xl">Carbon footprint finished.</p>
             <button class="bg-amber-300 cursor-pointer">
-                <a href="/carbonfp/devices">Finish</a>
+                <a href="/home">Finish</a>
             </button>
         </div>
         `;

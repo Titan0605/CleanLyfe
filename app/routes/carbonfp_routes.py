@@ -113,3 +113,29 @@ def carbonfp_accurate():
         return jsonify({'Status': status})
     except KeyError as error:
         return jsonify({'Status': error})
+
+
+@bp.route('/carbonfp/products/get-products-selected', methods=['POST'])
+def carbonfp_get_products():
+    try:
+        response = request.get_json()
+        
+        if response:
+            return jsonify({'Status': 'Valid response.'})
+        else:
+            return jsonify({'Status': 'You must choose at least one.'})
+            
+    except Exception as error:
+        return jsonify({'Status': error})
+
+
+@bp.route('/carbonfp/products/get-products-info', methods=['POST'])
+def carbonfp_get_products_info():
+    try:
+        response = request.get_json()
+        
+        print(f'response: {response}')
+        
+        return jsonify({'Status': 'Products calculation successfully.'})
+    except Exception as error:
+        return jsonify({'Status': error})

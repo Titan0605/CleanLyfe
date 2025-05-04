@@ -199,9 +199,9 @@ function draw_message(data) {
         // Adds the html needed
         successfull.innerHTML = `
         <div class="bg-blue-500">
-            <p class="text-5xl">Carbon footprint finished.</p>
+            <p class="text-5xl">Form answered correctly, advance to the next form.</p>
             <button class="bg-amber-300 cursor-pointer">
-                <a href="/home">Finish</a>
+                <a href="/carbonfp/products">Go products carbon footprint</a>
             </button>
         </div>
         `;

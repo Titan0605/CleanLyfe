@@ -30,4 +30,11 @@ def carbonfp_devices():
             return render_template('carbonfp_devices.html', devices=devices)
         else:
             return redirect(url_for('index_view.index'))
-    
+
+
+@bp.route('/carbonfp/products')
+def carbonfp_products():
+    if 'username' in session:
+        return render_template('carbonfp_products.html')
+    else:
+        return redirect(url_for('index_view.index'))

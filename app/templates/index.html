@@ -3,17 +3,17 @@
 
 {%block header%}
     <div class="flex gap-4 mr-8">
-        <a href="{{ url_for('index_view.login') }}" class="bg-blue-500 text-3xl rounded-3xl px-4 py-2 font-bold hover:bg-blue-600 hover:scale-105 hover:transition-transform">
+        <a href="{{ url_for('index_view.login') }}" class="text-white bg-blue-700 hover:bg-blue-800 ring-3 ring-blue-900  text-3xl text-center rounded-3xl px-4 py-2 font-bold hover:scale-105 hover:transition-transform">
             Login
         </a>
-        <a href="{{ url_for('index_view.sign_up') }}" class="bg-blue-500 text-3xl rounded-3xl px-4 py-2 font-bold hover:bg-blue-600 hover:scale-105 hover:transition-transform">
+        <a href="{{ url_for('index_view.sign_up') }}" class="text-white bg-blue-700 hover:bg-blue-800 ring-3 ring-blue-900  text-3xl text-center rounded-3xl px-4 py-2 font-bold hover:scale-105 hover:transition-transform">
             Sign Up
         </a>
     </div>
 {%endblock%}
 
 {%block main%}
-    <div id="container" class="flex flex-col items-center gap-6">
+    <section id="container" class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 gap-6">
         <img class="size-32" src="{{ url_for('static', filename='img/favicon.ico') }}" alt="">        
 
         <div>
@@ -21,8 +21,8 @@
         </div>
 
         <div class="px-3">
-            <p class="text-2xl text-black mt-4 text-center">Cleanlyfe analyzes your lifestyle to help you understand the impact you have on the environment through dynamic surveys, we collect information about your energy consumption, transportation, food and more. We then show you your ecological footprint in interactive, visual dashboards, where you can explore each category, discover patterns and make more sustainable decisions based on your own data.</p>
+            <p class="text-2xl text-black mt-4 text-center dark:text-white">Cleanlyfe analyzes your lifestyle to help you understand the impact you have on the environment through dynamic surveys, we collect information about your energy consumption, transportation, food and more. We then show you your ecological footprint in interactive, visual dashboards, where you can explore each category, discover patterns and make more sustainable decisions based on your own data.</p>
         </div>
-    </div>
+    </section>
     
 {%endblock%}

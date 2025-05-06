@@ -2,16 +2,21 @@
 
 {%block title%}Cleanlyfe{%endblock%}
 
-{%block header%}{%endblock%}
+{%block header%}
+    <button id="logout" class="text-white bg-blue-700 hover:bg-blue-800 text-3xl text-center rounded-3xl px-4 py-2 font-bold hover:scale-105 hover:transition-transform">Log out</button>
+{%endblock%}
 
 {%block main%}
-    <div>Hello {{user}}</div>
-
-    <button id="logout">Log out</button>
-
-    <button>
-        <a href="/carbonfp/transport">Go transport footprint</a>
-    </button>
+<section class="bg-gray-50 dark:bg-gray-900">
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 text-white">
+        <div class="flex">
+            <button class="text-white bg-blue-700 hover:bg-blue-800 ring-2 ring-blue-500  text-3xl text-center rounded-3xl px-4 py-2 font-bold hover:scale-105 hover:transition-transform">
+                <a href="/carbonfp/transport">Go transport footprint</a>
+            </button>            
+        </div>
+    
+    </div>
+</section>
 {%endblock%}
 
 {%block scripts%}

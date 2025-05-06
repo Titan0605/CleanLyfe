@@ -5,18 +5,19 @@
 {%block header%}{%endblock%}
 
 {%block main%}
-<div>
-    <form id="login_form">
-        <div>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" min="1" maxlength="10" placeholder="Username" required>
+<div id="container" class="">
+    <form id="login_form" class="bg-white flex flex-col rounded-lg shadow-lg p-8 w-2xl mx-auto items-center">
+        <h1 class="block mb-2 text-4xl font-medium text-gray-900 dark:text-white">Login</h1>
+        <div class="mt-4">
+            <label for="username" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white">Username</label>
+            <input type="text" id="username" name="username" min="1" maxlength="10" placeholder="Username" required class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         </div>
-        <div>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" min="4" placeholder="Create a password" required>
+        <div class="mt-4">
+            <label for="password" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white">Password</label>
+            <input type="password" id="password" name="password" min="4" placeholder="Create a password" required class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
         </div>
-        <div>
-            <button type="submit">Continue</button>
+        <div class="mt-4">
+            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Continue</button>
         </div>
     </form>
 </div>

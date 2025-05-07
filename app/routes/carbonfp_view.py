@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, render_template, redirect, url_for, session
+from flask import Blueprint, render_template, redirect, url_for, session
 import requests
 
 bp = Blueprint("carbonfp_view", __name__)
@@ -21,13 +21,13 @@ def carbonfp_transport():
 
 @bp.route('/carbonfp/devices')
 def carbonfp_devices():
-        api_get_devices  = "http://127.0.0.1:3000/carbonfp/get-devices"  
-        if 'username' in session:   
-            response = requests.get(api_get_devices)
-            response.raise_for_status()
+    api_get_devices  = "http://127.0.0.1:3000/carbonfp/get-devices"  
+    if 'username' in session:   
+        response = requests.get(api_get_devices)
+        response.raise_for_status()
 
-            devices = response.json()
-            return render_template('carbonfp_devices.html', devices=devices)
-        else:
-            return redirect(url_for('index_view.index'))
+        devices = response.json()
+        return render_template('carbonfp_devices.html', devices=devices)
+    else:
+        return redirect(url_for('index_view.index'))
     

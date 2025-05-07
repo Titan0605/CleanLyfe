@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, session, Blueprint, request
+from flask import jsonify, Blueprint, request
 from app.services.transportCalculus import Transport_fp_calculator
 from app.services.electric_devices_calculator import Electric_devices_calculator
 from app.models.electric_devices_model import Electric_devices_model

@@ -116,6 +116,22 @@ class FoodProductType(Enum):
         self.id: str = id
         self.water_footprint: float = water_footprint
 
+class ToiletType(Enum):
+    """
+    Enumeration of different types of toilet installations and their corresponding identifiers.
+    
+    This enum represents the various types of toilet installations that can be used
+    for water consumption calculations.
+    
+    Attributes:
+        TRADITIONAL_TOILET: Standard toilet with typical water flow (16 L/flush)
+        WATER_SAVING_TOILET: Eco-friendly toilet with reduced water flow (5 L/flush)
+        NONE: Represents no toilet installation or invalid value
+    """
+    TRADITIONAL_TOILET = 'traditional_toilet'
+    WATER_SAVING_TOILET = 'water_saving_toilet'
+    NONE = 'not_value'
+
 class HidricCalculator:
     """
     A class for calculating water consumption based on different water usage activities.
@@ -151,8 +167,12 @@ class HidricCalculator:
     TOP_LOADING_WASHING_CLOTHES_LITERS_PER_MIN = 80
     AVERAGE_WASHING_CLOTHES_LITERS_PER_MIN = 65
     
-    #constantes para el consumo de agua en el riego de jardines
+    # Constantes para el consumo de agua en el riego de jardines
     HOSE_LITERS_PER_MIN = 19
+    
+    # Constantes para el consumo de agua en el uso del baño
+    TRADITIONAL_TOILET_LITERS_PER_MIN = 16
+    WATER_SAVING_TOILET_LITERS_PER_MIN = 5
 
     # Mapeo de tipos de riego a su consumo
     HOSE_CONSUMPTION: dict[GardenWateringType, int] = {
@@ -182,6 +202,12 @@ class HidricCalculator:
         ClothesWashingType.TOP_LOADING: TOP_LOADING_WASHING_CLOTHES_LITERS_PER_MIN,
         ClothesWashingType.AVERAGE: AVERAGE_WASHING_CLOTHES_LITERS_PER_MIN,
         ClothesWashingType.NONE: 0
+    }
+    
+    TOILET_CONSUMPTION : dict[ToiletType, int] = {
+        ToiletType.TRADITIONAL_TOILET: TRADITIONAL_TOILET_LITERS_PER_MIN,
+        ToiletType.WATER_SAVING_TOILET: WATER_SAVING_TOILET_LITERS_PER_MIN,
+        ToiletType.NONE: 0
     }
 
     def calculate_liters_per_week(self, liters: int, multiplier: int, minutes: int = 1, days: int = 7) -> int:
@@ -248,6 +274,47 @@ class HidricCalculator:
             return 0
         else:
             return self.calculate_liters_per_week(consumption, times_per_day, shower_minutes)
+        
+    def toilet(self, times_per_day: int, toilet_type: str) -> int:
+        """
+        Calculates the total daily water usage (in liters) for toilet flushing.
+
+        This method handles different types of toilets and calculates their
+        water consumption based on the number of uses per day. It includes special
+        handling for water-saving toilets and traditional toilets.
+
+        Args:
+            times_per_day (int): Number of toilet uses per day
+            toilet_type (str): Type of toilet used, must match one of the ToiletType values
+
+        Returns:
+            int: Estimated total water usage in liters per day
+            
+        Raises:
+            ValueError: If times_per_day is negative, out of reasonable range (1-30),
+                      or if toilet_type is invalid
+
+        Example:
+            >>> calc = HidricCalculator()
+            >>> calc.toilet(6, 'traditional_toilet')
+            96  # (16L * 6 uses)
+            >>> calc.toilet(6, 'water_saving_toilet')
+            30  # (5L * 6 uses)
+        """
+        try:
+            toilet_enum = ToiletType(toilet_type)
+        except ValueError:
+            raise ValueError(f"Invalid toilet type. Must be one of: {[type.value for type in ToiletType]}")
+        
+        if 1 < times_per_day <= 25:
+            raise ValueError("Total times per day must be non-negative")
+        
+        consumption: int = self.TOILET_CONSUMPTION[toilet_enum]
+
+        if toilet_enum == ToiletType.NONE:
+            return 0
+        else:
+            return self.calculate_liters_per_week(consumption, times_per_day)
 
     def dishes(self, washing_minutes: int, times_per_day: int, washing_type: str) -> int:
         """

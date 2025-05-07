@@ -1,96 +1,79 @@
 {%extends 'layouts/base.html' %}
 
 {%block main%}
-    <div id="container">
-        <div class="calculator">
-            <form id="form_carbonfp_transport" class="">
-                <header class="">
-                    <i class="" ></i>
-                    <h1 class="">Transport calculator</h1>
+    <section id="container" class="bg-gray-50 dark:bg-gray-900">
+        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:p-0 text-black dark:text-white">
+            <div class="w-full space-y-8 md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-900 dark:border-gray-700">
+                <header class="flex items-center justify-center text-center gap-3">
+                    <i class="fa-solid fa-car" ></i>
+                    <h1 class="text-5xl text-center">Transport calculator</h1>
                 </header>
-        
-                <header class="">
-                    <i class=""></i> <!--here goes the icon of the title-->
-                    <h2 class="">Transport</h2>
-                </header>
-        
-                <section class="">
-        
-                    <article class="">
-        
-                        <section class="">
-                            <h3 class="">What type of fuel does your vehicle use?</h3>
-                            <div class="">
-                                <label for="fuel_type-1" class="">
-                                    <input type="radio" name="fuel_type" id="fuel_type-1" value="Gas" required>
-                                    Gas
-                                </label>
-                                <label for="fuel_type-2" class="">
-                                    <input type="radio" name="fuel_type" id="fuel_type-2" value="Diesel">
-                                    Diesel
-                                </label>
-                                <label for="fuel_type-3" class="">
-                                    <input type="radio" name="fuel_type" id="fuel_type-3" value="GNV">
-                                    GNV
-                                </label>
-                                <label for="fuel_type-4" class="">
-                                    <input type="radio" name="fuel_type" id="fuel_type-4" value="Electric">
-                                    Electric
-                                </label>
-                            </div>
-                        </section>
-        
-                        <section class="">
-                            <h3 class="">How many cylinders does your vehicle have?</h3>
-                            <select class="" name="cylinders_count" required>
-                                <option class="" value="1">1 cylinder</option>
-                                {% for i in range(2, 11) %}
-                                    <option class="" value="{{ i }}">{{ i }} cylinders</option>
-                                {% endfor %}
-                            </select>
-                        </section>
-        
-                        <section class="">
-                            <h3 class="">What year is your vehicle?</h3>
-                            <select class="" name="vehicule_old" required>
-                                {% for i in range(2026, 1949, -1) %}
-                                    <option class="" value="{{ i }}">{{ i }}</option>
-                                {% endfor %}
-                            </select>
-                        </section>
-        
-                    </article>
-        
-                    <article class="">
-        
-                        <section class="">
-                            <h3 class="">How many kilometers did you drive??</h3>
-                            <input type="number" name="distance_traveled" placeholder="Distance in Km" min="0" class="" required>
-                        </section>
-
-                        <section class="">
-                            <h3 class="">How much fuel did you consume?</h3>
-                            <input type="number" name="consumed_fuel" placeholder="Fuel in liters" min="0" class="" required>
-                        </section>
-        
-        
-                    </article>
-        
-                </section>
-        
-                <footer class="">
-                    <button type="submit">Continue</button>
-                </footer>
-        
-            </form>
+                <div class="bg-white w-lg p-6 space-y-4 rounded-lg shadow border-4 border-black dark:bg-gray-900 dark:border-white md:space-y-6 sm:p-8">
+                    <form id="form_carbonfp_transport" class="space-y-6">
+                        <header class="flex items-center justify-center gap-3">
+                            <i class="fa-solid fa-car-side"></i> <!--here goes the icon of the title-->
+                            <h2 class="text-3xl">Transport</h2>
+                        </header>
+                        <div class="">
+                            <article class="">
+                                <section class="mb-4">
+                                    <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-white" for="fuel">What type of fuel does your vehicle use?</label>
+                                    <div class="text-xl space-x-6" id="fuel">
+                                        <label for="fuel_type-1" class="">
+                                            <input class="accent-pink-500" type="radio" name="fuel_type" id="fuel_type-1" value="Gas" required>
+                                            Gas
+                                        </label>
+                                        <label for="fuel_type-2" class="">
+                                            <input class="accent-pink-500" type="radio" name="fuel_type" id="fuel_type-2" value="Diesel">
+                                            Diesel
+                                        </label>
+                                        <label for="fuel_type-3" class="">
+                                            <input class="accent-pink-500" type="radio" name="fuel_type" id="fuel_type-3" value="GNV">
+                                            GNV
+                                        </label>
+                                        <label for="fuel_type-4" class="">
+                                            <input class="accent-pink-500" type="radio" name="fuel_type" id="fuel_type-4" value="Electric">
+                                            Electric
+                                        </label>
+                                    </div>
+                                </section>
+                                <section class="mb-4">
+                                    <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-white" for="cylinders_count">How many cylinders does your vehicle have?</label>
+                                    <select class="text-xl" name="cylinders_count" id="cylinders_count" required>                                        
+                                        {% for i in range(1, 11) %}
+                                            <option class="dark:bg-gray-800" value="{{ i }}">{{ i }} cylinders</option>
+                                        {% endfor %}
+                                    </select>
+                                </section>
+                                <section class="mb-4">
+                                    <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-white" for="vehicule_old">What year is your vehicle?</label>
+                                    <select class="text-xl" name="vehicule_old" id="vehicule_old" required>
+                                        {% for i in range(2026, 1949, -1) %}
+                                            <option class="dark:bg-gray-800" value="{{ i }}">{{ i }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </section>
+                            </article>
+                            <article class="mb-4 space-y-4">
+                                <section class="">
+                                    <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-white" for="distance_traveled">How many kilometers did you drive??</label>
+                                    <input type="number" name="distance_traveled" id="distance_traveled" placeholder="Distance in Km" min="0" class="" required>
+                                </section>
+                                <section class="">
+                                    <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-white" id="consumed_fuel">How much fuel did you consume?</label>
+                                    <input type="number" name="consumed_fuel" id="consumed_fuel" placeholder="Fuel in liters" min="0" class="" required>
+                                </section>
+                            </article>
+                        </div>
+                        <footer class="">
+                            <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:scale-105 hover:transition-transform">Continue</button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
         </div>
 
-        <!-- test -->
-        <!-- <div class="bg-amber-100">
-            <p class="text-5xl">Hola como estas</p>
-            <button class="bg-amber-300 cursor-pointer">Try again</button>
-        </div> -->
-    </div>
+    </section>
 {%endblock%}
 
 {%block scripts%}

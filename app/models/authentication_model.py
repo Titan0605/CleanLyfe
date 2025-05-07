@@ -1,5 +1,5 @@
 from typing import Any, Literal
-from app.utils.db_utils import get_cursor, get_commit 
+from app.utils.db_utils import get_cursor, exec_commit 
 
 class AuthenticationModel:
     def __init__(self) -> None:
@@ -19,7 +19,7 @@ class AuthenticationModel:
     def commitQuery(self) -> None:
         """Commit current transaction"""
         if self.cur:
-            self.cur = get_commit()
+            self.cur = exec_commit()
             
     def insert_user(self, username, email, password) -> Literal['Sign up successfull.'] | Literal['User creation error.']:
         """Insert a new user into the database"""

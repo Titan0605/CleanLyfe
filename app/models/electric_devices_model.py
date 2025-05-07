@@ -1,5 +1,5 @@
 from typing import Any
-from app.utils.db_utils import get_cursor, get_commit 
+from app.utils.db_utils import get_cursor, exec_commit 
 
 class Electric_devices_model:
     def __init__(self) -> None:
@@ -13,7 +13,7 @@ class Electric_devices_model:
     def commitQuery(self) -> None:
         """Commit current transaction"""
         if self.cur:
-            self.cur = get_commit()
+            self.cur = exec_commit()
             
     def closeCursor(self) -> None:
         """Close database cursor if open"""

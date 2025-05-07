@@ -21,7 +21,7 @@ def get_cursor() -> Any:
         raise RuntimeError("No database connection available")
     return db.connection.cursor(MySQLdb.cursors.DictCursor)
 
-def get_commit() -> None:
+def exec_commit() -> None:
     """Commit the current transaction"""
     db: MySQL = get_mysql()
     if db.connection is None:

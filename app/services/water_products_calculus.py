@@ -566,10 +566,10 @@ def calculate_consumption(calculate: HidricCalculator, data: Dict[str, Any]) -> 
     }
     
     for key in calculations:
-        print(f"El calculo de {key} es: {calculations[key]} L \n")
+        print(f"El calculo de {key} es: {calculations[key]} L")
         _consumption += calculations[key]
     
-    print(_consumption)
+    print(f"El total de consumo es: {_consumption}")
     return _consumption
 
 if __name__ == '__main__':

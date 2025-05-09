@@ -1,6 +1,6 @@
 {%extends 'layouts/base.html' %} {% block title %}Water calculator{% endblock title %} {% block main %}
 
-<form id="hidric_form" action="" method="POST">
+<form id="hidric_form">
   <header>
     <h1>Hidric Calculator</h1>
   </header>
@@ -44,7 +44,7 @@
 
         <section>
           <h3>How many minutes do you take a shower?</h3>
-          <select name="minutes_shower">
+          <select name="shower_minutes">
             <option value="0">0 minute</option>
             <option value="1">1 minute</option>
             {% for i in range(2, 31) %}
@@ -75,7 +75,7 @@
 
         <section>
           <h3>How many times do you go to the bathroom a day?</h3>
-          <select name="bathroom_times">
+          <select name="toilet_times">
             <option value="0">0 time</option>
             <option value="1">1 time</option>
             {% for i in range(2, 25) %}
@@ -99,11 +99,11 @@
           <h3>How do you wash the dishes?</h3>
           <div>
             <label for="wash-1">
-              <input type="radio" name="wash_type" id="wash-1" value="Dishwasher" />
+              <input type="radio" name="dishes_type" id="wash-1" value="dishwasher" />
               Dishwasher
             </label>
             <label for="wash-2">
-              <input type="radio" name="wash_type" id="wash-2" value="By_hand" />
+              <input type="radio" name="dishes_type" id="wash-2" value="By_hand" />
               By hand
             </label>
           </div>
@@ -111,7 +111,7 @@
 
         <section>
           <h3>How many times do you wash the dishes per day?</h3>
-          <select name="times_per_day_dishes">
+          <select name="dishes_times_per_day">
             <option value="0">0 time</option>
             <option value="1">1 time</option>
             {% for i in range(2, 11) %}
@@ -140,7 +140,7 @@
 
         <section>
           <h3>How many minutes do you spend washing dishes for each time?</h3>
-          <select name="minutes_washing_dishes">
+          <select name="dishes_minutes">
             <option value="0">0 minute</option>
             <option value="1">1 minute</option>
             {% for i in range(2, 31) %}
@@ -171,15 +171,15 @@
           <h3>What type of washing-maching do you have?</h3>
           <div>
             <label for="type_washing_machine1">
-              <input type="radio" name="washing_machine_type" id="type_washing_machine1" value="0" />
+              <input type="radio" name="washing_machine_type" id="type_washing_machine1" value="front_loading" />
               Front loading
             </label>
             <label for="type_washing_machine2">
-              <input type="radio" name="washing_machine_type" id="type_washing_machine2" value="1" />
+              <input type="radio" name="washing_machine_type" id="type_washing_machine2" value="top_loading" />
               Top loading
             </label>
             <label for="type_washing_machine3">
-              <input type="radio" name="washing_machine_type" id="type_washing_machine3" value="2" />
+              <input type="radio" name="washing_machine_type" id="type_washing_machine3" value="average" />
               Don't know
             </label>
           </div>
@@ -187,7 +187,7 @@
 
         <section>
           <h3>How many times do you wash your clothes?</h3>
-          <select name="washing_clothes_times">
+          <select name="washing_machine_times">
             <option value="0">0 time</option>
             <option value="1">1 time</option>
             {% for i in range(2, 11) %}
@@ -242,7 +242,7 @@
 
         <section>
           <h3>How big is your yard? (approximate in square meters)</h3>
-          <select name="yard_size">
+          <select name="watering_yard_size">
             <option value="0">0 square meter</option>
             <option value="1">1 square meter</option>
             {% for i in range(2, 101) %}
@@ -253,7 +253,7 @@
 
         <section>
           <h3>If you use bottles. How many liters do you use?</h3>
-          <select name="liters_bottle">
+          <select name="watering_liters_bottle">
             <option value="0">0 liter</option>
             <option value="1">1 liter</option>
             {% for i in range(2, 51) %}
@@ -266,24 +266,24 @@
       <article>
         <section>
           <h3>How often do you water the yard (in a week)</h3>
-          <select name="times_watering">
+          <select name="watering_times">
             <option value="0">0 time</option>
             <option value="1">1 time</option>
             {% for i in range(2, 31) %}
             <option value="{{ i }}">{{ i }} times</option>
-            {% endfor %}
+            {% endfor %}
           </select>
         </section>
 
         <section>
           <h3>If you water by dripping</h3>
           <h3>number of drippers</h3>
-          <select name="drippers_number">
+          <select name="watering_drippers_number">
             <option value="0">0 dripper</option>
             <option value="1">1 dripper</option>
             {% for i in range(2, 21) %}
             <option value="{{ i }}">{{ i }} drippers</option>
-            {% endfor %}
+            {% endfor %}
           </select>
         </section>
 
@@ -291,19 +291,19 @@
           <h3>Flow rate of the drippers</h3>
           <div>
             <label for="flow_rate-1">
-              <input type="radio" name="flow_rate" id="flow_rate-1" value="2" />
+              <input type="radio" name="watering_flow_rate" id="flow_rate-1" value="2" />
               2L per hour
             </label>
             <label for="flow_rate-2">
-              <input type="radio" name="flow_rate" id="flow_rate-2" value="4" />
+              <input type="radio" name="watering_flow_rate" id="flow_rate-2" value="4" />
               4L per hour
             </label>
             <label for="flow_rate-3">
-              <input type="radio" name="flow_rate" id="flow_rate-3" value="8" />
+              <input type="radio" name="watering_flow_rate" id="flow_rate-3" value="8" />
               8L per hour
             </label>
             <label for="flow_rate-4">
-              <input type="radio" name="flow_rate" id="flow_rate-4" value="16" />
+              <input type="radio" name="watering_flow_rate" id="flow_rate-4" value="16" />
               16L per hour
             </label>
           </div>
@@ -327,29 +327,29 @@
             <option value="1">1 time</option>
             {% for i in range(2, 21) %}
             <option value="{{ i }}">{{ i }} times</option>
-            {% endfor %}
+            {% endfor %}
           </select>
         </section>
 
         <section>
           <h3>How many buckets do you use per mopping?</h3>
-          <select name="buckets_number">
+          <select name="mop_buckets_number">
             <option value="0">0 bucket</option>
             <option value="1">1 bucket</option>
             {% for i in range(2, 21) %}
             <option value="{{ i }}">{{ i }} buckets</option>
-            {% endfor %}
+            {% endfor %}
           </select>
         </section>
 
         <section>
           <h3>How many liters does your bucket hold?</h3>
-          <select name="liters_bucket">
+          <select name="mop_bucket_liters">
             <option value="0">0 liter</option>
             <option value="1">1 liter</option>
             {% for i in range(2, 31) %}
             <option value="{{ i }}">{{ i }} liters</option>
-            {% endfor %}
+            {% endfor %}
           </select>
         </section>
       </article>
@@ -368,7 +368,7 @@
           <div>
             <h3>How many coffees do you drink per week?</h3>
           </div>
-          <select name="cups_coffe">
+          <select name="coffee_cups">
             <option value="0">0 cup</option>
             <option value="1">1 cup</option>
             {% for i in range(2, 51) %}
@@ -381,7 +381,7 @@
           <div>
             <h3>How many cups of tea do you drink per week?</h3>
           </div>
-          <select name="cups_tea">
+          <select name="tea_cups">
             <option value="0">0 cup</option>
             <option value="1">1 cup</option>
             {% for i in range(2, 51) %}
@@ -394,7 +394,7 @@
           <div>
             <h3>How many kg of beef do you eat per week?</h3>
           </div>
-          <select name="kg_beef">
+          <select name="beef_kg">
             <option value="0">0 kg</option>
             <option value="1">1 kg</option>
             {% for i in range(2, 51) %}
@@ -407,7 +407,7 @@
           <div>
             <h3>How many kg chicken meat do you eat per week?</h3>
           </div>
-          <select name="kg_chicken">
+          <select name="chicken_kg">
             <option value="0">0 kg</option>
             <option value="1">1 kg</option>
             {% for i in range(2, 51) %}
@@ -420,7 +420,7 @@
           <div>
             <h3>How many kg of sugar do you eat per week?</h3>
           </div>
-          <select name="kg_sugar">
+          <select name="sugar_kg">
             <option value="0">0 kg</option>
             <option value="1">1 kg</option>
             {% for i in range(2, 51) %}
@@ -433,7 +433,7 @@
           <div>
             <h3>How many liters of soda do you drink per week?</h3>
           </div>
-          <select name="lt_soda">
+          <select name="soda_lt">
             <option value="0">0 liter</option>
             <option value="1">1 liter</option>
             {% for i in range(2, 21) %}
@@ -461,7 +461,7 @@
           <div>
             <h3>How many kg of rice do you eat per week?</h3>
           </div>
-          <select name="kg_rice">
+          <select name="rice_kg">
             <option value="0">0 kg</option>
             <option value="1">1 kg</option>
             {% for i in range(2, 51) %}
@@ -474,7 +474,7 @@
           <div>
             <h3>How many kg pork meat do you eat per week?</h3>
           </div>
-          <select name="pork_meat">
+          <select name="pork_kg">
             <option value="0">0 kg</option>
             <option value="1">1 kg</option>
             {% for i in range(2, 51) %}
@@ -487,7 +487,7 @@
           <div>
             <h3>How many kg of cheese do you eat per week?</h3>
           </div>
-          <select name="kg_cheese">
+          <select name="cheese_kg">
             <option value="0">0 kg</option>
             <option value="1">1 kg</option>
             {% for i in range(2, 51) %}
@@ -500,7 +500,7 @@
           <div>
             <h3>How many liters of milk do you drink per week?</h3>
           </div>
-          <select name="lt_milk">
+          <select name="milk_lt">
             <option value="0">0 liter</option>
             <option value="1">1 liter</option>
             {% for i in range(2, 31) %}
@@ -513,7 +513,7 @@
           <div>
             <h3>How many liters of beer do you drink per week?</h3>
           </div>
-          <select name="lt_beer">
+          <select name="beer_lt">
             <option value="0">0 liter</option>
             <option value="1">1 liter</option>
             {% for i in range(2, 21) %}
@@ -526,7 +526,7 @@
           <div>
             <h3>How many liters of juice do you drink per week?</h3>
           </div>
-          <select name="lt_juice">
+          <select name="juice_lt">
             <option value="0">0 liter</option>
             <option value="1">1 liter</option>
             {% for i in range(2, 21) %}
@@ -553,7 +553,7 @@
 
   <footer id="pagination">
     <ul>
-      <li id="prev">PREV</li>
+      <li id="prev" hidden>PREV</li>
       <li class="active" value="1">1</li>
       <li value="2">2</li>
       <li value="3">3</li>
@@ -562,9 +562,10 @@
       <li id="next">NEXT</li>
     </ul>
   </footer>
-  <input id="submit_button" type="submit" value="FINISH" hidden />
+  <button id="submit_button" type="submit" hidden>FINISH</button>
 </form>
 
 {% endblock main %} {%block scripts%}
 <script src="{{ url_for('static', filename='javascript/pagination.js') }}"></script>
+<script src="{{ url_for('static', filename='javascript/hidricfp.js') }}"></script>
 {%endblock%}

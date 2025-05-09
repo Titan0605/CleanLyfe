@@ -1,3 +1,4 @@
+from typing import Dict, Any
 from enum import Enum
 
 class ShowerType(Enum):
@@ -306,7 +307,7 @@ class HidricCalculator:
         except ValueError:
             raise ValueError(f"Invalid toilet type. Must be one of: {[type.value for type in ToiletType]}")
         
-        if 1 < times_per_day <= 25:
+        if times_per_day < 0:
             raise ValueError("Total times per day must be non-negative")
         
         consumption: int = self.TOILET_CONSUMPTION[toilet_enum]
@@ -528,6 +529,48 @@ class HidricCalculator:
             raise ValueError("Quantity must be non-negative")
         
         return self.calculate_liters_per_week(int(product_enum.water_footprint), quantity)
+    
+    
+def calculate_consumption(calculate: HidricCalculator, data: Dict[str, Any]) -> int:
+    _consumption = 0
+    
+    calculations: Dict[str, int] = {
+        'shower': calculate.showers(
+            shower_minutes = data['shower_minutes'],
+            times_per_day = data['shower_times'],
+            shower_type = data['shower_type']),
+        
+        'toilet': calculate.toilet(
+            times_per_day = data['toilet_times'],
+            toilet_type = data['toilet_type']),
+        
+        'dishes': 0,
+        
+        'washing_machine': calculate.washing_clothes(
+            cycles_per_week = data['washing_machine_times'],
+            washing_machine_type = data['washing_machine_type']),
+        
+        'watering_consumption': calculate.garden_watering(
+            minutes = data['watering_minutes'],
+            times_per_week = data['watering_times'],
+            watering_type = data['watering_type'],
+            area = data['watering_yard_size'],
+            liters = data['watering_liters_bottle'],
+            number_of_drippers = data['watering_drippers_number'],
+            dripper_flow_rate = data['watering_flow_rate']),
+        
+        'house_cleaning': calculate.house_cleaning(
+            liters_by_bucket = data['mop_bucket_liters'],
+            buckets = data['mop_buckets_number'],
+            mopping_per_day = data['mop_times'])
+    }
+    
+    for key in calculations:
+        print(f"El calculo de {key} es: {calculations[key]} L \n")
+        _consumption += calculations[key]
+    
+    print(_consumption)
+    return _consumption
 
 if __name__ == '__main__':
     hidric_calc = HidricCalculator()

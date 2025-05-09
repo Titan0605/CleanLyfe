@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, redirect, url_for, session
-import requests
 
 bp = Blueprint("hidricfp_view", __name__)
 

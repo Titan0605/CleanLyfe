@@ -6,7 +6,7 @@ from config import Config
 from app.database.db import init_app
 from flask import Flask
 from dotenv import load_dotenv
-from app.routes import auth_routes, carbonfp_routes, carbonfp_view, index_view, home_view, hidricfp_view, hidricfp_routes
+from app.routes import auth_routes, carbonfp_routes, carbonfp_view, index_view, home_view, hidricfp_view, hidricfp_routes, waterFlow_view, index_views
 
 def create_app(config = Config) -> Flask:
     load_dotenv()
@@ -29,6 +29,8 @@ def create_app(config = Config) -> Flask:
     app.register_blueprint(home_view.bp)
     app.register_blueprint(carbonfp_view.bp)
     app.register_blueprint(hidricfp_view.bp)
+    app.register_blueprint(waterFlow_view.bp)
+    app.register_blueprint(index_views.bp)
     
     # Blueprint registration 
     app.register_blueprint(auth_routes.bp)

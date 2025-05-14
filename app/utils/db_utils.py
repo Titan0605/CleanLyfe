@@ -1,22 +1,35 @@
-from app.database.db import mysql
-from flask_mysqldb import MySQLdb
+from flask_mysqldb import MySQLdb, MySQL
+from typing import Optional, Any
 
-# Function that returns the cursor 
-def get_cursor():
-    try:
-        return mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    except KeyError as e:
-        print(f"Error getting the cursor: {e}")
-        raise
+mysql: Optional[MySQL] = None
 
-def get_commit():
-    try:
-        return  mysql.connection.commit()
-    except KeyError as e:
-        print(f"Error getting the commit: {e}")
+def init_db(app_mysql: MySQL) -> None:
+    """Initialize the database connection"""
+    global mysql
+    mysql = app_mysql
 
-# Function that returns the information from a db in json format
-def get_table(table):
+def get_mysql() -> MySQL:
+    """Get the MySQL instance, raising an error if not initialized"""
+    if mysql is None:
+        raise RuntimeError("Database not initialized. Call init_db first.")
+    return mysql
+
+def get_cursor() -> Any:
+    """Get a database cursor"""
+    db: MySQL = get_mysql()
+    if db.connection is None:
+        raise RuntimeError("No database connection available")
+    return db.connection.cursor(MySQLdb.cursors.DictCursor)
+
+def exec_commit() -> None:
+    """Commit the current transaction"""
+    db: MySQL = get_mysql()
+    if db.connection is None:
+        raise RuntimeError("No database connection available")
+    db.connection.commit()
+
+def get_table(table: str) -> list:
+    """Get all rows from a table"""
     try:
         cur = get_cursor()
         cur.execute(f"SELECT * FROM {table}")
@@ -24,5 +37,6 @@ def get_table(table):
         result = list(data)
         cur.close()
         return result
-    except KeyError as e:
-        print(f"{e}")
+    except Exception as e:
+        print(f"Error getting table data: {e}")
+        raise

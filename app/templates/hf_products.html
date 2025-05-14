@@ -1,0 +1,571 @@
+{%extends 'layouts/base.html' %} {% block title %}Water calculator{% endblock title %} {% block main %}
+
+<form id="hidric_form">
+  <header>
+    <h1>Hidric Calculator</h1>
+  </header>
+
+  <!-- Page 1 -->
+  <div id="page-1" class="page">
+    <section>
+      <article>
+        <header>
+          <h2>Shower</h2>
+        </header>
+
+        <section>
+          <h3>What type of shower do you have?</h3>
+          <div>
+            <label for="shower1">
+              <input type="radio" name="shower_type" id="shower1" value="traditional_shower" />
+              Traditional shower
+            </label>
+            <label for="shower2">
+              <input type="radio" name="shower_type" id="shower2" value="water_saving_shower" />
+              Water-Saving shower
+            </label>
+            <label for="shower3">
+              <input type="radio" name="shower_type" id="shower3" value="bathtub" />
+              Bathtub
+            </label>
+          </div>
+        </section>
+
+        <section>
+          <h3>How many times do you bathe per week?</h3>
+          <select name="shower_times">
+            <option value="0">0 time</option>
+            <option value="1">1 time</option>
+            {% for i in range(2, 11) %}
+            <option value="{{ i }}">{{ i }} times</option>
+            {% endfor %}
+          </select>
+        </section>
+
+        <section>
+          <h3>How many minutes do you take a shower?</h3>
+          <select name="shower_minutes">
+            <option value="0">0 minute</option>
+            <option value="1">1 minute</option>
+            {% for i in range(2, 31) %}
+            <option value="{{ i }}">{{ i }} minutes</option>
+            {% endfor %}
+          </select>
+        </section>
+      </article>
+
+      <article>
+        <header>
+          <h2>Toilet</h2>
+        </header>
+
+        <section>
+          <h3>What type of toilet do you have?</h3>
+          <div>
+            <label>
+              <input for="toilet-1" type="radio" name="toilet_type" id="toilet-1" value="traditional_toilet" />
+              Traditional toilet
+            </label>
+            <label for="toilet-2">
+              <input type="radio" name="toilet_type" id="toilet-2" value="water_saving_toilet" />
+              Water-Saving toilet
+            </label>
+          </div>
+        </section>
+
+        <section>
+          <h3>How many times do you go to the bathroom a day?</h3>
+          <select name="toilet_times">
+            <option value="0">0 time</option>
+            <option value="1">1 time</option>
+            {% for i in range(2, 25) %}
+            <option value="{{ i }}">{{ i }} times</option>
+            {% endfor %}
+          </select>
+        </section>
+      </article>
+    </section>
+  </div>
+
+  <!-- Page 2 -->
+  <div id="page-2" class="page" hidden>
+    <section>
+      <article>
+        <header>
+          <h2>Dishes</h2>
+        </header>
+
+        <section>
+          <h3>How do you wash the dishes?</h3>
+          <div>
+            <label for="wash-1">
+              <input type="radio" name="dishes_type" id="wash-1" value="dishwasher" />
+              Dishwasher
+            </label>
+            <label for="wash-2">
+              <input type="radio" name="dishes_type" id="wash-2" value="hand_washing" />
+              By hand
+            </label>
+          </div>
+        </section>
+
+        <section>
+          <h3>How many times do you wash the dishes per day?</h3>
+          <select name="dishes_times_per_day">
+            <option value="0">0 time</option>
+            <option value="1">1 time</option>
+            {% for i in range(2, 11) %}
+            <option value="{{ i }}">{{ i }} times</option>
+            {% endfor %}
+          </select>
+        </section>
+
+        <section>
+          <h3>If you wash your dishes by hand</h3>
+          <div>
+            <label for="ByHand-1">
+              <input type="radio" name="dishes_handwashing_type" id="ByHand-1" value="always_open" />
+              Water always open
+            </label>
+            <label for="ByHand-2">
+              <input type="radio" name="dishes_handwashing_type" id="ByHand-2" value="when_need" />
+              You turn on the water when you need it
+            </label>
+            <label for="ByHand-3">
+              <input type="radio" name="dishes_handwashing_type" id="ByHand-3" value="exact_liters" />
+              Use exact liters
+            </label>
+          </div>
+        </section>
+
+        <section>
+          <h3>How many minutes do you spend washing dishes for each time?</h3>
+          <select name="dishes_minutes">
+            <option value="0">0 minute</option>
+            <option value="1">1 minute</option>
+            {% for i in range(2, 31) %}
+            <option value="{{ i }}">{{ i }} minutes</option>
+            {% endfor %}
+          </select>
+        </section>
+
+        <section>
+          <h3>If you use exact liters, how many liters do you use?</h3>
+          <select name="dishes_exact_liters">
+            <option value="0">0 liter</option>
+            <option value="1">1 liter</option>
+            {% for i in range(2, 31) %}
+            <option value="{{ i }}">{{ i }} liters</option>
+            {% endfor %}
+          </select>
+        </section>
+      </article>
+
+      <article>
+        <header>
+          <i></i>
+          <h2>Cleaning Clothes</h2>
+        </header>
+
+        <section>
+          <h3>What type of washing-maching do you have?</h3>
+          <div>
+            <label for="type_washing_machine1">
+              <input type="radio" name="washing_machine_type" id="type_washing_machine1" value="front_loading" />
+              Front loading
+            </label>
+            <label for="type_washing_machine2">
+              <input type="radio" name="washing_machine_type" id="type_washing_machine2" value="top_loading" />
+              Top loading
+            </label>
+            <label for="type_washing_machine3">
+              <input type="radio" name="washing_machine_type" id="type_washing_machine3" value="average" />
+              Don't know
+            </label>
+          </div>
+        </section>
+
+        <section>
+          <h3>How many times do you wash your clothes?</h3>
+          <select name="washing_machine_times">
+            <option value="0">0 time</option>
+            <option value="1">1 time</option>
+            {% for i in range(2, 11) %}
+            <option value="{{ i }}">{{ i }} times</option>
+            {% endfor %}
+          </select>
+        </section>
+      </article>
+    </section>
+  </div>
+
+  <!-- Page 3 -->
+  <div id="page-3" class="page" hidden>
+    <header>
+      <h2>Water the yard</h2>
+    </header>
+
+    <section>
+      <article>
+        <section>
+          <h3>How do you water the yard?</h3>
+          <div>
+            <label for="type_water1">
+              <input type="radio" name="watering_type" id="type_water1" value="hose" />
+              Hose
+            </label>
+            <label for="type_water2">
+              <input type="radio" name="watering_type" id="type_water2" value="spraying" />
+              Spraying
+            </label>
+            <label for="type_water3">
+              <input type="radio" name="watering_type" id="type_water3" value="dripping" />
+              Dripping
+            </label>
+            <label for="type_water4">
+              <input type="radio" name="watering_type" id="type_water4" value="bottle" />
+              Bottle
+            </label>
+          </div>
+        </section>
+
+        <section>
+          <h3>How many minutes do you water the yard?</h3>
+          <select name="watering_minutes">
+            <option value="0">0 minute</option>
+            <option value="1">1 minute</option>
+            {% for i in range(2, 31) %}
+            <option value="{{ i }}">{{ i }} minutes</option>
+            {% endfor %}
+          </select>
+        </section>
+
+        <section>
+          <h3>How big is your yard? (approximate in square meters)</h3>
+          <select name="watering_yard_size">
+            <option value="0">0 square meter</option>
+            <option value="1">1 square meter</option>
+            {% for i in range(2, 101) %}
+            <option value="{{ i }}">{{ i }} square meters</option>
+            {% endfor %}
+          </select>
+        </section>
+
+        <section>
+          <h3>If you use bottles. How many liters do you use?</h3>
+          <select name="watering_liters_bottle">
+            <option value="0">0 liter</option>
+            <option value="1">1 liter</option>
+            {% for i in range(2, 51) %}
+            <option value="{{ i }}">{{ i }} liters</option>
+            {% endfor %}
+          </select>
+        </section>
+      </article>
+
+      <article>
+        <section>
+          <h3>How often do you water the yard (in a week)</h3>
+          <select name="watering_times">
+            <option value="0">0 time</option>
+            <option value="1">1 time</option>
+            {% for i in range(2, 31) %}
+            <option value="{{ i }}">{{ i }} times</option>
+            {% endfor %}
+          </select>
+        </section>
+
+        <section>
+          <h3>If you water by dripping</h3>
+          <h3>number of drippers</h3>
+          <select name="watering_drippers_number">
+            <option value="0">0 dripper</option>
+            <option value="1">1 dripper</option>
+            {% for i in range(2, 21) %}
+            <option value="{{ i }}">{{ i }} drippers</option>
+            {% endfor %}
+          </select>
+        </section>
+
+        <section>
+          <h3>Flow rate of the drippers</h3>
+          <div>
+            <label for="flow_rate-1">
+              <input type="radio" name="watering_flow_rate" id="flow_rate-1" value="2" />
+              2L per hour
+            </label>
+            <label for="flow_rate-2">
+              <input type="radio" name="watering_flow_rate" id="flow_rate-2" value="4" />
+              4L per hour
+            </label>
+            <label for="flow_rate-3">
+              <input type="radio" name="watering_flow_rate" id="flow_rate-3" value="8" />
+              8L per hour
+            </label>
+            <label for="flow_rate-4">
+              <input type="radio" name="watering_flow_rate" id="flow_rate-4" value="16" />
+              16L per hour
+            </label>
+          </div>
+        </section>
+      </article>
+    </section>
+  </div>
+
+  <!-- Page 4 -->
+  <div id="page-4" class="page" hidden>
+    <section>
+      <article>
+        <header>
+          <h2>Cleaning house</h2>
+        </header>
+
+        <section>
+          <h3>How many times do you mop per day?</h3>
+          <select name="mop_times">
+            <option value="0">0 time</option>
+            <option value="1">1 time</option>
+            {% for i in range(2, 21) %}
+            <option value="{{ i }}">{{ i }} times</option>
+            {% endfor %}
+          </select>
+        </section>
+
+        <section>
+          <h3>How many buckets do you use per mopping?</h3>
+          <select name="mop_buckets_number">
+            <option value="0">0 bucket</option>
+            <option value="1">1 bucket</option>
+            {% for i in range(2, 21) %}
+            <option value="{{ i }}">{{ i }} buckets</option>
+            {% endfor %}
+          </select>
+        </section>
+
+        <section>
+          <h3>How many liters does your bucket hold?</h3>
+          <select name="mop_bucket_liters">
+            <option value="0">0 liter</option>
+            <option value="1">1 liter</option>
+            {% for i in range(2, 31) %}
+            <option value="{{ i }}">{{ i }} liters</option>
+            {% endfor %}
+          </select>
+        </section>
+      </article>
+    </section>
+  </div>
+
+  <!-- Page 5 -->
+  <div id="page-5" class="page" hidden>
+    <header>
+      <h2>Food</h2>
+    </header>
+
+    <section>
+      <article>
+        <section>
+          <div>
+            <h3>How many coffees do you drink per week?</h3>
+          </div>
+          <select name="coffee_cups">
+            <option value="0">0 cup</option>
+            <option value="1">1 cup</option>
+            {% for i in range(2, 51) %}
+            <option value="{{ i }}">{{ i }} cups</option>
+            {% endfor %}
+          </select>
+        </section>
+
+        <section>
+          <div>
+            <h3>How many cups of tea do you drink per week?</h3>
+          </div>
+          <select name="tea_cups">
+            <option value="0">0 cup</option>
+            <option value="1">1 cup</option>
+            {% for i in range(2, 51) %}
+            <option value="{{ i }}">{{ i }} cups</option>
+            {% endfor %}
+          </select>
+        </section>
+
+        <section>
+          <div>
+            <h3>How many kg of beef do you eat per week?</h3>
+          </div>
+          <select name="beef_kg">
+            <option value="0">0 kg</option>
+            <option value="1">1 kg</option>
+            {% for i in range(2, 51) %}
+            <option value="{{ i }}">{{ i }} kg</option>
+            {% endfor %}
+          </select>
+        </section>
+
+        <section>
+          <div>
+            <h3>How many kg chicken meat do you eat per week?</h3>
+          </div>
+          <select name="chicken_kg">
+            <option value="0">0 kg</option>
+            <option value="1">1 kg</option>
+            {% for i in range(2, 51) %}
+            <option value="{{ i }}">{{ i }} kg</option>
+            {% endfor %}
+          </select>
+        </section>
+
+        <section>
+          <div>
+            <h3>How many kg of sugar do you eat per week?</h3>
+          </div>
+          <select name="sugar_kg">
+            <option value="0">0 kg</option>
+            <option value="1">1 kg</option>
+            {% for i in range(2, 51) %}
+            <option value="{{ i }}">{{ i }} kg</option>
+            {% endfor %}
+          </select>
+        </section>
+
+        <section>
+          <div>
+            <h3>How many liters of soda do you drink per week?</h3>
+          </div>
+          <select name="soda_lt">
+            <option value="0">0 liter</option>
+            <option value="1">1 liter</option>
+            {% for i in range(2, 21) %}
+            <option value="{{ i }}">{{ i }} liters</option>
+            {% endfor %}
+          </select>
+        </section>
+
+        <section>
+          <div>
+            <h3>How many eggs do you eat per week?</h3>
+          </div>
+          <select name="eggs">
+            <option value="0">0 egg</option>
+            <option value="1">1 egg</option>
+            {% for i in range(2, 21) %}
+            <option value="{{ i }}">{{ i }} eggs</option>
+            {% endfor %}
+          </select>
+        </section>
+      </article>
+
+      <article>
+        <section>
+          <div>
+            <h3>How many kg of rice do you eat per week?</h3>
+          </div>
+          <select name="rice_kg">
+            <option value="0">0 kg</option>
+            <option value="1">1 kg</option>
+            {% for i in range(2, 51) %}
+            <option value="{{ i }}">{{ i }} kg</option>
+            {% endfor %}
+          </select>
+        </section>
+
+        <section>
+          <div>
+            <h3>How many kg pork meat do you eat per week?</h3>
+          </div>
+          <select name="pork_kg">
+            <option value="0">0 kg</option>
+            <option value="1">1 kg</option>
+            {% for i in range(2, 51) %}
+            <option value="{{ i }}">{{ i }} kg</option>
+            {% endfor %}
+          </select>
+        </section>
+
+        <section>
+          <div>
+            <h3>How many kg of cheese do you eat per week?</h3>
+          </div>
+          <select name="cheese_kg">
+            <option value="0">0 kg</option>
+            <option value="1">1 kg</option>
+            {% for i in range(2, 51) %}
+            <option value="{{ i }}">{{ i }} kg</option>
+            {% endfor %}
+          </select>
+        </section>
+
+        <section>
+          <div>
+            <h3>How many liters of milk do you drink per week?</h3>
+          </div>
+          <select name="milk_lt">
+            <option value="0">0 liter</option>
+            <option value="1">1 liter</option>
+            {% for i in range(2, 31) %}
+            <option value="{{ i }}">{{ i }} liters</option>
+            {% endfor %}
+          </select>
+        </section>
+
+        <section>
+          <div>
+            <h3>How many liters of beer do you drink per week?</h3>
+          </div>
+          <select name="beer_lt">
+            <option value="0">0 liter</option>
+            <option value="1">1 liter</option>
+            {% for i in range(2, 21) %}
+            <option value="{{ i }}">{{ i }} liters</option>
+            {% endfor %}
+          </select>
+        </section>
+
+        <section>
+          <div>
+            <h3>How many liters of juice do you drink per week?</h3>
+          </div>
+          <select name="juice_lt">
+            <option value="0">0 liter</option>
+            <option value="1">1 liter</option>
+            {% for i in range(2, 21) %}
+            <option value="{{ i }}">{{ i }} liters</option>
+            {% endfor %}
+          </select>
+        </section>
+
+        <section>
+          <div>
+            <h3>How many bread slices do you eat per week?</h3>
+          </div>
+          <select name="bread_slices">
+            <option value="0">0 slice</option>
+            <option value="1">1 slice</option>
+            {% for i in range(2, 21) %}
+            <option value="{{ i }}">{{ i }} slices</option>
+            {% endfor %}
+          </select>
+        </section>
+      </article>
+    </section>
+  </div>
+
+  <footer id="pagination">
+    <ul>
+      <li id="prev" hidden>PREV</li>
+      <li class="active" value="1">1</li>
+      <li value="2">2</li>
+      <li value="3">3</li>
+      <li value="4">4</li>
+      <li value="5">5</li>
+      <li id="next">NEXT</li>
+    </ul>
+  </footer>
+  <button id="submit_button" type="submit" hidden>FINISH</button>
+</form>
+
+{% endblock main %} {%block scripts%}
+<script src="{{ url_for('static', filename='javascript/pagination.js') }}"></script>
+<script src="{{ url_for('static', filename='javascript/hidricfp.js') }}"></script>
+{%endblock%}

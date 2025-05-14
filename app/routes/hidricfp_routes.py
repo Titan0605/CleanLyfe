@@ -18,6 +18,7 @@ def calculate_hidric_footprint() -> Response:
         
         response = hidric_model.insert_consumption(total_consumption)
     
+        render_template("home.html")
         return jsonify({'status': 'Data saved in DB', 'msg': response})
     except ValueError as error:
         return jsonify({'status': f'Invalid value: {error}', 'msg': response})

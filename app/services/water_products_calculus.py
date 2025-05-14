@@ -33,9 +33,15 @@ class DishWashingType(Enum):
         NONE: Represents no dish washing or invalid value
     """
     HAND_WASHING = 'hand_washing'
-    FILLED_SINK = 'filled_sink'
+    # FILLED_SINK = 'filled_sink'
     DISHWASHER = 'dishwasher'
     NONE = 'not_value'
+    
+class HandWashingType(Enum):
+    ALWAYS_OPEN = "always_open"
+    WHEN_NEED_IT = "when_need"
+    EXACT_LITERS = "exact_liters"
+    NONE = "not_value"
     
 class ClothesWashingType(Enum):
     """
@@ -159,9 +165,13 @@ class HidricCalculator:
     BATHTUB_LITERS = 150
 
     # Constantes para el consumo de agua en lavado de platos
-    HAND_WASHING_DISHES_LITERS_PER_MIN = 12
-    FILLED_SINK_DISHES_LITERS = 20
+    HAND_WASHING_LITERS = 0
     DISHWASHER_LITERS = 15
+    
+    # Constants for types of hand washing
+    
+    HAND_WASHING_ALWAYS_OPEN = 8
+    HAND_WASHING_WHEN_NEED_IT = 6
     
     # Constantes para el consumo de agua en el lavado de ropa
     FRONT_LOADING_WASHING_CLOTHES_LITERS_PER_MIN = 50
@@ -191,10 +201,17 @@ class HidricCalculator:
 
     # Mapeo de tipos de lavado de platos a su consumo
     DISHES_CONSUMPTION: dict[DishWashingType, int] = {
-        DishWashingType.HAND_WASHING: HAND_WASHING_DISHES_LITERS_PER_MIN,
-        DishWashingType.FILLED_SINK: FILLED_SINK_DISHES_LITERS,
+        DishWashingType.HAND_WASHING: HAND_WASHING_LITERS,
+        # DishWashingType.FILLED_SINK: FILLED_SINK_DISHES_LITERS,
         DishWashingType.DISHWASHER: DISHWASHER_LITERS,
         DishWashingType.NONE: 0
+    }
+    
+    HAND_WASHING_CONSUMPTION: dict[HandWashingType, int] = {
+        HandWashingType.ALWAYS_OPEN: HAND_WASHING_ALWAYS_OPEN,
+        HandWashingType.WHEN_NEED_IT: HAND_WASHING_WHEN_NEED_IT,
+        HandWashingType.EXACT_LITERS: 0,
+        HandWashingType.NONE: 0
     }
     
     # Mapeo de tipos de lavado de ropa a su consumo
@@ -317,7 +334,8 @@ class HidricCalculator:
         else:
             return self.calculate_liters_per_week(consumption, times_per_day)
 
-    def dishes(self, washing_minutes: int, times_per_day: int, washing_type: str) -> int:
+    def dishes(self, times_per_day: int, washing_type: str,
+               hand_washing_type: str = "not_value" ,washing_minutes: int = 0, exact_liters: int = 0) -> int:
         """
         Calculates the total weekly water usage (in liters) for washing dishes.
 
@@ -353,13 +371,23 @@ class HidricCalculator:
             raise ValueError("Washing minutes and times per day must be non-negative")
 
         consumption: int = self.DISHES_CONSUMPTION[washing_enum]
-
-        if washing_enum == DishWashingType.HAND_WASHING:
-            return self.calculate_liters_per_week(consumption, times_per_day, washing_minutes)
-        elif washing_enum == DishWashingType.NONE:
-            return 0
-        else:
+        
+        if washing_enum == DishWashingType.DISHWASHER:
             return self.calculate_liters_per_week(consumption, times_per_day)
+        elif DishWashingType.HAND_WASHING:
+            try:
+                handwashing_enum = HandWashingType(hand_washing_type)
+            except ValueError:
+                raise ValueError(f"Invalid hand washing type. Must be one of: {[type.value for type in HandWashingType]}")
+            
+            consumption: int = self.HAND_WASHING_CONSUMPTION[handwashing_enum]
+            
+            if handwashing_enum == HandWashingType.EXACT_LITERS:
+                return self.calculate_liters_per_week(exact_liters, times_per_day, washing_minutes)
+            else:
+                return self.calculate_liters_per_week(consumption, times_per_day, washing_minutes)
+            
+        return 0
         
     def washing_clothes(self, cycles_per_week: int, washing_machine_type: str) -> int:
         """
@@ -544,7 +572,13 @@ def calculate_consumption(calculate: HidricCalculator, data: Dict[str, Any]) -> 
             times_per_day = data['toilet_times'],
             toilet_type = data['toilet_type']),
         
-        'dishes': 0,
+        'dishes': calculate.dishes(
+          times_per_day = data["dishes_times_per_day"],
+          washing_type = data['dishes_type'],
+          hand_washing_type = data['dishes_handwashing_type'],
+          washing_minutes = data['dishes_minutes'],
+          exact_liters = data['dishes_exact_liters']
+        ),
         
         'washing_machine': calculate.washing_clothes(
             cycles_per_week = data['washing_machine_times'],
@@ -575,7 +609,7 @@ def calculate_consumption(calculate: HidricCalculator, data: Dict[str, Any]) -> 
 if __name__ == '__main__':
     hidric_calc = HidricCalculator()
     print(hidric_calc.showers(10, 10, 'traditional_shower'))
-    print(hidric_calc.dishes(15, 2, 'hand_washing'))
+    print(hidric_calc.dishes(15, 'hand_washing'))
     print(hidric_calc.washing_clothes(2,'top_loading'))
     print(hidric_calc.calculate_food_product_water(1, 'cow_meat'))  # 15500L for 1kg of beef
     print(hidric_calc.calculate_food_product_water(2, 'coffee'))    # 280.48L for 2 cups of coffee

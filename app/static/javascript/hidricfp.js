@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(result => {
             console.log('Success:', result);
+            window.location.href = '/home'
         })
         .catch(error => {
             console.error('Error:', error);

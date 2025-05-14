@@ -103,7 +103,7 @@
               Dishwasher
             </label>
             <label for="wash-2">
-              <input type="radio" name="dishes_type" id="wash-2" value="By_hand" />
+              <input type="radio" name="dishes_type" id="wash-2" value="hand_washing" />
               By hand
             </label>
           </div>
@@ -124,15 +124,15 @@
           <h3>If you wash your dishes by hand</h3>
           <div>
             <label for="ByHand-1">
-              <input type="radio" name="by_hand_type" id="ByHand-1" value="0" />
+              <input type="radio" name="dishes_handwashing_type" id="ByHand-1" value="always_open" />
               Water always open
             </label>
             <label for="ByHand-2">
-              <input type="radio" name="by_hand_type" id="ByHand-2" value="1" />
+              <input type="radio" name="dishes_handwashing_type" id="ByHand-2" value="when_need" />
               You turn on the water when you need it
             </label>
             <label for="ByHand-3">
-              <input type="radio" name="by_hand_type" id="ByHand-3" value="2" />
+              <input type="radio" name="dishes_handwashing_type" id="ByHand-3" value="exact_liters" />
               Use exact liters
             </label>
           </div>
@@ -151,7 +151,7 @@
 
         <section>
           <h3>If you use exact liters, how many liters do you use?</h3>
-          <select name="liters_by_hand">
+          <select name="dishes_exact_liters">
             <option value="0">0 liter</option>
             <option value="1">1 liter</option>
             {% for i in range(2, 31) %}

@@ -10,8 +10,8 @@
     <title>{%block title%}{%endblock%}</title>
 </head>
 
-<body>
-    <header class="bg-gradient-to-r from-sky-500 to-green-500 text-white py-4 px-6 gap-3 w-screen h-24 flex items-center justify-between fixed top-0">
+<body class="flex flex-col">
+    <header class="bg-gradient-to-r from-sky-500 to-green-500 text-white py-4 px-6 gap-3 w-screen h-24 flex items-center justify-between">
         <div class="flex items-center gap-3">
             <div class="hover:scale-110 hover:transition-transform">
                 <a href="/">
@@ -26,7 +26,7 @@
         {%block header%}{%endblock%}
     </header>
 
-    <main class="bg-gray-50 dark:bg-gray-900 px-12 h-screen">
+    <main class="bg-gray-50 dark:bg-gray-900 px-12 grow">
         {%block main%}{%endblock%}
     </main>
 

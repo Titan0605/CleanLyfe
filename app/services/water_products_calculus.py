@@ -106,16 +106,16 @@ class FoodProductType(Enum):
     """
     COFFEE = ('coffee', 140.24)  # L/cup
     TEA = ('tea', 30.24)  # L/cup
-    COW_MEAT = ('cow_meat', 15500)  # L/kg
-    CHICKEN_MEAT = ('chicken_meat', 4300)  # L/kg
-    PORK_MEAT = ('pork_meat', 6000)  # L/kg
+    BEEF = ('beef', 15500)  # L/kg
+    CHICKEN = ('chicken', 4300)  # L/kg
+    PORK = ('pork', 6000)  # L/kg
     RICE = ('rice', 3000)  # L/kg
     SUGAR = ('sugar', 1500)  # L/kg
     CHEESE = ('cheese', 940)  # L/kg
     EGGS = ('eggs', 135)  # L/piece
     MILK = ('milk', 1000)  # L/L
     BEER = ('beer', 300)  # L/L
-    PROCESSED_JUICE = ('processed_juice', 850)  # L/L
+    JUICE = ('juice', 850)  # L/L
     SODA = ('soda', 175)  # L/L
     BREAD = ('bread', 40)  # L/slice
 
@@ -558,6 +558,14 @@ class HidricCalculator:
         
         return self.calculate_liters_per_week(int(product_enum.water_footprint), quantity)
     
+    def calculate_multiple_products(self, products: dict) -> int:
+        _products_consumption = 0
+        
+        for key in products.keys():
+            _products_consumption += self.calculate_food_product_water(products[key], key)
+            
+        return _products_consumption
+    
     
 def calculate_consumption(calculate: HidricCalculator, data: Dict[str, Any]) -> int:
     _consumption = 0
@@ -566,23 +574,26 @@ def calculate_consumption(calculate: HidricCalculator, data: Dict[str, Any]) -> 
         'shower': calculate.showers(
             shower_minutes = data['shower_minutes'],
             times_per_day = data['shower_times'],
-            shower_type = data['shower_type']),
+            shower_type = data['shower_type']
+            ),
         
         'toilet': calculate.toilet(
             times_per_day = data['toilet_times'],
-            toilet_type = data['toilet_type']),
+            toilet_type = data['toilet_type']
+            ),
         
         'dishes': calculate.dishes(
-          times_per_day = data["dishes_times_per_day"],
-          washing_type = data['dishes_type'],
-          hand_washing_type = data['dishes_handwashing_type'],
-          washing_minutes = data['dishes_minutes'],
-          exact_liters = data['dishes_exact_liters']
-        ),
+            times_per_day = data["dishes_times_per_day"],
+            washing_type = data['dishes_type'],
+            hand_washing_type = data['dishes_handwashing_type'],
+            washing_minutes = data['dishes_minutes'],
+            exact_liters = data['dishes_exact_liters']
+            ),
         
         'washing_machine': calculate.washing_clothes(
             cycles_per_week = data['washing_machine_times'],
-            washing_machine_type = data['washing_machine_type']),
+            washing_machine_type = data['washing_machine_type']
+            ),
         
         'watering_consumption': calculate.garden_watering(
             minutes = data['watering_minutes'],
@@ -591,19 +602,25 @@ def calculate_consumption(calculate: HidricCalculator, data: Dict[str, Any]) -> 
             area = data['watering_yard_size'],
             liters = data['watering_liters_bottle'],
             number_of_drippers = data['watering_drippers_number'],
-            dripper_flow_rate = data['watering_flow_rate']),
+            dripper_flow_rate = data['watering_flow_rate']
+            ),
         
         'house_cleaning': calculate.house_cleaning(
             liters_by_bucket = data['mop_bucket_liters'],
             buckets = data['mop_buckets_number'],
-            mopping_per_day = data['mop_times'])
+            mopping_per_day = data['mop_times']
+            ),
+        
+        'products': calculate.calculate_multiple_products(
+            products = data['products']
+            )
     }
     
     for key in calculations:
-        print(f"El calculo de {key} es: {calculations[key]} L")
+        # print(f"El calculo de {key} es: {calculations[key]} L")
         _consumption += calculations[key]
     
-    print(f"El total de consumo es: {_consumption}")
+    # print(f"El total de consumo es: {_consumption}")
     return _consumption
 
 if __name__ == '__main__':

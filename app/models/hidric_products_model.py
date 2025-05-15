@@ -26,8 +26,8 @@ class Hidcric_products_model:
             if not self._cur:
                 raise Exception("Failed to open database cursor")
             
-            query = "INSERT INTO hf_water_consumption(consumption) VALUES (%s)"
-            values: tuple = (consumption,)
+            query = "INSERT INTO hf_water_consumption(description, consumption) VALUES (%s, %s)"
+            values: tuple = ("Hidric footprint",consumption)
             
             self._cur.execute(query, values)
             self._commit_query()

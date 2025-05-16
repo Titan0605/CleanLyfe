@@ -1,6 +1,7 @@
 from flask import jsonify, Blueprint, request
 from app.services.transportCalculus import Transport_fp_calculator
 from app.services.electric_devices_calculator import Electric_devices_calculator
+from app.services.carbon_water_calculus import WaterEmissionCalculator
 from app.models.electric_devices_model import Electric_devices_model
 
 bp = Blueprint("carbonfp_routes", __name__)
@@ -8,6 +9,7 @@ bp = Blueprint("carbonfp_routes", __name__)
 transCal = Transport_fp_calculator()
 elect_devices_model = Electric_devices_model()
 devicesCal = Electric_devices_calculator()
+water_emission_calc = WaterEmissionCalculator()
 
 @bp.route('/carbonfp/transport-data', methods=["POST"])
 def carbonfp_transport_data():
@@ -139,3 +141,21 @@ def carbonfp_get_products_info():
         return jsonify({'Status': 'Products calculation successfully.'})
     except Exception as error:
         return jsonify({'Status': error})
+    
+@bp.route('/carbonfp/water/calculate', methods=['POST'])
+def carbonfp_calculate_water():
+    try:
+        data = request.get_json()
+        
+        print(data)
+        emission = water_emission_calc.calculate_water_emission(
+            liters=data['water_consumed'],
+            heating_percentage=data['water_heated_percentage'],
+            heating_type=data['heater_type']
+            )
+        print(emission)
+        
+        return jsonify({'Status': 'Response recieved', 'Result': emission})
+    
+    except Exception as error:
+        return jsonify({'Status:', error})

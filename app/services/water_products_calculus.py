@@ -341,26 +341,36 @@ class HidricCalculator:
 
         This method handles different dish washing methods and calculates their
         water consumption based on usage patterns. It includes special handling for
-        different washing methods like hand washing, filled sink, and dishwasher.
+        different washing methods like hand washing and dishwasher. For hand washing,
+        it supports different modes like always open tap, when needed, or exact liters.
 
         Args:
-            washing_minutes (int): Duration of each dish washing session in minutes
-                                (ignored for filled_sink and dishwasher methods)
             times_per_day (int): Number of dish washing sessions per day
             washing_type (str): Type of dish washing method, must match one of the DishWashingType values
+            hand_washing_type (str, optional): Type of hand washing method, must match one of the HandWashingType values.
+                                             Defaults to "not_value"
+            washing_minutes (int, optional): Duration of each dish washing session in minutes.
+                                          Used for hand washing methods. Defaults to 0
+            exact_liters (int, optional): Exact amount of water used per session when using
+                                       HandWashingType.EXACT_LITERS. Defaults to 0
 
         Returns:
             int: Estimated total water usage in liters for the week
             
         Raises:
-            ValueError: If inputs are negative or washing_type is invalid
+            ValueError: If inputs are negative or washing_type/hand_washing_type is invalid
 
         Example:
             >>> calc = HidricCalc()
-            >>> calc.dishes(15, 1, 'hand_washing')
-            1260  # (12L/min * 15min * 1time * 7days)
-            >>> calc.dishes(0, 2, 'dishwasher')
-            210   # (15L * 2times * 7days)
+            >>> # Hand washing with tap always open
+            >>> calc.dishes(1, 'hand_washing', 'always_open', 15)
+            840  # (8L/min * 15min * 1time * 7days)
+            >>> # Using dishwasher
+            >>> calc.dishes(2, 'dishwasher')
+            210  # (15L * 2times * 7days)
+            >>> # Hand washing with exact liters
+            >>> calc.dishes(1, 'hand_washing', 'exact_liters', 1, 10)
+            70  # (10L * 1time * 7days)
         """
         try:
             washing_enum = DishWashingType(washing_type)
@@ -559,6 +569,28 @@ class HidricCalculator:
         return self.calculate_liters_per_week(int(product_enum.water_footprint), quantity)
     
     def calculate_multiple_products(self, products: dict) -> int:
+        """
+        Calculates the total water footprint for multiple food and beverage products.
+
+        This method takes a dictionary of products and their quantities, and calculates
+        the total water footprint by summing the individual water footprints of each product.
+
+        Args:
+            products (dict): A dictionary where keys are product types (str) and values
+                           are quantities (int/float). Product types must match FoodProductType ids.
+
+        Returns:
+            int: Total water footprint in liters for all products combined
+
+        Raises:
+            ValueError: If any product type is invalid or quantity is negative
+
+        Example:
+            >>> calc = HidricCalculator()
+            >>> products = {'coffee': 2, 'beef': 1}
+            >>> calc.calculate_multiple_products(products)
+            15780.48  # (2 * 140.24L for coffee) + (1 * 15500L for beef)
+        """
         _products_consumption = 0
         
         for key in products.keys():
@@ -566,8 +598,54 @@ class HidricCalculator:
             
         return _products_consumption
     
-    
 def calculate_consumption(calculate: HidricCalculator, data: Dict[str, Any]) -> int:
+    """
+    Calculates the total water consumption for all household activities and products.
+
+    This function aggregates water consumption from various sources including:
+    - Shower and bathing
+    - Toilet usage
+    - Dish washing
+    - Clothes washing
+    - Garden watering
+    - House cleaning
+    - Food and beverage products
+
+    Args:
+        calculate (HidricCalculator): An instance of the HidricCalculator class
+        data (Dict[str, Any]): A dictionary containing all the necessary parameters
+            for each calculation. Expected keys include:
+            - shower_minutes: int
+            - shower_times: int
+            - shower_type: str
+            - toilet_times: int
+            - toilet_type: str
+            - dishes_times_per_day: int
+            - dishes_type: str
+            - dishes_handwashing_type: str
+            - dishes_minutes: int
+            - dishes_exact_liters: int
+            - washing_machine_times: int
+            - washing_machine_type: str
+            - watering_minutes: int
+            - watering_times: int
+            - watering_type: str
+            - watering_yard_size: float
+            - watering_liters_bottle: int
+            - watering_drippers_number: int
+            - watering_flow_rate: float
+            - mop_bucket_liters: int
+            - mop_buckets_number: int
+            - mop_times: int
+            - products: Dict[str, int]
+
+    Returns:
+        int: Total water consumption in liters for all activities combined
+
+    Raises:
+        KeyError: If any required key is missing from the data dictionary
+        ValueError: If any calculation input is invalid
+    """
     _consumption = 0
     
     calculations: Dict[str, int] = {

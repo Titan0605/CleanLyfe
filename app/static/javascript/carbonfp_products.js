@@ -155,11 +155,20 @@ function draw_message(data) {
         // Adds the class name
         successfull.className = 'bg-amber-100';
         // Adds the html needed
+        // successfull.innerHTML = `
+        // <div class="bg-blue-500">
+        //     <p class="text-5xl">Carbon footprint finished, congratulations!!</p>
+        //     <button class="bg-amber-300 cursor-pointer">
+        //         <a href="/carbonfp">Finish</a>
+        //     </button>
+        // </div>
+        // `;
+
         successfull.innerHTML = `
         <div class="bg-blue-500">
-            <p class="text-5xl">Carbon footprint finished, congratulations!!</p>
+            <p class="text-5xl">Form answered correctly, advance to the next form.</p>
             <button class="bg-amber-300 cursor-pointer">
-                <a href="/carbonfp">Finish</a>
+                <a href="/carbonfp/water">Go water carbon footprint</a>
             </button>
         </div>
         `;

@@ -38,3 +38,10 @@ def carbonfp_products():
         return render_template('carbonfp_products.html')
     else:
         return redirect(url_for('index_view.index'))
+    
+@bp.route('/carbonfp/water')
+def carbonfp_water():
+    if 'username' in session:
+        return render_template('carbonfp_water.html')
+    else:
+        return redirect(url_for('index_view.index'))

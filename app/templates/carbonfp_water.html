@@ -1,0 +1,48 @@
+{%extends 'layouts/base.html' %} {% block title %}Carbon Water calculator{% endblock title %} {% block main %}
+
+<form id="water_emission_form">
+  <header>
+    <h1>Water Emission</h1>
+  </header>
+
+  <article>
+    <section>
+      <h3>How many liters of water did you consume this week?</h3>
+      <input type="number" name="water_consumed" placeholder="Liters" required min="0" max="5000" />
+    </section>
+
+    <section>
+      <h3>How much water do you heat for your daily activities?</h3>
+      <select name="water_heated_percentage">
+        {% for i in range(0, 110, 10) %}
+        <option value="{{i}}">{{i}} %</option>
+        {% endfor %}
+      </select>
+    </section>
+
+    <section>
+      <h3>How do you heat the water?</h3>
+      <div>
+        <label for="heater_type_1">
+          <input type="radio" name="heater_type" id="heater_type_1" value="lp_gas" />
+          Heating with LP gas
+        </label>
+        <label for="heater_type_2">
+          <input type="radio" name="heater_type" id="heater_type_2" value="natural_gas" />
+          Heating with natural gas
+        </label>
+        <label for="heater_type_3">
+          <input type="radio" name="heater_type" id="heater_type_3" value="electric" />
+          Heating with electricity
+        </label>
+      </div>
+    </section>
+  </article>
+
+  <footer>
+    <button id="submit_button" type="submit">FINISH</button>
+  </footer>
+</form>
+{% endblock main %} {%block scripts%}
+<script src="{{ url_for('static', filename='javascript/carbonfp-water.js') }}"></script>
+{%endblock%}

@@ -2,6 +2,15 @@
 {% block title %} WorldMatters {% endblock %}
 
 {%block main%}
+<div>
+<div class="relative w-full h-screen">
+  <img 
+    src="../static/img/portada_worldmatters.webp" 
+    alt="Background" 
+    class="w-full h-full top-0 object-contain object-center"
+  >
+</div>
+
 <div id="default-carousel" class="relative w-3xl top-56 m-auto rounded-br-4xl" data-carousel="slide">
     <!-- Carousel wrapper -->
     <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
@@ -36,5 +45,6 @@
             <span class="sr-only">Next</span>
         </span>
     </button>
+</div>
 </div>
 {%endblock%}

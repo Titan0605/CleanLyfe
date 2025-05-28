@@ -3,11 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
     <link rel="icon" href="{{ url_for('static', filename='img/favicon-worldmatters.ico') }}" />
     <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet" />
     <!-- <link href="{{ url_for('static', filename='css/index.css') }}" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link href="{{ url_for('static', filename='css/WM_css.css') }}" rel="stylesheet"/>
     <title>{%block title%}{%endblock%}</title>
   </head>
   <body class="flex flex-col">

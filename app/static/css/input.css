@@ -1,7 +1,1 @@
 @import "tailwindcss";
-
-@theme{
-    /* colors */
-    --color-cleanlyfe-blue: #08a3c0;
-    --color-cleanlyfe-green: #06bd68;
-}

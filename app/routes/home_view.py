@@ -8,4 +8,4 @@ def home():
         user = session
         return render_template("home.html", user=user)
     else:
-        return redirect(url_for('index_view.index'))
+        return render_template('index.html')

@@ -4,6 +4,13 @@ import water_products_calculus
 import transportCalculus, DbConection
 import pymysql
 import carbon_products_calculus
+from werkzeug.utils import secure_filename 
+
+from random import sample
+
+import os
+
+from random import random
 
 #este es para declarar una varianble tipo flask (es obligatorio)
 app = Flask(__name__)
@@ -18,6 +25,8 @@ app.config['MYSQL_DB'] = 'cleanlyfe'
 #YOU MUST CHANGE THE PORT IF ANOTHER PERSON WERE EDITING THE CODE (You have to put your own port of your xampp)
 app.config['MYSQL_PORT'] = 3306
 mysql = MySQL(app)
+
+app.jinja_env.globals.update(random=random)
 
 #el app route con el / es para que sea la primera pagina en aparecer
 @app.route('/')
@@ -48,6 +57,7 @@ def login_fun():
             session['last_name']= data[3]
             session['email']= data[5]
             session['id']= data[0]
+            session['img'] = data[7]
             #El flash es un mensaje que se va a mandar a los html por medio de jinja2
             flash('You have been logged in')
             return redirect(url_for('go_cleanlyfe'))
@@ -69,12 +79,14 @@ def logout():
         session.pop('last_name', None)
         session.pop('email', None)
         session.pop('id', None)
+        session.pop('img', None)
         return render_template('index.html')
     return render_template('index.html')
 
 @app.route('/register_fun', methods=['POST'])
 def register_fun():
     if request.method == 'POST':
+        encrypt_pass = 'ewte700et74j'
         email = request.form['email']
         user_name = request.form['username']
         password = request.form['password']
@@ -92,7 +104,7 @@ def register_fun():
 
         if len(password) >= 8:
             if password == con_password:
-                cur.execute('INSERT INTO tusers (id_type_member, user_name, user_email, user_password, active, created_at) VALUES (1, %s, %s, %s, 1, NOW())', (user_name, email, password))
+                cur.execute('INSERT INTO tusers (id_type_member, user_name, user_mail, user_password, active, created_at) VALUES (1, %s, aes_encrypt(%s, %s), SHA(%s), 1, NOW())', (user_name, email, encrypt_pass, password))
                 mysql.connection.commit()
                 flash('You have been registered')
                 return redirect(url_for('go_login'))
@@ -121,7 +133,15 @@ def go_register():
 @app.route('/go_user_profile', methods=['GET', 'POST'])
 def go_user_profile():
     if request.method == 'POST' or request.method == 'GET':
-        return render_template('userProfile.html')
+        if 'id' in session:
+            user_id = session['id']
+            user_name = session['user']
+            photo = session['img']
+            cur = mysql.connection.cursor()
+            cur.execute('SELECT * FROM tusers WHERE id_user = %s', (user_id,))
+            data = cur.fetchone()
+            print(data)
+            return render_template('userProfile.html', user_data = data, user = user_name, photo = photo)
 
 #Esta ruta es para renderizar la main page
 @app.route('/go_main_page', methods=['GET', 'POST'])
@@ -147,11 +167,14 @@ def go_cleanlyfe():
             history_url = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732812935134&to=1732834535135&timezone=browser&var-idUser={id_user}&orgId=1&panelId=3&__feature.dashboardSceneSolo'
             last_carbon = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732812935134&to=1732834535135&timezone=browser&var-idUser={id_user}&orgId=1&panelId=1&__feature.dashboardSceneSolo'
             last_hidric = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732812935134&to=1732834535135&timezone=browser&var-idUser={id_user}&orgId=1&panelId=2&__feature.dashboardSceneSolo'
-            carbon_section = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732835486670&to=1732857086670&timezone=browser&var-idUser={id_user}&showCategory=Standard%20options&orgId=1&panelId=4&__feature.dashboardSceneSolo'
+            carbon_section = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1733132785556&to=1733154385556&timezone=browser&var-idUser={id_user}&orgId=1&panelId=4&__feature.dashboardSceneSolo'
             carbon_footprints = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732835486670&to=1732857086670&timezone=browser&var-idUser={id_user}&showCategory=Standard%20options&orgId=1&panelId=6&__feature.dashboardSceneSolo'
             hidric_section = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732835486670&to=1732857086670&timezone=browser&var-idUser={id_user}&orgId=1&panelId=7&__feature.dashboardSceneSolo'
             hidric_footprints = f'http://localhost:3000/d-solo/ae5crwj1cuadce/cleanlyfe-dashboards?from=1732835486670&to=1732857086670&timezone=browser&var-idUser={id_user}&orgId=1&panelId=5&__feature.dashboardSceneSolo'
-            return render_template('cleanlyfe.html', user = user, grafana_user_history = history_url, grafana_user_last_carbon = last_carbon, grafana_user_last_hidric = last_hidric, grafana_carbon_section = carbon_section, grafana_carbon_footprints = carbon_footprints, grafana_hidric_section = hidric_section, grafana_hidric_footprints = hidric_footprints)
+            
+            photo = session['img']
+            
+            return render_template('cleanlyfe.html', user = user, grafana_user_history = history_url, grafana_user_last_carbon = last_carbon, grafana_user_last_hidric = last_hidric, grafana_carbon_section = carbon_section, grafana_carbon_footprints = carbon_footprints, grafana_hidric_section = hidric_section, grafana_hidric_footprints = hidric_footprints, photo = photo)
 
 
 #This route is for opening and renderising the missions page
@@ -165,7 +188,8 @@ def go_missions():
                 return 'You have not logged in yet'
             else:
                 user_name =session['user']
-                return render_template('misions.html', user = user_name)
+                photo = session['img']
+                return render_template('misions.html', user = user_name, photo = photo)
         return "You have not logged in yet"
 
 #This route is for opening and renderising the missions page
@@ -180,12 +204,16 @@ def go_hidric_cal():
         if 'id' in session:
             user_name = session['user']
             user_id = session['id']
+            photo = session['img']
+            if not photo:
+                photo = ''
             
         else:
             session['id']= int(10)
             session['user']='invited'
             user_id = session['id']
             user_name = session['user']
+            photo = ''
 
         if user_id != 10:
             cur = mysql.connection.cursor()
@@ -193,7 +221,7 @@ def go_hidric_cal():
             data = cur.fetchone()
             page = data[0]
             if page == 1:
-                return render_template('cal_hid.html', user = user_name, id = user_id)
+                return render_template('cal_hid.html', user = user_name, id = user_id, photo = photo)
             elif page == 2:
                 return redirect(url_for('go_hidric_cal_2'))
             elif page == 3:
@@ -203,7 +231,7 @@ def go_hidric_cal():
             elif page == 5:
                 return redirect(url_for('go_hidric_cal_5'))
 
-        return render_template('cal_hid.html', user = user_name, id = user_id)
+        return render_template('cal_hid.html', user = user_name, id = user_id, photo = photo)
 
 @app.route('/hidric_cal_1', methods=['POST'])
 def hidric_cal_1():
@@ -253,7 +281,8 @@ def go_hidric_cal_2():
         if 'id' in session:
             user_id = session['id']
             user_name = session['user']
-        return render_template('cal_hid_2.html', id = user_id, user = user_name)
+            photo = session['img']
+        return render_template('cal_hid_2.html', id = user_id, user = user_name, photo = photo)
 
 @app.route('/hidric_cal_2', methods=['POST'])
 def hidric_cal_2():
@@ -315,7 +344,8 @@ def go_hidric_cal_3():
     if 'id' in session:
         user_id = session['id']
         user_name = session['user']
-        return render_template('cal_hid_3.html', id = user_id, user = user_name)
+        photo = session['img']
+        return render_template('cal_hid_3.html', id = user_id, user = user_name, photo = photo)
     else:
         return 'You have to log in first'
 
@@ -359,7 +389,8 @@ def go_hidric_cal_4():
     if 'id' in session:
         user_id = session['id']
         user_name = session['user']
-        return render_template('cal_hid_4.html', id = user_id, user = user_name)
+        photo = session['img']
+        return render_template('cal_hid_4.html', id = user_id, user = user_name, photo = photo)
     else:
         return 'You have to log in first'
 
@@ -393,7 +424,8 @@ def go_hidric_cal_5():
     if 'id' in session:
         user_id = session['id']
         user_name = session['user']
-        return render_template('cal_hid_5.html', id = user_id, user = user_name)
+        photo = session['img']
+        return render_template('cal_hid_5.html', id = user_id, user = user_name, photo = photo)
     else:
         return 'You have to log in first'
 
@@ -463,6 +495,7 @@ def final_hid_calculator():
     if 'id' in session:
         user_id = session['id']
         user_name = session['user']
+        photo = session['img']
         cur = mysql.connection.cursor()
         cur.execute('CALL prd_get_hidric_footprint (%s, @final_emission);', (user_id,))
         cur.execute('SELECT @final_emission;')
@@ -471,7 +504,7 @@ def final_hid_calculator():
         formatted_value = "{:.2f}".format(total_water_footprint[0][0])
 
 
-        return render_template('final_cal_hid.html', id = user_id, user = user_name, total = formatted_value)
+        return render_template('final_cal_hid.html', id = user_id, user = user_name, total = formatted_value, photo = photo)
     else:
         return 'You have to log in first'
 
@@ -480,7 +513,8 @@ def go_cal_transport():
     if 'id' in session:
         user_id = session['id']
         user_name = session['user']
-        return render_template('cal_veh_1.html', id = user_id, user = user_name)
+        photo = session['img']
+        return render_template('cal_veh_1.html', id = user_id, user = user_name, photo = photo)
     else:
         return 'You have to log in first'
     
@@ -516,7 +550,8 @@ def go_cal_electric():
     if 'id' in session:
         user_id = session['id']
         user_name = session['user']
-        return render_template('cal_electric.html', id = user_id, user = user_name)
+        photo = session['img']
+        return render_template('cal_electric.html', id = user_id, user = user_name, photo = photo)
     else:
         return 'You have to log in first'
     
@@ -549,9 +584,10 @@ def go_electric_devices_info():
     if 'id' in session:
         user_id = session['id']
         user_name = session['user']
+        photo = session['img']
         devices_selected_list = session.get('devices_selected', [])
         print('DISPOSITIVOS ANTES DE SER ENVIADOS AL FORM DE INFO: ', devices_selected_list)
-        return render_template('cal_electric_device_info.html', id = user_id, user = user_name, devices_list = devices_selected_list)
+        return render_template('cal_electric_device_info.html', id = user_id, user = user_name, devices_list = devices_selected_list, photo = photo)
 
 @app.route('/electric_devices_info', methods=['POST'])
 def electric_devices_info():
@@ -600,7 +636,8 @@ def go_cal_water_products():
     if 'id' in session:
         user_id = session['id']
         user_name = session['user']
-        return render_template('cal_water_products.html', id = user_id, user = user_name, total = 1)
+        photo = session['img']
+        return render_template('cal_water_products.html', id = user_id, user = user_name, total = 1, photo = photo)
     else:
         return 'You have to log in first'  
     
@@ -632,7 +669,7 @@ def cal_water_products():
             print('Hot water', hot_water)
             #Prd that inserts all the values obtained            
             cur = mysql.connection.cursor()
-            cur.execute("CALL prd_calc_water_emission(%s, %s, %s, %s);", (user_id, cold_water, hot_water, id_heater_type))
+            cur.execute("CALL prd_new_calc_water_emission(%s, %s, %s, %s);", (user_id, cold_water, hot_water, id_heater_type))
             return redirect(url_for('go_final_cal_carbon_footprint'))
         else:
             return 'You have to log in first'
@@ -643,7 +680,8 @@ def go_cal_carbon_products():
         if session['id'] != 10:
             user_id = session['id']
             user_name = session['user']
-            return render_template('cal_carbon_products.html', id = user_id, user = user_name)
+            photo = session['img']
+            return render_template('cal_carbon_products.html', id = user_id, user = user_name, photo = photo)
         return 'you have to log in first'
     return 'you have to log in first'
 
@@ -782,7 +820,7 @@ def products_adjustements(product_id, product_unit, transport, packaging, refrig
     cur = mysql.connection.cursor()
     product_unit = float(product_unit)
     #The funcion in this part takes the different adjustements
-    cur.execute('CALL prd_carbon_product_adjustements(%s, %s, %s, %s, %s, @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement);', (user_id, product_id, transport, packaging, refrigeration))
+    cur.execute('CALL prd_new_carbon_product_adjustements(%s, %s, %s, %s, %s, @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement);', (user_id, product_id, transport, packaging, refrigeration))
     cur.execute('SELECT @carbon_emission, @transport_adjustement, @packaging_adjustement, @refrigeration_adjustement;')
     adjustements = cur.fetchone()
         
@@ -810,9 +848,80 @@ def go_final_cal_carbon_footprint():
         if 'id' in session:
             user_id = session['id']
             user_name = session['user']
+            photo = session['img']
             #HERE IS WHERE GRAFANA SHOULD BE. THIS MESSAGE IS FOR JOSUE
-            return render_template('final_carbon_emission.html', id = user_id, user = user_name)
+            return render_template('final_carbon_emission.html', id = user_id, user = user_name, photo = photo)
     return 'You must log in before'
+
+@app.route('/update_data', methods=['POST'])
+def update_data():
+    if request.method == 'POST':
+        if 'id' in session:
+            user_id = session['id']
+            
+            cur = mysql.connection.cursor()
+            
+            new_user_name = request.form['username']
+            if not new_user_name:
+                new_user_name = session['user']
+            
+            new_first_name = request.form['first_name']
+            if not new_user_name:
+                new_first_name = session['first_name']
+            
+            new_last_name = request.form['last_name']
+            if not new_last_name:
+                new_last_name = session['last_name']
+                
+            new_email = request.form['email']
+            if not new_email:
+                new_email = session['email']
+                
+            file     = request.files['select_img']
+            
+            if file:
+                cur.execute('SELECT user_img_path FROM tusers WHERE id_user = %s', (user_id,))
+                photo = cur.fetchone()[0]
+                if photo:
+                    basepath = os.path.dirname (__file__) #C:\xampp\htdocs\elmininar-archivos-con-Python-y-Flask\app
+                    url_File = os.path.join (basepath, 'static/user_img', photo)
+                    if os.path.exists(url_File):
+                        os.remove(url_File)
+            
+            basepath = os.path.dirname (__file__) #La ruta donde se encuentra el archivo actual
+            filename = secure_filename(file.filename) #Nombre original del archivo
+                    
+            #capturando extensión del archivo ejemplo: (.png, .jpg, .pdf ...etc)
+            extension           = os.path.splitext(filename)[1]
+            
+            if extension == '.jpg' or extension == '.jpeg' or extension == '.png' or extension == '.webp':
+            
+                newNameFile     = random_string() + extension
+                
+                upload_path = os.path.join (basepath, 'static/user_img', newNameFile) 
+                file.save(upload_path)
+                
+                session.pop('img', None)
+                session['img'] = newNameFile
+                
+                cur.execute('UPDATE tusers SET user_img_path = %s WHERE id_user = %s', (newNameFile, user_id))
+                mysql.connection.commit()
+            else:
+                flash('You must put a image file')
+                
+            session.pop('user', None)
+            session.pop('first_name', None)
+            session.pop('last_name', None)
+            session.pop('email', None)
+                
+            session['user']= new_user_name
+            session['first_name']= new_first_name
+            session['last_name']= new_last_name
+            session['email']= new_email
+                
+            cur.execute('UPDATE tusers SET first_name = %s, last_name = %s, user_name = %s, user_mail = %s WHERE id_user = %s', (new_first_name, new_last_name, new_user_name, new_email, user_id))
+            mysql.connection.commit()
+            return redirect(url_for('go_user_profile'))
 
 #This is a method that recieves an error and renderising the error handle page
 @app.route('/page_not_found')
@@ -829,6 +938,16 @@ def user_render_page(pageToRender):
         return render_template(f'{pageToRender}', id = user_id, user = user_name)
     else:
         return 'You have to log in first'
+    
+def random_string():
+    random_string = "0123456789abcdefghijklmnopqrstuvwxyz_"
+    length         = 20
+    secuencia        = random_string.upper()
+    random_result  = sample(secuencia, length)
+    random_string     = "".join(random_result)
+    return random_string
+
+
     
 #This is for running the application as a server
 if __name__ == "__main__":

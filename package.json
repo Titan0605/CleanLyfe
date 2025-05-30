@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "build:css": "tailwindcss -i ./app/static/css/input.css -o ./app/static/css/output.css --watch"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.4",
+    "flowbite": "^3.1.2",
+    "tailwindcss": "^4.1.4"
+  },
+  "devDependencies": {
+    "flowbite-typography": "^1.0.5"
+  }
+}

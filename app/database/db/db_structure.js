@@ -4,7 +4,7 @@ const users = {
     userName: 'admin',
     email: 'admin@worldmatters.com',
     password: "12345678",
-    memberType: 'admin | user | premium | guest',
+    memberType: 'guest | user | premium | admin',
     waterFlows: [
         ObjectId("waterflow_id"),
     ],

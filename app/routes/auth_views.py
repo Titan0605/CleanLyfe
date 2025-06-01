@@ -1,11 +1,6 @@
 from flask import render_template, Blueprint
 
-bp = Blueprint("index_view", __name__)
-
-# @bp.route('/')
-# def index():
-#     return render_template('index.html')
-
+bp = Blueprint("auth_views", __name__)
 
 @bp.route('/sign_up')
 def sign_up():

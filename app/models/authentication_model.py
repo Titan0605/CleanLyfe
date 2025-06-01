@@ -1,63 +1,54 @@
-from typing import Any, Literal
-from app.utils.db_utils import get_cursor, exec_commit 
-
+from app.utils.db_utils import get_client, get_collection
+from datetime import datetime, timezone
+from pymongo import MongoClient
+from pymongo.collection import Collection
+from typing import Optional
 class AuthenticationModel:
     def __init__(self) -> None:
-        self.cur = None
+        self._client: Optional[MongoClient] = None
+        self._users_collection: Optional[Collection] = None
+        
+    @property
+    def client(self) -> MongoClient:
+        if self._client is None:
+            self._client = get_client()
+        return self._client
     
-    def openCursor(self) -> None:
-        """Open database cursor if not already open"""
-        if not self.cur:
-            self.cur = get_cursor()
-            
-    def closeCursor(self) -> None:
-        """Close database cursor if open"""
-        if self.cur:
-            self.cur.close()
-            self.cur = None
-
-    def commitQuery(self) -> None:
-        """Commit current transaction"""
-        if self.cur:
-            self.cur = exec_commit()
-            
-    def insert_user(self, username, email, password) -> Literal['Sign up successfull.'] | Literal['User creation error.']:
-        """Insert a new user into the database"""
+    @property
+    def users_collection(self) -> Collection:
+        if self._users_collection is None:
+            self._users_collection = get_collection("users")
+        return self._users_collection
+    
+    def create_user(self, user_info: dict):
+        new_user = {
+            "firstName": user_info["first_name"],
+            "lastName": user_info["last_name"],
+            "userName": user_info["user_name"],
+            "email": user_info["email"],
+            "password": user_info["password"],
+            "memberType": "user",
+            "waterFlows": [],
+            "active": True,
+            "createdAt": datetime.now(timezone.utc),
+            "updatedAt": []
+        }
+        
         try:
-            self.openCursor()
-            if not self.cur:
-                raise Exception("Failed to open database cursor")
-                
-            query = 'INSERT INTO users(username, gmail, password) VALUES (%s, %s, %s)'
-            values: tuple = (username, email, password)
-            
-            self.cur.execute(query, values)
-            self.commitQuery()
-            self.closeCursor()
+            self.users_collection.insert_one(new_user)
             return "Sign up successfull."
-            
         except Exception as error:
             print(f"Error inserting user: {error}")
-            self.closeCursor()
             return "User creation error."
         
-    def get_user(self, username, password) -> Any | None:
-        """Get user by username and password"""
+    def get_user(self, user_credentials: dict):
+        query = {
+            "userName": user_credentials["username"]
+        }
+        
         try:
-            self.openCursor()
-            if not self.cur:
-                raise Exception("Failed to open database cursor")
-                
-            query = "SELECT * FROM users WHERE username = %s and password = %s"
-            values: tuple = (username, password)
-            
-            self.cur.execute(query, values)
-            response = self.cur.fetchone()
-            
-            self.closeCursor()
-            return response if response else None
-            
+            user = self.users_collection.find_one(query)
+            return user if user else None
         except Exception as error:
             print(f"Error getting user: {error}")
-            self.closeCursor()
             return None

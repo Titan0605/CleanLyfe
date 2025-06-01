@@ -1,60 +1,59 @@
 from flask import Blueprint, request, jsonify, session
 from app.models.authentication_model import AuthenticationModel
 
-bp = Blueprint("authentication_routes", __name__)
-
-authenModel = AuthenticationModel()
+bp = Blueprint("auth_routes", __name__)
 
 @bp.route('/sign_up_service', methods=["POST"])
 def sign_up_service():
     try:
+        authenModel = AuthenticationModel()
         # gets the data provided by the fetch
-        response = request.get_json() 
-        # is saved in by separated
-        username = response.get("username")
-        email = response.get("email")
-        password = response.get("password")
+        data = request.get_json() 
         
-        if not username or not email or not password:
-            status = "Invalid input."
-            return jsonify({"Status": status}), 400
+        user_info = dict(data)
         
-        elif(response['password'] == response['confirm-password']):
-            # call model to insert data
-            status = authenModel.insert_user(username, email, password)  
-            return jsonify({"Status": status})
+        if not user_info or not user_info["userName"] or not user_info["password"]:
+            return jsonify({'error': 'Email and password are required'}), 400
         
-        else:
+        if(user_info['password'] != user_info['confirm-password']):
             status = "Password confirmation incorrect, verify your credentials."
-            return jsonify({"Status": status, "Error": str(error)}), 401
-    except KeyError as error:
+            return jsonify({"Status": status}), 401
+            # call model to insert data
+            
+        status = authenModel.create_user(user_info)  
+        return jsonify({"Status": status})
+    except Exception as error:
             return jsonify({"Status": status, "Error": str(error)}), 401
 
 @bp.route('/login_service', methods=["POST"])
 def login_service():
     try:
+        authenModel = AuthenticationModel()
         # gets the data provided by the fetch
-        response = request.get_json() 
-        username = str(response.get("username"))
-        password = str(response.get("password"))
+        response = request.get_json()
         
+        user_credentials = dict(response)
+        
+        if not user_credentials or not user_credentials["userName"] or not user_credentials["password"]:
+            return jsonify({'error': 'Email and password are required'}), 400
+
         # call model to get the user if exist
-        response = authenModel.get_user(username, password) #example: (3, 'CleanUser', 'cleanlyfe_user@gmail.com')
-        print("Response: ", response)
+        user = authenModel.get_user(user_credentials)
+        
         # if there is no response
-        if response == None:
+        if user == None or user["password"] != user_credentials["password"]:
             # change the type of status and return
             status = "Login error, incorrect credentials."
             return jsonify({"Status": status}), 401
-        else:
-            # change the type of status
-            status = 'Login successfull.'
-            # saves the session
-            session["id"] = response['id']
-            session["username"] = response['username']
-            session["email"] = response['gmail']
-            
-            return jsonify({"Status": status}), 201
+        
+        # change the type of status 
+        status = 'Login successfull.'
+        # saves the session
+        session["id"] = str(user['_id'])
+        session["username"] = user['userName']
+        session["email"] = user['email']
+        
+        return jsonify({"Status": status}), 201
     except KeyError as error:
         return jsonify({"Status": "Something went wrong when logging in, try later.", "Error": str(error)}), 401
     

@@ -1,12 +1,12 @@
 {%extends 'layouts/base.html' %} {%block title%}Cleanlyfe{%endblock%} {%block header%}
 <div class="flex gap-4 mr-8">
   <a
-    href="{{ url_for('index_view.login') }}"
+    href="{{ url_for('auth_views.login') }}"
     class="text-white bg-blue-700 hover:bg-blue-800 ring-3 ring-blue-900 text-3xl text-center rounded-3xl px-4 py-2 font-bold hover:scale-105 hover:transition-transform">
     Login
   </a>
   <a
-    href="{{ url_for('index_view.sign_up') }}"
+    href="{{ url_for('auth_views.sign_up') }}"
     class="text-white bg-blue-700 hover:bg-blue-800 ring-3 ring-blue-900 text-3xl text-center rounded-3xl px-4 py-2 font-bold hover:scale-105 hover:transition-transform">
     Sign Up
   </a>

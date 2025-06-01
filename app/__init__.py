@@ -1,22 +1,18 @@
 import os
-
-from flask_mysqldb import MySQL
+from pymongo import MongoClient
 from app.utils.db_utils import init_db
-from config import Config
 from app.database.db import init_app
 from flask import Flask
 from dotenv import load_dotenv
 from app.routes import auth_routes, carbonfp_routes, carbonfp_view, index_view, home_view, hidricfp_view, hidricfp_routes, waterFlow_view, index_views
 
-def create_app(config = Config) -> Flask:
+def create_app() -> Flask:
     load_dotenv()
     
     app = Flask(__name__)
     
-    app.config.from_object(config)
-    
-    mysql: MySQL = init_app(app)
-    init_db(mysql)
+    mongo_client: MongoClient = init_app(app)
+    init_db(mongo_client)
     
     # env setup
     try:

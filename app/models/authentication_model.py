@@ -2,7 +2,10 @@ from app.utils.db_utils import get_client, get_collection
 from datetime import datetime, timezone
 from pymongo import MongoClient
 from pymongo.collection import Collection
-from typing import Optional
+from typing import Optional, Dict, Any
+from werkzeug.security import generate_password_hash, check_password_hash
+import re
+
 class AuthenticationModel:
     def __init__(self) -> None:
         self._client: Optional[MongoClient] = None
@@ -20,35 +23,59 @@ class AuthenticationModel:
             self._users_collection = get_collection("users")
         return self._users_collection
     
-    def create_user(self, user_info: dict):
+    def validate_email(self, email: str) -> bool:
+        """Validate email format"""
+        pattern = r'^[\w\.-]+@[\w\.-]+\.\w+$'
+        return bool(re.match(pattern, email))
+    
+    def validate_username(self, username: str) -> bool:
+        """Validate username format and uniqueness"""
+        if len(username) < 3:
+            return False
+        existing_user = self.users_collection.find_one({"user_name": username})
+        return existing_user is None
+    
+    def create_user(self, user_info: Dict[str, str]) -> Dict[str, str]:
+        """Create a new user with validation"""
+        # Validate email format
+        if not self.validate_email(user_info["email"]):
+            return {"status": "error", "message": "Invalid email format"}
+            
+        # Validate username
+        if not self.validate_username(user_info["username"]):
+            return {"status": "error", "message": "Username already exists or is invalid"}
+            
+        # Create new user document
         new_user = {
-            "firstName": user_info["first_name"],
-            "lastName": user_info["last_name"],
-            "userName": user_info["user_name"],
+            "first_name": user_info["firstname"],
+            "last_name": user_info["lastname"],
+            "user_name": user_info["username"],
             "email": user_info["email"],
-            "password": user_info["password"],
-            "memberType": "user",
-            "waterFlows": [],
+            "password": generate_password_hash(user_info["password"]),
+            "member_type": "user",
+            "water_flows": [],
             "active": True,
-            "createdAt": datetime.now(timezone.utc),
-            "updatedAt": []
+            "created_at": datetime.now(timezone.utc),
+            "updated_at": []
         }
         
         try:
             self.users_collection.insert_one(new_user)
-            return "Sign up successfull."
+            return {"status": "success", "message": "Sign up successful"}
         except Exception as error:
-            print(f"Error inserting user: {error}")
-            return "User creation error."
+            return {"status": "error", "message": str(error)}
         
-    def get_user(self, user_credentials: dict):
-        query = {
-            "userName": user_credentials["username"]
-        }
-        
+    def get_user(self, user_credentials: Dict[str, str]) -> Optional[Dict[str, Any]]:
+        """Get user and verify credentials"""
         try:
-            user = self.users_collection.find_one(query)
-            return user if user else None
+            user = self.users_collection.find_one({"user_name": user_credentials["username"]})
+            
+            if user and check_password_hash(user["password"], user_credentials["password"]):
+                # Remove password from returned user object
+                user.pop("password", None)
+                return user
+            return None
+            
         except Exception as error:
             print(f"Error getting user: {error}")
             return None

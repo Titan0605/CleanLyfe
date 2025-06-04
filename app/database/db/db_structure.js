@@ -106,16 +106,14 @@ const footprintCalculations = {
             houseCleaning: 43,
             totalWaterConsumption: 540 
         },
-        productsWaterConsumption: [
-            {
-                totalWaterConsumptionProducts: 540,
-                productsConsumptions: [
-                    {
-                        objectId: ObjectId("water_product_id"),
-                        productsConsumption: 43
-                    }
-                ]
-            }
-        ]
+        productsWaterConsumption: {
+            totalWaterConsumptionProducts: 540,
+            productsConsumptions: [
+                {
+                    objectId: ObjectId("water_product_id"),
+                    productsConsumption: 43
+                }
+            ]
+        }
     }
 }

@@ -1,17 +1,4 @@
-{%extends 'layouts/base.html' %} {%block title%}Cleanlyfe{%endblock%} {%block header%}
-<div class="flex gap-4 mr-8">
-  <a
-    href="{{ url_for('index_view.login') }}"
-    class="text-white bg-transparent hover:bg-[#20b9a7] ring-3 ring-[#6b7286] text-xl text-center rounded-3xl px-2 py-2 font-bold hover:scale-105 hover:transition-transform">
-    Login
-  </a>
-  <a
-    href="{{ url_for('index_view.sign_up') }}"
-    class="text-white bg-[#20b9a7] hover:bg-[#20b9a7] ring-3 ring-[#20b9a7] text-xl text-center rounded-3xl px-2 py-2 font-bold hover:scale-105 hover:transition-transform">
-    Sign Up
-  </a>
-</div>
-{%endblock%} {%block main%}
+{%extends 'layouts/base.html' %} {%block title%}Cleanlyfe{%endblock%} {%block main%}
 <section id="container" class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 gap-6">
   <img class="size-32" src="{{ url_for('static', filename='img/favicon.ico') }}" alt="" />
 

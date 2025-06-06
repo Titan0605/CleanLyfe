@@ -10,21 +10,153 @@
     <title>{%block title%}{%endblock%}</title>
 </head>
 
-<body class="flex flex-col">
-    <header class="bg-gradient-to-r from-[#36ab75] to-[#2a224d] text-white py-2 px-6 gap-3 w-screen h-auto flex items-center justify-between">
-        <div class="flex items-center gap-3">
-            <div class="hover:scale-110 hover:transition-transform">
-                <a href="/">
-                    <img class="size-15" src="{{ url_for('static', filename='img/favicon.ico') }}" alt="Cleanlyfe logo">
-                </a>
-            </div>
-            <div class="text-4xl font-bold">
-                <h1>Cleanlyfe</h1>
-            </div>
-        </div>
+<body class="flex flex-col w-screen h-screen">
+    
+    {%block styles%}{%endblock%}
 
-        {%block header%}{%endblock%}
-    </header>
+    {%block head%}{%endblock%}
+
+    {%block meta%}{%endblock%}
+     <header class="antialiased bg-gray-50 dark:bg-gray-900">
+      <nav class="bg-gray-800 border-b border-gray-200 px-4 py-3 dark:bg-gray-800 dark:border-gray-700 z-50">
+        <div class="flex flex-wrap justify-between items-center">Add commentMore actions
+          <div class="flex gap-2">
+            <!-- Toggle button -->
+            <button
+              data-drawer-target="drawer-navigation"
+              data-drawer-toggle="drawer-navigation"
+              aria-controls="drawer-navigation"
+              class="p-2 mr-2 text-gray-600 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 dark:focus:bg-gray-700 focus:ring-2 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+              <i class="fa-solid fa-bars w-6 h-6 text-xl"></i>
+              <span class="sr-only">Toggle sidebar</span>
+            </button>
+            <a href="" class="flex items-center justify-between mr-4 hover:scale-105 transition-transform duration-300">
+              <img src="../static/img/Logo-WorldMatters.ico" class="mr-3 h-8 rounded-full" alt="WorldMatters Logo" />
+              <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">WorldMatters</span>
+            </a>
+          </div>
+          
+          <div class="gap-4 hidden sm:flex">
+            <!-- BOTON LOG IN -->
+            <a href="{{ url_for('index_view.login') }}">
+                <button
+                    type="button"
+                    class="text-white bg-green-500 hover:bg-green-800 hover:scale-105 transition-transform duration-300 focus:outline-none focus:ring-4 focus:ring-green-300 font-bold rounded-full text-sm px-5 py-2 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 cursor-pointer">
+                    Log in
+                </button>
+            </a>
+            <!-- BOTON SING UP -->
+            <button
+              type="button"
+              class="border focus:outline-none hover:scale-105 transition-transform duration-300 focus:ring-4 font-bold rounded-full text-sm px-5 py-2 bg-gray-800 text-white border-gray-600 hover:bg-gray-700 hover:border-gray-600 focus:ring-gray-700 cursor-pointer">
+              Sign up
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Sidebar -->
+      <aside
+        class="fixed top-0 left-0 z-40 w-64 h-screen pt-4 transition-transform -translate-x-full bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700"
+        aria-label="Sidenav"
+        id="drawer-navigation"
+      >
+        <header class="flex justify-between pl-4 pr-1">
+          <a href="" class="flex items-center justify-between mr-4 hover:scale-105 transition-transform duration-300">
+              <img src="../static/img/Logo-WorldMatters.ico" class="mr-3 h-8 rounded-full" alt="WorldMatters Logo" />
+            </a>
+          <button
+              data-drawer-target="drawer-navigation"
+              data-drawer-toggle="drawer-navigation"
+              aria-controls="drawer-navigation"
+              class="p-2 mr-2 text-gray-600 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 focus:bg-gray-100 dark:focus:bg-gray-700 focus:ring-2 focus:ring-gray-100 dark:focus:ring-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+              <i class="fa-solid fa-xmark w-6 h-6 text-xl"></i>
+              <span class="sr-only">Toggle sidebar</span>
+            </button>
+        </header>
+        <div class="overflow-y-auto py-5 px-3 h-full bg-white dark:bg-gray-800">
+          <ul class="space-y-2">
+            <li>
+              <a
+                href="#"
+                class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              > 
+                <i class="fa-solid fa-house w-7 h-7 text-xl text-center"></i>
+                <span class="ml-3">Home</span>
+              </a>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                aria-controls="dropdown-pages"
+                data-collapse-toggle="dropdown-pages"
+              >
+                <img src="../static/img/Logo-CleanLyfe-ico.ico" class="rounded-full w-7 h-7" alt="CleanLyfe">
+                <span class="flex-1 ml-3 text-left whitespace-nowrap">CleanLyfe</span>
+              </button>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                aria-controls="dropdown-sales"
+                data-collapse-toggle="dropdown-sales"
+              >
+                <img src="../static/img/Logo_WaterFlow.ico" class="rounded-full w-7 h-7" alt="CleanLyfe">
+                <span class="flex-1 ml-3 text-left whitespace-nowrap">WaterFlow</span>
+              </button>
+            </li>
+          </ul>
+          
+          <ul class="pt-5 mt-5 space-y-2 border-t border-gray-200 dark:border-gray-700">
+            <li>
+              <a
+                href="#"
+                class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
+              >
+                <i class="fa-solid fa-dollar-sign w-6 h-6 text-xl text-center"></i>
+                <span class="ml-3">Prices</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
+              >
+                <i class="fa-solid fa-address-card w-6 h-6 text-xl text-center"></i>
+                <span class="ml-3">About Us</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white group"
+              >
+                <i class="fa-solid fa-circle-question w-6 h-6 text-xl text-center"></i>
+                <span class="ml-3">FAQ</span>
+              </a>
+            </li>
+            <li class="">
+              <div class="gap-4 flex justify-center">
+                <!-- BOTON LOG IN -->
+                <button
+                  type="button"
+                  class="text-white bg-green-500 hover:bg-green-800 hover:scale-105 transition-transform duration-300 focus:outline-none focus:ring-4 focus:ring-green-300 font-bold rounded-full text-sm px-5 py-2 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 cursor-pointer">
+                  Log in
+                </button>
+                <!-- BOTON SING UP -->
+                <button
+                  type="button"
+                  class="border focus:outline-none hover:scale-105 transition-transform duration-300 focus:ring-4 font-bold rounded-full text-sm px-5 py-2 bg-gray-800 text-white border-gray-600 hover:bg-gray-700 hover:border-gray-600 focus:ring-gray-700 cursor-pointer">
+                  Sign up
+                </button>
+              </div>
+            </li>
+          </ul>
+        </div>  
+      </aside>
+      {%block header%}{%endblock%}
 
     <main class="bg-radial-[at_25%_25%] from-[#3b3840] to-[#1f103c] to-75% px-12 grow">
         {%block main%}{%endblock%}

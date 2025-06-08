@@ -59,26 +59,26 @@ const footprintCalculations = {
     createdAt: new Date(),
     active: false,
     carbonFootprint: {
-        totalEmission: 30,
+        totalCarbonEmission: 30,
         transport: {
-            idFuelUsed: ObjectId("fuel_id"),
-            cylinderRatingId: ObjectId("cylinder_id"),
-            vehicleYearId: ObjectId("year_id"),
+            fuelUsed: "Gas",
+            cylinderRating: 4,
+            vehicleYear: 2005,
             timeUsedHours: 5,
             consumedFuel: 20,
             distanceTraveled: 50,
             fuelPerfomance: 15,
-            transportEmission: 2350
+            totalEmission: 2350
         },
         energy: {
             totalEnergyConsumption: 340,
-            energyEmission: 230,
+            totalEmission: 230,
             devices: [ // Varios dispositivos
                 ObjectId("device_id"),
             ]
         },
         products: {
-            totalProductsEmission: 340,
+            totalEmission: 340,
             productsEmissions:[ // Varios productos
                 {
                     carbonProductId: ObjectId("carbon_product_id"),
@@ -92,7 +92,7 @@ const footprintCalculations = {
             coldWaterVolume: 50,
             hotWaterEmission: 80,
             coldWaterEmission: 20,
-            waterEmission: 430
+            totalEmission: 430
         }
     },
     hydricFootprint: {

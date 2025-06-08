@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
-    <title>WorldMatters Layout</title>
+    <title>{%block title%}{%endblock%}</title>
   </head>
   <body class="flex flex-col">
     <header class="antialiased bg-gray-50 dark:bg-gray-900">
@@ -155,7 +155,7 @@
     </header>
 
     <!-- Contenido principal -->
-    <main class="px-4 py-4 grow">
+    <main class="grow">
       {% block main %}{% endblock %}
     </main>
 

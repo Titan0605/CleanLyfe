@@ -1,8 +1,11 @@
 from pymongo import MongoClient
+from dotenv import load_dotenv
 import os
 
 
 def init_app(app) -> MongoClient:
+    load_dotenv()
+    
     MONGO_USER = os.environ.get("DB_USER")
     MONGO_PASSWORD = os.environ.get("DB_PASSWORD")
     MONGO_CONNECTION_TYPE = os.environ.get("DB_CONNECTION")

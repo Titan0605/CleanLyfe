@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, session
-import requests
+from app.models.carbon_energy_model import ElectricDevicesModel
 
 bp = Blueprint("carbonfp_view", __name__)
 
@@ -21,13 +21,11 @@ def carbonfp_transport():
 
 @bp.route('/carbonfp/devices')
 def carbonfp_devices():
-    api_get_devices  = "http://127.0.0.1:3000/carbonfp/get-devices"  
-    if 'username' in session:   
-        response = requests.get(api_get_devices)
-        response.raise_for_status()
+    if 'username' in session:
+        energy_model = ElectricDevicesModel()
 
-        devices = response.json()
-        return render_template('carbonfp_devices.html') #, devices=devices)
+        devices = energy_model.get_all_devices()
+        return render_template('carbonfp_energy.html', devices=devices)
     else:
         return redirect(url_for('index_view.index'))
 

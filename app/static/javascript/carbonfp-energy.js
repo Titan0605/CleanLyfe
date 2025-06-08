@@ -22,12 +22,12 @@ document.addEventListener('DOMContentLoaded', async function () {
                 },
                 body: JSON.stringify(data),
             })
-                .then(response => response.json())
-                .then(responseData => {
-                    if (responseData.Status = "Devices collected successfully.") {
-                        draw_get_device_info(responseData.devices);
-                    }
-                })
+            .then(response => response.json())
+            .then(responseData => {
+                if (responseData.Status = "Devices collected successfully.") {
+                    draw_get_device_info(responseData.devices);
+                }
+            })
 
         } catch (error) {
             console.log(error)
@@ -58,12 +58,12 @@ document.addEventListener('DOMContentLoaded', async function () {
                     },
                     body: JSON.stringify(data),
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data) {
-                            draw_message(data)
-                        }
-                    })
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        draw_message(data)
+                    }
+                })
 
             } catch (error) {
                 console.log(error);
@@ -84,12 +84,12 @@ document.addEventListener('DOMContentLoaded', async function () {
                     },
                     body: JSON.stringify(data),
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data) {
-                            draw_message(data)
-                        }
-                    })
+                .then(response => response.json())
+                .then(data => {
+                    if (data) {
+                        draw_message(data)
+                    }
+                })
 
             } catch (error) {
                 console.log(error);
@@ -123,17 +123,14 @@ function draw_get_device_info(devices) {
 
     const device_form = document.createElement('form');
     device_form.id = 'devices_info_form';
-
     container.appendChild(device_form);
-    const form_div = document.createElement('div');
-    device_form.appendChild(form_div);
 
     devices.forEach(device => {
         const device_questions = document.createElement('div');
         device_questions.className = 'bg-amber-100';
         device_questions.innerHTML = `<header class="">
                 <i class=""></i>
-                <h2 class="text-3xl">${device.name}</h2>
+                <h2 class="text-3xl">${device.deviceName}</h2>
             </header>
             <div>
                 <input type="hidden" name="device_id" value="${device.id}">

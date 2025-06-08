@@ -38,7 +38,14 @@ const waterFlows = {
     active: false
 }
 
+const deviceCatalog = {
+  deviceName: "Vacuum",
+  deviceZone: "Others",
+  active: true
+}
+
 const energyDevices = {
+    deviceType: ObjectId("deviceCatalog"),
     deviceActivePower: 20,
     activeUsedHours: 50,
     deviceStandbyPower: 5,

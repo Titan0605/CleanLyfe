@@ -1,21 +1,23 @@
 from flask import jsonify
+from typing import Dict, List, Union, Optional
+
 class Electric_devices_calculator:
+    def __init__(self):
+        self.emission_factor = 0.438  # kgCO2e/kWh
     
-    def calculation_type(self, type_calculation: str, electricity_consumption: float, devices: dict):
+    def calculation_type(self, type_calculation: str, electricity_consumption: float, devices: Dict) -> str:
         try:
-            emission_factor = 0.438 # by the moment, change as soon as possible
-            
             match type_calculation:
                 case 'basic_calculation':
-                    self.basic_calculation(electricity_consumption, emission_factor)
+                    result = self.basic_calculation(electricity_consumption, self.emission_factor)
+                    return 'Electric calculation successfully.' if result > 0 else 'Failed electrical calculation.'
                 case 'accurate_calculation':
-                    self.accurate_calculation(devices)
+                    result = self.accurate_calculation(devices)
+                    return 'Electric calculation successfully.' if result else 'Failed electrical calculation.'
                 case _:
                     return 'Failed electrical calculation.'
-        
-            return 'Electric calculation successfully.'
         except (Exception, TypeError) as error:
-            print(f'Error found: {error}')
+            print(f'Error found in calculation_type: {error}')
             return 'Failed electrical calculation.'
     
     
@@ -33,74 +35,37 @@ class Electric_devices_calculator:
             print(f'Error found: {error}')
             return 0.0
     
-    
-    def accurate_calculation(self, devices: dict):
+    def accurate_calculation(self, devices: Dict) -> Dict:
         try:
-            # Order the devices for easier handling
-            devices = self.order_devices(devices)
+            ordered_devices = self._process_device_data(devices)
+            if not ordered_devices:
+                return {}
             
-            if devices:
-                # List that stores each device with its total emissions
-                devices_emissions = []
-                # Total sum of all devices emissions
-                total_final_emission = 0
-                
-                for device in devices:
-                    final_active_use_consume = self.active_use_consume(device['active_power'], device['active_hours'])
-                    # this
-                    final_active_energy_adjust = self.active_energy_adjust(final_active_use_consume, device['device_efficiency'])
-                    
-                    final_standby_consume = self.standby_consume(device['standby_power'], device['standby_hours'])
-                    # this
-                    final_standby_energy_adjust = self.standby_energy_adjust(final_standby_consume, device['device_efficiency'])
-                    
-                    total_emission = round(final_active_energy_adjust + final_standby_energy_adjust, 3)
-                    
-                    devices_data = {
-                        'id': int(device['id']),
-                        'active_energy_consumed': round(final_active_energy_adjust, 3),
-                        'standby_energy_consumed': round(final_standby_energy_adjust, 3),
-                        'total_emission': total_emission
-                    }
-                    
-                    devices_emissions.append(devices_data)
-                
-                for device in devices_emissions:
-                    
-                    total_final_emission = round(total_final_emission + device['total_emission'], 3)
-                
-                print(f'Total basic: {total_final_emission}')
-                
-                return total_final_emission
-            else:
-                return None
+            devices_emissions = []
+            total_emission = 0.0
+            total_consumption = 0
+            
+            for device in ordered_devices:
+                device_emission = self._calculate_single_device_emission(device)
+                devices_emissions.append(device_emission)
+                total_emission += device_emission['weeklyCarbonEmission']
+                total_consumption += device_emission['totalWeeklyConsumption']
+            
+            print(f'Devices emissions: {devices_emissions}')
+            print(f'Total weekly emission: {total_emission} kgCO2e')
+            print(f'Total weekly consumption: {total_consumption} Kw')
+            
+            calculations = {
+                "devices": devices_emissions,
+                "totalEmission": round(total_emission, 2),
+                "totalConsumption": round(total_consumption, 2)
+            }
+            
+            return calculations
         except Exception as error:
-            print(f'Error found: {error}')
-            return None
-    
-    def order_devices(self, devices: list):
-        try:
-            # list to save each data of each device individually
-            devices_data = []
-            
-            #Iterate each device data collected
-            for i in range(len(devices['device_id'])):
-                device_data = {
-                    'id': int(devices['device_id'][i]),
-                    'active_power': float(devices['device_active_power'][i]),
-                    'active_hours': float(devices['active_used_hours'][i]),
-                    'standby_power': float(devices['device_standby_power'][i]),
-                    'standby_hours': float(devices['standby_used_hours'][i]),
-                    'device_efficiency': float(devices['device_efficiency'][i]) / 100,
-                }
-                #Saves each dictionary generated for each device
-                devices_data.append(device_data)
-            
-            return devices_data
-        except Exception as error:
-            print(f'Error found: {error}')
-            return []
-    
+            print(f'Error found in calculate_devices_emissions: {error}')
+            return {}
+        
     def active_use_consume(self, active_power: float, active_used_hours: float):
         try:
             if active_power > 0 and active_used_hours >= 0:
@@ -160,3 +125,59 @@ class Electric_devices_calculator:
         except (Exception, TypeError) as error:
             print(f'Error found: {error}')
             return 0.0
+    
+    
+    def _process_device_data(self, devices: Dict) -> List[Dict]:
+        try:
+            devices_data = []
+            device_ids = devices.get('device_id', [])
+            
+            for i in range(len(device_ids)):
+                device_data = {
+                    'id': str(devices.get('device_id', [])[i]),
+                    'active_power': float(devices.get('device_active_power', [])[i]),
+                    'active_hours': float(devices.get('active_used_hours', [])[i]),
+                    'standby_power': float(devices.get('device_standby_power', [])[i]),
+                    'standby_hours': float(devices.get('standby_used_hours', [])[i]),
+                    'device_efficiency': float(devices.get('device_efficiency', [])[i]) / 100,
+                }
+                devices_data.append(device_data)
+            
+            return devices_data
+        except Exception as error:
+            print(f'Error found in _process_device_data: {error}')
+            return []
+    
+    def _calculate_single_device_emission(self, device: Dict) -> Dict:
+        device_data = {
+            'id': device['id'],
+            'deviceActivePower': device['active_power'],
+            'activeUsedHours': device['active_hours'],
+            'deviceStandbyPower': device['standby_power'],
+            'standbyUsedHours': device['standby_hours'],
+            'deviceEfficiency': device['device_efficiency'],
+        }
+        
+        # Calculate consumptions
+        active_consume = self.active_use_consume(device['active_power'], device['active_hours'])
+        device_data['activeConsume'] = round(active_consume, 2)
+        
+        standby_consume = self.standby_consume(device['standby_power'], device['standby_hours'])
+        device_data['standbyConsume'] = round(standby_consume, 2)
+        
+        # Calculate adjusted consumptions
+        adjusted_active = self.active_energy_adjust(active_consume, device['device_efficiency'])
+        device_data['adjustedActiveConsume'] = round(adjusted_active, 2)
+        
+        adjusted_standby = self.standby_energy_adjust(standby_consume, device['device_efficiency'])
+        device_data['adjustedStandbyConsume'] = round(adjusted_standby, 2)
+        
+        # Calculate total daily and weekly consumption
+        daily_consumption = adjusted_active + adjusted_standby
+        device_data['totalDailyConsumption'] = round(daily_consumption, 2)
+        device_data['totalWeeklyConsumption'] = round(daily_consumption * 7, 2)
+        
+        # Calculate weekly carbon emission
+        device_data['weeklyCarbonEmission'] = round(device_data['totalWeeklyConsumption'] * self.emission_factor, 2)
+        
+        return device_data

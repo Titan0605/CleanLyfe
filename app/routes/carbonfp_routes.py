@@ -1,14 +1,15 @@
 from flask import jsonify, Blueprint, request
 from app.services.carbon.transport_calculations import TransportCalculator
 from app.models.carbon_energy_model import ElectricDevicesModel
-# from app.services.electric_devices_calculator import Electric_devices_calculator
+from app.services.carbon.energy_calculations import Electric_devices_calculator
 # from app.services.carbon_water_calculus import WaterEmissionCalculator
 
 bp = Blueprint("carbonfp_routes", __name__)
 
-transCal = TransportCalculator()
 energy_model = ElectricDevicesModel()
-# devicesCal = Electric_devices_calculator()
+
+transCal = TransportCalculator()
+devicesCal = Electric_devices_calculator()
 # water_emission_calc = WaterEmissionCalculator()
 
 carbon_footprint = {}
@@ -29,7 +30,7 @@ def carbonfp_transport_data():
     data["fuel_type"]
         )
         
-        print("Final calculations: ", result)
+        print("Final transport calculations: ", result)
         carbon_footprint["transport"] = result
         return jsonify(result)
     except Exception as error:
@@ -66,6 +67,8 @@ def carbonfp_transport_data():
 def getdevices():
     try:
         response = request.get_json()  
+        
+        print(response['device'])
        
         devices = energy_model.get_devices_by_ids(response['device'])
             
@@ -74,7 +77,7 @@ def getdevices():
         return jsonify({"Status": "Devices collected successfully.", "devices": devices}), 201
         
     except KeyError as error:
-        return jsonify({"Status": error})
+        return jsonify({"Status": str(error)})
 
 
 # @bp.route('/carbonfp/devices/calculation-basic', methods=['POST'])
@@ -100,19 +103,33 @@ def getdevices():
 def carbonfp_accurate():
     try:
         response = request.get_json()
-        electricity_consumption = response['electricity_consumption']
-        type_calculation = response['type_calculation'][0]
-    
-        status = devicesCal.calculation_type(type_calculation, electricity_consumption, response)
+        # type_calculation = response['type_calculation'][0]
         
-        if status == 'Electric calculation successfully.':
-            status = 'Carbonfp successfully.'
-        elif status == 'Failed electrical calculation.':
-            status = 'Something went wrong, try again later.'
+        # Call the calculation function
+        result = devicesCal.accurate_calculation(response)
         
-        return jsonify({'Status': status})
-    except KeyError as error:
-        return jsonify({'Status': error})
+        energy_data = energy_model.calculate_energy_footprint(result)
+        
+        print("Final transport calculations: ", energy_data)
+        carbon_footprint["energy"] = energy_data
+        
+        print(carbon_footprint)
+        
+        if energy_data:
+            return jsonify({
+                'Status': 'Energy calculated successfully.',
+                'total_emission': energy_data["totalEmission"],
+                'message': f'Total weekly carbon emission: {energy_data["totalEmission"]} kgCO2e'
+            })
+        else:
+            return jsonify({
+                'Status': 'Something went wrong, try again later.',
+                'message': 'Failed to calculate emissions'
+            })
+            
+    except Exception as error:
+        print(f'Error in carbonfp_accurate: {error}')
+        return jsonify({'Status': str(error)})
 
 
 # @bp.route('/carbonfp/products/get-products-selected', methods=['POST'])

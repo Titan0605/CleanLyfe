@@ -8,6 +8,7 @@ class ElectricDevicesModel:
     def __init__(self) -> None:
         self._client: Optional[MongoClient] = None
         self._devices_catalog_collection: Optional[Collection] = None
+        self._devices_collection: Optional[Collection] = None
         
     @property
     def client(self) -> MongoClient:
@@ -20,6 +21,12 @@ class ElectricDevicesModel:
         if self._devices_catalog_collection is None:
             self._devices_catalog_collection = get_collection("deviceCatalog")
         return self._devices_catalog_collection
+    
+    @property
+    def devices_collection(self) -> Collection:
+        if self._devices_collection is None:
+            self._devices_collection = get_collection("energyDevices")
+        return self._devices_collection
     
     def get_all_devices(self):
         devices = []
@@ -52,6 +59,44 @@ class ElectricDevicesModel:
         print(devices)
         
         return tuple(devices)
+    
+    def calculate_energy_footprint(self, data):
+        user_devices_ids = self._insert_devices(data["devices"])
+        
+        energy_calculus = {
+            "totalEnergyConsumption": data["totalConsumption"],
+            "totalEmission": data["totalEmission"],
+            "devices": user_devices_ids
+        }
+        
+        return energy_calculus
+    
+    def _insert_devices(self, devices):
+        documents = []
+        
+        for device in devices:
+            device_insert = {
+                "deviceType": ObjectId(device["id"]),
+                "deviceActivePower": device["deviceActivePower"],
+                "activeUsedHours": device["activeUsedHours"],
+                "deviceStandbyPower": device["deviceStandbyPower"],
+                "standbyUsedHours": device["standbyUsedHours"],
+                "deviceEfficiency": device["deviceEfficiency"],
+                "activeConsume": device["activeConsume"],
+                "standbyConsume": device["standbyConsume"],
+                "adjustedActiveConsume": device["adjustedActiveConsume"],
+                "adjustedStandbyConsume": device["adjustedStandbyConsume"],
+                "totalDailyConsumption": device["totalDailyConsumption"],
+                "totalWeeklyConsumption": device["totalWeeklyConsumption"],
+                "weeklyCarbonEmission": device["weeklyCarbonEmission"]
+            }
+            documents.append(device_insert)
+            
+        result = self.devices_collection.insert_many(documents)
+        
+        generated_ids = result.inserted_ids
+        
+        return tuple(generated_ids)
             
 
 # class Electric_devices_model:

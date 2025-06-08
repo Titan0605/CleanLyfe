@@ -1,5 +1,5 @@
 from flask import Blueprint, Response, render_template, redirect, url_for, request, jsonify
-from app.services.hydricfp_calculus import HidricCalculator, calculate_consumption
+from app.services.hydric.hydricfp_calculus import HidricCalculator, calculate_consumption
 from app.models.hydric_products_model import Hydric_products_model
 
 bp = Blueprint("hidricfp_routes", __name__)

@@ -1,5 +1,5 @@
 from flask import jsonify, Blueprint, request
-from app.services.transport_calculus import TransportCalculator
+from app.services.carbon.transport_calculations import TransportCalculator
 # from app.services.electric_devices_calculator import Electric_devices_calculator
 # from app.services.carbon_water_calculus import WaterEmissionCalculator
 # from app.models.electric_devices_model import Electric_devices_model

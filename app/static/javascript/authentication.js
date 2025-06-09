@@ -76,28 +76,30 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Logout handler
-  const logoutButton = document.getElementById("logout");
-  if (logoutButton) {
-    logoutButton.addEventListener("click", async function () {
-      try {
-        const response = await fetch("/logout", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+  const logoutButtons = document.querySelectorAll(".logout");
+  if (logoutButtons) {
+    logoutButtons.forEach((logoutButton) => {
+      logoutButton.addEventListener("click", async function () {
+        try {
+          const response = await fetch("/logout", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
 
-        const result = await handleResponse(response);
+          const result = await handleResponse(response);
 
-        if (result.status === "success") {
-          window.location.href = "/";
-        } else {
-          showError(result.message);
+          if (result.status === "success") {
+            window.location.href = "/";
+          } else {
+            showError(result.message);
+          }
+        } catch (error) {
+          console.error("Logout error:", error);
+          showError(error.message);
         }
-      } catch (error) {
-        console.error("Logout error:", error);
-        showError(error.message);
-      }
+      });
     });
   }
 });

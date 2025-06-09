@@ -6,6 +6,6 @@ bp = Blueprint("home_view", __name__)
 def home():
    if "username" in session:
       user = session
-      return render_template("home.html")#user=user)
+      return render_template("home.html", user=user)
    else:
       return render_template('index.html')

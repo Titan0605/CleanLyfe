@@ -98,3 +98,5 @@ class Waterflow_model:
         
         return False
         
+
+model_waterflow = Waterflow_model()

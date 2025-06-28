@@ -98,3 +98,37 @@ def exists():
         "is_in_database": exists,
         "message": "WaterFlow found" if exists else "WaterFlow not found"
     }), (200 if exists else 404)
+
+@waterflow_bp.route('/history', methods=['GET'])
+def get_history():
+    mac = request.args.get('waterflow_mac', '').strip()
+    if not mac:
+        return jsonify({"status": "error", "message": "Missing 'waterflow_mac' parameter"}), 400
+
+    history = model_waterflow.get_history_of_the_waterflow(mac)
+    if history is None:
+        return jsonify({"status": "error", "message": "WaterFlow not found"}), 404
+
+    return jsonify({
+        "status": "success",
+        "message": "History retrieved successfully",
+        "waterflow_mac": mac,
+        "history": history
+    }), 200
+
+
+@waterflow_bp.route('/info', methods=['GET'])
+def get_user_waterflows_info():
+    user_id = request.args.get('user_id', '').strip()
+    if not user_id:
+        return jsonify({"status": "error", "message": "Missing 'user_id' parameter"}), 400
+
+    info = model_waterflow.get_information_waterflows(user_id)
+    if info is None:
+        return jsonify({"status": "error", "message": "No WaterFlows found for this user"}), 404
+
+    return jsonify({
+        "status": "success",
+        "message": "WaterFlow information retrieved successfully",
+        "waterflows": info
+    }), 200

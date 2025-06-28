@@ -6,6 +6,7 @@ from bson.objectid import ObjectId
 from flask import session
 from typing import Optional, Dict, Any
 from utils import generate_token
+import pytz
 
 class Waterflow_model:
     def __init__(self) -> None:
@@ -46,11 +47,13 @@ class Waterflow_model:
         
     def send_command_to_change(self, mac_address, activate: bool):
         db = self.waterflow_collection
-
+        local_zone = pytz.timezone('America/Chihuahua')
+        local_date = datetime.now(local_zone)
         try:
             db.update_one(
                 {"_id": ObjectId(mac_address)},
-                {"$set": {"activate": activate}}
+                {"$set": {"activate": activate},
+                 "$push": {"history": local_date}},
                 )
             return True
         except:
@@ -61,8 +64,6 @@ class Waterflow_model:
 
         state = db.find_one({"_id": ObjectId(mac_address)}, {"activate": 1, "_id": 0})
         
-
-
         return state
     
     def send_token_from_waterflow(self, token, mac_address):
@@ -73,7 +74,7 @@ class Waterflow_model:
         try:
             db_users.update_one(
                 {"token": token},
-                {"$push": {"waterflows": mac_address}}
+                {"$push": {"waterflows": ObjectId(mac_address)}}
             ) 
 
             query = {
@@ -97,6 +98,42 @@ class Waterflow_model:
             return True
         
         return False
+    
+    def get_waterflows_user(self, user_id):
+        user = self.users_collection.find_one({"_id": ObjectId(user_id)}, {"_id": 0, "waterflows": 1})
+        return user["waterflows"] if user else None
+    
+    def get_history_of_the_waterflow(self, mac_address):
+        db = self.waterflow_collection
+        waterflow = db.find_one({"_id": ObjectId(mac_address)}, {"_id": 0, "history": 1})
+        return waterflow["history"] if waterflow else None
+    
+    def get_information_waterflows(self, user_id):
+        wf_ids = self.get_waterflows_user(user_id)
+        if not wf_ids:
+            return None
         
+        try:
+            object_ids = [ObjectId(wf) for wf in wf_ids]
+        except Exception:
+            return None
+
+        cursor = self.waterflow_collection.find(
+            {"_id": {"$in": object_ids}},
+            {"waterflow_mac": 1, "activate": 1, "history": 1}
+        )
+
+        results = []
+        for doc in cursor:
+            doc["_id"] = str(doc["_id"])
+            raw_history = doc.get("history", [])
+            doc["history"] = [
+                dt.isoformat() if hasattr(dt, "isoformat") else str(dt)
+                for dt in raw_history
+            ]
+            results.append(doc)
+
+        return results
+
 
 model_waterflow = Waterflow_model()

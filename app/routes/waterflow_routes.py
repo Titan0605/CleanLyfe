@@ -12,13 +12,14 @@ def generate_token():
         return jsonify({"status": "error", "message": "Missing 'user_id' field"}), 400
 
     try:
-        success = model_waterflow.generate_token_to_user(user_id)
-        if not success:
+        token = model_waterflow.generate_token_to_user(user_id)
+        if not token:
             raise ValueError
         return jsonify({
-            "status": "success",
-            "message": "Token generated successfully",
-            "user_id": user_id
+        "status": "success",
+        "message": "Token generated successfully",
+        "user_id": user_id,
+        "token": token
         }), 201
     except Exception:
         return jsonify({"status": "error", "message": "User not found or update failed"}), 404
@@ -48,7 +49,7 @@ def send_command():
         return jsonify({"status": "error", "message": "Device not found or update failed"}), 404
 
 
-@waterflow_bp.route('/state', methods=['GET'])
+@waterflow_bp.route('/waterflow-state', methods=['GET'])
 def get_state():
     mac = request.args.get('waterflow_mac', '').strip()
     if not mac:
@@ -66,7 +67,7 @@ def get_state():
     }), 200
 
 
-@waterflow_bp.route('/pair', methods=['POST'])
+@waterflow_bp.route('/send-token', methods=['POST'])
 def pair_device():
     data = request.get_json() or {}
     token = data.get('token', '').strip()
@@ -86,7 +87,7 @@ def pair_device():
     }), 201
 
 
-@waterflow_bp.route('/exists', methods=['GET'])
+@waterflow_bp.route('/in-database', methods=['GET'])
 def exists():
     mac = request.args.get('waterflow_mac', '').strip()
     if not mac:

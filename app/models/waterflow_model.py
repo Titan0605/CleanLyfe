@@ -41,9 +41,9 @@ class Waterflow_model:
                 {"_id": ObjectId(user_id)},
                 {"$set": {"token": token}}
             )
-            return True
+            return token
         except:
-            return False
+            return None
         
     def send_command_to_change(self, mac_address, activate: bool):
         db = self.waterflow_collection
@@ -105,9 +105,20 @@ class Waterflow_model:
     
     def get_history_of_the_waterflow(self, mac_address):
         db = self.waterflow_collection
-        waterflow = db.find_one({"_id": ObjectId(mac_address)}, {"_id": 0, "history": 1})
-        return waterflow["history"] if waterflow else None
-    
+        entry = db.find_one(
+            {"_id": ObjectId(mac_address)},
+            {"_id": 0, "history": 1}
+        )
+        if not entry:
+            return None
+
+        raw_history = entry.get("history", [])
+        iso_history = [
+            dt.isoformat() if hasattr(dt, "isoformat") else str(dt)
+            for dt in raw_history
+        ]
+        return iso_history
+
     def get_information_waterflows(self, user_id):
         wf_ids = self.get_waterflows_user(user_id)
         if not wf_ids:

@@ -198,8 +198,11 @@ class Waterflow_model:
                 {"$push": {"historytemp": {"temp": temp,
                                            "date": local_date }}}
             )
+            return True
         except:
-            print()
+            print("ERROR IN UPDATING THE TEMP")
+            return False
+
 
 
 model_waterflow = Waterflow_model()

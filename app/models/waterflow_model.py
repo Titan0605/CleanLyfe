@@ -53,7 +53,9 @@ class Waterflow_model:
             db.update_one(
                 {"_id": ObjectId(mac_address)},
                 {"$set": {"activate": activate},
-                 "$push": {"history": local_date}},
+                 "$push": {"history": {"date": local_date,
+                                       "state": activate
+                                       }}},
                 )
             return True
         except:
@@ -80,7 +82,7 @@ class Waterflow_model:
             query = {
                 "_id": ObjectId(mac_address),
                 "activate": False,
-                "history": []
+                "history": {}
             }
 
             db_waterflow.insert_one(query)
@@ -105,19 +107,23 @@ class Waterflow_model:
     
     def get_history_of_the_waterflow(self, mac_address):
         db = self.waterflow_collection
-        entry = db.find_one(
+        entry = list(db.find_one(
             {"_id": ObjectId(mac_address)},
-            {"_id": 0, "history": 1}
-        )
+            {"_id": 0, "stateHistory": 1}
+        ))
         if not entry:
             return None
 
-        raw_history = entry.get("history", [])
-        iso_history = [
-            dt.isoformat() if hasattr(dt, "isoformat") else str(dt)
-            for dt in raw_history
-        ]
-        return iso_history
+        raw_history_with_activate = entry.get("history", [])
+        results = []
+        for doc in raw_history_with_activate:
+            isoformated = doc.get("date", "").isoformat()
+            results.append({
+                "date": isoformated,
+                "state": doc.get("state")
+            })
+        
+        return results
 
     def get_information_waterflows(self, user_id):
         wf_ids = self.get_waterflows_user(user_id)
@@ -138,13 +144,62 @@ class Waterflow_model:
         for doc in cursor:
             doc["_id"] = str(doc["_id"])
             raw_history = doc.get("history", [])
-            doc["history"] = [
+            doc["history"]["date"] = [
                 dt.isoformat() if hasattr(dt, "isoformat") else str(dt)
                 for dt in raw_history
             ]
             results.append(doc)
 
         return results
+
+    def get_temperature_waterflow(self, mac_address):
+        db = self.waterflow_collection
+        waterflow = db.find_one(
+            {"_id": ObjectId(mac_address)},
+            {"currentTemp": 1, "autoClose": 1, "autoCloseTemp": 1, "_id": 0}
+            )
+        
+        if not waterflow:
+            return None
+
+        return waterflow
+    
+    def get_history_temp(self, mac_address):
+        db = self.waterflow_collection
+
+        entry = db.find_one(
+            {"_id": ObjectId(mac_address)},
+            {"historytemp": 1, "_id": 0}
+        )
+        if not entry:
+            return None
+
+        raw_history_with_activate = entry.get("historytemp", [])
+
+        results = []
+        for doc in raw_history_with_activate:
+            isoformated = doc.get("date", "").isoformat()
+            results.append({
+                "date": isoformated,
+                "temp": doc.get("temp")
+            })
+        
+        return results
+    
+    def send_temp(self, mac_address, temp):
+        db = self.waterflow_collection
+        local_zone = pytz.timezone('America/Chihuahua')
+        local_date = datetime.now(local_zone)
+
+        try:
+            db.update_one(
+                {"_id": ObjectId(mac_address)},
+                {"$set": {"currentTemp": temp}},
+                {"$push": {"historytemp": {"temp": temp,
+                                           "date": local_date }}}
+            )
+        except:
+            print()
 
 
 model_waterflow = Waterflow_model()

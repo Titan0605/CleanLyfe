@@ -100,7 +100,7 @@ def exists():
         "message": "WaterFlow found" if exists else "WaterFlow not found"
     }), (200 if exists else 404)
 
-@waterflow_bp.route('/history', methods=['GET'])
+@waterflow_bp.route('/history_state', methods=['GET'])
 def get_history():
     mac = request.args.get('waterflow_mac', '').strip()
     if not mac:
@@ -118,7 +118,7 @@ def get_history():
     }), 200
 
 
-@waterflow_bp.route('/info', methods=['GET'])
+@waterflow_bp.route('/info_waterflow', methods=['GET'])
 def get_user_waterflows_info():
     user_id = request.args.get('user_id', '').strip()
     if not user_id:
@@ -132,4 +132,27 @@ def get_user_waterflows_info():
         "status": "success",
         "message": "WaterFlow information retrieved successfully",
         "waterflows": info
+    }), 200
+
+@waterflow_bp.route('/get_temperature_waterflow', methods=["GET"])
+def get_temperature_waterflow():
+    mac_address = request.args.get("mac_address", "")
+    if not mac_address:
+        return jsonify({
+            "status": "error",
+            "message": "No mac_address sent"
+        }), 400
+    
+    response = model_waterflow.get_temperature_waterflow(mac_address)
+
+    if not response:
+        return jsonify({
+            "status": "error",
+            "message": "Waterflow not found"
+        }), 404
+    
+    return jsonify({
+        "status": "successfuly",
+        "message": "Information collected succesfuly",
+        "results": response
     }), 200

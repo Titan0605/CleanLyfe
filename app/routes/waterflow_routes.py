@@ -156,3 +156,25 @@ def get_temperature_waterflow():
         "message": "Information collected succesfuly",
         "results": response
     }), 200
+
+@waterflow_bp.route("/get_history_temp",methods=["GET"])
+def get_history_temp():
+    mac_address = request.args.get("mac_address", "")
+    if not mac_address:
+        return jsonify({
+            "status": "error",
+            "message": "No mac_address sent"
+        }), 400
+    
+    response = model_waterflow.get_history_temp(mac_address)
+    if not response:
+        return jsonify({
+            "status": "error",
+            "message": "Waterflow not found"
+        }), 404
+    
+    return jsonify({
+        "status": "successfuly",
+        "message": "Information collected succesfuly",
+        "results": response
+    }), 200

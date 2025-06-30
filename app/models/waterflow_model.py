@@ -203,6 +203,4 @@ class Waterflow_model:
             print("ERROR IN UPDATING THE TEMP")
             return False
 
-
-
 model_waterflow = Waterflow_model()

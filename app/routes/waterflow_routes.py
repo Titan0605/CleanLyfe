@@ -100,7 +100,7 @@ def exists():
         "message": "WaterFlow found" if exists else "WaterFlow not found"
     }), (200 if exists else 404)
 
-@waterflow_bp.route('/history_state', methods=['GET'])
+@waterflow_bp.route('/history-state', methods=['GET'])
 def get_history():
     mac = request.args.get('waterflow_mac', '').strip()
     if not mac:
@@ -118,7 +118,7 @@ def get_history():
     }), 200
 
 
-@waterflow_bp.route('/info_waterflow', methods=['GET'])
+@waterflow_bp.route('/info-waterflow', methods=['GET'])
 def get_user_waterflows_info():
     user_id = request.args.get('user_id', '').strip()
     if not user_id:
@@ -134,7 +134,7 @@ def get_user_waterflows_info():
         "waterflows": info
     }), 200
 
-@waterflow_bp.route('/get_temperature_waterflow', methods=["GET"])
+@waterflow_bp.route('/get-temperature-waterflow', methods=["GET"])
 def get_temperature_waterflow():
     mac_address = request.args.get("mac_address", "")
     if not mac_address:
@@ -157,7 +157,7 @@ def get_temperature_waterflow():
         "results": response
     }), 200
 
-@waterflow_bp.route("/get_history_temp",methods=["GET"])
+@waterflow_bp.route("/get-history-temp",methods=["GET"])
 def get_history_temp():
     mac_address = request.args.get("mac_address", "")
     if not mac_address:
@@ -177,4 +177,29 @@ def get_history_temp():
         "status": "successfuly",
         "message": "Information collected succesfuly",
         "results": response
+    }), 200
+
+@waterflow_bp.route("/send-temperature", methods=["POST"])
+def send_temperature():
+    data = request.get_json()
+    if not data or not "mad_address" in data or not "temp" in data:
+        return jsonify({
+            "status": "error",
+            "message": "no data sent"
+        }), 400
+    
+    mac_address = data.get("mac_address", "")
+    temp = data.get("temp", "")
+
+    response = model_waterflow.send_temp(mac_address, temp)
+
+    if not response:
+        return jsonify({
+            "status": "error",
+            "message": "something went wrong with the update"
+        })
+    
+    return jsonify({
+        "status": "successfuly",
+        "message": "the update went well"
     }), 200

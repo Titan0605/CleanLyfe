@@ -129,7 +129,7 @@ class Waterflow_model:
         wf_ids = self.get_waterflows_user(user_id)
         if not wf_ids:
             return None
-        
+
         try:
             object_ids = [ObjectId(wf) for wf in wf_ids]
         except Exception:
@@ -137,20 +137,37 @@ class Waterflow_model:
 
         cursor = self.waterflow_collection.find(
             {"_id": {"$in": object_ids}},
-            {"waterflow_mac": 1, "activate": 1, "stateHistory": 1, "historytemp": 1, "currentTemp": 1, "autoCloseTemp": 1, "autoClose": 1, "active": 1, "_id": 0}
+            {
+                "_id": 1,
+                "waterflow_mac": 1,
+                "activate": 1,
+                "stateHistory": 1,
+                "historytemp": 1,
+                "currentTemp": 1,
+                "autoCloseTemp": 1,
+                "autoClose": 1,
+                "active": 1
+            }
         )
 
         results = []
         for doc in cursor:
             doc["_id"] = str(doc["_id"])
-            raw_history = doc.get("history", [])
-            doc["history"]["date"] = [
-                dt.isoformat() if hasattr(dt, "isoformat") else str(dt)
-                for dt in raw_history
-            ]
+
+            if "stateHistory" in doc:
+                for entry in doc["stateHistory"]:
+                    dt = entry.get("date")
+                    entry["date"] = dt.isoformat() if hasattr(dt, "isoformat") else str(dt)
+
+            if "historytemp" in doc:
+                for entry in doc["historytemp"]:
+                    dt = entry.get("date")
+                    entry["date"] = dt.isoformat() if hasattr(dt, "isoformat") else str(dt)
+
             results.append(doc)
 
         return results
+
 
     def get_temperature_waterflow(self, mac_address):
         db = self.waterflow_collection

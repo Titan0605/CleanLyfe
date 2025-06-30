@@ -137,7 +137,7 @@ class Waterflow_model:
 
         cursor = self.waterflow_collection.find(
             {"_id": {"$in": object_ids}},
-            {"waterflow_mac": 1, "activate": 1, "history": 1}
+            {"waterflow_mac": 1, "activate": 1, "stateHistory": 1, "historytemp": 1, "currentTemp": 1, "autoCloseTemp": 1, "autoClose": 1, "active": 1, "_id": 0}
         )
 
         results = []

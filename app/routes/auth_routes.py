@@ -108,6 +108,7 @@ def login_service():
             'status': 'success',
             'message': 'Login successful',
             'user': {
+                'id': user['id'],
                 'username': user['user_name'],
                 'email': user['email']
             }

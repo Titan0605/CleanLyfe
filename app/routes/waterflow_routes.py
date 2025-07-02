@@ -182,7 +182,7 @@ def get_history_temp():
 @waterflow_bp.route("/send-temperature", methods=["POST"])
 def send_temperature():
     data = request.get_json()
-    if not data or not "mad_address" in data or not "temp" in data:
+    if not data or not "mac_address" in data or not "temp" in data:
         return jsonify({
             "status": "error",
             "message": "no data sent"

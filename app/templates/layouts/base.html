@@ -18,7 +18,7 @@
     {%block meta%}{%endblock%}
      <header class="antialiased bg-gray-50 dark:bg-gray-900">
       <nav class="bg-gray-800 border-b border-gray-200 px-4 py-3 dark:bg-gray-800 dark:border-gray-700 z-50">
-        <div class="flex flex-wrap justify-between items-center">Add commentMore actions
+        <div class="flex flex-wrap justify-between items-center">
           <div class="flex gap-2">
             <!-- Toggle button -->
             <button
@@ -37,7 +37,7 @@
           
           <div class="gap-4 hidden sm:flex">
             <!-- BOTON LOG IN -->
-            <a href="{{ url_for('index_view.login') }}">
+            <a href="{{ url_for('auth_views.login') }}">
                 <button
                     type="button"
                     class="text-white bg-green-500 hover:bg-green-800 hover:scale-105 transition-transform duration-300 focus:outline-none focus:ring-4 focus:ring-green-300 font-bold rounded-full text-sm px-5 py-2 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 cursor-pointer">
@@ -45,11 +45,13 @@
                 </button>
             </a>
             <!-- BOTON SING UP -->
+              <a href="{{ url_for('auth_views.sign_up') }}">
             <button
               type="button"
               class="border focus:outline-none hover:scale-105 transition-transform duration-300 focus:ring-4 font-bold rounded-full text-sm px-5 py-2 bg-gray-800 text-white border-gray-600 hover:bg-gray-700 hover:border-gray-600 focus:ring-gray-700 cursor-pointer">
               Sign up
             </button>
+            </a>
           </div>
         </div>
       </nav>

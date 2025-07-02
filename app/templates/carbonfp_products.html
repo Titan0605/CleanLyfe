@@ -2,53 +2,50 @@
 <div class="flex flex-col items-center justify-center pb-8 mx-auto min-h-screen max-w-md lg:p-0 text-black dark:text-white">
   <div class="pb-4 rounded-lg bg-gray-50 dark:bg-gray-900 md:space-y-6 sm:p-8">
     <form id="products_select_form" class="w-full max-w-md mx-auto px-4 py-8 space-y-6">
-      <!-- Header -->
       <header class="flex items-center justify-center gap-3 text-center">
         <i class="fa-solid fa-bolt text-white text-3xl"></i>
         <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">Products Calculator</h1>
       </header>
 
-      <!-- Product Selection -->
       <section class="flex flex-col gap-3 text-gray-800 dark:text-gray-100">
         <h2 class="text-lg font-medium text-center leading-tight">Choose the types of products purchased in the week</h2>
 
         <label for="product_food" class="flex items-center gap-2">
-          <input type="checkbox" name="product" id="product_food" value="food_section" class="accent-blue-600" />
+          <input type="checkbox" name="product" id="product_food" value="food_section" class="accent-[#238c80]" />
           <span>Food products</span>
         </label>
 
         <label for="product_dairies" class="flex items-center gap-2">
-          <input type="checkbox" name="product" id="product_dairies" value="dairy_section" class="accent-blue-600" />
+          <input type="checkbox" name="product" id="product_dairies" value="dairy_section" class="accent-[#238c80]" />
           <span>Dairy</span>
         </label>
 
         <label for="product_fruit" class="flex items-center gap-2">
-          <input type="checkbox" name="product" id="product_fruit" value="fruits_section" class="accent-blue-600" />
+          <input type="checkbox" name="product" id="product_fruit" value="fruits_section" class="accent-[#238c80]" />
           <span>Fruits</span>
         </label>
 
         <label for="product_clothes" class="flex items-center gap-2">
-          <input type="checkbox" name="product" id="product_clothes" value="clothes_section" class="accent-blue-600" />
+          <input type="checkbox" name="product" id="product_clothes" value="clothes_section" class="accent-[#238c80]" />
           <span>Clothing</span>
         </label>
 
         <label for="product_electrical" class="flex items-center gap-2">
-          <input type="checkbox" name="product" id="product_electrical" value="electrical_section" class="accent-blue-600" />
+          <input type="checkbox" name="product" id="product_electrical" value="electrical_section" class="accent-[#238c80]" />
           <span>Electrical products</span>
         </label>
 
         <label for="product_cleaning" class="flex items-center gap-2">
-          <input type="checkbox" name="product" id="product_cleaning" value="cleaning_section" class="accent-blue-600" />
+          <input type="checkbox" name="product" id="product_cleaning" value="cleaning_section" class="accent-[#238c80]" />
           <span>Cleaning products</span>
         </label>
       </section>
 
-      <!-- Button -->
       <footer class="flex justify-center">
         <button
           id=""
           type="submit"
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-6 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:scale-105 transition-transform"
+          class="text-white bg-[#238c80] hover:bg-[#238c80] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm min-w-screen sm:w-auto px-5 py-2.5 text-center hover:scale-105 hover:transition-transform"
         >
           Next
         </button>
@@ -72,16 +69,15 @@
           <h1 class="text-2xl font-bold">Food products</h1>
         </header>
 
-        <!-- Meat Transportation -->
         <div class="space-y-2">
           <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Meat transportation method</h2>
           <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100">
             <label class="flex items-center gap-2 text-sm">
-              <input type="radio" name="meat_transport" value="transport_local" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="meat_transport" value="transport_local" class="accent-[#238c80] focus:ring-[#238c80]" />
               Local
             </label>
             <label class="flex items-center gap-2 text-sm">
-              <input type="radio" name="meat_transport" value="transport_regional" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="meat_transport" value="transport_regional" class="accent-[#238c80] focus:ring-[#238c80]" />
               Regional
             </label>
             <label class="flex items-center gap-2 text-sm">
@@ -89,51 +85,48 @@
               National
             </label>
             <label class="flex items-center gap-2 text-sm">
-              <input type="radio" name="meat_transport" value="transport_international" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="meat_transport" value="transport_international" class="accent-[#238c80] focus:ring-[#238c80]" />
               International
             </label>
           </div>
         </div>
 
-        <!-- Meat Packing -->
         <div class="space-y-2">
           <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Meat packing method</h2>
           <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100">
             <label class="flex items-center gap-2 text-sm">
-              <input type="radio" name="meat_packing" value="Without_packing" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="meat_packing" value="Without_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
               Without packaging
             </label>
             <label class="flex items-center gap-2 text-sm">
-              <input type="radio" name="meat_packing" value="minimun_packing" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="meat_packing" value="minimun_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
               Minimum packaging
             </label>
             <label class="flex items-center gap-2 text-sm">
-              <input type="radio" name="meat_packing" value="excessive_packing" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="meat_packing" value="excessive_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
               Excessive packaging
             </label>
           </div>
         </div>
 
-        <!-- Meat Refrigeration -->
         <div class="space-y-2">
           <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Meat refrigeration method</h2>
           <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100">
             <label class="flex items-center gap-2 text-sm">
-              <input type="radio" name="meat_refrigeration" value="ambient_temperature" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="meat_refrigeration" value="ambient_temperature" class="accent-[#238c80] focus:ring-[#238c80]" />
               Ambient temperature
             </label>
             <label class="flex items-center gap-2 text-sm">
-              <input type="radio" name="meat_refrigeration" value="refrigerated" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="meat_refrigeration" value="refrigerated" class="accent-[#238c80] focus:ring-[#238c80]" />
               Refrigerated
             </label>
             <label class="flex items-center gap-2 text-sm">
-              <input type="radio" name="meat_refrigeration" value="frozen" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="meat_refrigeration" value="frozen" class="accent-[#238c80] focus:ring-[#238c80]" />
               Frozen
             </label>
           </div>
         </div>
 
-        <!-- Quantity Inputs -->
         <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-3">
           <div>
             <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300" for="cow_meat_kg">Cow meat (kg)</label>
@@ -179,19 +172,19 @@
           <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Dairy transportation method</h2>
           <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100">
             <label for="dairy_transport_local" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="dairy_transport" id="dairy_transport_local" value="transport_local" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="dairy_transport" id="dairy_transport_local" value="transport_local" class="accent-[#238c80] focus:ring-[#238c80]" />
               Local
             </label>
             <label for="dairy_transport_regional" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="dairy_transport" id="dairy_transport_regional" value="transport_regional" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="dairy_transport" id="dairy_transport_regional" value="transport_regional" class="accent-[#238c80] focus:ring-[#238c80]" />
               Regional
             </label>
             <label for="dairy_transport_national" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="dairy_transport" id="dairy_transport_national" value="transport_national" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="dairy_transport" id="dairy_transport_national" value="transport_national" class="accent-[#238c80] focus:ring-[#238c80]" />
               National
             </label>
             <label for="dairy_transport_international" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="dairy_transport" id="dairy_transport_international" value="transport_international" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="dairy_transport" id="dairy_transport_international" value="transport_international" class="accent-[#238c80] focus:ring-[#238c80]" />
               International
             </label>
           </div>
@@ -200,15 +193,15 @@
           <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Dairy packing method</h2>
           <div>
             <label for="dairy_without_packing" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="dairy_packing" id="dairy_without_packing" value="Without_packing" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="dairy_packing" id="dairy_without_packing" value="Without_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
               Without packaging
             </label>
             <label for="dairy_minimun_packing" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="dairy_packing" id="dairy_minimun_packing" value="minimun_packing" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="dairy_packing" id="dairy_minimun_packing" value="minimun_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
               Minimum packaging
             </label>
             <label for="dairy_excessive_packing" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="dairy_packing" id="dairy_excessive_packing" value="excessive_packing" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="dairy_packing" id="dairy_excessive_packing" value="excessive_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
               Excessive packaging
             </label>
           </div>
@@ -217,15 +210,15 @@
           <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Dairy refrigeration method</h2>
           <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100">
             <label for="dairy_ambient_temperature" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="dairy_refrigeration" id="dairy_ambient_temperature" value="ambient_temperature" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="dairy_refrigeration" id="dairy_ambient_temperature" value="ambient_temperature" class="accent-[#238c80] focus:ring-[#238c80]" />
               Ambient temperature
             </label>
             <label for="dairy_refrigerated" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="dairy_refrigeration" id="dairy_refrigerated" value="refrigerated" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="dairy_refrigeration" id="dairy_refrigerated" value="refrigerated" class="accent-[#238c80] focus:ring-[#238c80]" />
               Refrigerated
             </label>
             <label for="dairy_frozen" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="dairy_refrigeration" id="dairy_frozen" value="frozen" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="dairy_refrigeration" id="dairy_frozen" value="frozen" class="accent-[#238c80] focus:ring-[#238c80]" />
               Frozen
             </label>
           </div>
@@ -265,19 +258,19 @@
           <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Fruits transportation method</h2>
           <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100">
             <label for="fruits_transport_local" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="fruits_transport" id="fruits_transport_local" value="transport_local" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="fruits_transport" id="fruits_transport_local" value="transport_local" class="accent-[#238c80] focus:ring-[#238c80]" />
               Local
             </label>
             <label for="fruits_transport_regional" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="fruits_transport" id="fruits_transport_regional" value="transport_regional" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="fruits_transport" id="fruits_transport_regional" value="transport_regional" class="accent-[#238c80] focus:ring-[#238c80]" />
               Regional
             </label>
             <label for="fruits_transport_national" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="fruits_transport" id="fruits_transport_national" value="transport_national" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="fruits_transport" id="fruits_transport_national" value="transport_national" class="accent-[#238c80] focus:ring-[#238c80]" />
               National
             </label>
             <label for="fruits_transport_international" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="fruits_transport" id="fruits_transport_international" value="transport_international" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="fruits_transport" id="fruits_transport_international" value="transport_international" class="accent-[#238c80] focus:ring-[#238c80]" />
               International
             </label>
           </div>
@@ -286,15 +279,15 @@
           <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Fruits packing method</h2>
           <div>
             <label for="fruits_without_packing" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="fruits_packing" id="fruits_without_packing" value="Without_packing" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="fruits_packing" id="fruits_without_packing" value="Without_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
               Without packaging
             </label>
             <label for="fruits_minimun_packing" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="fruits_packing" id="fruits_minimun_packing" value="minimun_packing" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="fruits_packing" id="fruits_minimun_packing" value="minimun_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
               Minimum packaging
             </label>
             <label for="fruits_excessive_packing" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="fruits_packing" id="fruits_excessive_packing" value="excessive_packing" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="fruits_packing" id="fruits_excessive_packing" value="excessive_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
               Excessive packaging
             </label>
           </div>
@@ -303,15 +296,15 @@
           <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Fruits refrigeration method</h2>
           <div>
             <label for="fruits_ambient_temperature" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="fruits_refrigeration" id="fruits_ambient_temperature" value="ambient_temperature" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="fruits_refrigeration" id="fruits_ambient_temperature" value="ambient_temperature" class="accent-[#238c80] focus:ring-[#238c80]" />
               Ambient temperature
             </label>
             <label for="fruits_refrigerated" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="fruits_refrigeration" id="fruits_refrigerated" value="refrigerated" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="fruits_refrigeration" id="fruits_refrigerated" value="refrigerated" class="accent-[#238c80] focus:ring-[#238c80]" />
               Refrigerated
             </label>
             <label for="fruits_frozen" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="fruits_refrigeration" id="fruits_frozen" value="frozen" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="fruits_refrigeration" id="fruits_frozen" value="frozen" class="accent-[#238c80] focus:ring-[#238c80]" />
               Frozen
             </label>
           </div>
@@ -361,19 +354,19 @@
           <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Clothes transportation method</h2>
           <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100">
             <label for="clothes_transport_local" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="clothes_transport" id="clothes_transport_local" value="transport_local" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="clothes_transport" id="clothes_transport_local" value="transport_local" class="accent-[#238c80] focus:ring-[#238c80]" />
               Local
             </label>
             <label for="clothes_transport_regional" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="clothes_transport" id="clothes_transport_regional" value="transport_regional" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="clothes_transport" id="clothes_transport_regional" value="transport_regional" class="accent-[#238c80] focus:ring-[#238c80]" />
               Regional
             </label>
             <label for="clothes_transport_national" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="clothes_transport" id="clothes_transport_national" value="transport_national" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="clothes_transport" id="clothes_transport_national" value="transport_national" class="accent-[#238c80] focus:ring-[#238c80]" />
               National
             </label>
             <label for="clothes_transport_international" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="clothes_transport" id="clothes_transport_international" value="transport_international" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="clothes_transport" id="clothes_transport_international" value="transport_international" class="accent-[#238c80] focus:ring-[#238c80]" />
               International
             </label>
           </div>
@@ -382,15 +375,15 @@
           <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Clothes packing method</h2>
           <div>
             <label for="clothes_without_packing" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="clothes_packing" id="clothes_without_packing" value="Without_packing" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="clothes_packing" id="clothes_without_packing" value="Without_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
               Without packaging
             </label>
             <label for="clothes_minimun_packing" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="clothes_packing" id="clothes_minimun_packing" value="minimun_packing" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="clothes_packing" id="clothes_minimun_packing" value="minimun_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
               Minimum packaging
             </label>
             <label for="clothes_excessive_packing" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="clothes_packing" id="clothes_excessive_packing" value="excessive_packing" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="clothes_packing" id="clothes_excessive_packing" value="excessive_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
               Excessive packaging
             </label>
           </div>
@@ -441,19 +434,17 @@
           <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Electrical products transportation method</h2>
           <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100">
             <label for="electrical_products_transport_local" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="electrical_products_transport" id="electrical_products_transport_local" value="transport_local" class="accent-blue-600 focus:ring-blue-500" />
-              Local
-            </label>
-            <label for="electrical_products_transport_regional" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="electrical_products_transport" id="electrical_products_transport_regional" value="transport_regional" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="electrical_products_transport" id="electrical_products_transport_local" value="transport_local" class="accent-[#238c80] focus:ring-[#238c80]accent-[#238c80]
+              focus:ring-[#238c80] for="electrical_products_transport_regional" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="electrical_products_transport" id="electrical_products_transport_regional" value="transport_regional" class="accent-[#238c80] focus:ring-[#238c80]" />
               Regional
             </label>
             <label for="electrical_products_transport_national" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="electrical_products_transport" id="electrical_products_transport_national" value="transport_national" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="electrical_products_transport" id="electrical_products_transport_national" value="transport_national" class="accent-[#238c80] focus:ring-[#238c80]" />
               National
             </label>
             <label for="electrical_products_transport_international" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="electrical_products_transport" id="electrical_products_transport_international" value="transport_international" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="electrical_products_transport" id="electrical_products_transport_international" value="transport_international" class="accent-[#238c80] focus:ring-[#238c80]" />
               International
             </label>
           </div>
@@ -462,15 +453,15 @@
           <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Electrical products packing method</h2>
           <div>
             <label for="electrical_products_without_packing" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="electrical_packing" id="electrical_products_without_packing" value="Without_packing" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="electrical_packing" id="electrical_products_without_packing" value="Without_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
               Without packaging
             </label>
             <label for="electrical_products_minimun_packing" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="electrical_packing" id="electrical_products_minimun_packing" value="minimun_packing" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="electrical_packing" id="electrical_products_minimun_packing" value="minimun_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
               Minimum packaging
             </label>
             <label for="electrical_products_excessive_packing" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="electrical_packing" id="electrical_products_excessive_packing" value="excessive_packing" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="electrical_packing" id="electrical_products_excessive_packing" value="excessive_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
               Excessive packaging
             </label>
           </div>
@@ -514,25 +505,24 @@
       <section id="cleaning_section" class="product">
         <header class="flex items-center justify-center gap-3 bg-blue-600 text-white rounded-2xl p-4 shadow-md">
           <i class="fa-solid fa-pizza-slice calculator__side-icon"></i>
-          <!-- <-- here goes the icon-->
           <h1 class="text-2xl font-bold">Cleaning products</h1>
         </header>
         <div class="space-y-2">
           <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Cleaning products transportation method</h2>
           <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100">
             <label for="cleaning_products_transport_local" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="cleaning_products_transport" id="cleaning_products_transport_local" value="transport_local" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="cleaning_products_transport" id="cleaning_products_transport_local" value="transport_local" class="accent-[#238c80] focus:ring-[#238c80]" />
               Local
             </label>
             <label for="cleaning_products_transport_regional" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="cleaning_products_transport" id=cleaningl_products_transport_regional" value="transport_regional"class="accent-blue-600 focus:ring-blue-500"/> Regional
+              <input type="radio" name="cleaning_products_transport" id="cleaningl_products_transport_regional" value="transport_regional" class="accent-[#238c80] focus:ring-[#238c80]" /> Regional
             </label>
             <label for="cleaning_products_transport_national" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="cleaning_products_transport" id="cleaning_products_transport_national" value="transport_national" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="cleaning_products_transport" id="cleaning_products_transport_national" value="transport_national" class="accent-[#238c80] focus:ring-[#238c80]" />
               National
             </label>
             <label for="cleaning_products_transport_international" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="cleaning_products_transport" id="cleaning_products_transport_international" value="transport_international" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="cleaning_products_transport" id="cleaning_products_transport_international" value="transport_international" class="accent-[#238c80] focus:ring-[#238c80]" />
               International
             </label>
           </div>
@@ -541,15 +531,15 @@
           <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Electrical products packing method</h2>
           <div>
             <label for="cleaning_products_without_packing" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="cleaning_packing" id="cleaning_products_without_packing" value="Without_packing" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="cleaning_packing" id="cleaning_products_without_packing" value="Without_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
               Without packaging
             </label>
             <label for="cleaning_products_minimun_packing" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="cleaning_packing" id="cleaning_products_minimun_packing" value="minimun_packing" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="cleaning_packing" id="cleaning_products_minimun_packing" value="minimun_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
               Minimum packaging
             </label>
             <label for="cleaning_products_excessive_packing" class="flex items-center gap-2 text-sm">
-              <input type="radio" name="cleaning_packing" id="cleaning_products_excessive_packing" value="excessive_packing" class="accent-blue-600 focus:ring-blue-500" />
+              <input type="radio" name="cleaning_packing" id="cleaning_products_excessive_packing" value="excessive_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
               Excessive packaging
             </label>
           </div>
@@ -568,7 +558,7 @@
           <div>
             <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">How many liters of softener did you buy during the week?</label>
             <input
-              class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2"
               type="number"
               placeholder="Softener in liters"
               name="softener_liters"
@@ -578,7 +568,7 @@
           <div>
             <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">How many liters of all purpose did you buy during the week?</label>
             <input
-              class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2"
               type="number"
               placeholder="Al purpose in liters"
               name="all_purpose_liters"
@@ -589,20 +579,20 @@
       </section>
 
       <footer id="finish_btn" hidden="true">
-        <button type="submit">Finish</button>
+        <button type="submit" class="text-white bg-red-500 px-5 py-2.5 text center font-medium rounded-lg min-w-screen sm:w-auto hover:scale-105hover:transition-transform">Finish</button>
       </footer>
     </form>
 
     <div id="navigation_btns" hidden="true">
       <button
         id="preview_btn"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-6 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:scale-105 transition-transform"
+        class="text-white bg-[#238c80] hover:bg-[#238c80] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm min-w-screen sm:w-auto px-5 py-2.5 text-center hover:scale-105 hover:transition-transform"
       >
         Preview
       </button>
       <button
         id="next_btn"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg text-sm px-6 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:scale-105 transition-transform"
+        class="text-white bg-[#238c80] hover:bg-[#238c80] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm min-w-screen sm:w-auto px-5 py-2.5 text-center hover:scale-105 hover:transition-transform"
       >
         Next
       </button>

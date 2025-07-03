@@ -163,7 +163,7 @@
       </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
-    <script src="url_for('static', filename='javascript/index.js')" ></script>
+    <script src="{{ url_for('static', filename='javascript/index.js') }}" ></script>
     {% block scripts %}{% endblock %}
   </body>
 </html>

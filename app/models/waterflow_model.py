@@ -204,12 +204,26 @@ class Waterflow_model:
         local_zone = pytz.timezone('America/Chihuahua')
         local_date = datetime.now(local_zone)
 
+        waterflow = db.find_one({"MAC": mac_address}, {"historyTemp": 1, "_id": 0})
+
+        historyTemp = waterflow["historyTemp"]
+
+        if not historyTemp:
+            print("NOT HISTORY TEMP FOUND")
+            return False
+        
+        if len(historyTemp) > 30:
+            historyTemp = historyTemp[-29:]
+            historyTemp.append({
+                "temp": temp,
+                "date": local_date
+            })
+
         try:
             db.update_one(
         {"MAC": mac_address},
         {
-                "$set": {"currentTemp": temp},
-                "$push": {"historyTemp": {"temp": temp, "date": local_date}}
+                "$set": {"currentTemp": temp, "historyTemp": historyTemp}
                 }
             )
             return True

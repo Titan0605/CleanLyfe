@@ -1,11 +1,11 @@
 from app.utils.db_utils import get_client, get_collection
+from app.utils import generate_token
 from datetime import datetime, timezone
 from pymongo import MongoClient
 from pymongo.collection import Collection
 from bson.objectid import ObjectId
 from flask import session
 from typing import Optional, Dict, Any
-from utils import generate_token
 import pytz
 
 class Waterflow_model:
@@ -64,7 +64,7 @@ class Waterflow_model:
     def get_waterflow_state_db(self, mac_address):
         db = self.waterflow_collection
 
-        state = db.find_one({"_id": ObjectId(mac_address)}, {"activate": 1, "_id": 0})
+        state = db.find_one({"MAC": mac_address}, {"_id": 0, "active": 1})
         
         return state
     
@@ -74,27 +74,32 @@ class Waterflow_model:
         db_users = self.users_collection
 
         try:
-            db_users.update_one(
-                {"token": token},
-                {"$push": {"waterflows": ObjectId(mac_address)}}
-            ) 
-
             query = {
-                "_id": ObjectId(mac_address),
-                "activate": False,
-                "history": {}
+                "MAC": mac_address,
+                "stateHistory": [],
+                "historyTemp": [],
+                "currentTemp": 0,
+                "autoCloseTemp": 0,
+                "autoClose": False,
+                "active": False
             }
 
-            db_waterflow.insert_one(query)
+            result = db_waterflow.insert_one(query)
+            
+            db_users.update_one(
+                {"token": token},
+                {"$push": {"waterflows": result.inserted_id}}
+            )
 
             return True
-        except:
+        except Exception as e:
+            print(f"Unexpected error: {e}")
             return False
 
     def waterflow_in_database(self, mac_address):
         db = self.waterflow_collection
 
-        waterflow = db.find_one({"_id": ObjectId(mac_address)})
+        waterflow = db.find_one({"MAC": mac_address})
 
         if waterflow:
             return True
@@ -107,23 +112,14 @@ class Waterflow_model:
     
     def get_history_of_the_waterflow(self, mac_address):
         db = self.waterflow_collection
-        entry = list(db.find_one(
-            {"_id": ObjectId(mac_address)},
+        result = db.find_one(
+            {"MAC": mac_address},
             {"_id": 0, "stateHistory": 1}
-        ))
-        if not entry:
+        )
+        if not result:
             return None
-
-        raw_history_with_activate = entry.get("history", [])
-        results = []
-        for doc in raw_history_with_activate:
-            isoformated = doc.get("date", "").isoformat()
-            results.append({
-                "date": isoformated,
-                "state": doc.get("state")
-            })
         
-        return results
+        return list(result)
 
     def get_information_waterflows(self, user_id):
         wf_ids = self.get_waterflows_user(user_id)
@@ -172,8 +168,8 @@ class Waterflow_model:
     def get_temperature_waterflow(self, mac_address):
         db = self.waterflow_collection
         waterflow = db.find_one(
-            {"_id": ObjectId(mac_address)},
-            {"currentTemp": 1, "autoClose": 1, "autoCloseTemp": 1, "_id": 0}
+            {"MAC": mac_address},
+            {"_id": 0, "currentTemp": 1, "autoClose": 1, "autoCloseTemp": 1}
             )
         
         if not waterflow:
@@ -210,10 +206,11 @@ class Waterflow_model:
 
         try:
             db.update_one(
-                {"_id": ObjectId(mac_address)},
-                {"$set": {"currentTemp": temp}},
-                {"$push": {"historytemp": {"temp": temp,
-                                           "date": local_date }}}
+        {"MAC": mac_address},
+        {
+                "$set": {"currentTemp": temp},
+                "$push": {"historyTemp": {"temp": temp, "date": local_date}}
+                }
             )
             return True
         except:

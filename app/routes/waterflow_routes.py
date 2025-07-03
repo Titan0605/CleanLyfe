@@ -1,10 +1,9 @@
 from flask import Blueprint, request, jsonify
-from bson.objectid import ObjectId
-from models import model_waterflow
+from app.models import model_waterflow
 
-waterflow_bp = Blueprint('waterflow', __name__, url_prefix='/waterflow')
+bp = Blueprint('waterflow', __name__, url_prefix='/waterflow')
 
-@waterflow_bp.route('/generate-token', methods=['POST'])
+@bp.route('/generate-token', methods=['POST', 'GET'])
 def generate_token():
     data = request.get_json() or {}
     user_id = data.get('user_id', '').strip()
@@ -25,7 +24,7 @@ def generate_token():
         return jsonify({"status": "error", "message": "User not found or update failed"}), 404
 
 
-@waterflow_bp.route('/send-command', methods=['POST'])
+@bp.route('/send-command', methods=['POST'])
 def send_command():
     data = request.get_json() or {}
     mac = data.get('waterflow_mac', '').strip()
@@ -49,7 +48,7 @@ def send_command():
         return jsonify({"status": "error", "message": "Device not found or update failed"}), 404
 
 
-@waterflow_bp.route('/waterflow-state', methods=['GET'])
+@bp.route('/waterflow-state', methods=['GET'])
 def get_state():
     mac = request.args.get('waterflow_mac', '').strip()
     if not mac:
@@ -63,15 +62,17 @@ def get_state():
         "status": "success",
         "message": "State retrieved successfully",
         "waterflow_mac": mac,
-        "activate": state.get('activate', False)
+        "activate": state.get('active', False)
     }), 200
 
 
-@waterflow_bp.route('/send-token', methods=['POST'])
+@bp.route('/send-token', methods=['POST'])
 def pair_device():
     data = request.get_json() or {}
     token = data.get('token', '').strip()
     mac = data.get('waterflow_mac', '').strip()
+    
+    print(data)
 
     if not token or not mac:
         return jsonify({"status": "error", "message": "Missing 'token' or 'waterflow_mac'"}), 400
@@ -87,7 +88,7 @@ def pair_device():
     }), 201
 
 
-@waterflow_bp.route('/in-database', methods=['GET'])
+@bp.route('/in-database', methods=['GET'])
 def exists():
     mac = request.args.get('waterflow_mac', '').strip()
     if not mac:
@@ -100,7 +101,7 @@ def exists():
         "message": "WaterFlow found" if exists else "WaterFlow not found"
     }), (200 if exists else 404)
 
-@waterflow_bp.route('/history-state', methods=['GET'])
+@bp.route('/history-state', methods=['GET'])
 def get_history():
     mac = request.args.get('waterflow_mac', '').strip()
     if not mac:
@@ -118,7 +119,7 @@ def get_history():
     }), 200
 
 
-@waterflow_bp.route('/info-waterflow', methods=['GET'])
+@bp.route('/info-waterflow', methods=['GET'])
 def get_user_waterflows_info():
     user_id = request.args.get('user_id', '').strip()
     if not user_id:
@@ -134,7 +135,7 @@ def get_user_waterflows_info():
         "waterflows": info
     }), 200
 
-@waterflow_bp.route('/get-temperature-waterflow', methods=["GET"])
+@bp.route('/get-temperature-waterflow', methods=["GET"])
 def get_temperature_waterflow():
     mac_address = request.args.get("mac_address", "")
     if not mac_address:
@@ -157,7 +158,7 @@ def get_temperature_waterflow():
         "results": response
     }), 200
 
-@waterflow_bp.route("/get-history-temp",methods=["GET"])
+@bp.route("/get-history-temp",methods=["GET"])
 def get_history_temp():
     mac_address = request.args.get("mac_address", "")
     if not mac_address:
@@ -179,7 +180,7 @@ def get_history_temp():
         "results": response
     }), 200
 
-@waterflow_bp.route("/send-temperature", methods=["POST"])
+@bp.route("/send-temperature", methods=["POST"])
 def send_temperature():
     data = request.get_json()
     if not data or not "mac_address" in data or not "temp" in data:

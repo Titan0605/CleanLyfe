@@ -51,7 +51,7 @@ class Waterflow_model:
         local_date = datetime.now(local_zone)
         try:
             db.update_one(
-                {"_id": ObjectId(mac_address)},
+                {"MAC": mac_address},
                 {"$set": {"activate": activate},
                  "$push": {"history": {"date": local_date,
                                        "state": activate
@@ -107,7 +107,7 @@ class Waterflow_model:
         return False
     
     def get_waterflows_user(self, user_id):
-        user = self.users_collection.find_one({"_id": ObjectId(user_id)}, {"_id": 0, "waterflows": 1})
+        user = self.users_collection.find_one({"_id": ObjectId(user_id)}, {"_id": 0, "water_flows": 1})
         return user["waterflows"] if user else None
     
     def get_history_of_the_waterflow(self, mac_address):
@@ -132,10 +132,10 @@ class Waterflow_model:
             return None
 
         cursor = self.waterflow_collection.find(
-            {"_id": {"$in": object_ids}},
+            {"MAC": {"$in": object_ids}},
             {
                 "_id": 1,
-                "waterflow_mac": 1,
+                "MAC": 1,
                 "activate": 1,
                 "stateHistory": 1,
                 "historytemp": 1,
@@ -181,7 +181,7 @@ class Waterflow_model:
         db = self.waterflow_collection
 
         entry = db.find_one(
-            {"_id": ObjectId(mac_address)},
+            {"MAC": mac_address},
             {"historytemp": 1, "_id": 0}
         )
         if not entry:

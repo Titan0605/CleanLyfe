@@ -119,9 +119,8 @@ def get_history():
     }), 200
 
 
-@bp.route('/info-waterflow', methods=['GET'])
-def get_user_waterflows_info():
-    user_id = request.args.get('user_id', '').strip()
+@bp.route('/info-waterflow/<string:user_id>', methods=['POST'])
+def get_user_waterflows_info(user_id):    
     if not user_id:
         return jsonify({"status": "error", "message": "Missing 'user_id' parameter"}), 400
 

@@ -52,7 +52,7 @@ class Waterflow_model:
         try:
             db.update_one(
                 {"MAC": mac_address},
-                {"$set": {"activate": activate},
+                {"$set": {"active": activate},
                  "$push": {"history": {"date": local_date,
                                        "state": activate
                                        }}},

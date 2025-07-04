@@ -87,8 +87,24 @@ class WaterEmissionCalculator:
             hot_water_emission = hot_water * (self.WATER_DISTRIBUTION_EMISSION + heating_emission)
             
             result = cold_water_emission + hot_water_emission
+            
+            response = {
+                "coldWaterLiters": cold_water,
+                "hotWaterLiters": hot_water,
+                "coldWaterEmission": cold_water_emission,
+                "hotWaterEmission": hot_water_emission,
+                "totalEmission": result
+            }
         else:
             # If no heating, only calculate distribution emissions
             result = liters * self.WATER_DISTRIBUTION_EMISSION
+            
+            response = {
+                "coldWaterLiters": liters,
+                "hotWaterLiters": 0,
+                "coldWaterEmission": result,
+                "hotWaterEmission": 0,
+                "totalEmission": result
+            }
         
-        return result
+        return response

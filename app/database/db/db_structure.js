@@ -95,10 +95,10 @@ const footprintCalculations = {
             ]
         },
         water: {
-            hotWaterVolume: 40,
-            coldWaterVolume: 50,
-            hotWaterEmission: 80,
+            coldWaterLiters: 50,
+            hotWaterLiters: 40,
             coldWaterEmission: 20,
+            hotWaterEmission: 80,
             totalEmission: 430
         }
     },

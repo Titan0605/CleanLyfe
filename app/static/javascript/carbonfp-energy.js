@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
       draw_message(result);
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred while processing your request");
+      alert("An error occurred while processing your request - Accurate Calculation");
     }
   });
 
@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
       draw_message(result);
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred while processing your request");
+      alert("An error occurred while processing your request - Basic Calculation");
     }
   });
 });
@@ -216,7 +216,7 @@ function draw_message(data) {
   container.innerHTML = ``;
 
   // If there is an error in the response shows this
-  if (data.Status !== "Carbonfp successfully.") {
+  if (data.Status !== "Energy calculated successfully.") {
     // Creates a div
     const warning = document.createElement("div");
     // Adds the class name
@@ -225,7 +225,9 @@ function draw_message(data) {
     warning.innerHTML = `
         <div class="bg-amber-100">
             <p class="text-5xl">${data.Status}</p>
-            <button class="bg-amber-300 cursor-pointer">Try again</button>
+            <button class="bg-amber-300 cursor-pointer">
+              <a href="/carbonfp/energy">Try again</a>
+            </button>
         </div>
         `;
     // Is apppended to the div container

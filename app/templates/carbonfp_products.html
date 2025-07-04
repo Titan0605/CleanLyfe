@@ -1,527 +1,587 @@
-{% extends 'layouts/base.html' %}
-{% block title %} Product Calculator {% endblock %}
+{% extends 'layouts/base.html' %} {% block title %} Product Calculator {% endblock %} {%block main%}
+<div class="flex flex-col items-center justify-center pb-8 mx-auto min-h-screen max-w-md lg:p-0 text-black dark:text-white">
 
-{%block main%}
-<div id="container w-auto h-auto">
-    <form id="products_select_form">
-        <header class="">
-            <i class="fa-solid fa-bolt calculator__icon --icon-lightning-1"></i>
-            <h1 class="text-5xl">Products Calculator</h1>
-        </header>
+  <div id="container" class="pb-4 rounded-lg bg-gray-50 dark:bg-gray-900 md:space-y-6 sm:p-8">
+    <form id="products_select_form" class="w-full max-w-md mx-auto px-4 py-8 space-y-6">
+      <header class="flex items-center justify-center gap-3 text-center">
+        <i class="fa-solid fa-bolt text-white text-3xl"></i>
+        <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">Products Calculator</h1>
+      </header>
 
-        <section>
-            <h1>Choose the types of products purchased in the week</h1>
+      <section class="flex flex-col gap-3 text-gray-800 dark:text-gray-100">
+        <h2 class="text-lg font-medium text-center leading-tight">Choose the types of products purchased in the week</h2>
 
-            <div>
-                <label for="product_food">
-                    <input type="checkbox" name="product" id="product_food" value="food_section">Food products
-                </label>
-            </div>
+        <label for="product_food" class="flex items-center gap-2">
+          <input type="checkbox" name="product" id="product_food" value="food_section" class="accent-[#238c80]" />
+          <span>Food products</span>
+        </label>
 
-            <div>
-                <label for="product_dairies">
-                    <input type="checkbox" name="product" id="product_dairies" value="dairy_section">Dairy
-                </label>
-            </div>
+        <label for="product_dairies" class="flex items-center gap-2">
+          <input type="checkbox" name="product" id="product_dairies" value="dairy_section" class="accent-[#238c80]" />
+          <span>Dairy</span>
+        </label>
 
-            <div>
-                <label for="product_fruit">
-                    <input type="checkbox" name="product" id="product_fruit" value="fruits_section">Fruits
-                </label>
-            </div>
+        <label for="product_fruit" class="flex items-center gap-2">
+          <input type="checkbox" name="product" id="product_fruit" value="fruits_section" class="accent-[#238c80]" />
+          <span>Fruits</span>
+        </label>
 
-            <div>
-                <label for="product_clothes">
-                    <input type="checkbox" name="product" id="product_clothes" value="clothes_section">Clothing
-                </label>
-            </div>
+        <label for="product_clothes" class="flex items-center gap-2">
+          <input type="checkbox" name="product" id="product_clothes" value="clothes_section" class="accent-[#238c80]" />
+          <span>Clothing</span>
+        </label>
 
-            <div>
-                <label for="product_electrical">
-                    <input type="checkbox" name="product" id="product_electrical" value="electrical_section">Electrical
-                    products
-                </label>
-            </div>
+        <label for="product_electrical" class="flex items-center gap-2">
+          <input type="checkbox" name="product" id="product_electrical" value="electrical_section" class="accent-[#238c80]" />
+          <span>Electrical products</span>
+        </label>
 
-            <div>
-                <label for="product_cleaning">
-                    <input type="checkbox" name="product" id="product_cleaning" value="cleaning_section">Cleaning
-                    products
-                </label>
-            </div>
-        </section>
+        <label for="product_cleaning" class="flex items-center gap-2">
+          <input type="checkbox" name="product" id="product_cleaning" value="cleaning_section" class="accent-[#238c80]" />
+          <span>Cleaning products</span>
+        </label>
+      </section>
 
-        <footer>
-            <button type="submit">Next</button>
-        </footer>
+      <footer class="flex justify-center">
+        <button
+          id=""
+          type="submit"
+          class="text-white bg-[#238c80] hover:bg-[#238c80] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm min-w-screen sm:w-auto px-5 py-2.5 text-center hover:scale-105 hover:transition-transform">
+          Next
+        </button>
+      </footer>
     </form>
 
     <!-- ----------------------------------------------------------- -->
 
     <form id="products_info_form">
-        <header class="">
-            <i class="fa-solid fa-bolt calculator__icon --icon-lightning-1"></i>
-            <h1 class="text-5xl">Products selected</h1>
+      <header class="flex items-center justify-center gap-3 mb-10">
+        <i class="fa-solid fa-bolt calculator__icon --icon-lightning-1"></i>
+        <h1 class="text-3xl">Products selected</h1>
+      </header>
+
+      <!-- ----------------------------------------------------------- -->
+
+      <section id="food_section" class="w-full max-w-3xl mx-auto px-4 py-8 space-y-8 product">
+        <!-- Header -->
+        <header class="flex items-center justify-center gap-3 bg-blue-600 text-white rounded-2xl p-4 shadow-md">
+          <i class="fa-solid fa-pizza-slice text-3xl"></i>
+          <h1 class="text-2xl font-bold">Food products</h1>
         </header>
 
-        <!-- ----------------------------------------------------------- -->
+        <div class="space-y-2">
+          <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Meat transportation method</h2>
+          <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100">
+            <label class="flex items-center gap-2 text-sm">
+              <input type="radio" name="meat_transport" value="transport_local" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Local
+            </label>
+            <label class="flex items-center gap-2 text-sm">
+              <input type="radio" name="meat_transport" value="transport_regional" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Regional
+            </label>
+            <label class="flex items-center gap-2 text-sm">
+              <input type="radio" name="meat_transport" value="transport_national" class="accent-blue-600 focus:ring-blue-500" />
+              National
+            </label>
+            <label class="flex items-center gap-2 text-sm">
+              <input type="radio" name="meat_transport" value="transport_international" class="accent-[#238c80] focus:ring-[#238c80]" />
+              International
+            </label>
+          </div>
+        </div>
 
-        <section id="food_section" class="product">
-            <header class="calculator__side-header">
-                <i class="fa-solid fa-pizza-slice calculator__side-icon"></i>
-                <h1 class="">Food products</h1>
-            </header>
-            <div>
-                <h1>Meat transportation method</h1>
-                <div>
-                    <label for="meat_transport_local">
-                        <input type="radio" name="meat_transport" id="meat_transport_local" value="transport_local">
-                        Local
-                    </label>
-                    <label for="meat_transport_regional">
-                        <input type="radio" name="meat_transport" id="meat_transport_regional"
-                            value="transport_regional">
-                        Regional
-                    </label>
-                    <label for="meat_transport_national">
-                        <input type="radio" name="meat_transport" id="meat_transport_national"
-                            value="transport_national">
-                        National
-                    </label>
-                    <label for="meat_transport_international">
-                        <input type="radio" name="meat_transport" id="meat_transport_international"
-                            value="transport_international">
-                        International
-                    </label>
-                </div>
-            </div>
-            <div>
-                <h1>Meat packing method</h1>
-                <div>
-                    <label for="meat_without_packing">
-                        <input type="radio" name="meat_packing" id="meat_without_packing" value="Without_packing">
-                        Without packaging
-                    </label>
-                    <label for="meat_minimun_packing">
-                        <input type="radio" name="meat_packing" id="meat_minimun_packing" value="minimun_packing">
-                        Minimum packaging
-                    </label>
-                    <label for="meat_excessive_packing">
-                        <input type="radio" name="meat_packing" id="meat_excessive_packing" value="excessive_packing">
-                        Excessive packaging
-                    </label>
-                </div>
-            </div>
-            <div>
-                <h1>Meat refrigeration method</h1>
-                <div>
-                    <label for="meat_ambient_temperature">
-                        <input type="radio" name="meat_refrigeration" id="meat_ambient_temperature"
-                            value="ambient_temperature">
-                        Ambient temperature
-                    </label>
-                    <label for="meat_refrigerated">
-                        <input type="radio" name="meat_refrigeration" id="meat_refrigerated" value="refrigerated">
-                        Refrigerated
-                    </label>
-                    <label for="meat_frozen">
-                        <input type="radio" name="meat_refrigeration" id="meat_frozen" value="frozen">
-                        Frozen
-                    </label>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <h3>How many kg of cow meat did you buy during the week?</h3>
-                    <input type="number" placeholder="Cow meat in Kg" name="cow_meat_kg" min="0">
-                </div>
-                <div>
-                    <h3>How many kg of pork meat did you buy during the week?</h3>
-                    <input type="number" placeholder="Pork meat in Kg" name="pork_meat_kg" min="0">
-                </div>
-                <div>
-                    <h3>How many kg of chicken meat did you buy during the week?</h3>
-                    <input type="number" placeholder="Chicken meat in kg" name="chicken_meat_kg" min="0">
-                </div>
-            </div>
-        </section>
+        <div class="space-y-2">
+          <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Meat packing method</h2>
+          <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100">
+            <label class="flex items-center gap-2 text-sm">
+              <input type="radio" name="meat_packing" value="Without_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Without packaging
+            </label>
+            <label class="flex items-center gap-2 text-sm">
+              <input type="radio" name="meat_packing" value="minimun_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Minimum packaging
+            </label>
+            <label class="flex items-center gap-2 text-sm">
+              <input type="radio" name="meat_packing" value="excessive_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Excessive packaging
+            </label>
+          </div>
+        </div>
 
-        <!-- ----------------------------------------------------------- -->
+        <div class="space-y-2">
+          <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Meat refrigeration method</h2>
+          <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100">
+            <label class="flex items-center gap-2 text-sm">
+              <input type="radio" name="meat_refrigeration" value="ambient_temperature" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Ambient temperature
+            </label>
+            <label class="flex items-center gap-2 text-sm">
+              <input type="radio" name="meat_refrigeration" value="refrigerated" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Refrigerated
+            </label>
+            <label class="flex items-center gap-2 text-sm">
+              <input type="radio" name="meat_refrigeration" value="frozen" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Frozen
+            </label>
+          </div>
+        </div>
 
-        <section id="dairy_section" class="product">
-            <header class="calculator__side-header">
-                <i class="fa-solid fa-pizza-slice calculator__side-icon"></i>
-                <h1 class="">Dairy products</h1>
-            </header>
-            <div>
-                <h1>Dairy transportation method</h1>
-                <div>
-                    <label for="dairy_transport_local">
-                        <input type="radio" name="dairy_transport" id="dairy_transport_local" value="transport_local">
-                        Local
-                    </label>
-                    <label for="dairy_transport_regional">
-                        <input type="radio" name="dairy_transport" id="dairy_transport_regional"
-                            value="transport_regional">
-                        Regional
-                    </label>
-                    <label for="dairy_transport_national">
-                        <input type="radio" name="dairy_transport" id="dairy_transport_national"
-                            value="transport_national">
-                        National
-                    </label>
-                    <label for="dairy_transport_international">
-                        <input type="radio" name="dairy_transport" id="dairy_transport_international"
-                            value="transport_international">
-                        International
-                    </label>
-                </div>
-            </div>
-            <div>
-                <h1>Dairy packing method</h1>
-                <div>
-                    <label for="dairy_without_packing">
-                        <input type="radio" name="dairy_packing" id="dairy_without_packing" value="Without_packing">
-                        Without packaging
-                    </label>
-                    <label for="dairy_minimun_packing">
-                        <input type="radio" name="dairy_packing" id="dairy_minimun_packing" value="minimun_packing">
-                        Minimum packaging
-                    </label>
-                    <label for="dairy_excessive_packing">
-                        <input type="radio" name="dairy_packing" id="dairy_excessive_packing" value="excessive_packing">
-                        Excessive packaging
-                    </label>
-                </div>
-            </div>
-            <div>
-                <h1>Dairy refrigeration method</h1>
-                <div>
-                    <label for="dairy_ambient_temperature">
-                        <input type="radio" name="dairy_refrigeration" id="dairy_ambient_temperature"
-                            value="ambient_temperature">
-                        Ambient temperature
-                    </label>
-                    <label for="dairy_refrigerated">
-                        <input type="radio" name="dairy_refrigeration" id="dairy_refrigerated" value="refrigerated">
-                        Refrigerated
-                    </label>
-                    <label for="dairy_frozen">
-                        <input type="radio" name="dairy_refrigeration" id="dairy_frozen" value="frozen">
-                        Frozen
-                    </label>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <h3>How many liters of milk did you buy during the week?</h3>
-                    <input type="number" placeholder="Milk in liters" name="milk_liters" min="0">
-                </div>
-                <div>
-                    <h3>How many kg of cheese did you buy during the week?</h3>
-                    <input type="number" placeholder="Cheese in Kg" name="cheese_kg" min="0">
-                </div>
-            </div>
-        </section>
+        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-3">
+          <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300" for="cow_meat_kg">Cow meat (kg)</label>
+            <input
+              type="number"
+              name="cow_meat_kg"
+              placeholder="Kg"
+              min="0"
+              class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+          <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300" for="pork_meat_kg">Pork meat (kg)</label>
+            <input
+              type="number"
+              name="pork_meat_kg"
+              placeholder="Kg"
+              min="0"
+              class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+          <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300" for="chicken_meat_kg">Chicken meat (kg)</label>
+            <input
+              type="number"
+              name="chicken_meat_kg"
+              placeholder="Kg"
+              min="0"
+              class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+        </div>
+      </section>
 
-        <!-- ----------------------------------------------------------- -->
+      <!-- ----------------------------------------------------------- -->
 
-        <section id="fruits_section" class="product">
-            <header class="calculator__side-header">
-                <i class="fa-solid fa-pizza-slice calculator__side-icon"></i>
-                <h1 class="">Fruits products</h1>
-            </header>
-            <div>
-                <h1>Fruits transportation method</h1>
-                <div>
-                    <label for="fruits_transport_local">
-                        <input type="radio" name="fruits_transport" id="fruits_transport_local" value="transport_local">
-                        Local
-                    </label>
-                    <label for="fruits_transport_regional">
-                        <input type="radio" name="fruits_transport" id="fruits_transport_regional"
-                            value="transport_regional">
-                        Regional
-                    </label>
-                    <label for="fruits_transport_national">
-                        <input type="radio" name="fruits_transport" id="fruits_transport_national"
-                            value="transport_national">
-                        National
-                    </label>
-                    <label for="fruits_transport_international">
-                        <input type="radio" name="fruits_transport" id="fruits_transport_international"
-                            value="transport_international">
-                        International
-                    </label>
-                </div>
-            </div>
-            <div>
-                <h1>Fruits packing method</h1>
-                <div>
-                    <label for="fruits_without_packing">
-                        <input type="radio" name="fruits_packing" id="fruits_without_packing" value="Without_packing">
-                        Without packaging
-                    </label>
-                    <label for="fruits_minimun_packing">
-                        <input type="radio" name="fruits_packing" id="fruits_minimun_packing" value="minimun_packing">
-                        Minimum packaging
-                    </label>
-                    <label for="fruits_excessive_packing">
-                        <input type="radio" name="fruits_packing" id="fruits_excessive_packing"
-                            value="excessive_packing">
-                        Excessive packaging
-                    </label>
-                </div>
-            </div>
-            <div>
-                <h1>Fruits refrigeration method</h1>
-                <div>
-                    <label for="fruits_ambient_temperature">
-                        <input type="radio" name="fruits_refrigeration" id="fruits_ambient_temperature"
-                            value="ambient_temperature">
-                        Ambient temperature
-                    </label>
-                    <label for="fruits_refrigerated">
-                        <input type="radio" name="fruits_refrigeration" id="fruits_refrigerated" value="refrigerated">
-                        Refrigerated
-                    </label>
-                    <label for="fruits_frozen">
-                        <input type="radio" name="fruits_refrigeration" id="fruits_frozen" value="frozen">
-                        Frozen
-                    </label>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <h3>How many kg from local production did you buy during the week?</h3>
-                    <input type="number" placeholder="Kg" name="local_profucts_kg" min="0">
-                </div>
-                <div>
-                    <h3>How many kg from greenhouse production did you buy during the week?</h3>
-                    <input type="number" placeholder="Kg" name="greenhouse_profucts_kg" min="0">
-                </div>
-                <div>
-                    <h3>How many kg from imported production did you buy during the week?</h3>
-                    <input type="number" placeholder="Kg" name="imported_profucts_kg" min="0">
-                </div>
-            </div>
-        </section>
+      <section id="dairy_section" class="product">
+        <header class="flex items-center justify-center gap-3 bg-blue-600 text-white rounded-2xl p-4 shadow-md">
+          <i class="fa-solid fa-pizza-slice calculator__side-icon"></i>
+          <h1 class="text-2xl font-bold">Dairy products</h1>
+        </header>
+        <div class="space-y-2">
+          <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Dairy transportation method</h2>
+          <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100">
+            <label for="dairy_transport_local" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="dairy_transport" id="dairy_transport_local" value="transport_local" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Local
+            </label>
+            <label for="dairy_transport_regional" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="dairy_transport" id="dairy_transport_regional" value="transport_regional" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Regional
+            </label>
+            <label for="dairy_transport_national" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="dairy_transport" id="dairy_transport_national" value="transport_national" class="accent-[#238c80] focus:ring-[#238c80]" />
+              National
+            </label>
+            <label for="dairy_transport_international" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="dairy_transport" id="dairy_transport_international" value="transport_international" class="accent-[#238c80] focus:ring-[#238c80]" />
+              International
+            </label>
+          </div>
+        </div>
+        <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100 space-y-2">
+          <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Dairy packing method</h2>
+          <div>
+            <label for="dairy_without_packing" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="dairy_packing" id="dairy_without_packing" value="Without_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Without packaging
+            </label>
+            <label for="dairy_minimun_packing" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="dairy_packing" id="dairy_minimun_packing" value="minimun_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Minimum packaging
+            </label>
+            <label for="dairy_excessive_packing" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="dairy_packing" id="dairy_excessive_packing" value="excessive_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Excessive packaging
+            </label>
+          </div>
+        </div>
+        <div class="space-y-2">
+          <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Dairy refrigeration method</h2>
+          <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100">
+            <label for="dairy_ambient_temperature" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="dairy_refrigeration" id="dairy_ambient_temperature" value="ambient_temperature" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Ambient temperature
+            </label>
+            <label for="dairy_refrigerated" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="dairy_refrigeration" id="dairy_refrigerated" value="refrigerated" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Refrigerated
+            </label>
+            <label for="dairy_frozen" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="dairy_refrigeration" id="dairy_frozen" value="frozen" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Frozen
+            </label>
+          </div>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2">
+          <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">How many liters of milk did you buy during the week?</label>
+            <input
+              class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="number"
+              placeholder="Milk in liters"
+              name="milk_liters"
+              min="0" />
+          </div>
+          <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">How many kg of cheese did you buy during the week?</label>
+            <input
+              class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="number"
+              placeholder="Cheese in Kg"
+              name="cheese_kg"
+              min="0" />
+          </div>
+        </div>
+      </section>
 
-        <!-- ----------------------------------------------------------- -->
+      <!-- ----------------------------------------------------------- -->
 
-        <section id="clothes_section" class="product">
-            <header class="calculator__side-header">
-                <i class="fa-solid fa-pizza-slice calculator__side-icon"></i>
-                <h1 class="">Clothes products</h1>
-            </header>
-            <div>
-                <h1>Clothes transportation method</h1>
-                <div>
-                    <label for="clothes_transport_local">
-                        <input type="radio" name="clothes_transport" id="clothes_transport_local"
-                            value="transport_local">
-                        Local
-                    </label>
-                    <label for="clothes_transport_regional">
-                        <input type="radio" name="clothes_transport" id="clothes_transport_regional"
-                            value="transport_regional">
-                        Regional
-                    </label>
-                    <label for="clothes_transport_national">
-                        <input type="radio" name="clothes_transport" id="clothes_transport_national"
-                            value="transport_national">
-                        National
-                    </label>
-                    <label for="clothes_transport_international">
-                        <input type="radio" name="clothes_transport" id="clothes_transport_international"
-                            value="transport_international">
-                        International
-                    </label>
-                </div>
-            </div>
-            <div>
-                <h1>Clothes packing method</h1>
-                <div>
-                    <label for="clothes_without_packing">
-                        <input type="radio" name="clothes_packing" id="clothes_without_packing" value="Without_packing">
-                        Without packaging
-                    </label>
-                    <label for="clothes_minimun_packing">
-                        <input type="radio" name="clothes_packing" id="clothes_minimun_packing" value="minimun_packing">
-                        Minimum packaging
-                    </label>
-                    <label for="clothes_excessive_packing">
-                        <input type="radio" name="clothes_packing" id="clothes_excessive_packing"
-                            value="excessive_packing">
-                        Excessive packaging
-                    </label>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <h3>How many t-shirts did you buy during the week?</h3>
-                    <input type="number" placeholder="Number of t-shirts" name="t-shits_quantity" min="0">
-                </div>
-                <div>
-                    <h3>How many pants did you buy during the week?</h3>
-                    <input type="number" placeholder="Number of pants" name="pants_quantity" min="0">
-                </div>
-                <div>
-                    <h3>How many pairs of shoes did you buy during the week?</h3>
-                    <input type="number" placeholder="Number of pairs of shoes" name="pair_shoes_quantity" min="0">
-                </div>
-            </div>
-        </section>
+      <section id="fruits_section" class="product">
+        <header class="flex items-center justify-center gap-3 bg-blue-600 text-white rounded-2xl p-4 shadow-md">
+          <i class="fa-solid fa-pizza-slice calculator__side-icon"></i>
+          <h1 class="text-2xl font-bold">Fruits products</h1>
+        </header>
+        <div class="space-y-2">
+          <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Fruits transportation method</h2>
+          <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100">
+            <label for="fruits_transport_local" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="fruits_transport" id="fruits_transport_local" value="transport_local" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Local
+            </label>
+            <label for="fruits_transport_regional" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="fruits_transport" id="fruits_transport_regional" value="transport_regional" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Regional
+            </label>
+            <label for="fruits_transport_national" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="fruits_transport" id="fruits_transport_national" value="transport_national" class="accent-[#238c80] focus:ring-[#238c80]" />
+              National
+            </label>
+            <label for="fruits_transport_international" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="fruits_transport" id="fruits_transport_international" value="transport_international" class="accent-[#238c80] focus:ring-[#238c80]" />
+              International
+            </label>
+          </div>
+        </div>
+        <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100 space-y-2">
+          <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Fruits packing method</h2>
+          <div>
+            <label for="fruits_without_packing" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="fruits_packing" id="fruits_without_packing" value="Without_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Without packaging
+            </label>
+            <label for="fruits_minimun_packing" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="fruits_packing" id="fruits_minimun_packing" value="minimun_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Minimum packaging
+            </label>
+            <label for="fruits_excessive_packing" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="fruits_packing" id="fruits_excessive_packing" value="excessive_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Excessive packaging
+            </label>
+          </div>
+        </div>
+        <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100 space-y-2">
+          <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Fruits refrigeration method</h2>
+          <div>
+            <label for="fruits_ambient_temperature" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="fruits_refrigeration" id="fruits_ambient_temperature" value="ambient_temperature" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Ambient temperature
+            </label>
+            <label for="fruits_refrigerated" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="fruits_refrigeration" id="fruits_refrigerated" value="refrigerated" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Refrigerated
+            </label>
+            <label for="fruits_frozen" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="fruits_refrigeration" id="fruits_frozen" value="frozen" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Frozen
+            </label>
+          </div>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-3">
+          <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">How many kg from local production did you buy during the week?</label>
+            <input
+              class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="number"
+              placeholder="Kg"
+              name="local_fruits_kg"
+              min="0" />
+          </div>
+          <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">How many kg from greenhouse production did you buy during the week?</label>
+            <input
+              class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="number"
+              placeholder="Kg"
+              name="greenhouse_fruits_kg"
+              min="0" />
+          </div>
+          <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">How many kg from imported production did you buy during the week?</label>
+            <input
+              class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="number"
+              placeholder="Kg"
+              name="imported_fruits_kg"
+              min="0" />
+          </div>
+        </div>
+      </section>
 
-        <!-- ----------------------------------------------------------- -->
+      <!-- ----------------------------------------------------------- -->
 
-        <section id="electrical_section" class="product">
-            <header class="">
-                <i class="fa-solid fa-pizza-slice calculator__side-icon"></i> <!-- <-- here goes the icon-->
-                <h1 class="">Electrical products</h1>
-            </header>
-            <div>
-                <h1>Electrical products transportation method</h1>
-                <div>
-                    <label for="electrical_products_transport_local">
-                        <input type="radio" name="electrical_products_transport"
-                            id="electrical_products_transport_local" value="transport_local">
-                        Local
-                    </label>
-                    <label for="electrical_products_transport_regional">
-                        <input type="radio" name="electrical_products_transport"
-                            id="electrical_products_transport_regional" value="transport_regional">
-                        Regional
-                    </label>
-                    <label for="electrical_products_transport_national">
-                        <input type="radio" name="electrical_products_transport"
-                            id="electrical_products_transport_national" value="transport_national">
-                        National
-                    </label>
-                    <label for="electrical_products_transport_international">
-                        <input type="radio" name="electrical_products_transport"
-                            id="electrical_products_transport_international" value="transport_international">
-                        International
-                    </label>
-                </div>
-            </div>
-            <div>
-                <h1>Electrical products packing method</h1>
-                <div>
-                    <label for="electrical_products_without_packing">
-                        <input type="radio" name="electrical_packing" id="electrical_products_without_packing"
-                            value="Without_packing">
-                        Without packaging
-                    </label>
-                    <label for="electrical_products_minimun_packing">
-                        <input type="radio" name="electrical_packing" id="electrical_products_minimun_packing"
-                            value="minimun_packing">
-                        Minimum packaging
-                    </label>
-                    <label for="electrical_products_excessive_packing">
-                        <input type="radio" name="electrical_packing" id="electrical_products_excessive_packing"
-                            value="excessive_packing">
-                        Excessive packaging
-                    </label>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <h3>How many cellphones did you buy during the week?</h3>
-                    <input type="number" placeholder="Number of cellphones" name="cellphones_quantity" min="0">
-                </div>
-                <div>
-                    <h3>How many laptops did you buy during the week?</h3>
-                    <input type="number" placeholder="Number of laptops" name="laptops_quantity" min="0">
-                </div>
-                <div>
-                    <h3>How many TVs did you buy during the week?</h3>
-                    <input type="number" placeholder="Number of TVs" name="TVs_quantity" min="0">
-                </div>
-            </div>
-        </section>
+      <section id="clothes_section" class="product">
+        <header class="flex items-center justify-center gap-3 bg-blue-600 text-white rounded-2xl p-4 shadow-md">
+          <i class="fa-solid fa-pizza-slice calculator__side-icon"></i>
+          <h1 class="text-2xl font-bold">Clothes products</h1>
+        </header>
+        <div class="space-y-2">
+          <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Clothes transportation method</h2>
+          <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100">
+            <label for="clothes_transport_local" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="clothes_transport" id="clothes_transport_local" value="transport_local" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Local
+            </label>
+            <label for="clothes_transport_regional" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="clothes_transport" id="clothes_transport_regional" value="transport_regional" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Regional
+            </label>
+            <label for="clothes_transport_national" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="clothes_transport" id="clothes_transport_national" value="transport_national" class="accent-[#238c80] focus:ring-[#238c80]" />
+              National
+            </label>
+            <label for="clothes_transport_international" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="clothes_transport" id="clothes_transport_international" value="transport_international" class="accent-[#238c80] focus:ring-[#238c80]" />
+              International
+            </label>
+          </div>
+        </div>
+        <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100 space-y-2">
+          <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Clothes packing method</h2>
+          <div>
+            <label for="clothes_without_packing" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="clothes_packing" id="clothes_without_packing" value="Without_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Without packaging
+            </label>
+            <label for="clothes_minimun_packing" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="clothes_packing" id="clothes_minimun_packing" value="minimun_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Minimum packaging
+            </label>
+            <label for="clothes_excessive_packing" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="clothes_packing" id="clothes_excessive_packing" value="excessive_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Excessive packaging
+            </label>
+          </div>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-3">
+          <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">How many t-shirts did you buy during the week?</label>
+            <input
+              class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="number"
+              placeholder="Number of t-shirts"
+              name="tshirt_units"
+              min="0" />
+          </div>
+          <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">How many pants did you buy during the week?</label>
+            <input
+              class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="number"
+              placeholder="Number of pants"
+              name="jeans_units"
+              min="0" />
+          </div>
+          <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">How many pairs of shoes did you buy during the week?</label>
+            <input
+              class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="number"
+              placeholder="Number of pairs of shoes"
+              name="shoes_pairs"
+              min="0" />
+          </div>
+        </div>
+      </section>
 
-        <!-- ----------------------------------------------------------- -->
+      <!-- ----------------------------------------------------------- -->
 
-        <section id="cleaning_section" class="product">
-            <header class="">
-                <i class="fa-solid fa-pizza-slice calculator__side-icon"></i> <!-- <-- here goes the icon-->
-                <h1 class="">Cleaning products</h1>
-            </header>
-            <div>
-                <h1>Cleaning products transportation method</h1>
-                <div>
-                    <label for="cleaning_products_transport_local">
-                        <input type="radio" name="cleaning_products_transport"
-                            id="cleaning_products_transport_local" value="transport_local">
-                        Local
-                    </label>
-                    <label for="cleaning_products_transport_regional">
-                        <input type="radio" name="cleaning_products_transport"
-                            id=cleaningl_products_transport_regional" value="transport_regional">
-                        Regional
-                    </label>
-                    <label for="cleaning_products_transport_national">
-                        <input type="radio" name="cleaning_products_transport"
-                            id="cleaning_products_transport_national" value="transport_national">
-                        National
-                    </label>
-                    <label for="cleaning_products_transport_international">
-                        <input type="radio" name="cleaning_products_transport"
-                            id="cleaning_products_transport_international" value="transport_international">
-                        International
-                    </label>
-                </div>
-            </div>
-            <div>
-                <h1>Electrical products packing method</h1>
-                <div>
-                    <label for="cleaning_products_without_packing">
-                        <input type="radio" name="cleaning_packing" id="cleaning_products_without_packing"
-                            value="Without_packing">
-                        Without packaging
-                    </label>
-                    <label for="cleaning_products_minimun_packing">
-                        <input type="radio" name="cleaning_packing" id="cleaning_products_minimun_packing"
-                            value="minimun_packing">
-                        Minimum packaging
-                    </label>
-                    <label for="cleaning_products_excessive_packing">
-                        <input type="radio" name="cleaning_packing" id="cleaning_products_excessive_packing"
-                            value="excessive_packing">
-                        Excessive packaging
-                    </label>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <h3>How many liters of detergent did you buy during the week?</h3>
-                    <input type="number" placeholder="Detergent in liters" name="detergent_liters" min="0">
-                </div>
-                <div>
-                    <h3>How many liters of softener did you buy during the week?</h3>
-                    <input type="number" placeholder="Softener in liters" name="softener_liters" min="0">
-                </div>
-                <div>
-                    <h3>How many liters of all purpose did you buy during the week?</h3>
-                    <input type="number" placeholder="Al purpose in liters" name="all_purpose_liters" min="0">
-                </div>
-            </div>
-        </section>
+      <section id="electrical_section" class="product">
+        <header class="flex items-center justify-center gap-3 bg-blue-600 text-white rounded-2xl p-4 shadow-md">
+          <i class="fa-solid fa-pizza-slice calculator__side-icon"></i>
+          <!-- <-- here goes the icon-->
+          <h1 class="text-2xl font-bold">Electrical products</h1>
+        </header>
+        <div class="space-y-2">
+          <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Electrical products transportation method</h2>
+          <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100">
+            <label for="electrical_products_transport_local" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="electrical_products_transport" id="electrical_products_transport_local" value="transport_local" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Local
+            </label>
+            <label for="electrical_products_transport_regional" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="electrical_products_transport" id="electrical_products_transport_regional" value="transport_regional" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Regional
+            </label>
+            <label for="electrical_products_transport_national" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="electrical_products_transport" id="electrical_products_transport_national" value="transport_national" class="accent-[#238c80] focus:ring-[#238c80]" />
+              National
+            </label>
+            <label for="electrical_products_transport_international" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="electrical_products_transport" id="electrical_products_transport_international" value="transport_international" class="accent-[#238c80] focus:ring-[#238c80]" />
+              International
+            </label>
+          </div>
+        </div>
+        <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100 space-y-2">
+          <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Electrical products packing method</h2>
+          <div>
+            <label for="electrical_products_without_packing" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="electrical_packing" id="electrical_products_without_packing" value="Without_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Without packaging
+            </label>
+            <label for="electrical_products_minimun_packing" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="electrical_packing" id="electrical_products_minimun_packing" value="minimun_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Minimum packaging
+            </label>
+            <label for="electrical_products_excessive_packing" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="electrical_packing" id="electrical_products_excessive_packing" value="excessive_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Excessive packaging
+            </label>
+          </div>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-3">
+          <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">How many cellphones did you buy during the week?</label>
+            <input
+              class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="number"
+              placeholder="Number of cellphones"
+              name="smartphone_units"
+              min="0" />
+          </div>
+          <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">How many laptops did you buy during the week?</label>
+            <input
+              class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="number"
+              placeholder="Number of laptops"
+              name="laptop_units"
+              min="0" />
+          </div>
+          <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">How many TVs did you buy during the week?</label>
+            <input
+              class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="number"
+              placeholder="Number of TVs"
+              name="tv_units"
+              min="0" />
+          </div>
+        </div>
+      </section>
 
-        <footer id="finish_btn" hidden="true">
-            <button type="submit">Finish</button>
-        </footer>
-        
+      <!-- ----------------------------------------------------------- -->
+
+      <section id="cleaning_section" class="product">
+        <header class="flex items-center justify-center gap-3 bg-blue-600 text-white rounded-2xl p-4 shadow-md">
+          <i class="fa-solid fa-pizza-slice calculator__side-icon"></i>
+          <h1 class="text-2xl font-bold">Cleaning products</h1>
+        </header>
+        <div class="space-y-2">
+          <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Cleaning products transportation method</h2>
+          <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100">
+            <label for="cleaning_products_transport_local" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="cleaning_products_transport" id="cleaning_products_transport_local" value="transport_local" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Local
+            </label>
+            <label for="cleaning_products_transport_regional" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="cleaning_products_transport" id="cleaningl_products_transport_regional" value="transport_regional" class="accent-[#238c80] focus:ring-[#238c80]" /> Regional
+            </label>
+            <label for="cleaning_products_transport_national" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="cleaning_products_transport" id="cleaning_products_transport_national" value="transport_national" class="accent-[#238c80] focus:ring-[#238c80]" />
+              National
+            </label>
+            <label for="cleaning_products_transport_international" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="cleaning_products_transport" id="cleaning_products_transport_international" value="transport_international" class="accent-[#238c80] focus:ring-[#238c80]" />
+              International
+            </label>
+          </div>
+        </div>
+        <div class="flex flex-col gap-2 text-gray-800 dark:text-gray-100 space-y-2">
+          <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-100">Electrical products packing method</h2>
+          <div>
+            <label for="cleaning_products_without_packing" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="cleaning_packing" id="cleaning_products_without_packing" value="Without_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Without packaging
+            </label>
+            <label for="cleaning_products_minimun_packing" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="cleaning_packing" id="cleaning_products_minimun_packing" value="minimun_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Minimum packaging
+            </label>
+            <label for="cleaning_products_excessive_packing" class="flex items-center gap-2 text-sm">
+              <input type="radio" name="cleaning_packing" id="cleaning_products_excessive_packing" value="excessive_packing" class="accent-[#238c80] focus:ring-[#238c80]" />
+              Excessive packaging
+            </label>
+          </div>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-3">
+          <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">How many kg of detergent did you buy during the week?</label>
+            <input
+              class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="number"
+              placeholder="Detergent in kg"
+              name="detergent_kg"
+              min="0" />
+          </div>
+          <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">How many liters of softener did you buy during the week?</label>
+            <input
+              class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2"
+              type="number"
+              placeholder="Softener in liters"
+              name="softener_liters"
+              min="0" />
+          </div>
+          <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">How many liters of all purpose cleaner did you buy during the week?</label>
+            <input
+              class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2"
+              type="number"
+              placeholder="All purpose in liters"
+              name="cleaner_liters"
+              min="0" />
+          </div>
+        </div>
+      </section>
+
+      <footer id="finish_btn" hidden="true" style="all:unset;display:flex;justify-content:center;width:100%;">
+        <button type="submit" id="finish_button" class="text-white bg-red-500 px-5 py-2.5 text-center font-medium rounded-lg min-w-screen sm:w-auto hover:scale-105 hover:transition-transform" style="cursor:pointer;">Finish</button>
+      </footer>
     </form>
 
     <div id="navigation_btns" hidden="true">
-        <button id="preview_btn">Preview</button>
-        <button id="next_btn">Next</button>
+      <button
+        id="preview_btn"
+        class="text-white bg-[#238c80] hover:bg-[#238c80] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm min-w-screen sm:w-auto px-5 py-2.5 text-center hover:scale-105 hover:transition-transform">
+        Preview
+      </button>
+      <button
+        id="next_btn"
+        class="text-white bg-[#238c80] hover:bg-[#238c80] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm min-w-screen sm:w-auto px-5 py-2.5 text-center hover:scale-105 hover:transition-transform">
+        Next
+      </button>
     </div>
+  </div>
 </div>
-{%endblock%}
-
-{%block scripts%}
+{%endblock%} {%block scripts%}
 <script src="{{ url_for('static', filename='javascript/carbonfp-products.js') }}"></script>
 {%endblock%}

@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, session
 
-bp = Blueprint("hidricfp_view", __name__)
+bp = Blueprint("hidricfp_views", __name__)
 
 @bp.route('/hidricfp')
 def hidricfp():

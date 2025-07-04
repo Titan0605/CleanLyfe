@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 
-bp = Blueprint("WaterFlow_routes", __name__)
+bp = Blueprint("waterflow_routes", __name__)
 
 @bp.route('/waterflow')
 def waterFlow_service():

@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((response) => response.json())
       .then((result) => {
         window.location.href = "/home";
-        // console.log('Success:', result);
+        console.log('Success:', result);
       })
       .catch((error) => {
         console.error("Error:", error);

@@ -530,7 +530,7 @@ class HidricCalculator:
         """
         return self.calculate_liters_per_week((liters_by_bucket * buckets), mopping_per_day)
     
-    def calculate_food_product_water(self, quantity: int, product_type: str) -> int:
+    def calculate_food_product_water(self, quantity: int, product_type: str) -> tuple[str, int]:
         """
         Calculates the water footprint for food and beverage products.
 
@@ -566,9 +566,9 @@ class HidricCalculator:
         if quantity < 0:
             raise ValueError("Quantity must be non-negative")
         
-        return self.calculate_liters_per_week(int(product_enum.water_footprint), quantity)
+        return (product_enum.id, self.calculate_liters_per_week(int(product_enum.water_footprint), quantity))
     
-    def calculate_multiple_products(self, products: dict) -> int:
+    def calculate_multiple_products(self, products: dict) -> tuple[tuple[str, int]]:
         """
         Calculates the total water footprint for multiple food and beverage products.
 
@@ -591,14 +591,14 @@ class HidricCalculator:
             >>> calc.calculate_multiple_products(products)
             15780.48  # (2 * 140.24L for coffee) + (1 * 15500L for beef)
         """
-        _products_consumption = 0
+        _products_consumption = []
         
         for key in products.keys():
-            _products_consumption += self.calculate_food_product_water(products[key], key)
-            
-        return _products_consumption
+            _products_consumption.append(self.calculate_food_product_water(products[key], key))
+
+        return tuple(_products_consumption)
     
-def calculate_consumption(calculate: HidricCalculator, data: Dict[str, Any]) -> int:
+def calculate_consumption(calculate: HidricCalculator, data: Dict[str, Any]) -> dict[str, Any]:
     """
     Calculates the total water consumption for all household activities and products.
 
@@ -646,21 +646,21 @@ def calculate_consumption(calculate: HidricCalculator, data: Dict[str, Any]) -> 
         KeyError: If any required key is missing from the data dictionary
         ValueError: If any calculation input is invalid
     """
-    _consumption = 0
+    normal_water_consumption = 0
     
     calculations: Dict[str, int] = {
-        'shower': calculate.showers(
+        'shower_consumption': calculate.showers(
             shower_minutes = data['shower_minutes'],
             times_per_day = data['shower_times'],
             shower_type = data['shower_type']
             ),
         
-        'toilet': calculate.toilet(
+        'toilet_consumption': calculate.toilet(
             times_per_day = data['toilet_times'],
             toilet_type = data['toilet_type']
             ),
         
-        'dishes': calculate.dishes(
+        'dishes_consumption': calculate.dishes(
             times_per_day = data["dishes_times_per_day"],
             washing_type = data['dishes_type'],
             hand_washing_type = data['dishes_handwashing_type'],
@@ -668,12 +668,12 @@ def calculate_consumption(calculate: HidricCalculator, data: Dict[str, Any]) -> 
             exact_liters = data['dishes_exact_liters']
             ),
         
-        'washing_machine': calculate.washing_clothes(
+        'washing_machine_consumption': calculate.washing_clothes(
             cycles_per_week = data['washing_machine_times'],
             washing_machine_type = data['washing_machine_type']
             ),
         
-        'watering_consumption': calculate.garden_watering(
+        'garden_consumption': calculate.garden_watering(
             minutes = data['watering_minutes'],
             times_per_week = data['watering_times'],
             watering_type = data['watering_type'],
@@ -683,23 +683,34 @@ def calculate_consumption(calculate: HidricCalculator, data: Dict[str, Any]) -> 
             dripper_flow_rate = data['watering_flow_rate']
             ),
         
-        'house_cleaning': calculate.house_cleaning(
+        'house_cleaning_consumption': calculate.house_cleaning(
             liters_by_bucket = data['mop_bucket_liters'],
             buckets = data['mop_buckets_number'],
             mopping_per_day = data['mop_times']
-            ),
-        
-        'products': calculate.calculate_multiple_products(
-            products = data['products']
             )
     }
     
     for key in calculations:
         # print(f"El calculo de {key} es: {calculations[key]} L")
-        _consumption += calculations[key]
+        normal_water_consumption += calculations[key]
+        
+    products = calculate.calculate_multiple_products(data['products'])
+    products_water_consumption = sum(product[1] for product in products)
+        
+    hydric_footprint = {
+        "total_hydric_footprint": normal_water_consumption + products_water_consumption,
+        "shower_consumption": calculations['shower_consumption'],
+        "toilet_consumption": calculations['toilet_consumption'],
+        "dishes_consumption": calculations['dishes_consumption'],
+        "washing_machine_consumption": calculations['washing_machine_consumption'],
+        "garden_consumption": calculations['garden_consumption'],
+        "house_cleaning_consumption": calculations['house_cleaning_consumption'],
+        "normal_water_consumption": normal_water_consumption,
+        "products_water_consumption": products_water_consumption,
+        "products": [{"productName": product[0], "productConsumption": product[1]} for product in products]
+    }
     
-    # print(f"El total de consumo es: {_consumption}")
-    return _consumption
+    return hydric_footprint
 
 if __name__ == '__main__':
     hidric_calc = HidricCalculator()

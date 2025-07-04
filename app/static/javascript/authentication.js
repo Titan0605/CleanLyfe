@@ -1,90 +1,105 @@
-document.addEventListener("DOMContentLoaded", async function() {
-    // Sign up
-    try {
-        document.getElementById("sign_up_form").addEventListener("submit", async function (e) {
-            e.preventDefault();
-            // Collect the data from the form
-            var formData = new FormData(e.target);
-            var data = Object.fromEntries(formData);                  
-    
-            fetch("/sign_up_service", {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            })
-            .then(response => response.json())
-            .then(data => {            
-                if (data.Status === "Sign up successfull.") {
-                    // redirect to home
-                    window.location.href = '/login';
-                } else {
-                    // error login manage
-                    alert("Fail sign up. Verify your password confirmation.");
-                }
-            })
-            .catch((error) => {
-                console.log('Error:', error);
-                alert("Something went wrong when signing up. Try later.");
-            });
-        });    
-    } catch (error) {
-        console.log(error);
+document.addEventListener("DOMContentLoaded", function () {
+  const handleResponse = async (response) => {
+    const data = await response.json();
+    if (!response.ok) {
+      throw new Error(data.message || "Something went wrong");
     }
+    return data;
+  };
 
-    // Log in
-    try {
-        document.getElementById("login_form").addEventListener("submit", async function (e) {
-            e.preventDefault();
-    
-            var formData = new FormData(e.target);
-            var data = Object.fromEntries(formData);
-    
-            fetch("/login_service", {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            })
-            .then(response => response.json())
-            .then(data => {            
-                if (data.Status === "Login successfull.") {
-                    // redirect to home
-                    window.location.href = '/home';
-                } else {
-                    // error login manage
-                    alert(data.Status);
-                }
-            })
-            .catch((error) => {
-                console.log('Error:', error);
-                alert(data.Status);
-            });
-        });    
-    } catch (error) {
-        console.log(error);
-    }    
+  const showError = (message) => {
+    alert(message);
+  };
 
-    // Log out
-    try {
-        document.getElementById("logout").addEventListener("click", async function () {
-            console.log("Log out clicked")
-            fetch("/logout", {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
-            .then(response => response.json())
-            .then(data =>{
-                if(data.Status === "Log out successfull."){
-                    // redirect to root
-                    window.location.href = "/"
-                }
-            })
-        })
-    } catch (error) {
-        console.log('Error:', error);
-    }
-})
+  // Sign up form handler
+  const signUpForm = document.getElementById("sign_up_form");
+  if (signUpForm) {
+    signUpForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      try {
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData);
+
+        const response = await fetch("/sign_up_service", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await handleResponse(response);
+
+        if (result.status === "success") {
+          window.location.href = "/login";
+        } else {
+          showError(result.message);
+        }
+      } catch (error) {
+        console.error("Sign up error:", error);
+        showError(error.message);
+      }
+    });
+  }
+
+  // Login form handler
+  const loginForm = document.getElementById("login_form");
+  if (loginForm) {
+    loginForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      try {
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData);
+
+        const response = await fetch("/login_service", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await handleResponse(response);
+
+        if (result.status === "success") {
+          window.location.href = "/home";
+        } else {
+          showError(result.message);
+        }
+      } catch (error) {
+        console.error("Login error:", error);
+        showError(error.message);
+      }
+    });
+  }
+
+  // Logout handler
+  const logoutButtons = document.querySelectorAll(".logout");
+  if (logoutButtons) {
+    logoutButtons.forEach((logoutButton) => {
+      logoutButton.addEventListener("click", async function () {
+        try {
+          const response = await fetch("/logout", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          const result = await handleResponse(response);
+
+          if (result.status === "success") {
+            window.location.href = "/";
+          } else {
+            showError(result.message);
+          }
+        } catch (error) {
+          console.error("Logout error:", error);
+          showError(error.message);
+        }
+      });
+    });
+  }
+});

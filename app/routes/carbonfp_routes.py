@@ -1,21 +1,20 @@
 
 from flask import jsonify, Blueprint, request
-from app.services.carbon.transport_calculations import TransportCalculator
-from app.models.carbon_energy_model import ElectricDevicesModel
-from app.services.carbon.energy_calculations import ElectricDevicesCalculator
-from app.models.carbon_products_model import CarbonProductsModel
+from app.services.carbon import TransportCalculator, ElectricDevicesCalculator, WaterEmissionCalculator
 from app.services.carbon.products_calculations import calculate_products_total
+from app.models.carbon_energy_model import ElectricDevicesModel
+from app.models.carbon_products_model import CarbonProductsModel
 
 bp = Blueprint("carbonfp_routes", __name__)
 
 energy_model = ElectricDevicesModel()
+products_model = CarbonProductsModel()
 
 transCal = TransportCalculator()
 energyCal = ElectricDevicesCalculator()
-# water_emission_calc = WaterEmissionCalculator()
+water_emission_calc = WaterEmissionCalculator()
 
 carbon_footprint = {}
-products_model = CarbonProductsModel()
 
 @bp.route('/carbonfp/transport-data', methods=["POST"])
 def carbonfp_transport_data():
@@ -38,33 +37,6 @@ def carbonfp_transport_data():
         return jsonify(result)
     except Exception as error:
         return jsonify({"status": "error", "msg": error})
-
-# @bp.route('/carbonfp/get-devices')
-# def carbonfp_get_devices():
-#     # Calls model to get all devices
-#     response = elect_devices_model.getAllDevices()
-#     return jsonify(response)
-
-# @bp.route('/carbonfp/get-device-id/<int:id>')
-# def carbonfp_get_devices_id(id):
-#     # Calls model to get the devices by id
-#     response = elect_devices_model.getDeviceById(id)
-    
-#     return jsonify(response)
-
-# @bp.route('/carbonfp/get-device-name/<string:name>')
-# def carbonfp_get_device_name(name):
-#     # calls model to get devices by name
-#     response = elect_devices_model.getDeviceByName(name)
-    
-#     return jsonify(response)
-
-# @bp.route('/carbonfp/get-device-location/<string:location>')
-# def carbonfp_get_device_location(location):
-#     # Calls model to get devices by location
-#     response = elect_devices_model.getDeviceByLocation(location)
-    
-#     return jsonify(response)
 
 @bp.route('/carbonfp/get-devices-name-selected', methods=['POST'])
 def getdevices():
@@ -186,20 +158,28 @@ def carbonfp_get_products_info():
         print(f'Error in carbonfp_get_products_info: {error}')
         return jsonify({'Status': str(error)})
     
-# @bp.route('/carbonfp/water/calculate', methods=['POST'])
-# def carbonfp_calculate_water():
-#     try:
-#         data = request.get_json()
+@bp.route('/carbonfp/water/calculate', methods=['POST'])
+def carbonfp_calculate_water():
+    try:
+        data = request.get_json()
         
-#         print(data)
-#         emission = water_emission_calc.calculate_water_emission(
-#             liters=data['water_consumed'],
-#             heating_percentage=data['water_heated_percentage'],
-#             heating_type=data['heater_type']
-#             )
-#         print(emission)
+        print(data)
+        result = water_emission_calc.calculate_water_emission(
+            liters=data['water_consumed'],
+            heating_percentage=data['water_heated_percentage'],
+            heating_type=data['heater_type']
+            )
+        print(result)
         
-#         return jsonify({'Status': 'Response recieved', 'Result': emission})
+        carbon_footprint['water'] = result
+        
+        print(carbon_footprint)
+        
+        return jsonify({
+            'Status': 'Water calculation successfully.',
+            'waterEmission': result['totalEmission'],
+            'message': f'Total water emission: {result["totalEmission"]} kgCO2e'
+        })
     
-#     except Exception as error:
-#         return jsonify({'Status:', error})
+    except Exception as error:
+        return jsonify({'Status': 'Water calculation Failed.', 'Result': error})

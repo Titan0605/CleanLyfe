@@ -1,7 +1,7 @@
 from flask import jsonify, Blueprint, request
 from app.services.carbon.transport_calculations import TransportCalculator
 from app.models.carbon_energy_model import ElectricDevicesModel
-from app.services.carbon.energy_calculations import Electric_devices_calculator
+from app.services.carbon.energy_calculations import ElectricDevicesCalculator
 # from app.services.carbon_water_calculus import WaterEmissionCalculator
 
 bp = Blueprint("carbonfp_routes", __name__)
@@ -9,7 +9,7 @@ bp = Blueprint("carbonfp_routes", __name__)
 energy_model = ElectricDevicesModel()
 
 transCal = TransportCalculator()
-devicesCal = Electric_devices_calculator()
+energyCal = ElectricDevicesCalculator()
 # water_emission_calc = WaterEmissionCalculator()
 
 carbon_footprint = {}
@@ -80,24 +80,32 @@ def getdevices():
         return jsonify({"Status": str(error)})
 
 
-# @bp.route('/carbonfp/devices/calculation-basic', methods=['POST'])
-# def carbonfp_basic():
-#     try:
-#         response = request.get_json()
-#         type_calculation = str(response['type_calculation'])
-#         electricity_consumption = float(response['electricity_consumption'])
+@bp.route('/carbonfp/devices/calculation-basic', methods=['POST'])
+def carbonfp_basic():
+    try:
+        response = request.get_json()
+        electricity_consumption = float(response['electricity_consumption'])
 
-#         status = devicesCal.calculation_type(type_calculation, electricity_consumption, response)
+        result = energyCal.basic_calculation(electricity_consumption)
         
-#         if status == 'Electric calculation successfully.':
-#             status = 'Carbonfp successfully.'
-#         elif status == 'Failed electrical calculation.':
-#             status = 'Something went wrong, try again later.'
+        carbon_footprint["energy"] = result
         
-#         return jsonify({'Status': status})
-#     except KeyError as error:
-#         return jsonify({'Status': error})
-
+        print(carbon_footprint)
+        
+        if result:
+            return jsonify({
+                'Status': 'Energy calculated successfully.',
+                'total_emission': result["totalEmission"],
+                'message': f'Total weekly carbon emission: {result["totalEmission"]} kgCO2e'
+            })
+        else:
+            return jsonify({
+                'Status': 'Something went wrong, try again later.',
+                'message': 'Failed to calculate emissions'
+            })
+    except KeyError as error:
+        print(f'Error in carbonfp_basic: {error}')
+        return jsonify({'Status': str(error)})
 
 @bp.route('/carbonfp/devices/calculation-accurate', methods=['POST'])
 def carbonfp_accurate():
@@ -106,7 +114,7 @@ def carbonfp_accurate():
         # type_calculation = response['type_calculation'][0]
         
         # Call the calculation function
-        result = devicesCal.accurate_calculation(response)
+        result = energyCal.accurate_calculation(response)
         
         energy_data = energy_model.calculate_energy_footprint(result)
         
@@ -157,20 +165,20 @@ def carbonfp_get_products_info():
     except Exception as error:
         return jsonify({'Status': error})
     
-@bp.route('/carbonfp/water/calculate', methods=['POST'])
-def carbonfp_calculate_water():
-    try:
-        data = request.get_json()
+# @bp.route('/carbonfp/water/calculate', methods=['POST'])
+# def carbonfp_calculate_water():
+#     try:
+#         data = request.get_json()
         
-        print(data)
-        emission = water_emission_calc.calculate_water_emission(
-            liters=data['water_consumed'],
-            heating_percentage=data['water_heated_percentage'],
-            heating_type=data['heater_type']
-            )
-        print(emission)
+#         print(data)
+#         emission = water_emission_calc.calculate_water_emission(
+#             liters=data['water_consumed'],
+#             heating_percentage=data['water_heated_percentage'],
+#             heating_type=data['heater_type']
+#             )
+#         print(emission)
         
-        return jsonify({'Status': 'Response recieved', 'Result': emission})
+#         return jsonify({'Status': 'Response recieved', 'Result': emission})
     
-    except Exception as error:
-        return jsonify({'Status:', error})
+#     except Exception as error:
+#         return jsonify({'Status:', error})

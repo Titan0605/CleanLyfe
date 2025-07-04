@@ -56,7 +56,7 @@ function drawMessage(data) {
         <div class="bg-blue-500">
             <p class="text-5xl">Form answered correctly, advance to the next form.</p>
             <button class="bg-amber-300 cursor-pointer">
-                <a href="/carbonfp/devices">Go devices carbon footprint</a>
+                <a href="/carbonfp/energy">Go devices carbon footprint</a>
             </button>
         </div>
         `;

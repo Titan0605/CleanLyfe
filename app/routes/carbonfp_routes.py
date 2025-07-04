@@ -1,8 +1,10 @@
+
 from flask import jsonify, Blueprint, request
 from app.services.carbon.transport_calculations import TransportCalculator
 from app.models.carbon_energy_model import ElectricDevicesModel
 from app.services.carbon.energy_calculations import ElectricDevicesCalculator
-# from app.services.carbon_water_calculus import WaterEmissionCalculator
+from app.models.carbon_products_model import CarbonProductsModel
+from app.services.carbon.products_calculations import calculate_products_total
 
 bp = Blueprint("carbonfp_routes", __name__)
 
@@ -13,6 +15,7 @@ energyCal = ElectricDevicesCalculator()
 # water_emission_calc = WaterEmissionCalculator()
 
 carbon_footprint = {}
+products_model = CarbonProductsModel()
 
 @bp.route('/carbonfp/transport-data', methods=["POST"])
 def carbonfp_transport_data():
@@ -154,16 +157,34 @@ def carbonfp_get_products():
         return jsonify({'Status': error})
 
 
+
 @bp.route('/carbonfp/products/get-products-info', methods=['POST'])
 def carbonfp_get_products_info():
     try:
         response = request.get_json()
+        # Espera un array de productos con sus datos
+        # Ejemplo: [{product_type, quantity, transport, packaging, refrigeration, product_id}]
+        if not response or not isinstance(response, dict):
+            return jsonify({'Status': 'Invalid input.'})
+
+        # Si el form solo manda un producto, lo convertimos a lista
+        products = response.get('products')
+        if not products:
+            # Si el form no manda 'products', intentamos armarlo de los campos planos
+            products = [response]
+
+        # Calcula emisiones
+        result = calculate_products_total(products)
+        # Guarda en la base de datos
+        db_result = products_model.calculate_products_footprint(result['productsEmissions'], result['totalEmission'])
+        carbon_footprint['products'] = db_result
         
-        print(f'response: {response}')
-        
-        return jsonify({'Status': 'Products calculation successfully.'})
+        print(carbon_footprint)
+
+        return jsonify({'Status': 'Products calculation successfully.', 'result': db_result})
     except Exception as error:
-        return jsonify({'Status': error})
+        print(f'Error in carbonfp_get_products_info: {error}')
+        return jsonify({'Status': str(error)})
     
 # @bp.route('/carbonfp/water/calculate', methods=['POST'])
 # def carbonfp_calculate_water():

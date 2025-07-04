@@ -41,7 +41,9 @@ function drawMessage(data) {
         warning.innerHTML = `
         <div class="bg-amber-100">
             <p class="text-5xl">${data.error}</p>
-            <button class="bg-amber-300 cursor-pointer">Try again</button>
+            <button class="bg-amber-300 cursor-pointer">
+                <a href="/carbonfp/transport">Try again</a>
+            </button>
         </div>
         `;
         // Is apppended to the div container

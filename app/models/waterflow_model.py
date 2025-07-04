@@ -118,8 +118,17 @@ class Waterflow_model:
         )
         if not result:
             return None
-        
-        return list(result)
+         
+        raw_history_with_activate = result.get("stateHistory", [])
+        results = []
+        for doc in raw_history_with_activate:
+            isoformated = doc.get("date", "").isoformat()
+            results.append({
+                "date": isoformated,
+                "state": doc.get("state")
+            })
+
+        return results
 
     def get_information_waterflows(self, user_id):
         wf_ids = self.get_waterflows_user(user_id)

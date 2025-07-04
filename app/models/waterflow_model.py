@@ -88,7 +88,7 @@ class Waterflow_model:
             
             db_users.update_one(
                 {"token": token},
-                {"$push": {"waterflows": result.inserted_id}}
+                {"$push": {"waterflows": mac_address}}
             )
 
             return True
@@ -107,7 +107,7 @@ class Waterflow_model:
         return False
     
     def get_waterflows_user(self, user_id):
-        user = self.users_collection.find_one({"_id": ObjectId(user_id)}, {"_id": 0, "water_flows": 1})
+        user = self.users_collection.find_one({"_id": ObjectId(user_id)}, {"_id": 0, "waterflows": 1})
         return user["waterflows"] if user else None
     
     def get_history_of_the_waterflow(self, mac_address):
@@ -127,7 +127,7 @@ class Waterflow_model:
             return None
 
         try:
-            object_ids = [ObjectId(wf) for wf in wf_ids]
+            object_ids = [wf for wf in wf_ids]
         except Exception:
             return None
 

@@ -240,5 +240,23 @@ class Waterflow_model:
         except:
             print("ERROR IN UPDATING THE TEMP")
             return False
+        
+    def modify_waterflow_settings(self, mac_address, autoCloseTemp, autoClose, name):
+        query = {
+            "autoCloseTemp": autoCloseTemp,
+            "autoClose": autoClose,
+            "name": name
+        }
+
+        db = self.waterflow_collection
+
+        try:
+            db.update_one(
+                {"MAC": mac_address},
+                {"$set": query}
+                )
+            return True
+        except:
+            return  False      
 
 model_waterflow = Waterflow_model()

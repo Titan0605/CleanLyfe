@@ -211,10 +211,21 @@ class Waterflow_model:
     
     def send_temp(self, mac_address, temp):
         db = self.waterflow_collection
+        db_users = self.users_collection
         local_zone = pytz.timezone('America/Chihuahua')
         local_date = datetime.now(local_zone)
 
-        waterflow = db.find_one({"MAC": mac_address}, {"historyTemp": 1, "_id": 0})
+        waterflow = db.find_one({"MAC": mac_address}, {"historyTemp": 1, "autoCloseTemp": 1,"_id": 0})
+
+        autoCloseTemp = waterflow["autoCloseTemp"]
+
+        if temp < autoCloseTemp:
+            cursor = db_users.find_one({"waterflows": mac_address},
+                                 {"_id": 1})
+            
+            user_id = str(cursor["_id"])
+
+            self.send_notification(user_id, "temperature", "The temperature is too low; be careful")
 
         historyTemp = waterflow["historyTemp"]
 

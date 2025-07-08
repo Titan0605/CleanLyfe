@@ -284,7 +284,9 @@ class Waterflow_model:
                     "message": message
                 }}}
             )
+            return True
         except:
-            return
+            print("ERROR IN UPDATING THE NOTIFICATIONS")
+            return False
 
 model_waterflow = Waterflow_model()

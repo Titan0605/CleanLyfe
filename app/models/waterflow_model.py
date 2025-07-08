@@ -76,6 +76,7 @@ class Waterflow_model:
         try:
             query = {
                 "MAC": mac_address,
+                "name": "New Waterflow",
                 "stateHistory": [],
                 "historyTemp": [],
                 "currentTemp": 0,

@@ -243,7 +243,7 @@ class Waterflow_model:
         
     def modify_waterflow_settings(self, mac_address, autoCloseTemp, autoClose, name):
         query = {
-            "autoCloseTemp": autoCloseTemp,
+            "autoCloseTemp": int(autoCloseTemp),
             "autoClose": autoClose,
             "name": name
         }

@@ -203,3 +203,30 @@ def send_temperature():
         "status": "successfuly",
         "message": "the update went well"
     }), 200
+
+@bp.route("/set-configuration", methods=["PUT"])
+def set_configuration():
+    data = request.get_json()
+    if not data or not "autoCloseTemp" in data or "autoClose" not in data or "name" not in data:
+        return jsonify({
+            "status": "error",
+            "message": "missing json or missing fields"
+        }), 400
+    
+    mac_address = data.get("mac_address", "")
+    autoCloseTemp = data.get("autoCloseTemp", 0)
+    autoClose = data.get("autoClose", False)
+    name = data.get("name", "New waterflow")
+
+    success = model_waterflow.modify_waterflow_settings(mac_address, autoCloseTemp, autoClose, name)
+
+    if not success:
+        return jsonify({
+            "status": "error",
+            "message": "the update was not successful"
+        }), 400
+    
+    return jsonify({
+        "status": "successfuly",
+        "message": "the update went well"
+    }), 200

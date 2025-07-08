@@ -230,3 +230,27 @@ def set_configuration():
         "status": "successfuly",
         "message": "the update went well"
     }), 200
+
+@bp.route("/get-notifications", methods=["GET"])
+def get_notifications():
+    user_id = request.args.get("user_id", "")
+
+    if not user_id:
+        return jsonify({
+            "status": "error",
+            "message": "no user id sent"
+        }), 400
+    
+    notifications = model_waterflow.get_notifications(user_id)
+
+    if not notifications:
+        return jsonify({
+            "status": "error",
+            "message": "Something went wrong"
+        }), 404
+    
+    return jsonify({
+        "status": "successfuly",
+        "message": "notifications was gotten well",
+        "notifications": notifications
+    }), 200

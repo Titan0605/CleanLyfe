@@ -258,5 +258,33 @@ class Waterflow_model:
             return True
         except:
             return  False      
+        
+    def get_notifications(self, user_id):
+        db = self.users_collection   
+        query = {
+            "_id": ObjectId(user_id)
+        }
+
+        cursor = db.find_one(query, {"notifications": 1, "_id": 0})
+
+        if not cursor:
+            print("USER NOT FOUND IN NOTIFICACTIONS")
+            return None
+             
+        return cursor["notifications"]
+    
+    def send_notification(self, user_id, type, message):
+        db = self.users_collection
+
+        try:
+            db.update_one(
+                {"_id": ObjectId(user_id)},
+                {"$push": {"notifications": {
+                    "notification_type": type,
+                    "message": message
+                }}}
+            )
+        except:
+            return
 
 model_waterflow = Waterflow_model()

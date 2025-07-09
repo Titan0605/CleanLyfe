@@ -1,58 +1,78 @@
 {%extends 'layouts/base.html' %} {% block title %}Carbon Water calculator{% endblock title %} {% block main %}
 
 <section id="container" class="">
-  <div class="flex flex-col items-center justify-center pb-8 mx-auto min-h-screen max-w-md lg:p-0 text-black dark:text-white">
-    <div class="w-full space-y-8 md:mt-0 sm:max-w-md xl:p-0">
-      <header class="flex items-center justify-center text-center gap-3">
-        <i class="fa-solid fa-droplet"></i>
-        <h1 class="text-5xl text-center">Water calculator</h1>
+  <div class="flex flex-col items-center justify-center pb-8 mx-auto min-h-screen w-full px-4 sm:px-6 lg:px-8 text-black dark:text-white">
+    <div class="w-full max-w-sm sm:max-w-md lg:max-w-lg xl:max-w-xl space-y-6 sm:space-y-8">
+      <header class="flex items-center justify-center text-center gap-2 sm:gap-3">
+        <i class="fa-solid fa-droplet text-2xl sm:text-3xl"></i>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl text-center">Water calculator</h1>
       </header>
-      <div class="pb-4 rounded-lg bg-gray-50 dark:bg-gray-900 md:space-y-6 sm:p-8">
-        <form id="water_emission_form" class="space-y-6">
-          <header class="flex items-center justify-center gap-3 bg-[#9696a3] rounded-2xl">
-            <i class="fa-solid fa-tint"></i>
-            <h2 class="text-2xl">Water Emission</h2>
+
+      <div class="p-4 sm:p-6 lg:p-8 rounded-lg bg-gray-50 dark:bg-gray-900 space-y-4 sm:space-y-6">
+        <form id="water_emission_form" class="space-y-4 sm:space-y-6">
+          <header class="flex items-center justify-center gap-2 sm:gap-3 bg-[#9696a3] rounded-2xl p-3 sm:p-4">
+            <i class="fa-solid fa-tint text-lg sm:text-xl"></i>
+            <h2 class="text-xl sm:text-2xl">Water Emission</h2>
           </header>
-          <div class="p-2">
+
+          <div class="p-2 sm:p-4 space-y-4 sm:space-y-6">
             <article class="">
-              <section class="mb-4">
-                <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-white" for="water_consumed">How many liters of water did you consume this week?</label>
-                <input type="number" name="water_consumed" id="water_consumed" placeholder="Liters" min="0" max="5000" class="text-xl text-black bg-[#9696a3] rounded shadow-lg size-9/12" required />
+              <section class="mb-4 sm:mb-6">
+                <label class="block mb-2 text-base sm:text-lg font-medium text-gray-900 dark:text-white" for="water_consumed"> How many liters of water did you consume this week? </label>
+                <input
+                  type="number"
+                  name="water_consumed"
+                  id="water_consumed"
+                  placeholder="Liters"
+                  min="0"
+                  max="5000"
+                  class="w-full sm:w-3/4 text-lg sm:text-xl text-black bg-[#9696a3] rounded shadow-lg p-3 sm:p-4"
+                  required
+                />
               </section>
 
-              <section class="mb-4">
-                <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-white" for="water_heated_percentage">How much water do you heat for your daily activities?</label>
-                <select class="text-xl text-black bg-[#9696a3] rounded shadow-lg" name="water_heated_percentage" id="water_heated_percentage" required>
-                  {% for i in range(0, 110, 10) %}
-                  <option class="dark:bg-white" value="{{ i }}">{{ i }} %</option>
-                  {% endfor %}
+              <section class="mb-4 sm:mb-6">
+                <label class="block mb-2 text-base sm:text-lg font-medium text-gray-900 dark:text-white" for="water_heated_percentage"> How much water do you heat for your daily activities? </label>
+                <select class="w-full sm:w-3/4 text-lg sm:text-xl text-black bg-[#9696a3] rounded shadow-lg p-3 sm:p-4" name="water_heated_percentage" id="water_heated_percentage" required>
+                  <option class="dark:bg-white" value="0">0 %</option>
+                  <option class="dark:bg-white" value="10">10 %</option>
+                  <option class="dark:bg-white" value="20">20 %</option>
+                  <option class="dark:bg-white" value="30">30 %</option>
+                  <option class="dark:bg-white" value="40">40 %</option>
+                  <option class="dark:bg-white" value="50">50 %</option>
+                  <option class="dark:bg-white" value="60">60 %</option>
+                  <option class="dark:bg-white" value="70">70 %</option>
+                  <option class="dark:bg-white" value="80">80 %</option>
+                  <option class="dark:bg-white" value="90">90 %</option>
+                  <option class="dark:bg-white" value="100">100 %</option>
                 </select>
               </section>
 
-              <section class="mb-4">
-                <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-white" for="heater_type">How do you heat the water?</label>
-                <div class="text-sm space-y-2 w-fit" id="heater_type">
+              <section class="mb-4 sm:mb-6">
+                <label class="block mb-2 text-base sm:text-lg font-medium text-gray-900 dark:text-white" for="heater_type"> How do you heat the water? </label>
+                <div class="text-sm sm:text-base space-y-2 sm:space-y-3 w-fit" id="heater_type">
                   <label for="heater_type_1" class="block">
-                    <input class="accent-[#238c80]" type="radio" name="heater_type" id="heater_type_1" value="lp_gas" required />
+                    <input class="accent-[#238c80] mr-2" type="radio" name="heater_type" id="heater_type_1" value="lp_gas" required />
                     Heating with LP gas
                   </label>
                   <label for="heater_type_2" class="block">
-                    <input class="accent-[#238c80]" type="radio" name="heater_type" id="heater_type_2" value="natural_gas" />
+                    <input class="accent-[#238c80] mr-2" type="radio" name="heater_type" id="heater_type_2" value="natural_gas" />
                     Heating with natural gas
                   </label>
                   <label for="heater_type_3" class="block">
-                    <input class="accent-[#238c80]" type="radio" name="heater_type" id="heater_type_3" value="electric" />
+                    <input class="accent-[#238c80] mr-2" type="radio" name="heater_type" id="heater_type_3" value="electric" />
                     Heating with electricity
                   </label>
                 </div>
               </section>
             </article>
           </div>
-          <footer class="">
+
+          <footer class="flex justify-center">
             <button
               id="submit_button"
               type="submit"
-              class="text-white bg-[#238c80] hover:bg-[#238c80] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm min-w-screen sm:w-auto px-5 py-2.5 text-center hover:scale-105 hover:transition-transform"
+              class="w-full sm:w-auto text-white bg-[#238c80] hover:bg-[#238c80] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center hover:scale-105 hover:transition-transform"
             >
               FINISH
             </button>

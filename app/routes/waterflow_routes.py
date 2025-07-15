@@ -254,3 +254,25 @@ def get_notifications():
         "message": "notifications was gotten well",
         "notifications": notifications
     }), 200
+
+@bp.route("/get-configuration",methods=["GET"])
+def get_configuration():
+    mac_address = request.args.get("mac_address", "")
+    if not mac_address:
+        return jsonify({
+            "status": "error",
+            "message": "No mac_address sent"
+        }), 400
+    
+    response = model_waterflow.get_configuration(mac_address)
+    if not response:
+        return jsonify({
+            "status": "error",
+            "message": "Waterflow not found"
+        }), 404
+    
+    return jsonify({
+        "status": "successfuly",
+        "message": "Information collected succesfuly",
+        "results": response
+    }), 200

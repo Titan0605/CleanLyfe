@@ -299,5 +299,15 @@ class Waterflow_model:
         except:
             print("ERROR IN UPDATING THE NOTIFICATIONS")
             return False
+        
+    def get_configuration(self, mac_address):
+        db = self.waterflow_collection
+
+        cursor = db.find_one(
+            {"MAC": mac_address},
+            {"_id": 0, "autoClose": 1, "autoCloseTemp": 1, "name": 1}
+            )
+        
+        return cursor
 
 model_waterflow = Waterflow_model()

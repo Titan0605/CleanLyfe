@@ -152,6 +152,7 @@ class Waterflow_model:
                 "currentTemp": 1,
                 "autoCloseTemp": 1,
                 "autoClose": 1,
+                "name": 1,
                 "active": 1
             }
         )

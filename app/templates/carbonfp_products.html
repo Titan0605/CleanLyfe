@@ -1,7 +1,7 @@
 {% extends 'layouts/base.html' %} {% block title %} Product Calculator {% endblock %} {%block main%}
-<div class="flex flex-col items-center justify-center pb-8 mx-auto min-h-screen max-w-md lg:p-0 text-black dark:text-white">
+<div class="flex flex-col items-center justify-center pb-8 mx-auto min-h-screen max-w-lg lg:p-0 text-black dark:text-white">
 
-  <div id="container" class="pb-4 rounded-lg bg-gray-50 dark:bg-gray-900 md:space-y-6 sm:p-8">
+  <div id="container" class="pb-4 rounded-lg bg-gray-50 dark:bg-gray-900 m-5 md:space-y-6 sm:p-8 w-full">
     <form id="products_select_form" class="w-full max-w-md mx-auto px-4 py-8 space-y-6">
       <header class="flex items-center justify-center gap-3 text-center">
         <i class="fa-solid fa-bolt text-white text-3xl"></i>
@@ -46,7 +46,7 @@
         <button
           id=""
           type="submit"
-          class="text-white bg-[#238c80] hover:bg-[#238c80] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm min-w-screen sm:w-auto px-5 py-2.5 text-center hover:scale-105 hover:transition-transform">
+          class="text-white bg-[#238c80] hover:bg-[#238c80] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-auto md:w-8/12 px-5 py-2.5 text-center hover:scale-105 hover:transition-transform">
           Next
         </button>
       </footer>
@@ -127,7 +127,7 @@
           </div>
         </div>
 
-        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-3">
+        <div class="grid gap-4 grid-cols-1">
           <div>
             <label class="text-lg font-semibold text-gray-800 dark:text-gray-100" for="cow_meat_kg">Cow meat (kg)</label>
             <input
@@ -160,7 +160,7 @@
 
       <!-- ----------------------------------------------------------- -->
 
-      <section id="dairy_section" class="w-full max-w-3xl mx-auto px-4 py-8 space-y-8">
+      <section id="dairy_section" class="w-full max-w-3xl mx-auto px-4 py-8 space-y-8 product">
         <header class="flex items-center justify-center gap-3 bg-blue-600 text-white rounded-2xl p-4 shadow-md">
           <i class="fa-solid fa-pizza-slice calculator__side-icon"></i>
           <h1 class="text-2xl font-bold">Dairy products</h1>
@@ -220,7 +220,7 @@
             </label>
           </div>
         </div>
-        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 m-1">
+        <div class="grid gap-4 grid-cols-1 m-1">
           <div>
             <label class="text-lg font-semibold text-gray-800 dark:text-gray-100">How many liters of milk did you buy during the week?</label>
             <input
@@ -244,7 +244,7 @@
 
       <!-- ----------------------------------------------------------- -->
 
-      <section id="fruits_section" class="w-full max-w-3xl mx-auto px-4 py-8 space-y-8">
+      <section id="fruits_section" class="w-full max-w-3xl mx-auto px-4 py-8 space-y-8 product">
         <header class="flex items-center justify-center gap-3 bg-blue-600 text-white rounded-2xl p-4 shadow-md">
           <i class="fa-solid fa-pizza-slice calculator__side-icon"></i>
           <h1 class="text-2xl font-bold">Fruits products</h1>
@@ -304,7 +304,7 @@
             </label>
           </div>
         </div>
-        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-3">
+        <div class="grid gap-4 grid-cols-1">
           <div>
             <label class="text-lg font-semibold text-gray-800 dark:text-gray-100">How many kg from local production did you buy during the week?</label>
             <input
@@ -337,7 +337,7 @@
 
       <!-- ----------------------------------------------------------- -->
 
-      <section id="clothes_section" class="w-full max-w-3xl mx-auto px-4 py-8 space-y-8">
+      <section id="clothes_section" class="w-full max-w-3xl mx-auto px-4 py-8 space-y-8 product">
         <header class="flex items-center justify-center gap-3 bg-blue-600 text-white rounded-2xl p-4 shadow-md">
           <i class="fa-solid fa-pizza-slice calculator__side-icon"></i>
           <h1 class="text-2xl font-bold">Clothes products</h1>
@@ -380,7 +380,7 @@
             </label>
           </div>
         </div>
-        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-3">
+        <div class="grid gap-4 grid-cols-1">
           <div>
             <label class="text-lg font-semibold text-gray-800 dark:text-gray-100">How many t-shirts did you buy during the week?</label>
             <input
@@ -413,7 +413,7 @@
 
       <!-- ----------------------------------------------------------- -->
 
-      <section id="electrical_section" class="w-full max-w-3xl mx-auto px-4 py-8 space-y-8">
+      <section id="electrical_section" class="w-full max-w-3xl mx-auto px-4 py-8 space-y-8 product">
         <header class="flex items-center justify-center gap-3 bg-blue-600 text-white rounded-2xl p-4 shadow-md">
           <i class="fa-solid fa-pizza-slice calculator__side-icon"></i>
           <!-- <-- here goes the icon-->
@@ -457,7 +457,7 @@
             </label>
           </div>
         </div>
-        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-3">
+        <div class="grid gap-4 grid-cols-1">
           <div>
             <label class="text-lg font-semibold text-gray-800 dark:text-gray-100">How many cellphones did you buy during the week?</label>
             <input
@@ -490,7 +490,7 @@
 
       <!-- ----------------------------------------------------------- -->
 
-      <section id="cleaning_section" class="w-full max-w-3xl mx-auto px-4 py-8 space-y-8">
+      <section id="cleaning_section" class="w-full max-w-3xl mx-auto px-4 py-8 space-y-8 product">
         <header class="flex items-center justify-center gap-3 bg-blue-600 text-white rounded-2xl p-4 shadow-md">
           <i class="fa-solid fa-pizza-slice calculator__side-icon"></i>
           <h1 class="text-2xl font-bold">Cleaning products</h1>
@@ -532,7 +532,7 @@
             </label>
           </div>
         </div>
-        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-3">
+        <div class="grid gap-4 grid-cols-1">
           <div>
             <label class="text-lg font-semibold text-gray-800 dark:text-gray-100">How many liters of detergent did you buy during the week?</label>
             <input
@@ -552,7 +552,7 @@
               min="0" />
           </div>
           <div>
-            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">How many liters of all purpose cleaner did you buy during the week?</label>
+            <label class="text-lg font-semibold text-gray-800 dark:text-gray-100">How many liters of all purpose cleaner did you buy during the week?</label>
             <input
               class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2"
               type="number"
@@ -564,19 +564,19 @@
       </section>
 
       <footer id="finish_btn" hidden="true" style="all:unset;display:flex;justify-content:center;width:100%;">
-        <button type="submit" id="finish_button" class="text-white bg-red-500 px-5 py-2.5 text-center font-medium rounded-lg min-w-screen sm:w-auto hover:scale-105 hover:transition-transform" style="cursor:pointer;">Finish</button>
+        <button type="submit" id="finish_button" class="text-white bg-red-500 px-5 py-2.5 text-center font-medium rounded-lg w-auto md:w-8/12 hover:scale-105 hover:transition-transform" style="cursor:pointer;">Finish</button>
       </footer>
     </form>
 
-    <div id="navigation_btns" hidden="true">
+    <div id="navigation_btns" class="flex justify-center" hidden="true">
       <button
         id="preview_btn"
-        class="text-white bg-[#238c80] hover:bg-[#238c80] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm min-w-screen sm:w-auto px-5 py-2.5 text-center hover:scale-105 hover:transition-transform">
-        Preview
+        class="text-white bg-[#238c80] hover:bg-[#238c80] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-auto md:w-8/12 px-5 py-2.5 text-center hover:scale-105 hover:transition-transform">
+        Previous
       </button>
       <button
         id="next_btn"
-        class="text-white bg-[#238c80] hover:bg-[#238c80] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm min-w-screen sm:w-auto px-5 py-2.5 text-center hover:scale-105 hover:transition-transform">
+        class="text-white bg-[#238c80] hover:bg-[#238c80] focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-auto md:w-8/12 px-5 py-2.5 text-center hover:scale-105 hover:transition-transform">
         Next
       </button>
     </div>

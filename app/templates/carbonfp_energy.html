@@ -6,8 +6,8 @@
   <span class="">Log out</span>
 </a>
 {% endblock %} {%block main%}
-<div class="flex justify-center min-h-screen p-4">
-  <div id="container" class="w-fit items-center px-4 py-8 text-black dark:text-white bg-gray-50 dark:bg-gray-900">
+<div class="flex justify-center items-center min-h-screen p-4">
+  <div id="container" class="h-fit w-fit items-center px-4 py-8 text-black dark:text-white bg-gray-50 dark:bg-gray-900 rounded-lg">
     <section id="container" class="mx-auto space-y-8">
       <header class="flex items-center justify-center text-center gap-3">
         <i class="fa-solid fa-bolt text-4xl sm:text-5xl"></i>
@@ -15,24 +15,22 @@
       </header>
 
       <div class="p-4 space-y-6">
-        <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+        <div class="flex flex-row justify-center items-center gap-4">
           <button
             id="btnBasic"
             class="text-white bg-[#238c80] hover:bg-[#1f756e] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center hover:scale-105 transition"
-            onclick="show_form('basic_calculation')"
-          >
+            onclick="show_form('basic_calculation')">
             Basic Calculator
           </button>
           <button
             id="btnAccurate"
             class="text-white bg-[#238c80] hover:bg-[#1f756e] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-4 py-2 text-center hover:scale-105 transition"
-            onclick="show_form('accurate_calculation')"
-          >
+            onclick="show_form('accurate_calculation')">
             Accurate Calculator
           </button>
         </div>
 
-        <div id="basic_calculation" class="mt-6" hidden>
+        <div id="basic_calculation" class="form mt-6" hidden>
           <form class="space-y-6">
             <header class="flex items-center justify-center gap-3 bg-[#9696a3] rounded-2xl p-3">
               <i class="fa-solid fa-plug"></i>
@@ -49,15 +47,14 @@
             <footer class="text-center">
               <button
                 type="submit"
-                class="text-white bg-[#238c80] hover:bg-[#1f756e] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center hover:scale-105 transition"
-              >
+                class="text-white bg-[#238c80] hover:bg-[#1f756e] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center hover:scale-105 transition">
                 Continue
               </button>
             </footer>
           </form>
         </div>
 
-        <div id="accurate_calculation" class="mt-6 bg-gray-100 dark:bg-gray-900 p-4" hidden>
+        <div id="accurate_calculation" class="form mt-6 bg-gray-100 dark:bg-gray-900 p-4" hidden>
           <form id="devices_select_form" class="space-y-6">
             <header class="flex items-center justify-center gap-3 bg-[#9696a3] rounded-2xl p-3">
               <i class="fa-solid fa-bolt"></i>
@@ -71,16 +68,21 @@
               <section class="bg-gray-200 dark:bg-gray-800 p-4 rounded-lg">
                 <header class="mb-4 flex gap-2 items-center">
                   <i
-                    class="fa-solid {% if zone == 'Kitchen' %}fa-kitchen-set {% elif zone == 'Living Room' %}fa-couch {% elif zone == 'Bedroom' %}fa-bed {% elif zone == 'Office / Study Room' %}fa-briefcase {% elif zone == 'Bathroom' %}fa-bath {% elif zone == 'Laundry Room' %}fa-washing-machine {% elif zone == 'Mobile and portable devices' %}fa-mobile {% else %}fa-plug{% endif %}"
-                  ></i>
+                    class="fa-solid {% if zone == 'Kitchen' %}fa-kitchen-set {% elif zone == 'Living Room' %}fa-couch {% elif zone == 'Bedroom' %}fa-bed {% elif zone == 'Office / Study Room' %}fa-briefcase {% elif zone == 'Bathroom' %}fa-bath {% elif zone == 'Laundry Room' %}fa-washing-machine {% elif zone == 'Mobile and portable devices' %}fa-mobile {% else %}fa-plug{% endif %}"></i>
                   <h3 class="text-lg font-semibold">{{ zone }}</h3>
                 </header>
                 <div class="space-y-2">
                   {% for device in devices %} {% if device.deviceZone == zone %}
-                  <label class="flex items-center gap-2">
-                    <input type="checkbox" name="selected_devices" value="{{ device.id }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded" />
+                  <!-- <label class="flex items-center gap-2">
+                    <input type="checkbox" name="selected_devices" value="{{ device.id }}" class="device-checkbox w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded" />
                     <span class="text-sm font-medium">{{ device.deviceName }}</span>
-                  </label>
+                  </label> -->
+                  <div class="device-wrapper">
+                    <div class="flex items-center mb-2">
+                      <input type="checkbox" name="selected_devices" value="{{ device.id }}" class="device-checkbox w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded" />
+                      <label class="ms-2 text-sm font-medium">{{ device.deviceName }}</label>
+                    </div>
+                  </div>
                   {% endif %} {% endfor %}
                 </div>
               </section>
@@ -91,15 +93,13 @@
               <button
                 id="continue-btn"
                 type="button"
-                class="text-white bg-[#238c80] hover:bg-[#1f756e] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 hover:scale-105 transition"
-              >
+                class="text-white bg-[#238c80] hover:bg-[#1f756e] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 hover:scale-105 transition">
                 Continue
               </button>
               <button
                 id="calculate-btn"
                 type="submit"
-                class="hidden text-white bg-[#238c80] hover:bg-[#1f756e] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 hover:scale-105 transition"
-              >
+                class="hidden text-white bg-[#238c80] hover:bg-[#1f756e] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 hover:scale-105 transition">
                 Calculate Carbon Footprint
               </button>
             </footer>

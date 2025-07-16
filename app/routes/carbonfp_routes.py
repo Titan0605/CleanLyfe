@@ -1,16 +1,18 @@
+
 from flask import jsonify, Blueprint, request
-from app.services.carbon.transport_calculations import TransportCalculator
+from app.services.carbon import TransportCalculator, ElectricDevicesCalculator, WaterEmissionCalculator
+from app.services.carbon.products_calculations import calculate_products_total
 from app.models.carbon_energy_model import ElectricDevicesModel
-from app.services.carbon.energy_calculations import Electric_devices_calculator
-# from app.services.carbon_water_calculus import WaterEmissionCalculator
+from app.models.carbon_products_model import CarbonProductsModel
 
 bp = Blueprint("carbonfp_routes", __name__)
 
 energy_model = ElectricDevicesModel()
+products_model = CarbonProductsModel()
 
 transCal = TransportCalculator()
-devicesCal = Electric_devices_calculator()
-# water_emission_calc = WaterEmissionCalculator()
+energyCal = ElectricDevicesCalculator()
+water_emission_calc = WaterEmissionCalculator()
 
 carbon_footprint = {}
 
@@ -36,33 +38,6 @@ def carbonfp_transport_data():
     except Exception as error:
         return jsonify({"status": "error", "msg": error})
 
-# @bp.route('/carbonfp/get-devices')
-# def carbonfp_get_devices():
-#     # Calls model to get all devices
-#     response = elect_devices_model.getAllDevices()
-#     return jsonify(response)
-
-# @bp.route('/carbonfp/get-device-id/<int:id>')
-# def carbonfp_get_devices_id(id):
-#     # Calls model to get the devices by id
-#     response = elect_devices_model.getDeviceById(id)
-    
-#     return jsonify(response)
-
-# @bp.route('/carbonfp/get-device-name/<string:name>')
-# def carbonfp_get_device_name(name):
-#     # calls model to get devices by name
-#     response = elect_devices_model.getDeviceByName(name)
-    
-#     return jsonify(response)
-
-# @bp.route('/carbonfp/get-device-location/<string:location>')
-# def carbonfp_get_device_location(location):
-#     # Calls model to get devices by location
-#     response = elect_devices_model.getDeviceByLocation(location)
-    
-#     return jsonify(response)
-
 @bp.route('/carbonfp/get-devices-name-selected', methods=['POST'])
 def getdevices():
     try:
@@ -80,24 +55,32 @@ def getdevices():
         return jsonify({"Status": str(error)})
 
 
-# @bp.route('/carbonfp/devices/calculation-basic', methods=['POST'])
-# def carbonfp_basic():
-#     try:
-#         response = request.get_json()
-#         type_calculation = str(response['type_calculation'])
-#         electricity_consumption = float(response['electricity_consumption'])
+@bp.route('/carbonfp/devices/calculation-basic', methods=['POST'])
+def carbonfp_basic():
+    try:
+        response = request.get_json()
+        electricity_consumption = float(response['electricity_consumption'])
 
-#         status = devicesCal.calculation_type(type_calculation, electricity_consumption, response)
+        result = energyCal.basic_calculation(electricity_consumption)
         
-#         if status == 'Electric calculation successfully.':
-#             status = 'Carbonfp successfully.'
-#         elif status == 'Failed electrical calculation.':
-#             status = 'Something went wrong, try again later.'
+        carbon_footprint["energy"] = result
         
-#         return jsonify({'Status': status})
-#     except KeyError as error:
-#         return jsonify({'Status': error})
-
+        print(carbon_footprint)
+        
+        if result:
+            return jsonify({
+                'Status': 'Energy calculated successfully.',
+                'total_emission': result["totalEmission"],
+                'message': f'Total weekly carbon emission: {result["totalEmission"]} kgCO2e'
+            })
+        else:
+            return jsonify({
+                'Status': 'Something went wrong, try again later.',
+                'message': 'Failed to calculate emissions'
+            })
+    except KeyError as error:
+        print(f'Error in carbonfp_basic: {error}')
+        return jsonify({'Status': str(error)})
 
 @bp.route('/carbonfp/devices/calculation-accurate', methods=['POST'])
 def carbonfp_accurate():
@@ -106,7 +89,7 @@ def carbonfp_accurate():
         # type_calculation = response['type_calculation'][0]
         
         # Call the calculation function
-        result = devicesCal.accurate_calculation(response)
+        result = energyCal.accurate_calculation(response)
         
         energy_data = energy_model.calculate_energy_footprint(result)
         
@@ -146,16 +129,34 @@ def carbonfp_get_products():
         return jsonify({'Status': error})
 
 
+
 @bp.route('/carbonfp/products/get-products-info', methods=['POST'])
 def carbonfp_get_products_info():
     try:
         response = request.get_json()
+        # Espera un array de productos con sus datos
+        # Ejemplo: [{product_type, quantity, transport, packaging, refrigeration, product_id}]
+        if not response or not isinstance(response, dict):
+            return jsonify({'Status': 'Invalid input.'})
+
+        # Si el form solo manda un producto, lo convertimos a lista
+        products = response.get('products')
+        if not products:
+            # Si el form no manda 'products', intentamos armarlo de los campos planos
+            products = [response]
+
+        # Calcula emisiones
+        result = calculate_products_total(products)
+        # Guarda en la base de datos
+        db_result = products_model.calculate_products_footprint(result['productsEmissions'], result['totalEmission'])
+        carbon_footprint['products'] = db_result
         
-        print(f'response: {response}')
-        
-        return jsonify({'Status': 'Products calculation successfully.'})
+        print(carbon_footprint)
+
+        return jsonify({'Status': 'Products calculation successfully.', 'result': db_result})
     except Exception as error:
-        return jsonify({'Status': error})
+        print(f'Error in carbonfp_get_products_info: {error}')
+        return jsonify({'Status': str(error)})
     
 @bp.route('/carbonfp/water/calculate', methods=['POST'])
 def carbonfp_calculate_water():
@@ -163,14 +164,22 @@ def carbonfp_calculate_water():
         data = request.get_json()
         
         print(data)
-        emission = water_emission_calc.calculate_water_emission(
+        result = water_emission_calc.calculate_water_emission(
             liters=data['water_consumed'],
             heating_percentage=data['water_heated_percentage'],
             heating_type=data['heater_type']
             )
-        print(emission)
+        print(result)
         
-        return jsonify({'Status': 'Response recieved', 'Result': emission})
+        carbon_footprint['water'] = result
+        
+        print(carbon_footprint)
+        
+        return jsonify({
+            'Status': 'Water calculation successfully.',
+            'waterEmission': result['totalEmission'],
+            'message': f'Total water emission: {result["totalEmission"]} kgCO2e'
+        })
     
     except Exception as error:
-        return jsonify({'Status:', error})
+        return jsonify({'Status': 'Water calculation Failed.', 'Result': error})

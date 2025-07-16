@@ -19,7 +19,7 @@ def carbonfp_transport():
      #   return redirect(url_for('index_view.index'))
 
 
-@bp.route('/carbonfp/devices')
+@bp.route('/carbonfp/energy')
 def carbonfp_devices():
     #if 'username' in session:  
     energy_model = ElectricDevicesModel()

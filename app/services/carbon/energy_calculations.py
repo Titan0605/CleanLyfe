@@ -1,39 +1,29 @@
 from flask import jsonify
 from typing import Dict, List, Union, Optional
 
-class Electric_devices_calculator:
+class ElectricDevicesCalculator:
     def __init__(self):
         self.emission_factor = 0.438  # kgCO2e/kWh
     
-    def calculation_type(self, type_calculation: str, electricity_consumption: float, devices: Dict) -> str:
+    def basic_calculation(self, electricity_consumption: float) -> dict:
         try:
-            match type_calculation:
-                case 'basic_calculation':
-                    result = self.basic_calculation(electricity_consumption, self.emission_factor)
-                    return 'Electric calculation successfully.' if result > 0 else 'Failed electrical calculation.'
-                case 'accurate_calculation':
-                    result = self.accurate_calculation(devices)
-                    return 'Electric calculation successfully.' if result else 'Failed electrical calculation.'
-                case _:
-                    return 'Failed electrical calculation.'
-        except (Exception, TypeError) as error:
-            print(f'Error found in calculation_type: {error}')
-            return 'Failed electrical calculation.'
-    
-    
-    def basic_calculation(self, electricity_consumption: float, emission_factor: float):
-        try:
-            if electricity_consumption > 0 and emission_factor > 0:
+            if electricity_consumption > 0 and self.emission_factor > 0:
                 
-                final_emission = float(electricity_consumption * emission_factor)
+                final_emission = float(electricity_consumption * self.emission_factor)
                 
                 print(f'Total basic: {final_emission}')
-                return float(final_emission)
+                
+                result = {
+                    "totalEnergyConsumption": electricity_consumption,
+                    "totalEmission": final_emission,
+                }
+                
+                return result
             else:
-                return 0.0
+                return {}
         except Exception as error:
             print(f'Error found: {error}')
-            return 0.0
+            return {}
     
     def accurate_calculation(self, devices: Dict) -> Dict:
         try:

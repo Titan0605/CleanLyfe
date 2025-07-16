@@ -378,10 +378,12 @@ function mapRefrigeration(val) {
 function navigation_btn(currentIndex, nextBtn, prevBtn, data) {
   if (currentIndex == data.product.length - 1) {
     document.getElementById("finish_btn").hidden = false;
+    prevBtn.hidden = false;
     nextBtn.hidden = true;
   } else if (currentIndex == 0) {
     document.getElementById("finish_btn").hidden = true;
     prevBtn.hidden = true;
+    nextBtn.hidden = false;
   } else if (currentIndex == 0 && data.product.length == 1){
     document.getElementById("finish_btn").hidden = false;
     nextBtn.hidden = true;

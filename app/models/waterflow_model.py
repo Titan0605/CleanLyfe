@@ -115,12 +115,12 @@ class Waterflow_model:
         db = self.waterflow_collection
         result = db.find_one(
             {"MAC": mac_address},
-            {"_id": 0, "stateHistory": 1}
+            {"_id": 0, "history": 1}
         )
         if not result:
             return None
          
-        raw_history_with_activate = result.get("stateHistory", [])
+        raw_history_with_activate = result.get("history", [])
         results = []
         for doc in raw_history_with_activate:
             isoformated = doc.get("date", "").isoformat()

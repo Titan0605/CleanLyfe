@@ -119,9 +119,8 @@ def get_history():
     }), 200
 
 
-@bp.route('/info-waterflow', methods=['GET'])
-def get_user_waterflows_info():
-    user_id = request.args.get('user_id', '').strip()
+@bp.route('/info-waterflow/<string:user_id>', methods=['POST'])
+def get_user_waterflows_info(user_id):    
     if not user_id:
         return jsonify({"status": "error", "message": "Missing 'user_id' parameter"}), 400
 
@@ -203,4 +202,77 @@ def send_temperature():
     return jsonify({
         "status": "successfuly",
         "message": "the update went well"
+    }), 200
+
+@bp.route("/set-configuration", methods=["PUT"])
+def set_configuration():
+    data = request.get_json()
+    if not data or not "autoCloseTemp" in data or "autoClose" not in data or "name" not in data:
+        return jsonify({
+            "status": "error",
+            "message": "missing json or missing fields"
+        }), 400
+    
+    mac_address = data.get("mac_address", "")
+    autoCloseTemp = data.get("autoCloseTemp", 0)
+    autoClose = data.get("autoClose", False)
+    name = data.get("name", "New waterflow")
+
+    success = model_waterflow.modify_waterflow_settings(mac_address, autoCloseTemp, autoClose, name)
+
+    if not success:
+        return jsonify({
+            "status": "error",
+            "message": "the update was not successful"
+        }), 400
+    
+    return jsonify({
+        "status": "successfuly",
+        "message": "the update went well"
+    }), 200
+
+@bp.route("/get-notifications", methods=["GET"])
+def get_notifications():
+    user_id = request.args.get("user_id", "")
+
+    if not user_id:
+        return jsonify({
+            "status": "error",
+            "message": "no user id sent"
+        }), 400
+    
+    notifications = model_waterflow.get_notifications(user_id)
+
+    if not notifications:
+        return jsonify({
+            "status": "error",
+            "message": "Something went wrong"
+        }), 404
+    
+    return jsonify({
+        "status": "successfuly",
+        "message": "notifications was gotten well",
+        "notifications": notifications
+    }), 200
+
+@bp.route("/get-configuration",methods=["GET"])
+def get_configuration():
+    mac_address = request.args.get("mac_address", "")
+    if not mac_address:
+        return jsonify({
+            "status": "error",
+            "message": "No mac_address sent"
+        }), 400
+    
+    response = model_waterflow.get_configuration(mac_address)
+    if not response:
+        return jsonify({
+            "status": "error",
+            "message": "Waterflow not found"
+        }), 404
+    
+    return jsonify({
+        "status": "successfuly",
+        "message": "Information collected succesfuly",
+        "results": response
     }), 200

@@ -52,7 +52,7 @@ class Waterflow_model:
         try:
             db.update_one(
                 {"MAC": mac_address},
-                {"$set": {"activate": activate},
+                {"$set": {"active": activate},
                  "$push": {"history": {"date": local_date,
                                        "state": activate
                                        }}},
@@ -76,6 +76,7 @@ class Waterflow_model:
         try:
             query = {
                 "MAC": mac_address,
+                "name": "New Waterflow",
                 "stateHistory": [],
                 "historyTemp": [],
                 "currentTemp": 0,
@@ -151,6 +152,7 @@ class Waterflow_model:
                 "currentTemp": 1,
                 "autoCloseTemp": 1,
                 "autoClose": 1,
+                "name": 1,
                 "active": 1
             }
         )
@@ -210,10 +212,21 @@ class Waterflow_model:
     
     def send_temp(self, mac_address, temp):
         db = self.waterflow_collection
+        db_users = self.users_collection
         local_zone = pytz.timezone('America/Chihuahua')
         local_date = datetime.now(local_zone)
 
-        waterflow = db.find_one({"MAC": mac_address}, {"historyTemp": 1, "_id": 0})
+        waterflow = db.find_one({"MAC": mac_address}, {"historyTemp": 1, "autoCloseTemp": 1,"_id": 0})
+
+        autoCloseTemp = waterflow["autoCloseTemp"]
+
+        if temp < autoCloseTemp:
+            cursor = db_users.find_one({"waterflows": mac_address},
+                                 {"_id": 1})
+            
+            user_id = str(cursor["_id"])
+
+            self.send_notification(user_id, "temperature", "The temperature is too low; be careful")
 
         historyTemp = waterflow["historyTemp"]
 
@@ -239,5 +252,63 @@ class Waterflow_model:
         except:
             print("ERROR IN UPDATING THE TEMP")
             return False
+        
+    def modify_waterflow_settings(self, mac_address, autoCloseTemp, autoClose, name):
+        query = {
+            "autoCloseTemp": int(autoCloseTemp),
+            "autoClose": autoClose,
+            "name": name
+        }
+
+        db = self.waterflow_collection
+
+        try:
+            db.update_one(
+                {"MAC": mac_address},
+                {"$set": query}
+                )
+            return True
+        except:
+            return  False      
+        
+    def get_notifications(self, user_id):
+        db = self.users_collection   
+        query = {
+            "_id": ObjectId(user_id)
+        }
+
+        cursor = db.find_one(query, {"notifications": 1, "_id": 0})
+
+        if not cursor:
+            print("USER NOT FOUND IN NOTIFICACTIONS")
+            return None
+             
+        return cursor["notifications"]
+    
+    def send_notification(self, user_id, type, message):
+        db = self.users_collection
+
+        try:
+            db.update_one(
+                {"_id": ObjectId(user_id)},
+                {"$push": {"notifications": {
+                    "notification_type": type,
+                    "message": message
+                }}}
+            )
+            return True
+        except:
+            print("ERROR IN UPDATING THE NOTIFICATIONS")
+            return False
+        
+    def get_configuration(self, mac_address):
+        db = self.waterflow_collection
+
+        cursor = db.find_one(
+            {"MAC": mac_address},
+            {"_id": 0, "autoClose": 1, "autoCloseTemp": 1, "name": 1}
+            )
+        
+        return cursor
 
 model_waterflow = Waterflow_model()

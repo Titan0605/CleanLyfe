@@ -15,7 +15,11 @@ const users = {
             action: "Member Update",
             date: new Date()
         }
-    ]
+    ],
+    notifications: [{
+        "notification_type": "temperature",
+        "message": "The temperature is too low"
+    }]
 }
 
 const waterFlows = {

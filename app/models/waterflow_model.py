@@ -193,12 +193,12 @@ class Waterflow_model:
 
         entry = db.find_one(
             {"MAC": mac_address},
-            {"historytemp": 1, "_id": 0}
+            {"historyTemp": 1, "_id": 0}
         )
         if not entry:
             return None
 
-        raw_history_with_activate = entry.get("historytemp", [])
+        raw_history_with_activate = entry.get("historyTemp", [])
 
         results = []
         for doc in raw_history_with_activate:

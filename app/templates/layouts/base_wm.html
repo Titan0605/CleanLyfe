@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
-    <title>WorldMatters Layout</title>
+    <title>{%block title%}{%endblock%}</title>
   </head>
   <body class="flex flex-col">
     <header class="antialiased bg-gray-50 dark:bg-gray-900">
@@ -24,26 +24,13 @@
               <i class="fa-solid fa-bars w-6 h-6 text-xl"></i>
               <span class="sr-only">Toggle sidebar</span>
             </button>
-            <a href="" class="flex items-center justify-between mr-4 hover:scale-105 transition-transform duration-300">
+            <a href="/" class="flex items-center justify-between mr-4 hover:scale-105 transition-transform duration-300">
               <img src="../static/img/Logo-WorldMatters.ico" class="mr-3 h-8 rounded-full" alt="WorldMatters Logo" />
               <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">WorldMatters</span>
             </a>
           </div>
           
-          <div class="gap-4 hidden sm:flex">
-            <!-- BOTON LOG IN -->
-            <button
-              type="button"
-              class="text-white bg-green-500 hover:bg-green-800 hover:scale-105 transition-transform duration-300 focus:outline-none focus:ring-4 focus:ring-green-300 font-bold rounded-full text-sm px-5 py-2 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 cursor-pointer">
-              Log in
-            </button>
-            <!-- BOTON SING UP -->
-            <button
-              type="button"
-              class="border focus:outline-none hover:scale-105 transition-transform duration-300 focus:ring-4 font-bold rounded-full text-sm px-5 py-2 bg-gray-800 text-white border-gray-600 hover:bg-gray-700 hover:border-gray-600 focus:ring-gray-700 cursor-pointer">
-              Sign up
-            </button>
-          </div>
+          {% block navbar %}{% endblock %}
         </div>
       </nav>
 
@@ -70,7 +57,7 @@
           <ul class="space-y-2">
             <li>
               <a
-                href="#"
+                href="/home"
                 class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               > 
                 <i class="fa-solid fa-house w-7 h-7 text-xl text-center"></i>
@@ -78,26 +65,30 @@
               </a>
             </li>
             <li>
-              <button
-                type="button"
-                class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                aria-controls="dropdown-pages"
-                data-collapse-toggle="dropdown-pages"
-              >
-                <img src="../static/img/Logo-CleanLyfe-ico.ico" class="rounded-full w-7 h-7" alt="CleanLyfe">
-                <span class="flex-1 ml-3 text-left whitespace-nowrap">CleanLyfe</span>
-              </button>
+              <a href="/home">
+                <button
+                  type="button"
+                  class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                  aria-controls="dropdown-pages"
+                  data-collapse-toggle="dropdown-pages"
+                >
+                  <img src="../static/img/Logo-CleanLyfe-ico.ico" class="rounded-full w-7 h-7" alt="CleanLyfe">
+                  <span class="flex-1 ml-3 text-left whitespace-nowrap">CleanLyfe</span>
+                </button>
+              </a>
             </li>
             <li>
-              <button
-                type="button"
-                class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                aria-controls="dropdown-sales"
-                data-collapse-toggle="dropdown-sales"
-              >
-                <img src="../static/img/Logo_WaterFlow.ico" class="rounded-full w-7 h-7" alt="CleanLyfe">
-                <span class="flex-1 ml-3 text-left whitespace-nowrap">WaterFlow</span>
-              </button>
+              <a href="">
+                <button
+                  type="button"
+                  class="flex items-center p-2 w-full text-base font-medium text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                  aria-controls="dropdown-sales"
+                  data-collapse-toggle="dropdown-sales"
+                >
+                  <img src="../static/img/Logo_WaterFlow.ico" class="rounded-full w-7 h-7" alt="CleanLyfe">
+                  <span class="flex-1 ml-3 text-left whitespace-nowrap">WaterFlow</span>
+                </button>
+              </a>
             </li>
           </ul>
           
@@ -151,7 +142,7 @@
     </header>
 
     <!-- Contenido principal -->
-    <main class="px-4 py-4 grow">
+    <main class="grow">
       {% block main %}{% endblock %}
     </main>
 
@@ -172,7 +163,7 @@
       </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
-    <script src="url_for('static', filename='javascript/index.js')" ></script>
+    <script src="{{ url_for('static', filename='javascript/index.js') }}" ></script>
     {% block scripts %}{% endblock %}
   </body>
 </html>

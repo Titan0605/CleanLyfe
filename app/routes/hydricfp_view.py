@@ -1,10 +1,11 @@
 from flask import Blueprint, render_template, redirect, url_for, session
 
-bp = Blueprint("hidricfp_views", __name__)
+bp = Blueprint("hydricfp_views", __name__)
 
-@bp.route('/hidricfp')
-def hidricfp():
-    #if 'username' in session:
-        return render_template('hf_products.html')
-    #else:
-    #    return redirect(url_for('index_view.index'))
+@bp.route('/hydricfp')
+def hydricfp():
+    if 'username' in session:
+        user = session
+        return render_template('hf_products.html', user=user)
+    else:
+       return redirect(url_for('indexes_views.index_views'))

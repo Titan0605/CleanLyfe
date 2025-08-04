@@ -229,10 +229,6 @@ class Waterflow_model:
             self.send_notification(user_id, "temperature", "The temperature is too low; be careful")
 
         historyTemp = waterflow["historyTemp"]
-
-        if not historyTemp:
-            print("NOT HISTORY TEMP FOUND")
-            return False
         
         if len(historyTemp) > 30:
             historyTemp = historyTemp[-29:]

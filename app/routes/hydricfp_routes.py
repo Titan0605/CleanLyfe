@@ -2,9 +2,9 @@ from flask import Blueprint, Response, render_template, redirect, url_for, reque
 from app.services.hydric.hydricfp_calculus import HidricCalculator, calculate_consumption
 from app.models.hydric_products_model import Hydric_products_model
 
-bp = Blueprint("hidricfp_routes", __name__)
+bp = Blueprint("hydricfp_routes", __name__)
 
-@bp.route('/hidricfp/calculation', methods=['POST'])
+@bp.route('/hydricfp/calculation', methods=['POST'])
 def calculate_hidric_footprint() -> Response:
     calculator = HidricCalculator()
     hidric_model = Hydric_products_model()

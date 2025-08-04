@@ -1,15 +1,13 @@
-{%extends 'layouts/base.html' %}
+{%extends 'layouts/base_wm.html' %}
 
 {%block title%}Sign up{%endblock%}
-
-{%block header%}{%endblock%}
 
 {%block main%}
 <section class="bg-gray-50 dark:bg-gray-900 min-h-screen pb-4">
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto max-w-md lg:py-0">
         <div class="flex items-center mb-3 sm:pt-0 sm:mb-1 md:pt-2">
         <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-            <img class="size-15 mr-2" src="{{ url_for('static', filename='img/favicon.ico') }}" alt="logo">
+            <img class="w-[5rem] h-[5rem] mr-2" src="{{ url_for('static', filename='img/favicon.ico') }}" alt="logo">
             Cleanlyfe    
         </a>
         </div>

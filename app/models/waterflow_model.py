@@ -231,7 +231,8 @@ class Waterflow_model:
         historyTemp = waterflow["historyTemp"]
         
         
-        historyTemp = historyTemp[-29:]
+        if not historyTemp:
+            historyTemp = []
         historyTemp.append({
             "temp": temp,
             "date": local_date

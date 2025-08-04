@@ -230,12 +230,12 @@ class Waterflow_model:
 
         historyTemp = waterflow["historyTemp"]
         
-        if len(historyTemp) > 30:
-            historyTemp = historyTemp[-29:]
-            historyTemp.append({
-                "temp": temp,
-                "date": local_date
-            })
+        
+        historyTemp = historyTemp[-29:]
+        historyTemp.append({
+            "temp": temp,
+            "date": local_date
+        })
 
         try:
             db.update_one(

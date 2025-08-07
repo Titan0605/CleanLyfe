@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // console.log('Products List:', products)
     // console.log('Form data:', data); // Log the form data to the console
 
-    fetch("/hidricfp/calculation", {
+    fetch("/hydricfp/calculation", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
